@@ -1,0 +1,174 @@
+image: docker:latest
+services:
+  - docker:dind
+
+stages:
+  - preparation
+  - building
+  - testing
+  - security
+  - deploy
+
+# Variables
+variables:
+  MYSQL_ROOT_PASSWORD: trifactory
+  MYSQL_USER: trifactory
+  MYSQL_PASSWORD: trifactory
+  MYSQL_DATABASE: trifactory
+  DB_HOST: db
+  # CI_DEBUG_TRACE: "true"
+
+cache:
+  key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+
+# composer:
+#   stage: preparation
+#   services:
+#     - mysql:5.7
+#   image: edbizarro/gitlab-ci-pipeline-php:7.2
+#   script:
+#     - php -v
+#     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+#     - cp .env.example .env
+#     - php artisan key:generate
+#   artifacts:
+#     paths:
+#       - vendor/
+#       - .env
+#     expire_in: 1 days
+#     when: always
+#   cache:
+#     paths:
+#       - vendor/
+
+# yarn:
+#   stage: preparation
+#   image: edbizarro/gitlab-ci-pipeline-php:7.2
+#   script:
+#     - yarn --version
+#     - yarn install --pure-lockfile
+#   artifacts:
+#     paths:
+#       - node_modules/
+#     expire_in: 1 days
+#     when: always
+#   cache:
+#     paths:
+#       - node_modules/
+
+# build-assets:
+#   stage: building
+#   image: edbizarro/gitlab-ci-pipeline-php:7.2
+#   # Download the artifacts for these jobs
+#   dependencies:
+#     - composer
+#     - yarn
+#   script:
+#     - yarn --version
+#     - yarn run production --progress false
+#   artifacts:
+#     paths:
+#       - public/css/
+#       - public/js/
+#       - public/fonts/
+#       - public/mix-manifest.json
+#     expire_in: 1 days
+#     when: always
+
+# db-seeding:
+#   stage: building
+#   services:
+#     - mysql:5.7
+#   image: edbizarro/gitlab-ci-pipeline-php:7.2
+#   # Download the artifacts for these jobs
+#   dependencies:
+#     - composer
+#     - yarn
+#   script:
+#     - php artisan migrate:fresh --seed
+#   artifacts:
+#     paths:
+#       - ./storage/logs # for debugging
+#     expire_in: 1 days
+#     when: on_failure
+
+# phpunit:
+#   stage: testing
+#   services:
+#     - mysql:5.7
+#   image: edbizarro/gitlab-ci-pipeline-php:7.2
+#   # Download the artifacts for these jobs
+#   dependencies:
+#     - build-assets
+#     - composer
+#     - db-seeding
+#   script:
+#     - php -v
+#     - sudo cp /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.bak
+#     - echo "" | sudo tee /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#     - ./vendor/phpunit/phpunit/phpunit --version
+#     - php -d short_open_tag=off ./vendor/phpunit/phpunit/phpunit -v --colors=never --stderr
+#     - sudo cp /usr/local/etc/php/conf.d/docker-php-ext-xdebug.bak /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#   artifacts:
+#     paths:
+#       - ./storage/logs # for debugging
+#     expire_in: 1 days
+#     when: on_failure
+
+# codestyle:
+#   stage: testing
+#   image: lorisleiva/laravel-docker
+#   script:
+#     - phpcs --standard=PSR2 --extensions=php --ignore=app/Support/helpers.php app
+#   dependencies: []
+
+# phpcpd:
+#   stage: testing
+#   image: edbizarro/gitlab-ci-pipeline-php:7.2
+#   script:
+#     - test -f phpcpd.phar || curl -L https://phar.phpunit.de/phpcpd.phar -o phpcpd.phar
+#     - php phpcpd.phar app/ --min-lines=50
+#   dependencies: []
+#   cache:
+#     paths:
+#       - phpcpd.phar
+
+# sensiolabs:
+#   stage: security
+#   image: edbizarro/gitlab-ci-pipeline-php:7.2
+#   script:
+#     - test -d security-checker || git clone https://github.com/sensiolabs/security-checker.git
+#     - cd security-checker
+#     - composer install
+#     - php security-checker security:check ../composer.lock
+#   dependencies: []
+#   cache:
+#     paths:
+#       - security-checker/
+
+deploy:
+  image: breadcrumbsstudio/laravel-gitlab-ci:1.0
+  stage: deploy
+  services:
+    - docker:dind
+  before_script:
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY" | base64 -d)
+  script:
+    - ssh -T -o StrictHostKeyChecking=no gitlabci@beta.thetrifactory.com <<'ENDSSH'
+    - cd git
+    - if [ ! -d "trifactory_backend" ]; then git clone git@gitlab.com:breadcrumbsegypt/trifactory_backend.git; fi
+    - cd trifactory_backend
+    - git reset --hard
+    - git checkout develop
+    - git pull
+    - cp .env.example .env
+    - docker run --network=trifactory_backend_network -v trifactory_backend_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/trifactory_backend:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - docker run --network=trifactory_backend_network -v trifactory_backend_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/trifactory_backend:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 vendor/bin/dep deploy prod -vvv
+    - docker run --network=trifactory_backend_network -v trifactory_backend_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/trifactory_backend:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 chmod -R 777 /code/shared/storage
+    - ENDSSH
+  only:
+    - develop
