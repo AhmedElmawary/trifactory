@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>2-down-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Events---Event-details" transform="translate(-383.000000, -916.000000)">
+            <g id="2-down-icon" transform="translate(383.000000, 916.000000)">
+                <rect id="Rectangle-23" x="0" y="0" width="12" height="12"></rect>
+                <polyline id="Shape" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" transform="translate(6.000000, 3.000000) scale(-1, 1) rotate(90.000000) translate(-6.000000, -3.000000) " points="3.5 -2 8.5 3 3.5 8"></polyline>
+                <polyline id="Shape" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" transform="translate(6.000000, 9.000000) scale(-1, 1) rotate(90.000000) translate(-6.000000, -9.000000) " points="3.5 4 8.5 9 3.5 14"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

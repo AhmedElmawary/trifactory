@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Home | The Trifactory</title>
+  <meta name="description" content="The home of triathlon in Egypt. All the information about upcoming events, trips and training services.">
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+  <body class="{{$body_class}}">
+    <!-- Start Header -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <img src="images/logo.png" class="d-inline-block align-top" alt="logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0 left-nav">
+        <li class="nav-item  {{ Request::path() == '/' ? 'active' : '' }} ">
+          <a class="nav-link" href="/"><span>Home</span></a>
+        </li>
+        <li class="nav-item {{ Request::path() == 'events' ? 'active' : '' }}">
+          <a class="nav-link" href="events">
+            <span>Events</span>
+            
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav my-2 my-lg-0 right-nav">
+        <li class="nav-item cart-item">
+          <a class="nav-link" href="cart.html"><i class="fas fa-shopping-cart"></i>Cart</a>
+        </li>
+        <li class="nav-item login-item">
+          <a class="nav-link " href="sign-in.html">Login | Signup</a>
+          <a class="nav-link d-none" href="profile.html"><i class="fas fa-user-circle"></i>Profile</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <!-- End Header -->
+    
+    
+    @yield('content')
+
+    
+    <!-- Start Footer -->
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-5">
+        <img src="images/logo.png" alt="Trifactory Logo" class="logo">
+      </div>
+      <div class="col-lg-3">
+        <span class="contact-item clearfix">
+          <img src="images/location-icon.svg" alt="Location Icon" class="icon">
+          <p>17 Al Mansour Moahmed Street, Zamalek</p>
+        </span>
+        <span class="contact-item clearfix">
+          <img src="images/email-icon.svg" alt="email Icon" class="icon">
+          <a href="mailto:info@thetrifactory.com">info@thetrifactory.com</a>
+        </span>
+      </div>
+      <div class="col-lg-2 text-right">
+        <a href="#0"><img src="images/facebook-icon.svg" alt="facebook" class="social-icon"></a>
+        <a href="#0"><img src="images/instagram-icon.svg" alt="instagram" class="social-icon"></a>
+      </div>
+      <div class="col-lg-1"></div>
+    </div>
+    <div class="row newsletter-container">
+      <div class="col-lg-6 offset-lg-3 text-center">
+        <h5>subscribe to our newsletter</h5>
+        <form action="#0" class="needs-validation">
+          <input type="email" class="form-control dark-bg" placeholder="Your e-mail" required>
+          <button class="btn" type="submit"><img src="images/send-icon.svg" alt="Send Icon" class="icon"></button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 text-left">
+        <p class="footer-text">Copyright 2018 The Trifactory</p>
+      </div>
+      <div class="col-lg-6 text-right">
+        <p class="footer-text">Designed & developed by bread//crumbs studio</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <!-- End Footer -->
+    <!-- Start JS -->
+    <script src="js/font-awesome.js"></script>
+<script src="js/jquery-3.2.1.slim.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/slick.min.js"></script>
+<script src="js/app.js"></script>
+
+    <!-- End JS -->
+  </body>
+</html>

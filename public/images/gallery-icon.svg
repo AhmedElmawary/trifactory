@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="50px" viewBox="0 0 50 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50.2 (55047) - http://www.bohemiancoding.com/sketch -->
+    <title>gallery-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home" transform="translate(-120.000000, -2827.000000)" fill="#000000" fill-rule="nonzero">
+            <g id="gallery" transform="translate(120.000000, 2827.000000)">
+                <g id="Group-3">
+                    <path d="M4.99613583,9.99215457 L0,9.99215457 L0,44.9648712 C0,47.7251756 2.23571429,49.961007 4.99613583,49.961007 L39.9688525,49.961007 L39.9688525,44.9648712 L4.99613583,44.9648712 L4.99613583,9.99215457 Z" id="Shape"></path>
+                    <path d="M44.9648712,0 L14.9882904,0 C12.2279859,0 9.99215457,2.23571429 9.99215457,4.99613583 L9.99215457,34.9727166 C9.99215457,37.7330211 12.2278689,39.9688525 14.9882904,39.9688525 L44.9648712,39.9688525 C47.7251756,39.9688525 49.961007,37.7331382 49.961007,34.9727166 L49.961007,4.99613583 C49.961007,2.23571429 47.7251756,0 44.9648712,0 Z M14.9882904,34.9727166 L22.4824356,24.9805621 L27.5535129,31.7502342 L34.9727166,22.4824356 L44.9648712,34.9727166 L14.9882904,34.9727166 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
