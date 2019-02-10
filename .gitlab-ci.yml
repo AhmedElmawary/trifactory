@@ -146,29 +146,29 @@ cache:
 #     paths:
 #       - security-checker/
 
-deploy:
-  image: breadcrumbsstudio/laravel-gitlab-ci:1.0
-  stage: deploy
-  services:
-    - docker:dind
-  before_script:
-    - mkdir -p ~/.ssh
-    - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
-    - eval $(ssh-agent -s)
-    - ssh-add <(echo "$SSH_PRIVATE_KEY" | base64 -d)
-  script:
-    - ssh -T -o StrictHostKeyChecking=no gitlabci@beta.thetrifactory.com <<'ENDSSH'
-    - cd git
-    - if [ ! -d "trifactory_backend" ]; then git clone git@gitlab.com:breadcrumbsegypt/trifactory_backend.git; fi
-    - cd trifactory_backend
-    - git reset --hard
-    - git checkout develop
-    - git pull
-    - cp .env.example .env
-    - docker run --network=trifactory_backend_network -v trifactory_backend_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/trifactory_backend:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
-    - docker run --network=trifactory_backend_network -v trifactory_backend_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/trifactory_backend:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 vendor/bin/dep deploy prod -vvv
-    - docker run --network=trifactory_backend_network -v trifactory_backend_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/trifactory_backend:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 chmod -R 777 /code/shared/storage
-    - ENDSSH
-  only:
-    - develop
+# deploy:
+#   image: breadcrumbsstudio/laravel-gitlab-ci:1.0
+#   stage: deploy
+#   services:
+#     - docker:dind
+#   before_script:
+#     - mkdir -p ~/.ssh
+#     - echo "$SSH_PRIVATE_KEY" | base64 -d > ~/.ssh/id_rsa
+#     - chmod 600 ~/.ssh/id_rsa
+#     - eval $(ssh-agent -s)
+#     - ssh-add <(echo "$SSH_PRIVATE_KEY" | base64 -d)
+#   script:
+#     - ssh -T -o StrictHostKeyChecking=no gitlabci@beta.thetrifactory.com <<'ENDSSH'
+#     - cd git
+#     - if [ ! -d "trifactory_backend" ]; then git clone git@gitlab.com:breadcrumbsegypt/trifactory_backend.git; fi
+#     - cd trifactory_backend
+#     - git reset --hard
+#     - git checkout develop
+#     - git pull
+#     - cp .env.example .env
+#     - docker run --network=trifactory_backend_network -v trifactory_backend_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/trifactory_backend:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+#     - docker run --network=trifactory_backend_network -v trifactory_backend_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/trifactory_backend:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 vendor/bin/dep deploy prod -vvv
+#     - docker run --network=trifactory_backend_network -v trifactory_backend_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/trifactory_backend:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 chmod -R 777 /code/shared/storage
+#     - ENDSSH
+#   only:
+#     - develop
