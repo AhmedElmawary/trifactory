@@ -12,6 +12,8 @@ use App\Mail\VoucherPurchase;
 use App\Mail\SendVoucher;
 use App\Events\VoucherPurchased;
 
+use Illuminate\Support\Facades\Auth;
+
 class CartController extends Controller
 {
     public function index(Request $request)
@@ -52,15 +54,30 @@ class CartController extends Controller
             $ticket = Ticket::find($ticketValues['type']);
             $race = $ticket->race()->first();
 
-            $attributes = [
-                'For' => $ticketValues['firstname'] . ' ' . $ticketValues['lastname'],
-                'E-mail' => $ticketValues['email'],
-                'Phone' => $ticketValues['phone'],
-                'Race' => $race->name,
-                'Ticket Type' => $ticket->name,
-                'Price' => $ticket->price
-            ];
-
+            if($ticketValues['use'] == 'myself')
+            {
+                $user = Auth::user();
+                if($user)
+                {
+                    $attributes = [
+                        'For' => $user->name,
+                        'E-mail' => $user->email,
+                        'Phone' => $user->phone,
+                    ];
+                }
+            }
+            else {
+                $attributes = [
+                    'For' => $ticketValues['firstname'] . ' ' . $ticketValues['lastname'],
+                    'E-mail' => $ticketValues['email'],
+                    'Phone' => $ticketValues['phone'],
+                ];
+            }
+            
+            $attributes['Race'] = $race->name;
+            $attributes['Ticket Type'] = $ticket->name;
+            $attributes['Price'] = $ticket->price;
+            
             $metas = preg_filter('/^meta_(.*)/', '$1', array_keys($ticketValues));
             $metas = array_values($metas);
 

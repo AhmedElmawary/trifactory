@@ -61,7 +61,7 @@
 
         </div>
         <div class="col-lg-10">
-          <button class="btn btn-dark dropdown-button-icon" data-toggle="collapse" data-target="#tickets_info"
+          <button type="button" class="btn btn-dark dropdown-button-icon" data-toggle="collapse" data-target="#tickets_info"
             aria-expanded="false">Fill Tickets Details</button>
         </div>
       </div>
@@ -97,33 +97,33 @@
       </div>
       <div class="col-lg-6 mt-3" own-ticket-hide>
         <div class="input-group">
-          <input type="text" class="form-control " placeholder="First Name" name="ticket_1_firstname" required>
+          <input type="text" class="form-control " placeholder="First Name" name="ticket_1_firstname">
         </div>
 
       </div>
       <div class="col-lg-6 mt-3" own-ticket-hide>
         <div class="input-group">
-          <input type="text" class="form-control " placeholder="Last Name" name="ticket_1_lastname" required>
+          <input type="text" class="form-control " placeholder="Last Name" name="ticket_1_lastname">
         </div>
 
       </div>
       <div class="col-lg-6 mt-3" own-ticket-hide>
         <div class="input-group">
-          <input type="text" class="form-control " placeholder="Phone" name="ticket_1_phone" required>
+          <input type="text" class="form-control " placeholder="Phone" name="ticket_1_phone">
         </div>
 
       </div>
       <div class="col-lg-6 mt-3" own-ticket-hide>
         <div class="input-group">
-          <input type="text" class="form-control " placeholder="E-mail" name="ticket_1_email" required>
+          <input type="text" class="form-control " placeholder="E-mail" name="ticket_1_email">
         </div>
 
       </div>
       
       <div class="col-lg-6 mt-3">
         <div class="input-group">
-          <select class="custom-select ticket_race" name="ticket_1_race">
-            <option disabled selected>Race</option>
+          <select class="custom-select ticket_race" name="ticket_1_race" required>
+            <option disabled value="" selected>Race</option>
 
             @foreach($event->race()->get() as $race)
               <option value="{{$race->id}}">{{$race->name}}</option>
@@ -135,8 +135,8 @@
       </div>
       <div class="col-lg-6 mt-3">
         <div class="input-group">
-          <select class="custom-select " name="ticket_1_type">
-            <option disabled selected>Ticket Type</option>
+          <select class="custom-select " name="ticket_1_type" required>
+            <option disabled value="" selected>Ticket Type</option>
           </select>
         </div>
       </div>

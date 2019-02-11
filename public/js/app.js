@@ -34,7 +34,7 @@ $(document).ready(function() {
           success:function(data) {
 
               $('select[name="'+drop_name+'"]').empty();
-              $('select[name="'+drop_name+'"]').append('<option disabled selected>Ticket Type</option>');
+              $('select[name="'+drop_name+'"]').append('<option value="" disabled selected>Ticket Type</option>');
 
               $.each(data, function(key, value){
                 $('select[name="'+drop_name+'"]').append('<option value="'+ key +'">' + value + '</option>');
@@ -66,7 +66,7 @@ $(document).ready(function() {
                 if(question.answertype.type === 'dropdown')
                 {
                   str += '<select class="custom-select " name="'+ meta_field_name + "_" + question.id +'" required>';
-                  str += '<option disabled selected>' + question.question_text + '</option>';
+                  str += '<option value="" disabled selected>' + question.question_text + '</option>';
                   $.each(question.answervalue, function(key, answervalue){
                     str += '<option value="' + answervalue.id + '">' + answervalue.value + '</option>';
                   });
@@ -105,9 +105,11 @@ $(document).ready(function() {
     $('input[type="radio"]').change(function() {
       if($(this).val() == 'myself'){
         $(this).parents('.ticket-info-section').find('*[own-ticket-hide]').hide();
+        $(this).parents('.ticket-info-section').find('*[own-ticket-hide] input').attr('required', false);
       }
       if($(this).val() == 'someone'){
         $(this).parents('.ticket-info-section').find('*[own-ticket-hide]').show();
+        $(this).parents('.ticket-info-section').find('*[own-ticket-hide] input').attr('required', true);
       }
     });
     $('input[type="radio"]').each(function() {
