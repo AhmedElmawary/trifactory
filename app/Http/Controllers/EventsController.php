@@ -10,7 +10,14 @@ use DB;
 
 class EventsController extends Controller
 {
-    public function index($id)
+    public function index()
+    {
+        $events = Event::published()->get();
+        
+        return view('events', ['events' => $events]);
+    }
+
+    public function details($id)
     {
         $event = Event::find($id)->first();
         
