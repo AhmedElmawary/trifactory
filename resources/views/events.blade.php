@@ -4,9 +4,8 @@
     <section class="hero-section d-flex justify-content-center align-items-center no-separator no-padding">
   <div class="hero-content d-flex justify-content-center align-items-center flex-column">
     <h1>Events</h1>
-    <h3>weekly events and triathlons</h3>
   </div>
-  <img src="images/placeholder-dark.svg" alt="Hero Image" class="hero-image">
+  <img src="/images/events.jpg" alt="Hero Image" class="hero-image">
 </section>
 
 <section class="events-section container no-separator">

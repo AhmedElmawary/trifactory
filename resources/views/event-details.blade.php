@@ -12,15 +12,15 @@
       </div>
     </div>
     <div class="col-lg-6">
-      <div class="event-title mb-3">Event 1</div>
+      <div class="event-title mb-3">{{ $event->name }}</div>
       <div class="row mb-3">
         <div class="col-lg-6 event-sub-details">
           <img class="details-icon" src="/images/calendar-icon.svg">
-          <span class="details-text">June 19th 2018</span>
+          <span class="details-text">{{ \Carbon\Carbon::parse($event->event_start)->format('F jS Y')}} - {{ \Carbon\Carbon::parse($event->event_end)->format('F jS Y')}}</span>
         </div>
         <div class="col-lg-6 event-sub-details">
           <img class="details-icon" src="/images/location-icon.svg">
-          <span class="details-text">Aswan, Egypt</span>
+          <span class="details-text">{{$event->city}}, {{$event->country}}</span>
         </div>
         
       </div>

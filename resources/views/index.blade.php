@@ -10,7 +10,7 @@
     </div>
     <div class="hero-content-bg"></div>
   </div>
-  <img src="images/placeholder-dark.svg" alt="Hero Image" class="hero-image">
+  <img src="/images/home.jpg" alt="Hero Image" class="hero-image">
 </section>
 
 <section class="events-section container">
