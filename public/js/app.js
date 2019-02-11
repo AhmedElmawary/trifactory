@@ -170,14 +170,13 @@ $(document).ready(function() {
    * Cart Payment Page
    */
   function initCartPayment() {
-    $("#use_points_button").click(function() {
-      $(this).attr('disabled', true);
-      $('#undo_points_button').addClass('active');
+    
+    $("#undo-credit").click(function(event) {
+      $('#credit').val(0);
+      $('#credit-form').submit();
+      event.preventDefault();
     });
-    $("#undo_points_button a").click(function() {
-      $('#use_points_button').attr('disabled', false);
-      $('#undo_points_button').removeClass('active');
-    });
+    
   }
 
   /*
@@ -262,7 +261,7 @@ $(document).ready(function() {
       }
     }
   }
-
+  
   switch (getPageId()) {
     case 'home':
       initHome();

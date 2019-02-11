@@ -19,15 +19,20 @@
             tickets. If your credits are not enough to buy a full ticket, you
             will pay the remaining cost in cash or credit.
         </p>
-        <h4 class="mt-3">You have 100 credits (EGP 100) in your wallet</h4>
-        <button class="btn btn-dark text-light" id="use_points_button">
+        <h4 class="mt-3">You have {{$credit}} credits (EGP {{$credit}}) in your wallet</h4>
+        <form id="credit-form" method="POST" action="/cart/credit">
+          @csrf
+          <input id="credit" name="credit" value="{{$credit}}" type="hidden">
+        
+        <button @if($condition) disabled @endif type="submit" class="btn btn-dark text-light" id="use_points_button">
             Use Credits
         </button>
-        <span id="undo_points_button">
+        </form>
+        <span id="undo_points_button" class="@if($condition) active @endif" >
             We will use your credits to pay for the ticket. Your total cart
-            price is EGP {{$cartTotal}}
+            price is @if($condition) now @endif EGP {{$cartTotal}}
             <br />
-            <a href="#0">Undo</a>
+            <a id="undo-credit" href="#">Undo</a>
         </span>
     </div>
     <div class="cart-title">
@@ -63,6 +68,11 @@
         <div class="cart-summary-item separator">
             Subtotal <span class="float-right">EGP {{$cartSubTotal}}</span>
         </div>
+        @if($condition)
+        <div class="cart-summary-item separator">
+            {{$condition->getName()}} <span class="float-right">EGP {{$condition->getValue()}}</span>
+        </div>
+        @endif
         <div class="cart-summary-item">
             Total <span class="float-right">EGP {{$cartTotal}}</span>
         </div>

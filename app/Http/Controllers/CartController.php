@@ -34,12 +34,48 @@ class CartController extends Controller
         $cartSubTotal = \Cart::getSubTotal();
         $cartTotal = \Cart::getTotal();
         $cartItems = \Cart::getContent()->toArray();
-        
-        return view('cart-payment', [
+        $condition = \Cart::getCondition('Credit');
+
+        $data = [
             'cartItems' => $cartItems,
             'cartSubTotal' => $cartSubTotal,
             'cartTotal' => $cartTotal,
-        ]);
+            'condition' => null,
+            'credit' => 0,
+        ];
+
+        $user = Auth::user();
+        if($user)
+        {
+            $data['credit'] = $user->credit->sum('amount');
+        }
+
+        if($condition && $condition->getValue() != 0)
+        {
+            $data['condition'] = $condition;
+        }
+        
+        return view('cart-payment', $data);
+    }
+
+    public function credit(Request $request)
+    {
+        $inputs = $request->all();
+        $credit = $inputs['credit'];
+        // validate credit
+
+        $condition = new \Darryldecode\Cart\CartCondition(array(
+            'name' => 'Credit',
+            'type' => 'credit',
+            'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
+            'value' => $credit * -1,
+        ));
+
+        \Cart::condition($condition);
+
+        return redirect()->action(
+            'CartController@payment'
+        );
     }
 
     public function emptyCart(Request $request) {
