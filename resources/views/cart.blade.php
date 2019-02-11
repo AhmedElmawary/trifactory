@@ -1,6 +1,5 @@
 @extends('layouts.app', ['body_class' => 'cart-view'])
 @section('content')
-
 <!-- Start Content -->
 <section class="container no-height no-separator">
   <h3 class="section-title">
@@ -38,7 +37,7 @@
     <div class="cart-summary-item">
       Total <span class="float-right">EGP {{$cartTotal}}</span>
     </div>
-    <a href="cart-payment.html" class="btn btn-dark text-light mt-4 mb-4">Proceed to Payment</a>
+    <a href="/cart/payment" class="btn btn-dark text-light mt-4 mb-4">Proceed to Payment</a>
   </div>
 </section>
 

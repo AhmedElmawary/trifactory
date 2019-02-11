@@ -32,6 +32,8 @@ Route::get('/cart', 'CartController@index');
 Route::get('/cart/empty', 'CartController@emptyCart');
 Route::post('/cart', 'CartController@addToCart');
 
+Route::get('/cart/payment', 'CartController@payment');
+
 Route::get('/test', 'HomeController@test');
 Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');

@@ -29,6 +29,19 @@ class CartController extends Controller
         ]);
     }
 
+    public function payment(Request $request)
+    {
+        $cartSubTotal = \Cart::getSubTotal();
+        $cartTotal = \Cart::getTotal();
+        $cartItems = \Cart::getContent()->toArray();
+        
+        return view('cart-payment', [
+            'cartItems' => $cartItems,
+            'cartSubTotal' => $cartSubTotal,
+            'cartTotal' => $cartTotal,
+        ]);
+    }
+
     public function emptyCart(Request $request) {
         \Cart::clear();
     }
