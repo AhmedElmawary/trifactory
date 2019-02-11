@@ -38,8 +38,15 @@
           <a class="nav-link" href="/cart"><i color="#E21C21" class="fas fa-shopping-cart"></i>Cart ({{$cart_items_count}})</a>
         </li>
         <li class="nav-item login-item">
-          <a class="nav-link " href="/sign-in.html">Login | Signup</a>
-          <a class="nav-link d-none" href="/profile.html"><i class="fas fa-user-circle"></i>Profile</a>
+          @auth
+          <a class="nav-link " href="{{ route('logout') }}">Logout</a>
+          @endauth
+          @guest
+          <a class="nav-link " style="display:inline" href="{{ route('login') }}">Login</a>
+          <span class="nav-link " style="display:inline;line-height:40px;"> | </span>
+          <a class="nav-link " style="display:inline" href="{{ route('register') }}">Signup</a>
+          @endguest
+          <!-- <a class="nav-link d-none" href="/profile.html"><i class="fas fa-user-circle"></i>Profile</a> -->
         </li>
       </ul>
     </div>

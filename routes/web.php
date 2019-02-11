@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/events', 'EventsController@index');
 
@@ -31,6 +32,6 @@ Route::get('/cart', 'CartController@index');
 Route::get('/cart/empty', 'CartController@emptyCart');
 Route::post('/cart', 'CartController@addToCart');
 
-
-
 Route::get('/test', 'HomeController@test');
+Auth::routes();
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
