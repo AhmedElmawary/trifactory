@@ -5,21 +5,21 @@
   <div class="row">
     <div class="col-lg-6 order-lg-1">
       <div class="event-slider">
-        <img src="images/placeholder.svg">
+        <img src="/images/placeholder.svg">
       </div>
       <div class="event-slider-nav">
-        <img src="images/placeholder.svg">
+        <img src="/images/placeholder.svg">
       </div>
     </div>
     <div class="col-lg-6">
       <div class="event-title mb-3">Event 1</div>
       <div class="row mb-3">
         <div class="col-lg-6 event-sub-details">
-          <img class="details-icon" src="images/calendar-icon.svg">
+          <img class="details-icon" src="/images/calendar-icon.svg">
           <span class="details-text">June 19th 2018</span>
         </div>
         <div class="col-lg-6 event-sub-details">
-          <img class="details-icon" src="images/location-icon.svg">
+          <img class="details-icon" src="/images/location-icon.svg">
           <span class="details-text">Aswan, Egypt</span>
         </div>
         
@@ -66,7 +66,7 @@
     </div>
   </div>
 </section>
-
+<form>
 <div class="collapse" id="tickets_info">
   <section class="container no-height no-separator no-padding sub-title-section">
     <div class="row">
@@ -146,12 +146,12 @@
   <section class="container no-height no-separator">
     <div class="row">
       <div class="col-lg-12 text-right">
-        <button class="btn btn-dark" id="open_added_to_cart_modal">Add 1 Ticket(s) to Cart</button>
+        <button type="submit" class="btn btn-dark" id="open_added_to_cart_modal">Add 1 Ticket(s) to Cart</button>
       </div>
     </div>
   </section>
 </div>
-
+</form>
 <!-- Added to Cart Modal -->
 <div class="modal fade custom-modal" id="added_to_cart_modal" tabindex="-1" role="dialog"
   aria-labelledby="phone_verify_modal" aria-hidden="true">
@@ -159,17 +159,17 @@
     <div class="modal-content">
       <div class="header">
         <!-- <h3 class="modal-title">Verification code sent to this number:</h3> -->
-        <img src="images/success-icon.svg" class="modal-icon">
+        <img src="/images/success-icon.svg" class="modal-icon">
         <span class="modal-sub-title">2 Tickets added to your Cart for Event 1</span>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <img src="images/close-icon.svg" alt="close icon">
+          <img src="/images/close-icon.svg" alt="close icon">
         </button>
       </div>
       <div class="content">
         <p class="modal-text">Whether its a triathlon, marathon, duathlon, aquathlon, or any other race – we bring
           endurance sports to you. We organise our own events and manage others on behalf of our partners</p>
-        <a href="cart.html" class="btn btn-dark light">Proceed to Checkout</a>
-        <a href="events.html" class="btn btn-clear text-dark">Explore More Events</a>
+        <a href="/cart.html" class="btn btn-dark light">Proceed to Checkout</a>
+        <a href="/events.html" class="btn btn-clear text-dark">Explore More Events</a>
       </div>
     </div>
   </div>

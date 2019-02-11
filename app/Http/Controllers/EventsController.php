@@ -10,9 +10,9 @@ use DB;
 
 class EventsController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $event = Event::find(1)->first();
+        $event = Event::find($id)->first();
         
         return view('event-details', ['event' => $event]);
     }

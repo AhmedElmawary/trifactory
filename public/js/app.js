@@ -65,7 +65,7 @@ $(document).ready(function() {
                 
                 if(question.answertype.type === 'dropdown')
                 {
-                  str += '<select class="custom-select " name="'+ meta_field_name + "_" + question.id +'">';
+                  str += '<select class="custom-select " name="'+ meta_field_name + "_" + question.id +'" required>';
                   str += '<option disabled selected>' + question.question_text + '</option>';
                   $.each(question.answervalue, function(key, answervalue){
                     str += '<option value="' + answervalue.id + '">' + answervalue.value + '</option>';
@@ -160,7 +160,7 @@ $(document).ready(function() {
     });
     // Added to cart modal
     $('#open_added_to_cart_modal').click(function() {
-      $('#added_to_cart_modal').modal();
+      // $('#added_to_cart_modal').modal();
     });
   }
 
@@ -233,8 +233,8 @@ $(document).ready(function() {
     var self = $(this),
         min = self.attr('min'),
         max = self.attr('max');
-    $('<img src="images/arrow-up-icon.svg" class="quantity-add">').insertAfter($(this));
-    $('<img src="images/arrow-down-icon.svg" class="quantity-mince">').insertAfter($(this));
+    $('<img src="/images/arrow-up-icon.svg" class="quantity-add">').insertAfter($(this));
+    $('<img src="/images/arrow-down-icon.svg" class="quantity-mince">').insertAfter($(this));
     $(this).next('.quantity-mince').click(function() {
       if(self.val() != min){
         var value = parseInt(self.val()) - 1;

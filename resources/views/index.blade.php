@@ -24,7 +24,7 @@
         @foreach($events as $event)
         <div class="col-lg-6 event-card">
         <img src="images/placeholder.svg" alt="Event Image">
-        <a href="event-details.html">
+        <a href="event-details/{{$event->id}}">
           <div class="d-flex justify-content-center align-items-center flex-column event-details">
             <h5>{{$event->name}}</h5>
             <p>{{ \Carbon\Carbon::parse($event->event_start)->format('F jS Y')}}, {{$event->city}}, {{$event->country}}</p>

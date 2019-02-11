@@ -17,7 +17,7 @@ Route::get('/events', function () {
     return view('events');
 });
 
-Route::get('/event-details', 'EventsController@index');
+Route::get('/event-details/{id}', 'EventsController@index');
 Route::get('/event-details/getTicketsByRaceId/{id}', 'EventsController@getTicketsByRaceId');
 Route::get('/event-details/getMetaByRaceId/{id}', 'EventsController@getMetaByRaceId');
 
