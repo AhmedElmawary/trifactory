@@ -1,6 +1,8 @@
 @extends('layouts.app', ['body_class' => 'event-details-view'])
 @section('content')
 <!-- Start Content -->
+<form method="POST" action="/cart">
+    @csrf
 <section class="event-summary container">
   <div class="row">
     <div class="col-lg-6 order-lg-1">
@@ -54,7 +56,7 @@
       <div class="row">
         <div class="col-lg-2 tickets-quantity">
           <div class="custom-number">
-            <input type="number" class="form-control form-number" value="1" min="1" max="10" disabled>
+            <input name="number_of_tickets" type="number" class="form-control form-number" value="1" min="1" max="10">
           </div>
 
         </div>
@@ -66,7 +68,7 @@
     </div>
   </div>
 </section>
-<form>
+
 <div class="collapse" id="tickets_info">
   <section class="container no-height no-separator no-padding sub-title-section">
     <div class="row">
@@ -151,7 +153,6 @@
     </div>
   </section>
 </div>
-</form>
 <!-- Added to Cart Modal -->
 <div class="modal fade custom-modal" id="added_to_cart_modal" tabindex="-1" role="dialog"
   aria-labelledby="phone_verify_modal" aria-hidden="true">
@@ -174,6 +175,6 @@
     </div>
   </div>
 </div>
-
+</form>
 <!-- End Content -->
 @endsection

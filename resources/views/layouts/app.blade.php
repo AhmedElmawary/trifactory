@@ -35,7 +35,7 @@
       </ul>
       <ul class="navbar-nav my-2 my-lg-0 right-nav">
         <li class="nav-item cart-item">
-          <a class="nav-link" href="/cart.html"><i color="#E21C21" class="fas fa-shopping-cart"></i>Cart (0)</a>
+          <a class="nav-link" href="/cart"><i color="#E21C21" class="fas fa-shopping-cart"></i>Cart ({{$cart_items_count}})</a>
         </li>
         <li class="nav-item login-item">
           <a class="nav-link " href="/sign-in.html">Login | Signup</a>

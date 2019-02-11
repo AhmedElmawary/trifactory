@@ -24,7 +24,7 @@ $(document).ready(function() {
       name = name.split('_');
       var drop_name = "ticket_" + name[1] + "_type";
       var meta_name = "#ticket_info_" + name[1] + " .meta";
-      var meta_field_name = "ticket_" + name[1];
+      var meta_field_name = "ticket_" + name[1] + "_meta";
 
       $.ajax({
           url: '/event-details/getTicketsByRaceId/'+raceId,

@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         BaklySystems\PayMob\PayMobServiceProvider::class,
+        Darryldecode\Cart\CartServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -228,6 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'PayMob' => BaklySystems\PayMob\Facades\PayMob::class,
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
 
     ],
 

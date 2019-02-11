@@ -27,6 +27,10 @@ Route::post('/buy-vouchers', 'PaymentController@index');
 Route::get('/payment/processedCallback', 'PaymentController@processedCallback');
 Route::get('/payment/invoice', 'PaymentController@invoice');
 
+Route::get('/cart', 'CartController@index');
+Route::get('/cart/empty', 'CartController@emptyCart');
+Route::post('/cart', 'CartController@addToCart');
+
 
 
 Route::get('/test', 'HomeController@test');

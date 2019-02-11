@@ -2,7 +2,7 @@
   padding-top: 0;
 }
 
-.btn-dark {
+.btn-dark, .btn-dark:hover {
   background-color: #e21c21;
   border-color: #e21c21;
 }
@@ -67,4 +67,9 @@
   color: #fff;
   text-transform: uppercase;
   text-align: center;
+}
+
+nav .navbar-nav .nav-item .nav-link span {
+  transition: 0s ease-in-out;
+  border-bottom: 0px solid #e21c21;
 }
