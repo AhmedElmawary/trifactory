@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Event;
 use App\Ticket;
 use App\Question;
+use App\Voucher;
 use Mail;
 
 use App\Mail\VoucherPurchase;
@@ -80,19 +81,22 @@ class CartController extends Controller
         }
         else {
             // validate voucher
-            $voucher = 1000;
-
-            $condition = new \Darryldecode\Cart\CartCondition(array(
+            $voucher = Voucher::where("code", $code)
+                        ->where('usedOn', null)
+                        ->first();
+            if ($voucher) {
+                $condition = new \Darryldecode\Cart\CartCondition(array(
                 'name' => 'Voucher',
                 'type' => 'voucher',
                 'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
-                'value' => $voucher * -1,
+                'value' => $voucher->amount * -1,
                 'attributes' => [
                     'code' => $code
                 ]
             ));
 
-            \Cart::condition($condition);
+                \Cart::condition($condition);
+            }
         }
 
         return redirect()->action(

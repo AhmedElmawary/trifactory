@@ -15,10 +15,11 @@ class Vouchers extends Migration
     {
         Schema::create('vouchers', function (Blueprint $table) {
             $table->increments('id');
-            
-            $table->string('code');
-            $table->string('user_email');
 
+            $table->string('code');
+            $table->string('amount');
+            $table->string('sender_id');
+            $table->string('user_id');
             $table->timestamp('usedOn')->nullable();
             
             $table->timestamps();
