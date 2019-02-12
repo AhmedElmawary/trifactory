@@ -80,22 +80,26 @@ class CartController extends Controller
             \Cart::removeCartCondition("Voucher");
         }
         else {
-            // validate voucher
-            $voucher = Voucher::where("code", $code)
+            $user = Auth::user();
+            if ($user) {
+                $voucher = Voucher::where("code", $code)
+                        ->where('user_id', $user->id)
                         ->where('usedOn', null)
                         ->first();
-            if ($voucher) {
-                $condition = new \Darryldecode\Cart\CartCondition(array(
-                'name' => 'Voucher',
-                'type' => 'voucher',
-                'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
-                'value' => $voucher->amount * -1,
-                'attributes' => [
-                    'code' => $code
-                ]
-            ));
 
-                \Cart::condition($condition);
+                if ($voucher) {
+                    $condition = new \Darryldecode\Cart\CartCondition(array(
+                        'name' => 'Voucher',
+                        'type' => 'voucher',
+                        'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
+                        'value' => $voucher->amount * -1,
+                        'attributes' => [
+                            'code' => $code
+                        ]
+                    ));
+
+                    \Cart::condition($condition);
+                }
             }
         }
 
