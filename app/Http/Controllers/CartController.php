@@ -62,16 +62,26 @@ class CartController extends Controller
     {
         $inputs = $request->all();
         $credit = $inputs['credit'];
+        
+        $dbCredit = 0;
         // validate credit
+        $user = Auth::user();
+        if($user)
+        {
+            $dbCredit = $user->credit->sum('amount');
+        }
 
-        $condition = new \Darryldecode\Cart\CartCondition(array(
-            'name' => 'Credit',
-            'type' => 'credit',
-            'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
-            'value' => $credit * -1,
-        ));
+        if ($credit <= $dbCredit) {
 
-        \Cart::condition($condition);
+            $condition = new \Darryldecode\Cart\CartCondition(array(
+                'name' => 'Credit',
+                'type' => 'credit',
+                'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
+                'value' => $credit * -1,
+            ));
+
+            \Cart::condition($condition);
+        }
 
         return redirect()->action(
             'CartController@payment'

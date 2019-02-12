@@ -24,7 +24,7 @@
           @csrf
           <input id="credit" name="credit" value="{{$credit}}" type="hidden">
         
-        <button @if($condition) disabled @endif type="submit" class="btn btn-dark text-light" id="use_points_button">
+        <button @if($condition) disabled @endif @if(!$credit) disabled @endif type="submit" class="btn btn-dark text-light" id="use_points_button">
             Use Credits
         </button>
         </form>
