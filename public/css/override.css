@@ -73,3 +73,5 @@ nav .navbar-nav .nav-item .nav-link span {
   transition: 0s ease-in-out;
   border-bottom: 0px solid #e21c21;
 }
+
+.cart-payment-view section .cart-voucher-container #undo_voucher_button{display:none;font-size:20px;font-weight:400;color:#747474;margin:0;width:100%;margin-top:10px}.cart-payment-view section .cart-voucher-container #undo_voucher_button a{color:#000;font-weight:700;font-size:20px;text-decoration:underline;display:inline-block}.cart-payment-view section .cart-voucher-container #undo_voucher_button.active{display:block}

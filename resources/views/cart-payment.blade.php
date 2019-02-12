@@ -40,18 +40,31 @@
     </div>
     <div class="cart-voucher-container col-lg-12">
         <p>You can use voucher codes to get discounts on tickets.</p>
+        <form id="voucher-form" method="POST" action="/cart/voucher">
         <div class="row col-lg-6">
             <div class="input-group">
+                  @csrf
                 <input
+                    id="vode"
+                    name="code"
+                    value="@if($voucher) {{$voucher->getAttributes()['code']}} @endif"
                     type="text"
                     class="form-control dark-bg"
                     placeholder="Type the Code"
+                    @if($voucher) disabled @endif
                 />
             </div>
         </div>
         <div class="row col-lg-12">
-            <button class="btn btn-dark text-light">Use Voucher Code</button>
+            <button @if($voucher) disabled @endif type="submit" class="btn btn-dark text-light">Use Voucher Code</button>
+            <span id="undo_voucher_button" class="@if($voucher) active @endif" >
+                Using voucher "@if($voucher) {{$voucher->getAttributes()['code']}} @endif". Your total cart
+                price is @if($condition) now @endif EGP {{$cartTotal}}
+                <br />
+                <a id="undo-voucher" href="#">Undo</a>
+            </span>
         </div>
+      </form>
     </div>
     <div class="cart-title">
         <h3>Order Details</h3>
@@ -71,6 +84,11 @@
         @if($condition)
         <div class="cart-summary-item separator">
             {{$condition->getName()}} <span class="float-right">EGP {{$condition->getValue()}}</span>
+        </div>
+        @endif
+        @if($voucher)
+        <div class="cart-summary-item separator">
+            {{$voucher->getName()}} <span class="float-right">EGP {{$voucher->getValue()}}</span>
         </div>
         @endif
         <div class="cart-summary-item">

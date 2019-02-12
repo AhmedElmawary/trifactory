@@ -35,12 +35,14 @@ class CartController extends Controller
         $cartTotal = \Cart::getTotal();
         $cartItems = \Cart::getContent()->toArray();
         $condition = \Cart::getCondition('Credit');
+        $voucher = \Cart::getCondition('Voucher');
 
         $data = [
             'cartItems' => $cartItems,
             'cartSubTotal' => $cartSubTotal,
             'cartTotal' => $cartTotal,
             'condition' => null,
+            'voucher' => null,
             'credit' => 0,
         ];
 
@@ -54,8 +56,48 @@ class CartController extends Controller
         {
             $data['condition'] = $condition;
         }
+
+        if($voucher && $voucher->getValue() != 0)
+        {
+            $data['voucher'] = $voucher;
+        }
         
         return view('cart-payment', $data);
+    }
+
+    public function voucher(Request $request) 
+    {
+        $inputs = $request->all();
+        $code = null;
+        if(isset($inputs['code']))
+        {
+            $code = $inputs['code'];
+        }
+        
+        if($code == null)
+        {
+            \Cart::removeCartCondition("Voucher");
+        }
+        else {
+            // validate voucher
+            $voucher = 1000;
+
+            $condition = new \Darryldecode\Cart\CartCondition(array(
+                'name' => 'Voucher',
+                'type' => 'voucher',
+                'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
+                'value' => $voucher * -1,
+                'attributes' => [
+                    'code' => $code
+                ]
+            ));
+
+            \Cart::condition($condition);
+        }
+
+        return redirect()->action(
+            'CartController@payment'
+        );
     }
 
     public function credit(Request $request)

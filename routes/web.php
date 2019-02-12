@@ -34,7 +34,7 @@ Route::post('/cart', 'CartController@addToCart');
 
 Route::get('/cart/payment', 'CartController@payment');
 Route::post('/cart/credit', 'CartController@credit');
-Route::post('/cart/vourcher', 'CartController@voucher');
+Route::post('/cart/voucher', 'CartController@voucher');
 
 Route::get('/test', 'HomeController@test');
 Auth::routes();

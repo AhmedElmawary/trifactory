@@ -176,6 +176,12 @@ $(document).ready(function() {
       $('#credit-form').submit();
       event.preventDefault();
     });
+
+    $("#undo-voucher").click(function(event) {
+      $('#code').val(null);
+      $('#voucher-form').submit();
+      event.preventDefault();
+    });
     
   }
 
