@@ -15,6 +15,11 @@
         <input name="recipient_email" type="text" class="form-control " placeholder="E-mail">
       </div>
     </div>
+
+    <div class="col-lg-6">
+      <label class="input-label"></label>
+      <h6>Purchase a voucher for your friends and family were they can use it to register and pay for any of our current or upcoming events.</h6>
+    </div>
   </div>
 
   <div class="row">
@@ -24,6 +29,12 @@
           <input name="recipient_name" type="text" class="form-control " placeholder="Name">
         </div>
       </div>
+
+      <div class="col-lg-6">
+      <!-- <label class="input-label"></label> -->
+      <h6>Terms of use: </h6>
+      <h6>This voucher can be used for one time only when registering in our races. In the case the amount of the voucher was not consumed fully, the full voucher amount, the rest of the amount not used will remain in the credit balance to be used in any upcoming races.</h6>
+    </div>
   </div>
 
   <div class="row">

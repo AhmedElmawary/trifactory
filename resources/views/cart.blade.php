@@ -7,12 +7,12 @@
   </h3>
 
   <div class="row booking-summary-container">
-    <div class="col-lg-12">
+    <!-- <div class="col-lg-12">
       <div class="section-sub-title small">
         <h3>Event 1</h3>
         <p>June 19th 2018, Aswan, Egypt</p>
       </div>
-    </div>
+    </div> -->
     @foreach($cartItems as $key => $item)
     <div class="col-lg-12 summary-ticket">
       <span class="ticket-no mb-2 mt-3">Ticket {{$loop->iteration}}</span>

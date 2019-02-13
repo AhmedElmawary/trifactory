@@ -44,7 +44,7 @@
           @guest
           <a class="nav-link " style="display:inline" href="{{ route('login') }}">Login</a>
           <span class="nav-link " style="display:inline;line-height:40px;"> | </span>
-          <a class="nav-link " style="display:inline" href="{{ route('register') }}">Signup</a>
+          <a class="nav-link " style="display:inline" href="{{ route('register') }}">Sign up</a>
           @endguest
           <!-- <a class="nav-link d-none" href="/profile.html"><i class="fas fa-user-circle"></i>Profile</a> -->
         </li>
