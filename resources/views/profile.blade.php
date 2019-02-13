@@ -1,4 +1,5 @@
-@extends('layouts.app', ['body_class' => 'profile-view']) @section('content')
+@extends('layouts.app', ['body_class' => 'profile-view']) 
+@section('content')
 <!-- Start Content -->
 <section class="main-profile-section container no-height no-separator">
     <div class="row">
