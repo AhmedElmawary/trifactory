@@ -38,6 +38,9 @@ Route::get('/cart/payment', 'CartController@payment');
 Route::post('/cart/credit', 'CartController@credit');
 Route::post('/cart/voucher', 'CartController@voucher');
 
+Route::get('/profile', 'ProfileController@index');
+Route::post('/profile/image', 'ProfileController@image');
+
 Route::get('/test', 'HomeController@test');
 Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');

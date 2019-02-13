@@ -209,6 +209,15 @@ $(document).ready(function() {
         $('#pills-previous-events').addClass('event-shown');
       }
     });
+
+    // upload image
+    $("#profile-image").click(function() {
+      $("input[id='profile_image']").click();
+    });
+
+    $('#profile_image').change(function() {
+      $('#profile-image-form').submit();
+    });
   }
 
   /*
