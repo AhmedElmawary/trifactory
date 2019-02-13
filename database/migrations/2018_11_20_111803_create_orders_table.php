@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->string('paymob_order_id')->nullable();
             $table->string('totalCost')->nullable();
             $table->string('success')->nullable();
-            $table->string('meta')->nullable();
+            $table->longText('meta')->nullable();
             $table->integer('user_id')->nullable();
 
             $table->timestamps();

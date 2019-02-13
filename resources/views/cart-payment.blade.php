@@ -97,6 +97,8 @@
     </div>
 
     <div class="cart-payment-container">
+        <form method="POST" action="/buy-tickets">
+        @csrf
         <div class="form-check mb-2">
             <input
                 class="form-check-input"
@@ -109,6 +111,7 @@
                 >Cash</label
             >
         </div>
+        
         <div class="form-check">
             <input
                 class="form-check-input"
@@ -124,8 +127,9 @@
         </div>
 
         <div class="row col-lg-12">
-            <button class="btn btn-dark text-light">Place Order</button>
+            <button type="submit" class="btn btn-dark text-light">Place Order</button>            
         </div>
+        </form>
     </div>
 </section>
 

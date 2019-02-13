@@ -24,7 +24,9 @@ Route::get('/purchase-voucher', function () {
     return view('purchase-voucher');
 });
 
-Route::post('/buy-vouchers', 'PaymentController@index');
+Route::post('/buy-vouchers', 'PaymentController@buyVouchers');
+Route::post('/buy-tickets', 'PaymentController@buyTickets');
+
 Route::get('/payment/processedCallback', 'PaymentController@processedCallback');
 Route::get('/payment/invoice', 'PaymentController@invoice');
 

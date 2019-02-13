@@ -6,11 +6,40 @@ use Illuminate\Http\Request;
 use PayMob;
 use App\Order;
 use App\Events\VoucherPurchased;
+use Auth;
 
 class PaymentController extends Controller
 {
-    public function index(Request $request) {
-        $auth = PayMob::authPaymob();
+    public function buyTickets(Request $request) {
+
+        $inputs = $request->all();
+        // $inputs['paymet_method'];
+        
+        $cartTotal = \Cart::getTotal();
+        $cartItems = \Cart::getContent()->toArray();
+
+        foreach($cartItems as $item)
+        {   
+            $meta[$item['id']] = new \stdClass();
+            $meta[$item['id']]->type = 'ticket';
+            foreach($item['attributes'] as $key => $attribute)
+            {
+                $meta[$item['id']]->$key = $attribute;
+            }
+        }
+
+        $order = new Order();
+        $order->id = uniqid('TFV-');
+        $order->totalCost = $cartTotal;
+        $order->meta = json_encode($meta);
+        
+        $order->save();
+
+        return $this->makePayment($order);
+    }
+
+    public function buyVouchers(Request $request) {
+        
 
         $inputs = $request->all();
 
@@ -24,10 +53,15 @@ class PaymentController extends Controller
         $order->id = uniqid('TFV-');
         $order->totalCost = $inputs["qty"] * $inputs["discount_amount"];
         $order->meta = json_encode($meta);
-        
+
         $order->save();
 
+        return $this->makePayment($order);
+    }
 
+    public function makePayment($order) {
+        $auth = PayMob::authPaymob();
+        
         $paymobOrder = PayMob::makeOrderPaymob(
             $auth->token, // this is token from step 1.
             $auth->profile->id, // this is the merchant id from step 1.
@@ -37,21 +71,22 @@ class PaymentController extends Controller
 
         $order->update(['paymob_order_id' => $paymobOrder->id]); 
 
+        $user = Auth::user();
+            
         $paymentKey = PayMob::getPaymentKeyPaymob(
             $auth->token, // from step 1.
             $order->totalCost * 100, // total amount by cents/piasters.
-            $paymobOrder->id // paymob order id from step 2.
+            $paymobOrder->id, // paymob order id from step 2.
             // For billing data
-            // $user->email, // optional
-            // $user->firstname, // optional
-            // $user->lastname, // optional
-            // $user->phone, // optional
+            $user->email, // optional
+            $user->firstname, // optional
+            $user->lastname, // optional
+            $user->phone // optional
             // $city->name, // optional
             // $country->name // optional
         );
-
+        
         return view('payment', ['paymentKey' => $paymentKey]);
-
     }
 
     /**
@@ -140,8 +175,15 @@ class PaymentController extends Controller
         $order->save();
 
         $meta = json_decode($order->meta);
-        if ($meta->type == 'voucher') {
+        
+        if (property_exists($meta, 'type')) {
             event(new VoucherPurchased($meta));
+        }
+        else {
+            foreach($meta as $key => $ticket)
+            {
+                dd($ticket);
+            }
         }
     }
 }
