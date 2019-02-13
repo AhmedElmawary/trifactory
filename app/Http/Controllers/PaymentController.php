@@ -39,10 +39,10 @@ class PaymentController extends Controller
     }
 
     public function buyVouchers(Request $request) {
-        
 
         $inputs = $request->all();
-
+        // $inputs['paymet_method'];
+        
         $meta = new \stdClass();
         $meta->type = 'voucher';
         $meta->qty = $inputs["qty"];
