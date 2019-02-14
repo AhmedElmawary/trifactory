@@ -24,10 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('*', function ($view) 
-        {
+        view()->composer('*', function ($view) {
             $cart_items = \Cart::getContent()->toArray();
-            $view->with('cart_items_count', count($cart_items) );    
-        });   
+            $view->with('cart_items_count', count($cart_items));
+        });
     }
 }

@@ -28,13 +28,11 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if($user)
-        {
+        if ($user) {
             $data['credit'] = $user->credit->sum('amount');
             $data['user'] = $user;
             $data['profile_image'] = '/images/placeholder.svg';
-            if($user->profile_image)
-            {
+            if ($user->profile_image) {
                 $data['profile_image'] = '/storage/profile_images/' . $user->profile_image;
             }
         }
@@ -60,7 +58,6 @@ class ProfileController extends Controller
         $user->save();
 
         return redirect('/profile');
-
     }
 
     public function update(Request $request)
@@ -91,15 +88,15 @@ class ProfileController extends Controller
 
     public function image(Request $request)
     {
-        if($request->hasFile('profile_image')) {
+        if ($request->hasFile('profile_image')) {
             // Get filename with extension
             $filenameWithExt = $request->file('profile_image')->getClientOriginalName();
             // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);            
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
            // Get just ext
             $extension = $request->file('profile_image')->getClientOriginalExtension();
             //Filename to store
-            $fileNameToStore = 'profile_image_'.time().'.'.$extension;                       
+            $fileNameToStore = 'profile_image_'.time().'.'.$extension;
             // Upload Image
             $path = $request->file('profile_image')->storeAs('public/profile_images', $fileNameToStore);
 
@@ -111,6 +108,5 @@ class ProfileController extends Controller
         return redirect()->action(
             'ProfileController@index'
         );
-
     }
 }

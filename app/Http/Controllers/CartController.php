@@ -48,38 +48,32 @@ class CartController extends Controller
         ];
 
         $user = Auth::user();
-        if($user)
-        {
+        if ($user) {
             $data['credit'] = $user->credit->sum('amount');
         }
 
-        if($condition && $condition->getValue() != 0)
-        {
+        if ($condition && $condition->getValue() != 0) {
             $data['condition'] = $condition;
         }
 
-        if($voucher && $voucher->getValue() != 0)
-        {
+        if ($voucher && $voucher->getValue() != 0) {
             $data['voucher'] = $voucher;
         }
         
         return view('cart-payment', $data);
     }
 
-    public function voucher(Request $request) 
+    public function voucher(Request $request)
     {
         $inputs = $request->all();
         $code = null;
-        if(isset($inputs['code']))
-        {
+        if (isset($inputs['code'])) {
             $code = $inputs['code'];
         }
         
-        if($code == null)
-        {
+        if ($code == null) {
             \Cart::removeCartCondition("Voucher");
-        }
-        else {
+        } else {
             $user = Auth::user();
             if ($user) {
                 $voucher = Voucher::where("code", $code)
@@ -116,13 +110,11 @@ class CartController extends Controller
         $dbCredit = 0;
         // validate credit
         $user = Auth::user();
-        if($user)
-        {
+        if ($user) {
             $dbCredit = $user->credit->sum('amount');
         }
 
         if ($credit <= $dbCredit) {
-
             $condition = new \Darryldecode\Cart\CartCondition(array(
                 'name' => 'Credit',
                 'type' => 'credit',
@@ -138,7 +130,8 @@ class CartController extends Controller
         );
     }
 
-    public function emptyCart(Request $request) {
+    public function emptyCart(Request $request)
+    {
         \Cart::clear();
     }
 
@@ -161,33 +154,27 @@ class CartController extends Controller
 
         $grouppedInput = array();
 
-        for($i=1;$i<=$number_of_tickets;$i++)
-        {
+        for ($i=1; $i<=$number_of_tickets; $i++) {
             $ticket_keys = preg_filter('/^ticket_'.$i.'_(.*)/', '$1', array_keys($input));
-            foreach($ticket_keys as $key)
-            {
+            foreach ($ticket_keys as $key) {
                 $grouppedInput['ticket_'.$i][$key] = $input['ticket_'.$i.'_'.$key];
             }
         }
         
-        foreach($grouppedInput as $ticketValues)
-        {
+        foreach ($grouppedInput as $ticketValues) {
             $ticket = Ticket::find($ticketValues['type']);
             $race = $ticket->race()->first();
 
-            if($ticketValues['use'] == 'myself')
-            {
+            if ($ticketValues['use'] == 'myself') {
                 $user = Auth::user();
-                if($user)
-                {
+                if ($user) {
                     $attributes = [
                         'For' => $user->name,
                         'E-mail' => $user->email,
                         'Phone' => $user->phone,
                     ];
                 }
-            }
-            else {
+            } else {
                 $attributes = [
                     'For' => $ticketValues['firstname'] . ' ' . $ticketValues['lastname'],
                     'E-mail' => $ticketValues['email'],
@@ -202,21 +189,17 @@ class CartController extends Controller
             $metas = preg_filter('/^meta_(.*)/', '$1', array_keys($ticketValues));
             $metas = array_values($metas);
 
-            foreach($metas as $meta)
-            {
+            foreach ($metas as $meta) {
                 $question = Question::where("id", $meta)
                             ->with('answertype', 'answervalue')
                             ->first();
                 
                 $answervalues = $question->answervalue()->get();
 
-                if(count($answervalues))
-                {
+                if (count($answervalues)) {
                     $answer = $answervalues->firstWhere('id', $ticketValues['meta_'.$meta]);
                     $attributes[$question->question_text] = $answer->value;
-                }
-                else
-                {
+                } else {
                     $attributes[$question->question_text] = $ticketValues['meta_'.$meta];
                 }
             }

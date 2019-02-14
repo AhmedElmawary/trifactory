@@ -31,5 +31,4 @@ class Ticket extends Model
     // {
     //     return $this->belongsToMany('App\Event', 'user_races')->withTimestamps();
     // }
-    
 }

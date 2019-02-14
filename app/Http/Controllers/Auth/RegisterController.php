@@ -42,7 +42,7 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        $nationalities = \countries(); 
+        $nationalities = \countries();
         
         return view('auth.register', [
             'nationalities' => $nationalities

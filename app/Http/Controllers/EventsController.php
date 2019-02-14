@@ -24,14 +24,16 @@ class EventsController extends Controller
         return view('event-details', ['event' => $event]);
     }
 
-    public function getTicketsByRaceId($id) {
-        $tickets = DB::table("tickets")->where("race_id",$id)->pluck("name","id");
+    public function getTicketsByRaceId($id)
+    {
+        $tickets = DB::table("tickets")->where("race_id", $id)->pluck("name", "id");
         return json_encode($tickets);
     }
 
-    public function getMetaByRaceId($id) {
+    public function getMetaByRaceId($id)
+    {
         
-        $raceQuestions = Race::where('id',$id)
+        $raceQuestions = Race::where('id', $id)
         ->with('question', 'question.answertype', 'question.answervalue')
         ->get();
         

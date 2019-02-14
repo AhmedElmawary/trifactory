@@ -10,7 +10,8 @@ use Auth;
 
 class PaymentController extends Controller
 {
-    public function buyTickets(Request $request) {
+    public function buyTickets(Request $request)
+    {
 
         $inputs = $request->all();
         // $inputs['paymet_method'];
@@ -18,12 +19,10 @@ class PaymentController extends Controller
         $cartTotal = \Cart::getTotal();
         $cartItems = \Cart::getContent()->toArray();
 
-        foreach($cartItems as $item)
-        {   
+        foreach ($cartItems as $item) {
             $meta[$item['id']] = new \stdClass();
             $meta[$item['id']]->type = 'ticket';
-            foreach($item['attributes'] as $key => $attribute)
-            {
+            foreach ($item['attributes'] as $key => $attribute) {
                 $meta[$item['id']]->$key = $attribute;
             }
         }
@@ -38,7 +37,8 @@ class PaymentController extends Controller
         return $this->makePayment($order);
     }
 
-    public function buyVouchers(Request $request) {
+    public function buyVouchers(Request $request)
+    {
 
         $inputs = $request->all();
         // $inputs['paymet_method'];
@@ -59,7 +59,8 @@ class PaymentController extends Controller
         return $this->makePayment($order);
     }
 
-    public function makePayment($order) {
+    public function makePayment($order)
+    {
         $auth = PayMob::authPaymob();
         
         $paymobOrder = PayMob::makeOrderPaymob(
@@ -69,7 +70,7 @@ class PaymentController extends Controller
             $order->id // your (merchant) order id.
         );
 
-        $order->update(['paymob_order_id' => $paymobOrder->id]); 
+        $order->update(['paymob_order_id' => $paymobOrder->id]);
 
         $user = Auth::user();
             
@@ -97,7 +98,6 @@ class PaymentController extends Controller
      */
     protected function succeeded($order)
     {
-
     }
 
     /**
@@ -108,7 +108,6 @@ class PaymentController extends Controller
      */
     protected function voided($order)
     {
-     
     }
 
     /**
@@ -119,7 +118,6 @@ class PaymentController extends Controller
      */
     protected function refunded($order)
     {
-     
     }
 
     /**
@@ -130,7 +128,6 @@ class PaymentController extends Controller
      */
     protected function failed($order)
     {
-        
     }
 
     /**
@@ -178,10 +175,8 @@ class PaymentController extends Controller
         
         if (property_exists($meta, 'type')) {
             event(new VoucherPurchased($meta));
-        }
-        else {
-            foreach($meta as $key => $ticket)
-            {
+        } else {
+            foreach ($meta as $key => $ticket) {
                 dd($ticket);
             }
         }

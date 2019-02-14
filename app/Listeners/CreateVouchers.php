@@ -28,8 +28,7 @@ class CreateVouchers
      */
     public function handle($event)
     {
-        for($i=0;$i<$event->meta->qty;$i++)
-        {
+        for ($i=0; $i<$event->meta->qty; $i++) {
             $voucher = new Voucher();
             $voucher->code = uniqid('V');
             $voucher->user_email = $event->meta->user_email;

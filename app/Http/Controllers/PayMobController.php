@@ -30,7 +30,7 @@ class PayMobController extends Controller
         );
         // Duplicate order id
         // PayMob saves your order id as a unique id as well as their id as a primary key, thus your order id must not
-        // duplicate in their database. 
+        // duplicate in their database.
         if (isset($paymobOrder->message)) {
             if ($paymobOrder->message == 'duplicate') {
                 # code... your order id is duplicate on PayMob database.
@@ -74,17 +74,17 @@ class PayMobController extends Controller
         $user    = auth()->user();
         $order   = config('paymob.order.model', 'App\Order')::findOrFail($request->orderId);
         $payment = PayMob::makePayment( // make transaction on Paymob servers.
-          $payment_key_token,
-          $request->card_number,
-          $request->card_holdername,
-          $request->card_expiry_mm,
-          $request->card_expiry_yy,
-          $request->card_cvn,
-          $order->paymob_order_id,
-          $user->firstname,
-          $user->lastname,
-          $user->email,
-          $user->phone
+            $payment_key_token,
+            $request->card_number,
+            $request->card_holdername,
+            $request->card_expiry_mm,
+            $request->card_expiry_yy,
+            $request->card_cvn,
+            $order->paymob_order_id,
+            $user->firstname,
+            $user->lastname,
+            $user->email,
+            $user->phone
         );
 
         # code...
@@ -175,5 +175,4 @@ class PayMobController extends Controller
     {
         # code...
     }
-
 }

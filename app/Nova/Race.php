@@ -11,7 +11,6 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Boolean;
 
-
 class Race extends Resource
 {
     public static $category = "Events Manage";
@@ -59,7 +58,7 @@ class Race extends Resource
             Textarea::make('Details', 'details')->sortable(),
             HasMany::make('Ticket'),
             // HasMany::make('UserRace'),
-            Boolean::make('Published','published')
+            Boolean::make('Published', 'published')
             ->trueValue('yes')
             ->falseValue('no'),
             BelongsToMany::make('Question'),

@@ -51,7 +51,7 @@ class Ticket extends Resource
         return [
             // ID::make()->sortable(),
             Text::make('Name', 'name')->sortable(),
-            Boolean::make('Published','published')
+            Boolean::make('Published', 'published')
         ->trueValue('yes')
         ->falseValue('no'),
             Currency::make('Price', 'price')->sortable()->format('%.2n'),

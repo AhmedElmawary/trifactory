@@ -59,7 +59,7 @@ class Event extends Resource
             Place::make('Address', 'address')->countries(['EG']),
             Date::make('From', 'event_start')->sortable(),
             Date::make('To', 'event_end')->sortable(),
-            Boolean::make('Published','published')
+            Boolean::make('Published', 'published')
             ->trueValue('yes')
             ->falseValue('no'),
 
