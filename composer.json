@@ -15,6 +15,7 @@
         "laravel/framework": "5.7.*",
         "laravel/nova": "*",
         "laravel/tinker": "^1.0",
+        "lorisleiva/laravel-deployer": "^0.2.7",
         "rinvex/countries": "^5.0"
     },
     "require-dev": {
