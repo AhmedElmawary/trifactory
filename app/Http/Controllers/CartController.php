@@ -142,6 +142,18 @@ class CartController extends Controller
         \Cart::clear();
     }
 
+    public function removeFromCart(Request $request)
+    {
+        $inputs = $request->all();
+        $itemKey = $inputs['item_key'];
+
+        \Cart::remove($itemKey);
+
+        return redirect()->action(
+            'CartController@index'
+        );
+    }
+
     public function addToCart(Request $request)
     {
         $input = $request->all();

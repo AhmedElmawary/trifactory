@@ -33,6 +33,7 @@ Route::get('/payment/invoice', 'PaymentController@invoice');
 Route::get('/cart', 'CartController@index');
 Route::get('/cart/empty', 'CartController@emptyCart');
 Route::post('/cart', 'CartController@addToCart');
+Route::post('/cart/remove', 'CartController@removeFromCart');
 
 Route::get('/cart/payment', 'CartController@payment');
 Route::post('/cart/credit', 'CartController@credit');

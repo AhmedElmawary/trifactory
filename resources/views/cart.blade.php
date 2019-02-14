@@ -3,7 +3,7 @@
 <!-- Start Content -->
 <section class="container no-height no-separator">
   <h3 class="section-title">
-    <img src="images/tickets-icon.svg" alt="tickets-icon" class="icon">Bookings Summary
+    <img src="/images/tickets-icon.svg" alt="tickets-icon" class="icon">Bookings Summary
   </h3>
 
   <div class="row booking-summary-container">
@@ -16,6 +16,13 @@
     @foreach($cartItems as $key => $item)
     <div class="col-lg-12 summary-ticket">
       <span class="ticket-no mb-2 mt-3">Ticket {{$loop->iteration}}</span>
+      <span style="float:right;">
+        <form method="POST" action="/cart/remove">
+        @csrf
+        <input name="item_key" type="hidden" value="{{$key}}" />
+        <input type="image" src="/images/close-icon.svg" alt="Submit" width="50%" />
+        </form>
+      </span>
       <div class="row">
         @foreach($item['attributes'] as $key => $val)
         <div class="col-lg-4 mb-2 ticket-data">
@@ -23,6 +30,7 @@
         </div>
         @endforeach
       </div>
+      
     </div>
     @endforeach
 
