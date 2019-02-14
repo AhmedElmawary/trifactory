@@ -45,7 +45,9 @@
     <div class="cart-summary-item">
       Total <span class="float-right">EGP {{$cartTotal}}</span>
     </div>
-    <a href="/cart/payment" class="btn btn-dark text-light mt-4 mb-4">Proceed to Payment</a>
+    @if (count($cartItems) > 0)
+    <a  href="/cart/payment" class="btn btn-dark text-light mt-4 mb-4">Proceed to Payment</a>
+    @endif
   </div>
 </section>
 

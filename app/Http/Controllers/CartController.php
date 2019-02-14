@@ -214,8 +214,6 @@ class CartController extends Controller
             ));
         }
 
-        return redirect()->action(
-            'CartController@index'
-        );
+        // return response(true, 200);
     }
 }

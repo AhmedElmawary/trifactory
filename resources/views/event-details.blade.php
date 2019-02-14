@@ -1,7 +1,7 @@
 @extends('layouts.app', ['body_class' => 'event-details-view'])
 @section('content')
 <!-- Start Content -->
-<form method="POST" action="/cart">
+<form id="add_to_cart" method="POST" action="/cart">
     @csrf
 <section class="event-summary container">
   <div class="row">
@@ -148,7 +148,12 @@
   <section class="container no-height no-separator">
     <div class="row">
       <div class="col-lg-12 text-right">
-        <button type="submit" class="btn btn-dark" id="open_added_to_cart_modal">Add 1 Ticket(s) to Cart</button>
+        @auth
+        <button class="btn btn-dark" id="open_added_to_cart_modal">Add Ticket(s) to Cart</button>
+        @endauth
+        @guest
+        <button class="btn btn-dark" id="open_login_modal">Add Ticket(s) to Cart</button>
+        @endguest
       </div>
     </div>
   </section>
@@ -161,7 +166,7 @@
       <div class="header">
         <!-- <h3 class="modal-title">Verification code sent to this number:</h3> -->
         <img src="/images/success-icon.svg" class="modal-icon">
-        <span class="modal-sub-title">2 Tickets added to your Cart for Event 1</span>
+        <span class="modal-sub-title">Ticket(s) added to your Cart for {{ $event->name }}</span>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <img src="/images/close-icon.svg" alt="close icon">
         </button>
@@ -169,11 +174,32 @@
       <div class="content">
         <p class="modal-text">Whether its a triathlon, marathon, duathlon, aquathlon, or any other race – we bring
           endurance sports to you. We organise our own events and manage others on behalf of our partners</p>
-        <a href="/cart.html" class="btn btn-dark light">Proceed to Checkout</a>
-        <a href="/events.html" class="btn btn-clear text-dark">Explore More Events</a>
+        <a href="/cart" class="btn btn-dark light">Proceed to Checkout</a>
+        <a href="/events" class="btn btn-clear text-dark">Explore More Events</a>
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade custom-modal" id="login_modal" tabindex="-1" role="dialog"
+aria-labelledby="phone_verify_modal" aria-hidden="true">
+<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="header">
+      <!-- <h3 class="modal-title">Verification code sent to this number:</h3> -->
+      <img src="/images/success-icon.svg" class="modal-icon">
+      <span class="modal-sub-title">Login or Sign up</span>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <img src="/images/close-icon.svg" alt="close icon">
+      </button>
+    </div>
+    <div class="content">
+      <p class="modal-text">Please login or create an account to add items to your cart.</p>
+      <a href="/login" class="btn btn-dark light">Proceed to Login</a>
+      <a href="/register" class="btn btn-clear text-dark">Proceed to Sign up</a>
+    </div>
+  </div>
+</div>
 </div>
 </form>
 <!-- End Content -->

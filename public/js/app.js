@@ -161,8 +161,32 @@ $(document).ready(function() {
       }
     });
     // Added to cart modal
-    $('#open_added_to_cart_modal').click(function() {
-      // $('#added_to_cart_modal').modal();
+    $('#open_added_to_cart_modal').click(function(e) {
+      $('#open_added_to_cart_modal').unbind();
+      if($('#add_to_cart')[0].checkValidity())
+      {
+        $('#add_to_cart').on('submit', function (e) {
+          e.preventDefault();
+          $.ajax({
+              type: $('#add_to_cart').attr('method'),
+              url: $('#add_to_cart').attr('action'),
+              data: $('#add_to_cart').serialize(),
+              success: function (data) {
+                  $("#add_to_cart").get(0).reset();
+                  $('#added_to_cart_modal').modal();
+              },
+              error: function (data) {
+                  console.log('An error occurred.');
+              },
+          });
+          return false;
+        });
+      }
+
+    });
+
+    $('#open_login_modal').click(function() {
+      $('#login_modal').modal();
     });
   }
 
