@@ -81,6 +81,23 @@
                     </div>
 
                     <div class="input-group">
+                        <select style="margin-top:20px;" class="custom-select" name="nationality" required>
+                            <option disabled value="" selected>Nationality</option>
+
+                            @foreach($nationalities as $nationality)
+                            <option value="{{$nationality['iso_3166_1_alpha2']}}">{{$nationality['name']}}</option>
+                            @endforeach
+
+                        </select>
+
+                        @if ($errors->has('nationality'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('nationality') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+
+                    <div class="input-group">
                         <input
                             placeholder="Password"
                             id="password"

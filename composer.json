@@ -14,7 +14,8 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/nova": "*",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "rinvex/countries": "^5.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

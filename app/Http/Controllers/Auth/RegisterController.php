@@ -40,6 +40,15 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+        $nationalities = \countries(); 
+        
+        return view('auth.register', [
+            'nationalities' => $nationalities
+        ]);
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -53,6 +62,7 @@ class RegisterController extends Controller
             'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
+            'nationality' => ['required', 'string'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ]);
     }
