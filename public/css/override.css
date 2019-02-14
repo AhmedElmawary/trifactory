@@ -82,3 +82,7 @@ nav .navbar-nav .nav-item .nav-link span {
   border-top: 4px solid #e21c21;
   padding-top: 5px;
 }
+
+.invalid-feedback {
+  display: block;
+}

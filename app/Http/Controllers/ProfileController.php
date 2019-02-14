@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Event;
 use Auth;
+use Validator;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -38,6 +40,53 @@ class ProfileController extends Controller
         }
 
         return view('profile', $data);
+    }
+
+    public function password(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'password_confirmation' => ['required', 'string', 'min:6'],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/profile')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $user = Auth::user();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return redirect('/profile');
+
+    }
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
+        ]);
+
+        
+        if ($validator->fails()) {
+            return redirect('/profile')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        $user = Auth::user();
+        $user->firstname = $request->firstname;
+        $user->lastname = $request->lastname;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->save();
+
+        return redirect('/profile');
     }
 
     public function image(Request $request)

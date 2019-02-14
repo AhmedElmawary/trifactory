@@ -79,6 +79,8 @@
             </ul>
             <div class="tab-content profile-tab-content" id="pills-tabContent">
                 <!-- Personal Information -->
+                <form method="POST" action="/profile/update">
+                @csrf
                 <div
                     class="tab-pane show active"
                     id="pills-info"
@@ -91,11 +93,19 @@
 
                             <div class="input-group">
                                 <input
+                                    name="firstname"
+                                    required
                                     type="text"
                                     class="form-control "
                                     placeholder="First Name"
                                     value="{{$user->firstname}}"
                                 />
+
+                                @if ($errors->has('firstname'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('firstname') }}</strong>
+                                </span>
+                                @endif
                             </div>
                         </div>
                         <div class="col-lg-6 mb-5">
@@ -103,11 +113,18 @@
 
                             <div class="input-group">
                                 <input
+                                    name="lastname"
+                                    required
                                     type="text"
                                     class="form-control "
                                     placeholder="Last Name"
                                     value="{{$user->lastname}}"
                                 />
+                                @if ($errors->has('lastname'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('lastname') }}</strong>
+                                </span>
+                                @endif
                             </div>
                         </div>
                         <div class="col-lg-6 mb-5">
@@ -115,49 +132,40 @@
 
                             <div class="input-group">
                                 <input
+                                    name="phone"
+                                    required
                                     type="text"
                                     class="form-control "
                                     placeholder="Phone Number"
                                     value="{{$user->phone}}"
                                 />
+                                @if ($errors->has('phone'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('phone') }}</strong>
+                                </span>
+                                @endif
                             </div>
                         </div>
                         <div class="col-lg-6 mb-5">
-                            <label class="input-label">Password</label>
+                            <label class="input-label">Email</label>
 
                             <div class="input-group">
                                 <input
-                                    type="password"
+                                    name="email"
+                                    required
+                                    type="email"
                                     class="form-control"
-                                    placeholder="Password"
-                                    value=""
+                                    placeholder="E-Mail"
+                                    value="{{$user->email}}"
                                 />
+                                @if ($errors->has('email'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                                @endif
                             </div>
                         </div>
-                        <div class="col-lg-12 mb-5">
-                            <hr class="line-separator" />
-                        </div>
-                        <div class="col-lg-12">
-                            <label class="input-label">Password Change</label>
-                        </div>
-                        <div class="col-lg-6 mb-5">
-                            <div class="input-group">
-                                <input
-                                    type="password"
-                                    class="form-control"
-                                    placeholder="New Password"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mb-5">
-                            <div class="input-group">
-                                <input
-                                    type="password"
-                                    class="form-control"
-                                    placeholder="New Password Confirm"
-                                />
-                            </div>
-                        </div>
+                      
                         <div class="col-lg-12 mb-5">
                             <hr class="line-separator" />
                         </div>
@@ -166,6 +174,52 @@
                                 Save Changes
                             </button>
                         </div>
+                        </form>
+                        <div class="col-lg-12">
+                        <form method="POST" action="/profile/password">
+                        @csrf
+                            <label class="input-label">Password Change</label>
+                        </div>
+                        <div class="col-lg-6 mb-5">
+                            <div class="input-group">
+                                <input
+                                    name="password"
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="New Password"
+                                />
+                                @if ($errors->has('password'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mb-5">
+                            <div class="input-group">
+                                <input
+                                    name="password_confirmation"
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="New Password Confirm"
+                                />
+
+                                @if ($errors->has('password_confirmation'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-lg-12 mb-5">
+                            <hr class="line-separator" />
+                        </div>
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn btn-dark float-right">
+                                Change Password
+                            </button>
+                        </div>
+                      </form>
                     </div>
                 </div>
                 <!-- Rankings -->

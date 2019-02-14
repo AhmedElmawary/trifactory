@@ -40,6 +40,8 @@ Route::post('/cart/voucher', 'CartController@voucher');
 
 Route::get('/profile', 'ProfileController@index');
 Route::post('/profile/image', 'ProfileController@image');
+Route::post('/profile/update', 'ProfileController@update');
+Route::post('/profile/password', 'ProfileController@password');
 
 Route::get('/test', 'HomeController@test');
 Auth::routes();

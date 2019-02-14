@@ -39,7 +39,9 @@
         </li>
         <li class="nav-item login-item">
           @auth
-          <a class="nav-link " href="{{ route('logout') }}">Logout</a>
+          <a class="nav-link " style="display:inline" href="/profile">Profile</a>
+          <span class="nav-link " style="display:inline;line-height:40px;"> | </span>
+          <a class="nav-link " style="display:inline" href="{{ route('logout') }}">Logout</a>
           @endauth
           @guest
           <a class="nav-link " style="display:inline" href="{{ route('login') }}">Login</a>
