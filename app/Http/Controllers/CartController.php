@@ -85,7 +85,7 @@ class CartController extends Controller
                     $condition = new \Darryldecode\Cart\CartCondition(array(
                         'name' => 'Voucher',
                         'type' => 'voucher',
-                        'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
+                        'target' => 'total',
                         'value' => $voucher->amount * -1,
                         'attributes' => [
                             'code' => $code
