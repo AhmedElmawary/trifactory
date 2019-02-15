@@ -95,6 +95,7 @@ return [
     'options' => [
         'application' => env('APP_NAME', 'The Trifactory'),
         'repository' => 'git@gitlab.com:breadcrumbsegypt/thetrifactory.com.git',
+        'http_user' => 'www-data'
     ],
 
     /*
@@ -116,7 +117,6 @@ return [
         'localhost' => [
             'deploy_path' => '/code',
             'user' => 'gitlabci',
-            'http_user' => 'www-data'
         ],
         // 'www.thetrifactory.com' => [
         //     'deploy_path' => '/home/gitlabci/git/www.thetrifactory.com',
