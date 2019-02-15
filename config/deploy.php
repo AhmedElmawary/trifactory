@@ -62,7 +62,7 @@ return [
             'artisan:cache:clear',
             'artisan:config:cache',
             'artisan:migrate',
-            'artisan:horizon:terminate',
+            // 'artisan:horizon:terminate',
         ],
         
         // Deployment is done and live
