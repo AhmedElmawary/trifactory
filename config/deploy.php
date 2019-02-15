@@ -95,7 +95,8 @@ return [
     'options' => [
         'application' => env('APP_NAME', 'The Trifactory'),
         'repository' => 'git@gitlab.com:breadcrumbsegypt/thetrifactory.com.git',
-        'http_user' => 'www-data'
+        'http_user' => 'www-data',
+        'writable_mode' => 'chmod'
     ],
 
     /*
