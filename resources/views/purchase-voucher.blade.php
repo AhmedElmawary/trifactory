@@ -12,7 +12,7 @@
     <div class="col-lg-6">
       <label class="input-label">Enter recipient e-mail</label>
       <div class="input-group">
-        <input name="recipient_email" type="text" class="form-control " placeholder="E-mail">
+        <input required name="recipient_email" type="email" class="form-control " placeholder="E-mail">
       </div>
     </div>
 
@@ -26,7 +26,7 @@
       <div class="col-lg-6">
         <label class="input-label">Enter recipient name</label>
         <div class="input-group">
-          <input name="recipient_name" type="text" class="form-control " placeholder="Name">
+          <input required name="recipient_name" type="text" class="form-control " placeholder="Name">
         </div>
       </div>
 
@@ -41,7 +41,7 @@
       <div class="col-lg-6">
         <label class="input-label">Message</label>
         <div class="input-group">
-          <textarea name="message" class="form-control" placeholder="Message"></textarea>
+          <textarea required name="message" class="form-control" placeholder="Message"></textarea>
         </div>
       </div>
   </div>
@@ -93,7 +93,12 @@
 <section class="container no-height no-separator">
   <div class="row">
     <div class="col-lg-12 text-right">
-      <button type="submit" class="btn btn-dark">Quick Checkout</button>
+        @auth
+        <button class="btn btn-dark" type="submit">Quick Checkout</button>
+        @endauth
+        @guest
+        <button class="btn btn-dark" id="open_login_modal">Quick Checkout</button>
+        @endguest
       <br>
       <!-- <button class="btn btn-clear"><i class="fas fa-shopping-cart mr-3"></i>Add to cart</button> -->
     </div>
@@ -101,4 +106,25 @@
 </section>
 </form>
 <!-- End Content -->
+
+<div class="modal fade custom-modal" id="login_modal" tabindex="-1" role="dialog"
+aria-labelledby="phone_verify_modal" aria-hidden="true">
+<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="header">
+      <!-- <h3 class="modal-title">Verification code sent to this number:</h3> -->
+      <img src="/images/success-icon.svg" class="modal-icon">
+      <span class="modal-sub-title">Login or Sign up</span>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <img src="/images/close-icon.svg" alt="close icon">
+      </button>
+    </div>
+    <div class="content">
+      <p class="modal-text">Please login or create an account to add items to your cart.</p>
+      <a href="/login" class="btn btn-dark light">Proceed to Login</a>
+      <a href="/register" class="btn btn-clear text-dark">Proceed to Sign up</a>
+    </div>
+  </div>
+</div>
+</div>
 @endsection

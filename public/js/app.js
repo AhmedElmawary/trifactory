@@ -1,4 +1,9 @@
 $(document).ready(function() {
+
+  $('#open_login_modal').click(function() {
+    $('#login_modal').modal();
+  });
+  
   /*
    * Home Page
    */
@@ -185,9 +190,6 @@ $(document).ready(function() {
 
     });
 
-    $('#open_login_modal').click(function() {
-      $('#login_modal').modal();
-    });
   }
 
   /*
