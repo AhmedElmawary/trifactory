@@ -62,7 +62,7 @@ return [
             'artisan:cache:clear',
             'artisan:config:cache',
             'artisan:migrate',
-            'artisan:nova:publish --force',
+            // 'artisan:nova:publish --force',
             // 'artisan:horizon:terminate',
         ],
         
