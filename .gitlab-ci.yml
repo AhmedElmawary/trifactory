@@ -78,6 +78,8 @@ staging:
     - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
     - *change_file_permissions
     - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 php artisan deploy localhost
+    - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 php artisan nova:publish --force
+    - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 php artisan config:clear
     - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 chmod -R 777 /code/shared/storage
   environment:
     name: staging
@@ -101,6 +103,8 @@ production:
     - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
     - *change_file_permissions
     - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 php artisan deploy localhost
+    - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 php artisan nova:publish --force
+    - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 php artisan config:clear
     - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 chmod -R 777 /code/shared/storage
   environment:
     name: production
