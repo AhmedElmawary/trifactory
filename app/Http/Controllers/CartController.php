@@ -213,6 +213,5 @@ class CartController extends Controller
                 'attributes' => $attributes
             ));
         }
-
     }
 }
