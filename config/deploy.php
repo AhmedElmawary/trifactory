@@ -113,6 +113,10 @@ return [
             'deploy_path' => '/home/gitlabci/code',
             'user' => 'gitlabci',
         ],
+        'localhost' => [
+            'deploy_path' => '/code',
+            'user' => 'gitlabci',
+        ],
         // 'www.thetrifactory.com' => [
         //     'deploy_path' => '/home/gitlabci/git/www.thetrifactory.com',
         //     'user' => 'root',
