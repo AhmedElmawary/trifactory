@@ -70,7 +70,7 @@ staging:
     - *init_ssh
     - ssh -T -o StrictHostKeyChecking=no gitlabci@beta.thetrifactory.com <<'ENDSSH'
     - cd git
-    - cd trifactory
+    - cd thetrifactory.com
     - git reset --hard
     - git checkout develop
     - git pull
@@ -93,7 +93,7 @@ production:
     - *init_ssh
     - ssh -T -o StrictHostKeyChecking=no gitlabci@beta.thetrifactory.com <<'ENDSSH'
     - cd git
-    - cd trifactory
+    - cd thetrifactory.com
     - git reset --hard
     - git checkout master
     - git pull
