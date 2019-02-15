@@ -110,7 +110,7 @@ return [
 
     'hosts' => [
         'live.thetrifactory.com' => [
-            'deploy_path' => '/home/gitlabci/git/live.thetrifactory.com',
+            'deploy_path' => '/code',
             'user' => 'gitlabci',
         ],
         // 'www.thetrifactory.com' => [

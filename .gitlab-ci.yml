@@ -67,19 +67,21 @@ staging:
   script:
     - *init_ssh
     - *change_file_permissions
-    - php artisan deploy live.thetrifactory.com -s upload
+    - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 php artisan deploy
+    # - php artisan deploy live.thetrifactory.com -s upload
   environment:
     name: staging
     url: https://live.thetrifactory.com
   only:
-    - master
+    - develop
   
 production:
   stage: deploy
   script:
     - *init_ssh
     - *change_file_permissions
-    - php artisan deploy live.thetrifactory.com -s upload
+    - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 php artisan deploy
+    # - php artisan deploy live.thetrifactory.com -s upload
   environment:
     name: production
     url: https://www.thetrifactory.com
