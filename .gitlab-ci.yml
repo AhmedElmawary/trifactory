@@ -64,6 +64,8 @@ codestyle:
 
 staging:
   stage: deploy
+  services:
+    - docker:dind
   script:
     - *init_ssh
     - *change_file_permissions
@@ -77,6 +79,8 @@ staging:
   
 production:
   stage: deploy
+  services:
+    - docker:dind
   script:
     - *init_ssh
     - *change_file_permissions
