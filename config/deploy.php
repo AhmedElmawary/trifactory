@@ -116,6 +116,7 @@ return [
         'localhost' => [
             'deploy_path' => '/code',
             'user' => 'gitlabci',
+            'http_user' => 'www-data'
         ],
         // 'www.thetrifactory.com' => [
         //     'deploy_path' => '/home/gitlabci/git/www.thetrifactory.com',
