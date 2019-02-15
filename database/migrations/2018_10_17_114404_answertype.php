@@ -17,6 +17,7 @@ class Answertype extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('type');
+            $table->string('validation')->nullable();
 
             $table->timestamps();
         });

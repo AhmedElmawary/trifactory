@@ -27,18 +27,21 @@ class AnswerTypesTableSeeder extends Seeder
         DB::table('answertype')->insert([
             'name' => 'Email',
             'type' => "input",
+            'validation' => 'email'
         ]);
 
         // 4
         DB::table('answertype')->insert([
             'name' => 'Phone number',
             'type' => "input",
+            'validation' => 'phone'
         ]);
 
         // 5
         DB::table('answertype')->insert([
             'name' => 'Year of birth',
             'type' => "input",
+            'validation' => 'date'
         ]);
 
         // 6

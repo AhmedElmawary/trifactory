@@ -49,6 +49,7 @@ class AnswerType extends Resource
             ID::make()->sortable(),
             Text::make('Name', 'name')->sortable(),
             Text::make('Type', 'type')->sortable(),
+            Text::make('Validation', 'validation')->sortable(),
 
             HasMany::make('Question'),
 

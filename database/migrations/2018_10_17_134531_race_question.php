@@ -17,6 +17,7 @@ class RaceQuestion extends Migration
             $table->increments('id');
             $table->integer('race_id')->nullable();
             $table->integer('question_id')->nullable();
+            $table->integer('order')->nullable();
 
             $table->timestamps();
         }); //
