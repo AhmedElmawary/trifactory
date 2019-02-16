@@ -79,8 +79,6 @@
             </ul>
             <div class="tab-content profile-tab-content" id="pills-tabContent">
                 <!-- Personal Information -->
-                <form method="POST" action="/profile/update">
-                @csrf
                 <div
                     class="tab-pane show active"
                     id="pills-info"
@@ -92,6 +90,8 @@
                             <label class="input-label">First Name</label>
 
                             <div class="input-group">
+                                <form method="POST" action="/profile/update">
+                                @csrf
                                 <input
                                     name="firstname"
                                     required
@@ -173,15 +173,15 @@
                             <button type="submit" class="btn btn-dark float-right">
                                 Save Changes
                             </button>
+                            </form>
                         </div>
-                        </form>
                         <div class="col-lg-12">
-                        <form method="POST" action="/profile/password">
-                        @csrf
                             <label class="input-label">Password Change</label>
                         </div>
                         <div class="col-lg-6 mb-5">
                             <div class="input-group">
+                                <form method="POST" action="/profile/password">
+                                @csrf
                                 <input
                                     name="password"
                                     type="password"
@@ -218,21 +218,21 @@
                             <button type="submit" class="btn btn-dark float-right">
                                 Change Password
                             </button>
+                            </form>
                         </div>
-                      </form>
                     </div>
                 </div>
                 <!-- Rankings -->
-                <div
+                <!-- <div
                     class="tab-pane"
                     id="pills-rankings"
                     role="tabpanel"
                     aria-labelledby="pills-rankings-tab"
                 >
                     Rankings
-                </div>
+                </div> -->
                 <!-- Upcoming Events -->
-                <div
+                <!-- <div
                     class="tab-pane"
                     id="pills-upcoming-events"
                     role="tabpanel"
@@ -563,9 +563,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- Previous Events -->
-                <div
+                <!-- <div
                     class="tab-pane"
                     id="pills-previous-events"
                     role="tabpanel"
@@ -857,7 +857,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <!-- My Wallet -->
                 <div
                     class="tab-pane"
