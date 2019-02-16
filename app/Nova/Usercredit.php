@@ -17,6 +17,7 @@ class Usercredit extends Resource
      * @var string
      */
     public static $model = 'App\Usercredit';
+    public static $group = 'Operations';
 
     /**
      * The single value that should be used to represent the resource when being displayed.

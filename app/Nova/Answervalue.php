@@ -11,14 +11,13 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Answervalue extends Resource
 {
-    public static $category = "Questions";
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
     public static $model = 'App\Answervalue';
+    public static $group = 'Settings';
 
     /**
      * The single value that should be used to represent the resource when being displayed.

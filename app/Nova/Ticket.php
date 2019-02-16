@@ -14,8 +14,6 @@ use Laravel\Nova\Fields\BelongsTo;
 
 class Ticket extends Resource
 {
-    public static $category = "Events Manage";
-
     /**
      * The model the resource corresponds to.
      *
@@ -23,6 +21,7 @@ class Ticket extends Resource
      */
 
     public static $model = 'App\Ticket';
+    public static $group = 'Content';
 
     /**
      * The single value that should be used to represent the resource when being displayed.

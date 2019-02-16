@@ -5,7 +5,7 @@ namespace App\Nova;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Password;
 
 class User extends Resource
@@ -16,6 +16,7 @@ class User extends Resource
      * @var string
      */
     public static $model = 'App\\User';
+    public static $group = 'Operations';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -44,7 +45,7 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Gravatar::make(),
+            Avatar::make('Image','profile_image')->disk('profile_images'),
 
             Text::make('Name')
                 ->sortable()

@@ -14,7 +14,6 @@ use Laravel\Nova\Fields\BelongsTo;
 
 class EventImage extends Resource
 {
-    public static $category = "Events Manage";
 
     /**
      * The model the resource corresponds to.
@@ -22,6 +21,7 @@ class EventImage extends Resource
      * @var string
      */
     public static $model = 'App\EventImage';
+    public static $group = 'Content';
     public static $displayInNavigation = false;
 
     /**

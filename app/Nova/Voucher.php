@@ -15,14 +15,13 @@ use Laravel\Nova\Fields\Number;
 
 class Voucher extends Resource
 {
-    public static $category = "Vouchers";
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
     public static $model = 'App\Voucher';
+    public static $group = 'Operations';
 
     /**
      * The single value that should be used to represent the resource when being displayed.

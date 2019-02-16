@@ -10,14 +10,13 @@ use Laravel\Nova\Fields\HasMany;
 
 class Gallery extends Resource
 {
-    public static $category = "Galleries";
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
     public static $model = 'App\Gallery';
+    public static $group = 'Content';
 
     /**
      * The single value that should be used to represent the resource when being displayed.

@@ -29,7 +29,6 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         if ($user) {
-            $data['credit'] = $user->credit->sum('amount');
             $data['user'] = $user;
             $data['profile_image'] = '/images/placeholder.svg';
             if ($user->profile_image) {

@@ -9,14 +9,13 @@ use Laravel\Nova\Fields\Image;
 
 class Galleryimage extends Resource
 {
-    public static $category = "Galleries";
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
     public static $model = 'App\Galleryimage';
+    public static $group = 'Content';
     public static $displayInNavigation = false;
 
     /**

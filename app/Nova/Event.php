@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Resource
 {
-    public static $category = "Events Manage";
 
     use SoftDeletes;
 
@@ -26,6 +25,7 @@ class Event extends Resource
      * @var string
      */
     public static $model = 'App\Event';
+    public static $group = 'Content';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -52,11 +52,12 @@ class Event extends Resource
     public function fields(Request $request)
     {
         return [
-            // ID::make()->sortable(),
             Text::make('Name', 'name')->sortable(),
-            Text::make('Country', 'country')->sortable(),
-            Place::make('City', 'city')->onlyCities()->countries(['EG']),
-            Place::make('Address', 'address')->countries(['EG']),
+            Text::make('Country', 'country')->sortable()->hideFromIndex(),
+            Place::make('City', 'city')->onlyCities()
+                                       ->countries(['EG'])
+                                       ->hideFromIndex(),
+            Place::make('Address', 'address')->countries(['EG'])->hideFromIndex(),
             Date::make('From', 'event_start')->sortable(),
             Date::make('To', 'event_end')->sortable(),
             Boolean::make('Published', 'published')

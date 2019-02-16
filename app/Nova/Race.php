@@ -13,14 +13,13 @@ use Laravel\Nova\Fields\Boolean;
 
 class Race extends Resource
 {
-    public static $category = "Events Manage";
-
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
     public static $model = 'App\Race';
+    public static $group = 'Content';
 
     /**
      * The single value that should be used to represent the resource when being displayed.

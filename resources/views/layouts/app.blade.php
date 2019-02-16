@@ -35,7 +35,10 @@
       </ul>
       <ul class="navbar-nav my-2 my-lg-0 right-nav">
         <li class="nav-item cart-item">
-          <a class="nav-link" href="/cart"><i color="#E21C21" class="fas fa-shopping-cart"></i>Cart ({{$cart_items_count}})</a>
+          <a class="nav-link" style="display:inline;line-height:40px;" href="/cart"><i color="#E21C21" class="fas fa-shopping-cart"></i>Cart ({{ $cart_items_count }})</a>
+          @auth
+          <a class="nav-link" style="display:inline;line-height:40px;" href="#"><i color="#E21C21" class="fas fa-credit-card"></i>EGP {{ $credit }}</a>
+          @endauth
         </li>
         <li class="nav-item login-item">
           @auth
