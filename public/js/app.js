@@ -170,8 +170,7 @@ $(document).ready(function() {
       $('#open_added_to_cart_modal').unbind();
       if($('#add_to_cart')[0].checkValidity())
       {
-        $('#add_to_cart').on('submit', function (e) {
-          e.preventDefault();
+        $('#add_to_cart').submit(function (e) {
           $.ajax({
               type: $('#add_to_cart').attr('method'),
               url: $('#add_to_cart').attr('action'),
@@ -184,6 +183,8 @@ $(document).ready(function() {
                   console.log('An error occurred.');
               },
           });
+
+          e.preventDefault();
           return false;
         });
       }
