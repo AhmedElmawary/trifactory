@@ -31,8 +31,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('cart_items_count', count($cart_items));
 
             $user = Auth::user();
-            if($user)
-            {
+            if ($user) {
                 $credit = $user->credit->sum('amount');
                 $view->with('credit', $credit);
             }

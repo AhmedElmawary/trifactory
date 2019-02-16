@@ -45,7 +45,7 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Avatar::make('Image','profile_image')->disk('profile_images'),
+            Avatar::make('Image', 'profile_image')->disk('profile_images'),
 
             Text::make('Name')
                 ->sortable()
