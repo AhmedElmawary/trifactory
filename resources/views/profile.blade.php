@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-lg-3 profile-summary-container">
             <img style="cursor:pointer;" id="profile-image" src="{{$profile_image}}" class="profile-img" />
-            <form enctype="multipart/form-data" id="profile-image-form" method="POST" action="/profile/image">
+            <form enctype="multipart/form-data" id="profile-image-form" method="POST" action="{{ url('/profile/image') }}">
               @csrf
               <input name="profile_image" type="file" id="profile_image" accept="image/*" style="display: none;" />
             </form>
@@ -90,7 +90,7 @@
                             <label class="input-label">First Name</label>
 
                             <div class="input-group">
-                                <form method="POST" action="/profile/update">
+                                <form method="POST" action="{{ url('/profile/update') }}">
                                 @csrf
                                 <input
                                     name="firstname"
@@ -180,7 +180,7 @@
                         </div>
                         <div class="col-lg-6 mb-5">
                             <div class="input-group">
-                                <form method="POST" action="/profile/password">
+                                <form method="POST" action="{{ url('/profile/password') }}">
                                 @csrf
                                 <input
                                     name="password"

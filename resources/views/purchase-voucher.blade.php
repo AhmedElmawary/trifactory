@@ -1,7 +1,7 @@
 @extends('layouts.app', ['body_class' => 'purchase-voucher-view'])
 @section('content')
 <!-- Start Content -->
-<form method="POST" action="/buy-vouchers">
+<form method="POST" action="{{ url('/buy-vouchers') }}">
   @csrf
 <section class="container no-height">
   <h3 class="section-title">

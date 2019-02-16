@@ -20,7 +20,7 @@
             will pay the remaining cost in cash or credit.
         </p>
         <h4 class="mt-3">You have {{$credit}} credits (EGP {{$credit}}) in your wallet</h4>
-        <form id="credit-form" method="POST" action="/cart/credit">
+        <form id="credit-form" method="POST" action="{{ url('/cart/credit') }}">
           @csrf
           <input id="credit" name="credit" value="{{$credit}}" type="hidden">
         
@@ -40,7 +40,7 @@
     </div>
     <div class="cart-voucher-container col-lg-12">
         <p>You can use voucher codes to get discounts on tickets.</p>
-        <form id="voucher-form" method="POST" action="/cart/voucher">
+        <form id="voucher-form" method="POST" action="{{ url('/cart/voucher') }}">
         <div class="row col-lg-6">
             <div class="input-group">
                   @csrf
@@ -97,7 +97,7 @@
     </div>
 
     <div class="cart-payment-container">
-        <form method="POST" action="/buy-tickets">
+        <form method="POST" action="{{ url('/buy-tickets') }}">
         @csrf
         <div class="form-check mb-2">
             <input

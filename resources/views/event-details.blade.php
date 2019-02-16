@@ -1,7 +1,7 @@
 @extends('layouts.app', ['body_class' => 'event-details-view'])
 @section('content')
 <!-- Start Content -->
-<form id="add_to_cart" method="POST" action="/cart">
+<form id="add_to_cart" method="POST" action="{{ url('/cart') }}">
     @csrf
 <section class="event-summary container">
   <div class="row">
