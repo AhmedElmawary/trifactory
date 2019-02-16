@@ -51,7 +51,7 @@ services:
             - code:/code
             - ./site.conf:/etc/nginx/conf.d/default.conf
         environment:
-            - SERVER_NAME=beta.thetrifactory.test
+            - SERVER_NAME=beta.thetrifactory.com
         depends_on:
             - fpm
         networks:
@@ -61,7 +61,7 @@ services:
             replicas: 1
             labels:
                 traefik.enable: "true"
-                traefik.frontend.rule: "Host: beta.thetrifactory.test"
+                traefik.frontend.rule: "Host: beta.thetrifactory.com"
                 traefik.port: 80
                 traefik.docker.network: "proxy"
                 traefik.backend.loadbalancer.swarm: "false"
@@ -77,7 +77,7 @@ services:
             replicas: 1
             labels:
                 traefik.enable: "true"
-                traefik.frontend.rule: "Host: mailhog.thetrifactory.test"
+                traefik.frontend.rule: "Host: mailhog.thetrifactory.com"
                 traefik.port: 8025
                 traefik.docker.network: "proxy"
                 traefik.backend.loadbalancer.swarm: "false"
