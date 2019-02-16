@@ -6,33 +6,29 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Date;
-use Laravel\Nova\Fields\Place;
-use Laravel\Nova\Fields\Trix;
-use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\File;
+use Laravel\Nova\Fields\Image;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Nova\Fields\BelongsTo;
 
-class Event extends Resource
+class EventImage extends Resource
 {
     public static $category = "Events Manage";
-
-    use SoftDeletes;
 
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = 'App\Event';
+    public static $model = 'App\EventImage';
+    public static $displayInNavigation = false;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
      * @var string
      */
-    public static $title = 'name';
+    public static $title = 'image_name';
 
     /**
      * The columns that should be searched.
@@ -52,21 +48,7 @@ class Event extends Resource
     public function fields(Request $request)
     {
         return [
-            // ID::make()->sortable(),
-            Text::make('Name', 'name')->sortable(),
-            Text::make('Country', 'country')->sortable(),
-            Place::make('City', 'city')->onlyCities()->countries(['EG']),
-            Place::make('Address', 'address')->countries(['EG']),
-            Date::make('From', 'event_start')->sortable(),
-            Date::make('To', 'event_end')->sortable(),
-            Boolean::make('Published', 'published')
-            ->trueValue('yes')
-            ->falseValue('no'),
-
-            Trix::make('Details', 'details')->sortable(),
-            HasMany::make('Eventimages'),
-            HasMany::make('Race'),
-
+            Image::make('Image', 'image'),
         ];
     }
 

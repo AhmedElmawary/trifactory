@@ -7,10 +7,14 @@
   <div class="row">
     <div class="col-lg-6 order-lg-1">
       <div class="event-slider">
-        <img src="/images/placeholder.svg">
+        @foreach($event->eventimages()->get() as $image)
+          <img src="/storage/{{ $image->image }}">
+        @endforeach
       </div>
       <div class="event-slider-nav">
-        <img src="/images/placeholder.svg">
+        @foreach($event->eventimages()->get() as $image)
+          <img src="/storage/{{ $image->image }}">
+        @endforeach
       </div>
     </div>
     <div class="col-lg-6">

@@ -42,10 +42,10 @@ class Event extends Model
         return $query->where('published', 'yes');
     }
 
-    // public function eventsimage()
-    // {
-    //     return $this-> hasMany('App\Eventsimage', 'event_id');
-    // }
+    public function eventimages()
+    {
+        return $this-> hasMany('App\EventImage', 'event_id');
+    }
 
     public function race()
     {

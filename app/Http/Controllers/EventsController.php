@@ -19,8 +19,7 @@ class EventsController extends Controller
 
     public function details($id)
     {
-        $event = Event::find($id)->first();
-        
+        $event = Event::find($id)->with('eventimages')->first();
         return view('event-details', ['event' => $event]);
     }
 
