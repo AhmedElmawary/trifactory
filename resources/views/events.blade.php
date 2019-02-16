@@ -13,10 +13,18 @@
 
     @foreach($events as $event)
     <div class="col-lg-12 event-card">
-      <img class="event-cover" src="/images/placeholder-dark.svg" alt="Event Cover">
+      @if($event->eventimages()->cover()->first())
+        <img class="event-cover" src="/storage/{{ $event->eventimages()->cover()->first()->image }}" alt="Event Cover">
+      @else
+        <img class="event-cover" src="/images/placeholder-dark.svg" alt="Event Cover">
+      @endif
       <a href="/event-details/{{$event->id}}">
         <div class="d-flex justify-content-center align-items-center flex-column event-details left">
-          <img src="/images/placeholder.svg" alt="Event Thumb" class="event-thumb">
+          @if($event->eventimages()->thumbnail()->first())
+            <img src="/storage/{{ $event->eventimages()->thumbnail()->first()->image }}" alt="Event Thumb" class="event-thumb">
+          @else
+            <img src="/images/placeholder.svg" alt="Event Thumb" class="event-thumb">
+          @endif
         </div>
         <div class="d-flex justify-content-center align-items-center flex-column event-details right">
           <h5>{{$event->name}}</h5>

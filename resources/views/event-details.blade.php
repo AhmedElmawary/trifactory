@@ -2,7 +2,7 @@
 @section('content')
 <!-- Start Content -->
 <form id="add_to_cart" method="POST" action="{{ url('/cart') }}">
-    @csrf
+@csrf
 <section class="event-summary container">
   <div class="row">
     <div class="col-lg-6 order-lg-1">

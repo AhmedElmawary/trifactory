@@ -17,6 +17,8 @@ class Eventsimages extends Migration
             $table->increments('id');
             $table->string('event_id');
             $table->string('image');
+            $table->string('cover')->nullable();
+            $table->string('thumbnail')->nullable();
             $table->timestamps();
         });
         //

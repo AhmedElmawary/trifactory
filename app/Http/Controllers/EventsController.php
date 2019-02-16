@@ -12,8 +12,7 @@ class EventsController extends Controller
 {
     public function index()
     {
-        $events = Event::published()->get();
-        
+        $events = Event::with('eventimages')->published()->get();
         return view('events', ['events' => $events]);
     }
 

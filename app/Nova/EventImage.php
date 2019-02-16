@@ -8,6 +8,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\File;
 use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Boolean;
 
 use Laravel\Nova\Fields\BelongsTo;
 
@@ -49,6 +50,12 @@ class EventImage extends Resource
     {
         return [
             Image::make('Image', 'image'),
+            Boolean::make('Cover', 'cover')
+            ->trueValue('yes')
+            ->falseValue('no'),
+            Boolean::make('Thumbnail', 'thumbnail')
+            ->trueValue('yes')
+            ->falseValue('no'),
         ];
     }
 
