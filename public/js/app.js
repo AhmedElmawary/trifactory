@@ -173,7 +173,7 @@ $(document).ready(function() {
         $('#add_to_cart').submit(function (e) {
           $.ajax({
               type: $('#add_to_cart').attr('method'),
-              url: $('#add_to_cart').attr('action'),
+              url: $('#add_to_cart').attr('action').replace("http://", "https://"),
               data: $('#add_to_cart').serialize(),
               success: function (data) {
                   $("#add_to_cart").get(0).reset();
