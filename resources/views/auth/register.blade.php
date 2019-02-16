@@ -46,7 +46,7 @@
 
                     <div class="input-group">
                         <input
-                            placeholder="E-Mail"
+                            placeholder="E-mail"
                             id="email"
                             type="email"
                             class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
