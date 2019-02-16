@@ -85,13 +85,13 @@
                     role="tabpanel"
                     aria-labelledby="pills-info-tab"
                 >
+                    <form method="POST" action="{{ url('/profile/update') }}">
+                    @csrf
                     <div class="row">
                         <div class="col-lg-6 mb-5">
                             <label class="input-label">First Name</label>
 
                             <div class="input-group">
-                                <form method="POST" action="{{ url('/profile/update') }}">
-                                @csrf
                                 <input
                                     name="firstname"
                                     required
@@ -173,15 +173,17 @@
                             <button type="submit" class="btn btn-dark float-right">
                                 Save Changes
                             </button>
-                            </form>
                         </div>
+                    </div>   
+                    </form>
+                    <form method="POST" action="{{ url('/profile/password') }}">
+                    @csrf
+                    <div class="row">
                         <div class="col-lg-12">
                             <label class="input-label">Password Change</label>
                         </div>
                         <div class="col-lg-6 mb-5">
                             <div class="input-group">
-                                <form method="POST" action="{{ url('/profile/password') }}">
-                                @csrf
                                 <input
                                     name="password"
                                     type="password"
@@ -218,9 +220,9 @@
                             <button type="submit" class="btn btn-dark float-right">
                                 Change Password
                             </button>
-                            </form>
                         </div>
                     </div>
+                    </form>
                 </div>
                 <!-- Rankings -->
                 <!-- <div
