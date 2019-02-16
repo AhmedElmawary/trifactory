@@ -212,7 +212,6 @@ class CartController extends Controller
                 'conditions' => [],
                 'attributes' => $attributes
             ));
-
         }
 
         return redirect()->action(
