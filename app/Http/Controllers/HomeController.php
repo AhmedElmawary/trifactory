@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Event;
+use App\Gallery;
 
 class HomeController extends Controller
 {
@@ -24,7 +25,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $gallery = Gallery::latest('created_at')->with('galleryimage')->first();
         $upcomingEvents = Event::upcomming()->published()->get();
-        return view('home', ['upcomingEvents' => $upcomingEvents]);
+
+        $data = [
+            'gallery' => $gallery,
+            'upcomingEvents' => $upcomingEvents,
+        ];
+        
+        return view('home', $data);
     }
 }

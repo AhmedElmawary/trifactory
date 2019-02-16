@@ -59,13 +59,11 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="home-gallery">
-        
-        <img class="gallery-image" src="images/placeholder.svg" alt="Gallery Image">
-        
-        <img class="gallery-image" src="images/placeholder.svg" alt="Gallery Image">
-        
-        <img class="gallery-image" src="images/placeholder.svg" alt="Gallery Image">
-        
+        @if ($gallery)
+          @foreach($gallery->galleryimage as $image)
+            <img class="gallery-image" src="/storage/{{ $image->image }}" alt="Gallery Image">
+          @endforeach
+        @endif
       </div>
     </div>
   </div>
