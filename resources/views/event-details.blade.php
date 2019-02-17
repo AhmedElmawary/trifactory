@@ -176,8 +176,7 @@
         </button>
       </div>
       <div class="content">
-        <p class="modal-text">Whether its a triathlon, marathon, duathlon, aquathlon, or any other race – we bring
-          endurance sports to you. We organise our own events and manage others on behalf of our partners</p>
+        <p class="modal-text"></p>
         <a href="/cart" class="btn btn-dark light">Proceed to Checkout</a>
         <a href="/events" class="btn btn-clear text-dark">Explore More Events</a>
       </div>
