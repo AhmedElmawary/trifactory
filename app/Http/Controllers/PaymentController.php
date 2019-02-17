@@ -29,9 +29,12 @@ class PaymentController extends Controller
             }
         }
 
+        $user = Auth::user();
+
         $order = new Order();
-        $order->id = uniqid('TFV-');
+        $order->id = uniqid('TFT-');
         $order->totalCost = $cartTotal;
+        $order->user_id = $user->id;
         $order->meta = json_encode($meta);
         
         $order->save();
@@ -52,8 +55,11 @@ class PaymentController extends Controller
         $meta->user_email = $inputs["recipient_email"];
         $meta[$item['id']]->paymentMethod = $paymentMethod;
         
+        $user = Auth::user();
+
         $order = new Order();
         $order->id = uniqid('TFV-');
+        $order->user_id = $user->id;
         $order->totalCost = $inputs["qty"] * $inputs["discount_amount"];
         $order->meta = json_encode($meta);
 
@@ -173,16 +179,27 @@ class PaymentController extends Controller
         $order = Order::wherePaymobOrderId($orderId)->first();
         $order->success = $request->success;
         $order->save();
-
-        $meta = json_decode($order->meta);
         
-        if (property_exists($meta, 'type')) {
-            event(new VoucherPurchased($meta));
-        } else {
-            $user = Auth::user();
-            foreach ($meta as $ticketId => $ticket) {
-                event(new TicketPurchased($ticketId, $ticket, $user));
+        if ($order->success === 'true') {
+            $meta = json_decode($order->meta);
+        
+            if (property_exists($meta, 'type')) {
+                event(new VoucherPurchased($meta));
+            } else {
+                $user = Auth::user();
+                foreach ($meta as $ticketId => $ticket) {
+                    event(new TicketPurchased($ticketId, $ticket, $user));
+                }
             }
+
+            \Cart::clear();
         }
+
+        return $this->success($order);
+    }
+
+    public function success($order)
+    {
+        return view('payment-success', ['order' => $order]);
     }
 }
