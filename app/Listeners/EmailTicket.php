@@ -66,7 +66,15 @@ class EmailTicket
             
             $other = true;
             
-            Mail::to($ticket->$email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, $fromUser, $newAccount));
+            Mail::to($ticket->$email)->send(new SendTicketEmail(
+                $ticketId,
+                $user,
+                $ticket,
+                $self,
+                $other,
+                $fromUser,
+                $newAccount
+            ));
         }
     }
 }
