@@ -8,8 +8,10 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 use App\Events\VoucherPurchased;
+use App\Events\TicketPurchased;
 use App\Events\UserRegistered;
 
+use App\Listeners\EmailTicket;
 use App\Listeners\CreateVouchers;
 use App\Listeners\EmailVoucherBuyer;
 use App\Listeners\EmailNewUser;
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserRegistered::class => [
             EmailNewUser::class,
+        ],
+        TicketPurchased::class => [
+            EmailTicket::class,
         ],
         VoucherPurchased::class => [
             CreateVouchers::class,

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use PayMob;
 use App\Order;
 use App\Events\VoucherPurchased;
+use App\Events\TicketPurchased;
 use Auth;
 
 class PaymentController extends Controller
@@ -14,7 +15,7 @@ class PaymentController extends Controller
     {
 
         $inputs = $request->all();
-        // $inputs['paymet_method'];
+        $paymentMethod = $inputs['paymet_method'];
         
         $cartTotal = \Cart::getTotal();
         $cartItems = \Cart::getContent()->toArray();
@@ -22,6 +23,7 @@ class PaymentController extends Controller
         foreach ($cartItems as $item) {
             $meta[$item['id']] = new \stdClass();
             $meta[$item['id']]->type = 'ticket';
+            $meta[$item['id']]->paymentMethod = $paymentMethod;
             foreach ($item['attributes'] as $key => $attribute) {
                 $meta[$item['id']]->$key = $attribute;
             }
@@ -33,7 +35,7 @@ class PaymentController extends Controller
         $order->meta = json_encode($meta);
         
         $order->save();
-
+        
         return $this->makePayment($order);
     }
 
@@ -41,13 +43,14 @@ class PaymentController extends Controller
     {
 
         $inputs = $request->all();
-        // $inputs['paymet_method'];
+        $paymentMethod = $inputs['paymet_method'];
         
         $meta = new \stdClass();
         $meta->type = 'voucher';
         $meta->qty = $inputs["qty"];
         $meta->discount_amount = $inputs["discount_amount"];
         $meta->user_email = $inputs["recipient_email"];
+        $meta[$item['id']]->paymentMethod = $paymentMethod;
         
         $order = new Order();
         $order->id = uniqid('TFV-');
@@ -176,8 +179,9 @@ class PaymentController extends Controller
         if (property_exists($meta, 'type')) {
             event(new VoucherPurchased($meta));
         } else {
-            foreach ($meta as $key => $ticket) {
-                dd($ticket);
+            $user = Auth::user();
+            foreach ($meta as $ticketId => $ticket) {
+                event(new TicketPurchased($ticketId, $ticket, $user));
             }
         }
     }

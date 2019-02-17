@@ -182,6 +182,7 @@ class CartController extends Controller
                 ];
             }
             
+            $attributes['Event'] = $race->event()->first()->name;
             $attributes['Race'] = $race->name;
             $attributes['Ticket Type'] = $ticket->name;
             $attributes['Price'] = $ticket->price;
