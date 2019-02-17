@@ -35,17 +35,19 @@ class EmailTicket
         $user = $event->user;
         $self = false;
         $other = false;
+        $newAccount = false;
 
         $email = 'E-mail';
 
         if ($user->email === $ticket->$email) {
             $self = true;
-            Mail::to($user->email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, null));
+            Mail::to($user->email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, null, null));
         } else {
-            Mail::to($user->email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, null));
+            Mail::to($user->email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, null, null));
             $fromUser = $user;
             $user = User::where('email', $ticket->$email)->first();
             if (!$user) {
+                $newAccount = true;
                 $name = explode(" ", $ticket->For);
                 
                 if (!$name[1]) {
@@ -64,7 +66,7 @@ class EmailTicket
             
             $other = true;
             
-            Mail::to($ticket->$email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, $fromUser));
+            Mail::to($ticket->$email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, $fromUser, $newAccount));
         }
     }
 }

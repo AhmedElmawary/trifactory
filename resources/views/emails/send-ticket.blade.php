@@ -46,8 +46,12 @@
             </div><br>
 
             <div>
-                @if($other)
-                    To complete your account and benefit from the The TriFactory’s ranking program, <a href="{{ url('/password/reset') }}">click here</a><br>
+                @if($other) 
+                    @if($newAccount) 
+                        To complete your account and benefit from the The TriFactory’s ranking program, <a href="{{ url('/password/reset') }}">click here</a><br>
+                    @else
+                    To access your account and benefit from the The TriFactory’s ranking program, <a href="{{ url('/login') }}">click here</a><br>
+                    @endif
                 @endif
             </div><br>
             

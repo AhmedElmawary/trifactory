@@ -17,13 +17,14 @@ class SendTicketEmail extends Mailable
     public $self;
     public $other;
     public $fromUser;
+    public $newAccount;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($ticketId, $user, $ticket, $self, $other, $fromUser)
+    public function __construct($ticketId, $user, $ticket, $self, $other, $fromUser, $newAccount)
     {
         $this->user = $user;
         $this->ticketId = $ticketId;
@@ -31,6 +32,7 @@ class SendTicketEmail extends Mailable
         $this->self = $self;
         $this->other = $other;
         $this->fromUser = $fromUser;
+        $this->newAccount = $newAccount;
     }
 
     /**
@@ -49,6 +51,7 @@ class SendTicketEmail extends Mailable
                     'self' => $this->self,
                     'other' => $this->other,
                     'fromUser' => $this->fromUser,
+                    'newAccount' => $this->newAccount,
                 ]);
     }
 }
