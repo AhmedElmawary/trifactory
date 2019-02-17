@@ -23,7 +23,11 @@
     <div class="row">
         @foreach($events as $event)
         <div class="col-lg-6 event-card">
-        <img src="images/placeholder.svg" alt="Event Image">
+        @if($event->eventimages()->cover()->first())
+          <img src="/storage/{{ $event->eventimages()->cover()->first()->image }}" alt="Event Image">
+        @else
+          <img src="/images/placeholder.svg" alt="Event Image">
+        @endif
         <a href="event-details/{{$event->id}}">
           <div class="d-flex justify-content-center align-items-center flex-column event-details">
             <h5>{{$event->name}}</h5>
