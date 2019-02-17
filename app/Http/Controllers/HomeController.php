@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Event;
 use App\Gallery;
+use App\User;
+
+use App\Events\UserRegistered;
+use App\Events\VoucherPurchased;
+use App\Mail\SendWelcomeEmail;
+use Mail;
 
 class HomeController extends Controller
 {
@@ -34,5 +40,18 @@ class HomeController extends Controller
         ];
         
         return view('home', $data);
+    }
+
+    public function test()
+    {
+
+        $user = User::first();
+        // Mail::to($user->email)->send(new SendWelcomeEmail());
+
+        // $meta = "";
+        $event = new UserRegistered($user);
+        event($event);
+
+        // $event = new VoucherPurchased($meta);
     }
 }

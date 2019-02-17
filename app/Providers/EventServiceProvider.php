@@ -8,8 +8,11 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 use App\Events\VoucherPurchased;
+use App\Events\UserRegistered;
+
 use App\Listeners\CreateVouchers;
 use App\Listeners\EmailVoucherBuyer;
+use App\Listeners\EmailNewUser;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -21,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        UserRegistered::class => [
+            EmailNewUser::class,
         ],
         VoucherPurchased::class => [
             CreateVouchers::class,
