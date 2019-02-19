@@ -34,10 +34,12 @@ class SendVoucher extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.send-voucher', [
-            'meta' =>  $this->meta,
-            'user' =>  $this->user,
-            'voucher' =>  $this->voucher
-        ]);
+        return $this
+                ->subject('The Trifactory - Voucher information')
+                ->view('emails.send-voucher', [
+                    'meta' =>  $this->meta,
+                    'user' =>  $this->user,
+                    'voucher' =>  $this->voucher
+                ]);
     }
 }
