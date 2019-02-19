@@ -11,14 +11,16 @@ class VoucherPurchase extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $event;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($event)
     {
-        //
+        $this->event = $event;
     }
 
     /**
@@ -28,6 +30,9 @@ class VoucherPurchase extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.voucher-purchase');
+        return $this->view('emails.voucher-purchase', [
+            'meta' => $this->event->meta,
+            'user' => $this->event->user
+        ]);
     }
 }

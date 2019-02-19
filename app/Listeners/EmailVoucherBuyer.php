@@ -29,6 +29,6 @@ class EmailVoucherBuyer
     public function handle($event)
     {
         
-        Mail::to('buyer@tf.com')->send(new VoucherPurchase());
+        Mail::to($event->user->email)->send(new VoucherPurchase($event));
     }
 }

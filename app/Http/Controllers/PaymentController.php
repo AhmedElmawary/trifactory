@@ -52,8 +52,11 @@ class PaymentController extends Controller
         $meta->type = 'voucher';
         $meta->qty = $inputs["qty"];
         $meta->discount_amount = $inputs["discount_amount"];
-        $meta->user_email = $inputs["recipient_email"];
-        $meta[$item['id']]->paymentMethod = $paymentMethod;
+        $meta->recipient_email = $inputs["recipient_email"];
+        $meta->recipient_name = $inputs["recipient_name"];
+        $meta->recipient_phone = $inputs["recipient_phone"];
+        $meta->message = $inputs["message"];
+        $meta->paymentMethod = $paymentMethod;
         
         $user = Auth::user();
 
@@ -181,12 +184,12 @@ class PaymentController extends Controller
         $order->save();
         
         if ($order->success === 'true') {
+            $user = Auth::user();
             $meta = json_decode($order->meta);
-        
+            
             if (property_exists($meta, 'type')) {
-                event(new VoucherPurchased($meta));
+                event(new VoucherPurchased($meta, $user));
             } else {
-                $user = Auth::user();
                 foreach ($meta as $ticketId => $ticket) {
                     event(new TicketPurchased($ticketId, $ticket, $user));
                 }

@@ -11,14 +11,20 @@ class SendVoucher extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $meta;
+    public $user;
+    public $voucher;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($meta, $user, $voucher)
     {
-        //
+        $this->meta = $meta;
+        $this->user = $user;
+        $this->voucher = $voucher;
     }
 
     /**
@@ -28,6 +34,10 @@ class SendVoucher extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.send-voucher');
+        return $this->view('emails.send-voucher', [
+            'meta' =>  $this->meta,
+            'user' =>  $this->user,
+            'voucher' =>  $this->voucher
+        ]);
     }
 }

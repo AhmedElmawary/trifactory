@@ -86,3 +86,10 @@ nav .navbar-nav .nav-item .nav-link span {
 .invalid-feedback {
   display: block;
 }
+
+.purchase-voucher-view section .cart-payment-container {
+  background-color: #F5F5F5;
+  width: 100%;
+  padding: 20px;
+  margin-top: 50px;
+}

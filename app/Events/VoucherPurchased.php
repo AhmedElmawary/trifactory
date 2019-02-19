@@ -15,15 +15,17 @@ class VoucherPurchased
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $meta;
+    public $user;
     
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($meta)
+    public function __construct($meta, $user)
     {
         $this->meta = $meta;
+        $this->user = $user;
     }
 
     /**

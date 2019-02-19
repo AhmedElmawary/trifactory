@@ -38,6 +38,15 @@
   </div>
 
   <div class="row">
+    <div class="col-lg-6">
+        <label class="input-label">Enter recipient phone</label>
+          <div class="input-group">
+            <input required name="recipient_phone" type="text" class="form-control " placeholder="Phone">
+          </div>
+        </div>
+    </div>
+
+  <div class="row">
       <div class="col-lg-6">
         <label class="input-label">Message</label>
         <div class="input-group">
@@ -86,6 +95,35 @@
         <input name="qty" type="number" class="form-control form-number" value="1" min="1" max="10">
       </div>
 
+    </div>
+  </div>
+
+  <div class="cart-payment-container">
+    <div class="form-check mb-2">
+        <input
+            class="form-check-input"
+            type="radio"
+            id="paymet_method_cash"
+            name="paymet_method"
+            value="cash"
+        />
+        <label class="form-check-label" for="paymet_method_cash"
+            >Cash</label
+        >
+    </div>
+    
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="radio"
+            id="paymet_method_card"
+            name="paymet_method"
+            value="card"
+            checked
+        />
+        <label class="form-check-label" for="paymet_method_card"
+            >Credit Card</label
+        >
     </div>
   </div>
 </section>
