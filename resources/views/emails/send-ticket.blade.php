@@ -1,75 +1,148 @@
-<!DOCTYPE html>
-<html>
-
-    <body>
-    <section class="container no-height">
-   
-    <div class="row">
-        <div class="col-lg-6">
-            <div>Dear {{ $user->name }},</div><br>
+@extends('layouts.email')
+@section('content')
+    <tr>
+        <td>
+            <span style="font-family: AvenirNext-Bold;font-size: 24px;color: #000000;">
+                Dear {{ $user->name }},
+            </span>
+        </td>
+    </tr>
+    <tr style="height:10px;"></tr>
+    <tr>
+        <td>
             @if($other === false)
                 @if($self)
-                <div>
-                    Thank you for registering in {{ $ticket->Event }}.  This is your registration confirmation for {{ $ticket->Event }}.
-                </div><br>
+                    <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">
+                        Thank you for registering in 
+                    </span>
+                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">{{$ticket->Event}}</span>
+                    <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">.  This is your registration confirmation for </span>   
+                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">{{$ticket->Event}}</span>
+                    <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">.</span> 
                 @else
-                <div>
-                You successfully registered in {{ $ticket->Event }}, a ticket to {{ $ticket->Race }} for {{ $ticket->For }}
-                </div><br>
+                    <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">
+                        You successfully registered in
+                    </span>
+                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">{{$ticket->Event}}</span>
+                    <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">, a ticket to </span>   
+                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">{{$ticket->Race}}</span>
+                    <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">
+                        for 
+                    </span> 
+                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">
+                        {{$ticket->For}}
+                    </span>
                 @endif
             @else
                 @if($fromUser)
-                <div>
-                    You have successfully registered to {{ $fromUser->name }} to {{ $ticket->Race }}.
-                </div><br>
+                    <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">
+                        You successfully registered to
+                    </span>
+                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">
+                        {{ $fromUser->name }}
+                    </span>
+                    <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">
+                        to 
+                    </span>   
+                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">{{$ticket->Race}}</span>
+                    <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">.</span> 
                 @endif
             @endif
-
-            <div>
-                Ticket Information:<br>
-                <br>
-                1. <b>Ticket ID: </b>{{ $ticketId }} <br>
-                2. <b>Event: </b> {{ $ticket->Event }} <br>
-                3. <b>Race: </b>{{ $ticket->Race }} <br>
-                4. <b>Participant Name: </b>{{ $ticket->For }} <br>
-                5. <b>Price: </b>EGP {{ $ticket->Price }} <br>
-                6. <b>Payment Method: </b>@if($ticket->paymentMethod === 'card')
-                    Credit Card.
-                    @else
-                        Cash
-                    @endif
-                    <br> 
-                    @if($ticket->paymentMethod === 'cash')
-                    Your race ticket will be confirmed and a race number will be assigned when the payment is completed successfully.<br>
-                    @endif
-
-            </div><br>
-
-            <div>
+        </td>
+    </tr>
+    <tr style="height:10px;"></tr>
+    <tr>
+        <td>
+            <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">
+                Ticket Information:
+            </span>
+        </td>
+    </tr>
+    <tr style="height:10px;"></tr>
+    <tr>
+        <td>
+            <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">
+                <ol>
+                        <li style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                            <b>Ticket ID: </b>
+                        </span>
+                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;">
+                            <b>{{ $ticketId }}</b>
+                        </span>
+                    </li>
+                    <li style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                            <b>Event: </b>
+                        </span>
+                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;">
+                            <b>{{ $ticket->Event }}</b>
+                        </span>
+                    </li>
+                    <li style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                            <b>Race: </b>
+                        </span>
+                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;">
+                            <b>{{ $ticket->Race }}</b>
+                        </span>
+                    </li>
+                    <li style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                            <b>Participant Name: </b>
+                        </span>
+                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;">
+                            <b>{{ $ticket->For }}</b>
+                        </span>
+                    </li>
+                    <li style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                            <b>Price: </b>
+                        </span>
+                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;">
+                            <b>EGP {{ $ticket->Price }}</b>
+                        </span>
+                    </li>
+                    <li style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                            <b>Payment Method: </b>
+                        </span>
+                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;">
+                            <b>
+                                @if($ticket->paymentMethod === 'card')
+                                    Credit Card.
+                                @else
+                                    Cash
+                                @endif
+                            </b>
+                        </span>
+                    </li>
+                </ol>
+            </span>
+        </td>
+    </tr>
+    @if($ticket->paymentMethod === 'cash')
+    <tr style="height:10px;"></tr>
+    <tr>
+        <td>
+            <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                Your race ticket will be confirmed and a race number will be assigned when the payment is completed successfully.<br>
+            </span>
+        </td>
+    </tr>
+    @endif
+    <tr style="height:10px;"></tr>
+    <tr>
+        <td>
+            <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
                 @if($other) 
                     @if($newAccount) 
-                        To complete your account and benefit from the The TriFactory’s ranking program, <a href="{{ url('/password/reset') }}">click here</a><br>
+                        To complete your account and benefit from the The TriFactory’s ranking program, <a style="text-decoration: none;color: #D31D00;" href="{{ url('/password/reset') }}">click here</a>
                     @else
-                    To access your account and benefit from the The TriFactory’s ranking program, <a href="{{ url('/login') }}">click here</a><br>
+                        To access your account and benefit from the The TriFactory’s ranking program, <a style="text-decoration: none;color: #D31D00;" href="{{ url('/login') }}">click here</a>
                     @endif
                 @endif
-            </div><br>
-            
-            <div>
-                --<br>
-                Best Regards,<br>
-                The TriFactory Team
-            </div><br>
-            <div>
-                <a href="{{url('/')}}">Webiste</a><br>
-                <a href="https://www.facebook.com/thetrifactory">Facebook</a><br>
-                <a href="https://www.instagram.com/thetrifactory/">Instagram</a><br>
-            </div>
-        </div>
-    </div>
-
-    </section>
-        
-    </body>
-
-</html>
+            </span>
+        </td>
+    </tr>
+@endsection

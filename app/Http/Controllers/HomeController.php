@@ -46,12 +46,8 @@ class HomeController extends Controller
     {
 
         $user = User::first();
-        // Mail::to($user->email)->send(new SendWelcomeEmail());
-
-        // $meta = "";
+        
         $event = new UserRegistered($user);
         event($event);
-
-        // $event = new VoucherPurchased($meta);
     }
 }
