@@ -9,11 +9,11 @@ class UserRace extends Model
     protected $table = 'user_races';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'user_id', 
-        'race_id', 
-        'tracker_id', 
-        'ticket_id', 
-        'created_at', 
+        'user_id',
+        'race_id',
+        'tracker_id',
+        'ticket_id',
+        'created_at',
         'updated_at',
     ];
     

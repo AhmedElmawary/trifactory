@@ -37,11 +37,11 @@ class CreateUserRace
         $meta = json_decode($event->order->meta);
 
         $userRace = new UserRace;
-        $userRace->order_id = $order->id; 
-        $userRace->user_id = $user->id; 
-        $userRace->race_id = $meta->$ticketId->_race_id; 
-        $userRace->ticket_id = $meta->$ticketId->_ticket_id; 
-        $userRace->save(); 
+        $userRace->order_id = $order->id;
+        $userRace->user_id = $user->id;
+        $userRace->race_id = $meta->$ticketId->_race_id;
+        $userRace->ticket_id = $meta->$ticketId->_ticket_id;
+        $userRace->save();
 
         $metaArray =  (array) $meta->$ticketId;
 
@@ -49,7 +49,6 @@ class CreateUserRace
         $metas = array_values($metas);
 
         foreach ($metas as $meta) {
-
             $question = Question::where("id", $meta)
                             ->with('answertype', 'answervalue')
                             ->first();
@@ -63,8 +62,7 @@ class CreateUserRace
             if (count($answervalues)) {
                 $answer = $answervalues->firstWhere('id', $metaArray['_qid'.$meta]);
                 $questionAnswer->answer_value = $answer->value;
-            }
-            else {
+            } else {
                 $questionAnswer->answer_value = $metaArray['_qid'.$meta];
             }
             

@@ -4,7 +4,7 @@ namespace App\Nova\Metrics;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Metrics\Value;
-Use App\User;
+use App\User;
 
 class NewUsers extends Value
 {
