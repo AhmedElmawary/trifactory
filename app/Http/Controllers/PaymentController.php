@@ -188,10 +188,10 @@ class PaymentController extends Controller
             $meta = json_decode($order->meta);
             
             if (property_exists($meta, 'type')) {
-                event(new VoucherPurchased($meta, $user));
+                event(new VoucherPurchased($order, $meta, $user));
             } else {
                 foreach ($meta as $ticketId => $ticket) {
-                    event(new TicketPurchased($ticketId, $ticket, $user));
+                    event(new TicketPurchased($order, $ticketId, $ticket, $user));
                 }
             }
 

@@ -16,16 +16,18 @@ class VoucherPurchased
 
     public $meta;
     public $user;
+    public $order;
     
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($meta, $user)
+    public function __construct($order, $meta, $user)
     {
         $this->meta = $meta;
         $this->user = $user;
+        $this->order = $order;
     }
 
     /**

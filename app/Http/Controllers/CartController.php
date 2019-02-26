@@ -186,6 +186,8 @@ class CartController extends Controller
             $attributes['Race'] = $race->name;
             $attributes['Ticket Type'] = $ticket->name;
             $attributes['Price'] = $ticket->price;
+            $attributes['_race_id'] = $race->id;
+            $attributes['_ticket_id'] = $ticket->id;
             
             $metas = preg_filter('/^meta_(.*)/', '$1', array_keys($ticketValues));
             $metas = array_values($metas);
@@ -197,11 +199,14 @@ class CartController extends Controller
                 
                 $answervalues = $question->answervalue()->get();
 
+                // for lists
                 if (count($answervalues)) {
                     $answer = $answervalues->firstWhere('id', $ticketValues['meta_'.$meta]);
                     $attributes[$question->question_text] = $answer->value;
+                    $attributes["_qid" . $question->id] = $answer->id;
                 } else {
                     $attributes[$question->question_text] = $ticketValues['meta_'.$meta];
+                    $attributes["_qid" . $question->id] = $ticketValues['meta_'.$meta];
                 }
             }
             

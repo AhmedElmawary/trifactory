@@ -167,10 +167,8 @@ $(document).ready(function() {
     });
     // Added to cart modal
     $('#open_added_to_cart_modal').click(function(e) {
-      $('#open_added_to_cart_modal').unbind();
       if($('#add_to_cart')[0].checkValidity())
       {
-        e.preventDefault();
         $('#add_to_cart').submit(function (e) {
           $.ajax({
               type: $('#add_to_cart').attr('method'),
@@ -185,9 +183,10 @@ $(document).ready(function() {
               },
           });
           return false;
-        });
+        });        
       }
-
+      e.preventDefault();
+      $('#open_added_to_cart_modal').unbind();
     });
 
   }

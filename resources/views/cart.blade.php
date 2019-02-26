@@ -25,9 +25,11 @@
       </span>
       <div class="row">
         @foreach($item['attributes'] as $key => $val)
-        <div class="col-lg-4 mb-2 ticket-data">
-          {{$key}}: <b>{{$val}}</b>
-        </div>
+          @if(strpos($key, '_') === false)
+            <div class="col-lg-4 mb-2 ticket-data">
+              {{$key}}: <b>{{$val}}</b>
+            </div>
+          @endif
         @endforeach
       </div>
       

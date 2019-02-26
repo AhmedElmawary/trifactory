@@ -17,17 +17,19 @@ class TicketPurchased
     public $ticketId;
     public $ticket;
     public $user;
+    public $order;
     
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($ticketId, $ticket, $user)
+    public function __construct($order, $ticketId, $ticket, $user)
     {
         $this->ticketId = $ticketId;
         $this->ticket = $ticket;
         $this->user = $user;
+        $this->order = $order;
     }
 
     /**

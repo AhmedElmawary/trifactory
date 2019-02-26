@@ -11,6 +11,7 @@ use App\Events\VoucherPurchased;
 use App\Events\TicketPurchased;
 use App\Events\UserRegistered;
 
+use App\Listeners\CreateUserRace;
 use App\Listeners\EmailTicket;
 use App\Listeners\CreateVouchers;
 use App\Listeners\EmailVoucherBuyer;
@@ -32,6 +33,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         TicketPurchased::class => [
             EmailTicket::class,
+            CreateUserRace::class,
         ],
         VoucherPurchased::class => [
             CreateVouchers::class,
