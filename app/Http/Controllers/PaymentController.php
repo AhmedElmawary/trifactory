@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use PayMob;
 use App\Order;
 use App\Voucher;
+use App\UserCredit;
 use App\Events\VoucherPurchased;
 use App\Events\TicketPurchased;
 use Auth;
@@ -25,7 +26,7 @@ class PaymentController extends Controller
         $voucher = \Cart::getCondition('Voucher');
 
         if ($credit) {
-            $meta['credit'] = $credit->getAttributes();
+            $meta['credit'] = $credit->parsedRawValue;
         }
 
         if ($voucher) {
@@ -199,9 +200,13 @@ class PaymentController extends Controller
             $meta = json_decode($order->meta);
             
             if (property_exists($meta, 'credit')) {
-                // do something
+                $userCredit = new UserCredit;
+                $userCredit->amount = $meta->credit * -1;
+                $userCredit->action = $order->id;
+                $userCredit->user_id = $user->id;
+                $userCredit->save();
             }
-
+            
             if (property_exists($meta, 'voucher')) {
                 $voucher = Voucher::where('code', $meta->voucher->code)->first();
                 if ($voucher) {
@@ -222,6 +227,7 @@ class PaymentController extends Controller
             }
 
             \Cart::clear();
+            \Cart::clearCartConditions();
         }
 
         return $this->success($order);

@@ -134,6 +134,7 @@ class CartController extends Controller
     public function emptyCart(Request $request)
     {
         \Cart::clear();
+        \Cart::clearCartConditions();
     }
 
     public function removeFromCart(Request $request)
