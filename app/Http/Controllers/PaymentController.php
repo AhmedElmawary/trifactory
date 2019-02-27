@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use PayMob;
+use App\PayMob\PayMobCash;
 use App\Order;
 use App\Voucher;
 use App\UserCredit;
@@ -53,7 +54,7 @@ class PaymentController extends Controller
         if ($cartTotal > 0) {
             $order->save();
             
-            return $this->makePayment($order);
+            return $this->makePayment($order, $paymentMethod);
         } else {
             $order->success = 'true';
             $order->save();
@@ -87,10 +88,10 @@ class PaymentController extends Controller
 
         $order->save();
 
-        return $this->makePayment($order);
+        return $this->makePayment($order, $paymentMethod);
     }
 
-    public function makePayment($order)
+    public function makePayment($order, $paymentMethod)
     {
         $auth = PayMob::authPaymob();
         
@@ -104,21 +105,40 @@ class PaymentController extends Controller
         $order->update(['paymob_order_id' => $paymobOrder->id]);
 
         $user = Auth::user();
+
+        if ($paymentMethod === 'card') {
+            $paymentKey = PayMob::getPaymentKeyPaymob(
+                $auth->token, // from step 1.
+                $order->totalCost * 100, // total amount by cents/piasters.
+                $paymobOrder->id // paymob order id from step 2.
+            );
+
+            return view('payment', ['paymentKey' => $paymentKey]);
+        } else {
+            $pbc = new PayMobCash();
+            $paymentKey = $pbc->getCashPaymentKeyPaymob(
+                $auth->token, // from step 1.
+                $order->totalCost * 100, // total amount by cents/piasters.
+                $paymobOrder->id, // paymob order id from step 2.
+                // For billing data
+                $user->email,
+                $user->firstname,
+                $user->lastname,
+                $user->phone,
+                'Cairo', // City (helio)
+                'EG', // Counry
+                'Cairo' // State (list)
+            );
+
+            $payment = $pbc->makePayment($paymentKey->token);
+
+            $this->consumeCartConditions($order);
             
-        $paymentKey = PayMob::getPaymentKeyPaymob(
-            $auth->token, // from step 1.
-            $order->totalCost * 100, // total amount by cents/piasters.
-            $paymobOrder->id // paymob order id from step 2.
-            // For billing data
-            // $user->email, // optional
-            // $user->firstname, // optional
-            // $user->lastname, // optional
-            // $user->phone // optional
-            // $city->name, // optional
-            // $country->name // optional
-        );
-        
-        return view('payment', ['paymentKey' => $paymentKey]);
+            \Cart::clear();
+            \Cart::clearCartConditions();
+
+            return $this->successCash($order);
+        }
     }
 
     /**
@@ -205,6 +225,30 @@ class PaymentController extends Controller
         return $this->postInvoice($order);
     }
 
+    public function consumeCartConditions($order)
+    {
+
+        $user = Auth::user();
+        $meta = json_decode($order->meta);
+
+        if (property_exists($meta, 'credit')) {
+            $userCredit = new UserCredit;
+            $userCredit->amount = $meta->credit * -1;
+            $userCredit->action = $order->id;
+            $userCredit->user_id = $user->id;
+            $userCredit->save();
+        }
+        
+        if (property_exists($meta, 'voucher')) {
+            $voucher = Voucher::where('code', $meta->voucher->code)->first();
+            if ($voucher) {
+                $voucher->order_id = $order->id;
+                $voucher->usedOn = Carbon::now()->format('Y-m-d H:i:s');
+                $voucher->save();
+            }
+        }
+    }
+
     public function postInvoice($order)
     {
 
@@ -212,22 +256,7 @@ class PaymentController extends Controller
             $user = Auth::user();
             $meta = json_decode($order->meta);
             
-            if (property_exists($meta, 'credit')) {
-                $userCredit = new UserCredit;
-                $userCredit->amount = $meta->credit * -1;
-                $userCredit->action = $order->id;
-                $userCredit->user_id = $user->id;
-                $userCredit->save();
-            }
-            
-            if (property_exists($meta, 'voucher')) {
-                $voucher = Voucher::where('code', $meta->voucher->code)->first();
-                if ($voucher) {
-                    $voucher->order_id = $order->id;
-                    $voucher->usedOn = Carbon::now()->format('Y-m-d H:i:s');
-                    $voucher->save();
-                }
-            }
+            $this->consumeCartConditions($order);
 
             if (property_exists($meta, 'type')) {
                 event(new VoucherPurchased($order, $meta, $user));
@@ -249,5 +278,10 @@ class PaymentController extends Controller
     public function success($order)
     {
         return view('payment-success', ['order' => $order]);
+    }
+
+    public function successCash($order)
+    {
+        return view('cash-success', ['order' => $order]);
     }
 }

@@ -39,4 +39,5 @@ return [
 
     'integration_id' => '2874',
     'iframe_id' => '5895',
+    'cash_integration_id' => '3151',
 ];
