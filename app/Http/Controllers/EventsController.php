@@ -19,7 +19,11 @@ class EventsController extends Controller
     public function details($id)
     {
         $event = Event::find($id)->with('eventimages')->first();
-        return view('event-details', ['event' => $event]);
+        $nationalities = \countries();
+
+        return view('event-details', [
+            'event' => $event,
+        ]);
     }
 
     public function getTicketsByRaceId($id)
@@ -36,5 +40,11 @@ class EventsController extends Controller
         ->get();
         
         return json_encode($raceQuestions);
+    }
+
+    public function getCountries()
+    {
+        
+        return json_encode($nationalities);
     }
 }

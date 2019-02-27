@@ -77,6 +77,16 @@ $(document).ready(function() {
                   });
                   str += '</select>';
                 }
+
+                if(question.answertype.type === 'countries')
+                {
+                  str += '<select class="custom-select " name="'+ meta_field_name + "_" + question.id +'" required>';
+                  str += '<option value="" disabled selected>' + question.question_text + '</option>';
+                  $.each(question.answervalue, function(key, answervalue){
+                    str += '<option value="' + answervalue.id + '">' + answervalue.value + '</option>';
+                  });
+                  str += '</select>';
+                }
                 
                 str += '</div></div>';
 
