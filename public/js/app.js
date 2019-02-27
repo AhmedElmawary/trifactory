@@ -185,7 +185,7 @@ $(document).ready(function() {
           return false;
         });        
       }
-      e.preventDefault();
+      // e.preventDefault();
       $('#open_added_to_cart_modal').unbind();
     });
 
