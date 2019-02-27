@@ -107,6 +107,8 @@ class CartController extends Controller
     {
         $inputs = $request->all();
         $credit = $inputs['credit'];
+
+        $cartTotal = \Cart::getTotal();
         
         $dbCredit = 0;
         // validate credit
@@ -116,6 +118,10 @@ class CartController extends Controller
         }
 
         if ($credit <= $dbCredit) {
+            if ($cartTotal < $credit) {
+                $credit = $cartTotal;
+            }
+
             $condition = new \Darryldecode\Cart\CartCondition(array(
                 'name' => 'Credit',
                 'type' => 'credit',

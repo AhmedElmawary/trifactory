@@ -19,6 +19,7 @@ class Order extends Model
         'paymob_order_id',
         'totalCost',
         'user_id',
+        'success',
         'created_at',
         'updated_at'
     ];

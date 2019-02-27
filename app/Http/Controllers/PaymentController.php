@@ -50,9 +50,16 @@ class PaymentController extends Controller
         $order->user_id = $user->id;
         $order->meta = json_encode($meta);
         
-        $order->save();
-        
-        return $this->makePayment($order);
+        if ($cartTotal > 0) {
+            $order->save();
+            
+            return $this->makePayment($order);
+        } else {
+            $order->success = 'true';
+            $order->save();
+            
+            return $this->postInvoice($order);
+        }
     }
 
     public function buyVouchers(Request $request)
@@ -194,7 +201,13 @@ class PaymentController extends Controller
         $order = Order::wherePaymobOrderId($orderId)->first();
         $order->success = $request->success;
         $order->save();
-        
+
+        return $this->postInvoice($order);
+    }
+
+    public function postInvoice($order)
+    {
+
         if ($order->success === 'true') {
             $user = Auth::user();
             $meta = json_decode($order->meta);
