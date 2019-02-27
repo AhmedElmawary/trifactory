@@ -9,6 +9,7 @@ use Laravel\Nova\NovaApplicationServiceProvider;
 
 use App\Nova\Metrics\NewUsers;
 use App\Nova\Metrics\NewOrders;
+use App\Nova\Metrics\TotalSales;
 use App\Nova\Metrics\NewVouchers;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
@@ -61,6 +62,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     {
         return [
             new NewUsers,
+            new TotalSales,
             new NewOrders,
             new NewVouchers,
         ];
