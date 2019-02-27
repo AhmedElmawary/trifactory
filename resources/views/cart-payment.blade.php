@@ -99,7 +99,7 @@
     <div class="cart-payment-container">
         <form method="POST" action="{{ url('/buy-tickets') }}">
         @csrf
-        <div class="form-check mb-2">
+        <div class="form-check mb-2" @if($cartTotal == 0) style="display: none;" @endif>
             <input
                 class="form-check-input"
                 type="radio"
@@ -112,7 +112,7 @@
             >
         </div>
         
-        <div class="form-check">
+        <div class="form-check" @if($cartTotal == 0) style="display: none;" @endif>
             <input
                 class="form-check-input"
                 type="radio"
