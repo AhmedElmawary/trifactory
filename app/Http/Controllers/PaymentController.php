@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PayMob;
 use App\Order;
+use App\Voucher;
 use App\Events\VoucherPurchased;
 use App\Events\TicketPurchased;
 use Auth;
+use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
@@ -19,7 +21,17 @@ class PaymentController extends Controller
         
         $cartTotal = \Cart::getTotal();
         $cartItems = \Cart::getContent()->toArray();
+        $credit = \Cart::getCondition('Credit');
+        $voucher = \Cart::getCondition('Voucher');
 
+        if ($credit) {
+            $meta['credit'] = $credit->getAttributes();
+        }
+
+        if ($voucher) {
+            $meta['voucher'] = $voucher->getAttributes();
+        }
+        
         foreach ($cartItems as $item) {
             $meta[$item['id']] = new \stdClass();
             $meta[$item['id']]->type = 'ticket';
@@ -28,7 +40,7 @@ class PaymentController extends Controller
                 $meta[$item['id']]->$key = $attribute;
             }
         }
-
+        
         $user = Auth::user();
 
         $order = new Order();
@@ -44,7 +56,6 @@ class PaymentController extends Controller
 
     public function buyVouchers(Request $request)
     {
-
         $inputs = $request->all();
         $paymentMethod = $inputs['paymet_method'];
         
@@ -187,11 +198,26 @@ class PaymentController extends Controller
             $user = Auth::user();
             $meta = json_decode($order->meta);
             
+            if (property_exists($meta, 'credit')) {
+                // do something
+            }
+
+            if (property_exists($meta, 'voucher')) {
+                $voucher = Voucher::where('code', $meta->voucher->code)->first();
+                if ($voucher) {
+                    $voucher->order_id = $order->id;
+                    $voucher->usedOn = Carbon::now()->format('Y-m-d H:i:s');
+                    $voucher->save();
+                }
+            }
+
             if (property_exists($meta, 'type')) {
                 event(new VoucherPurchased($order, $meta, $user));
             } else {
                 foreach ($meta as $ticketId => $ticket) {
-                    event(new TicketPurchased($order, $ticketId, $ticket, $user));
+                    if ($ticketId !== 'credit' && $ticketId !== 'voucher') {
+                        event(new TicketPurchased($order, $ticketId, $ticket, $user));
+                    }
                 }
             }
 

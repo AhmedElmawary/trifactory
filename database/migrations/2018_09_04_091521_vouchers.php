@@ -20,6 +20,7 @@ class Vouchers extends Migration
             $table->string('amount');
             $table->string('sender_id');
             $table->string('user_id');
+            $table->string('order_id')->nullable();
             $table->timestamp('usedOn')->nullable();
             
             $table->timestamps();

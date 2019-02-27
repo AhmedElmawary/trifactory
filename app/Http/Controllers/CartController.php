@@ -79,6 +79,7 @@ class CartController extends Controller
                 $voucher = Voucher::where("code", $code)
                         ->where('user_id', $user->id)
                         ->where('usedOn', null)
+                        ->where('order_id', null)
                         ->first();
 
                 if ($voucher) {

@@ -14,6 +14,11 @@ class Voucher extends Model
         'user_id',
         'usedOn',
     ];
+
+    protected $casts = [
+        'usedOn' => 'datetime',
+    ];
+
     protected $table = 'vouchers';
     protected $primaryKey = 'id';
     public $timestamps = true;
@@ -26,5 +31,10 @@ class Voucher extends Model
     public function sender()
     {
         return $this->belongsTo('App\User', 'sender_id');
+    }
+
+    public function order()
+    {
+        return $this->belongsTo('App\Order', 'order_id');
     }
 }
