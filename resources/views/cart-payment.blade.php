@@ -1,4 +1,5 @@
 @extends('layouts.app', ['body_class' => 'cart-payment-view'])
+@section('title', 'Cart Payment')
 @section('content')
 <!-- Start Content -->
 <section class="container no-height no-separator">

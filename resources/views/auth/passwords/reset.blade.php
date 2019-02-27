@@ -1,4 +1,6 @@
-@extends('layouts.app', ['body_class' => 'sign-in-view']) @section('content')
+@extends('layouts.app', ['body_class' => 'sign-in-view']) 
+@section('title', 'Reset Password')
+@section('content')
 <div class="container">
     <section class="login-section no-height">
         <div class="row">

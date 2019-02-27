@@ -1,4 +1,5 @@
 @extends('layouts.app', ['body_class' => 'events-view'])
+@section('title', 'Events')
 @section('content')
 <!-- Start Content -->
 <section class="hero-section d-flex justify-content-center align-items-center no-separator no-padding">

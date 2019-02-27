@@ -1,4 +1,6 @@
-@extends('layouts.app', ['body_class' => 'sign-in-view']) @section('content')
+@extends('layouts.app', ['body_class' => 'sign-in-view']) 
+@section('title', 'Sign up')
+@section('content')
 <div class="container">
     <section class="register-section no-height no-separator">
         <div class="row">

@@ -1,5 +1,5 @@
 @extends('layouts.app', ['body_class' => 'sign-in-view'])
-
+@section('title', 'Login')
 @section('content')
 <!-- Start Content -->
 <div class="container">

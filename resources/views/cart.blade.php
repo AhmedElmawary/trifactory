@@ -1,4 +1,5 @@
 @extends('layouts.app', ['body_class' => 'cart-view'])
+@section('title', 'Cart')
 @section('content')
 <!-- Start Content -->
 <section class="container no-height no-separator">

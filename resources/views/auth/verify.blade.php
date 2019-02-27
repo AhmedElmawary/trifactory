@@ -1,5 +1,5 @@
 @extends('layouts.app', ['body_class' => 'sign-in-view'])
-
+@section('title', 'Verify')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

@@ -1,4 +1,5 @@
 @extends('layouts.app', ['body_class' => 'purchase-voucher-view'])
+@section('title', 'Purchase Voucher')
 @section('content')
 <!-- Start Content -->
 <form method="POST" action="{{ url('/buy-vouchers') }}">

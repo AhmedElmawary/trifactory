@@ -1,4 +1,5 @@
 @extends('layouts.app', ['body_class' => 'home-view'])
+@section('title', 'Home')
 @section('content')
     <!-- Start Content -->
     <section class="hero-section d-flex justify-content-center no-separator no-padding">

@@ -1,4 +1,5 @@
 @extends('layouts.app', ['body_class' => 'event-details-view'])
+@section('title', $event->name)
 @section('content')
 <!-- Start Content -->
 <form id="add_to_cart" method="POST" action="{{ url('/cart') }}">

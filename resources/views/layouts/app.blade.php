@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Home | The Trifactory</title>
+  <title>@yield('title') | The TriFactory</title>
   <meta name="description" content="The home of triathlon in Egypt. All the information about upcoming events, trips and training services.">
   <!-- CSS -->
   <link rel="stylesheet" href="/css/main.css">
