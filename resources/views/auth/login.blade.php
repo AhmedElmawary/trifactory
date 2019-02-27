@@ -29,7 +29,10 @@
                     </div>
 
                     <a class="dark float-left mt-2" href="{{ route('password.request') }}">Forgot Password?</a>
+                    <a class="dark float-right mt-2" href="{{ route('register') }}">Sign up</a>
+                    <span class="float-right mt-2">&nbsp;|&nbsp;</span>
                     <button type="submit" class="btn dark btn-clear float-right mt-2">Login</button>
+                    
                 </form>
             </div>
         </div>
