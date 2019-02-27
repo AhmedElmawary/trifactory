@@ -37,7 +37,7 @@ class CreateVouchers
                 $newAccount = true;
                 $name = explode(" ", $event->meta->recipient_name);
                 
-                if (!$name[1]) {
+                if (count($name) === 1) {
                     $name[1] = '';
                 }
 
