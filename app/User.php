@@ -41,4 +41,29 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Usercredit');
     }
+
+    public function usercredit()
+    {
+        return $this->hasMany('App\Usercredit');
+    }
+
+    public function order()
+    {
+        return $this->hasMany('App\Order');
+    }
+
+    public function userrace()
+    {
+        return $this->hasMany('App\UserRace');
+    }
+
+    public function ticket()
+    {
+        return $this->hasMany('App\Ticket');
+    }
+
+    public function voucher()
+    {
+        return $this->hasMany('App\Voucher');
+    }
 }
