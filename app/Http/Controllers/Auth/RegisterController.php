@@ -42,7 +42,7 @@ class RegisterController extends Controller
     }
 
     public function showRegistrationForm()
-    {   
+    {
         $nationalities = \countries();
         unset($nationalities['il']);
         
