@@ -7,7 +7,7 @@ use PayMob;
 use App\PayMob\PayMobCash;
 use App\Order;
 use App\Voucher;
-use App\UserCredit;
+use App\Usercredit;
 use App\Events\VoucherPurchased;
 use App\Events\TicketPurchased;
 use Auth;
@@ -232,7 +232,7 @@ class PaymentController extends Controller
         $meta = json_decode($order->meta);
 
         if (property_exists($meta, 'credit')) {
-            $userCredit = new UserCredit;
+            $userCredit = new Usercredit;
             $userCredit->amount = $meta->credit * -1;
             $userCredit->action = $order->id;
             $userCredit->user_id = $user->id;
