@@ -85,6 +85,8 @@ $(document).ready(function() {
                   $.each(question.answervalue, function(key, answervalue){
                     str += '<option value="' + answervalue.id + '">' + answervalue.value + '</option>';
                   });
+                  // temp
+                  str += '<option value="Egypt">Egypt</option>';
                   str += '</select>';
                 }
                 
