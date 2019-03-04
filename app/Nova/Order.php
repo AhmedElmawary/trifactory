@@ -4,11 +4,11 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
-use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\DateTime;
 
 class Order extends Resource
 {
@@ -34,6 +34,8 @@ class Order extends Resource
      */
     public static $search = [
         'id',
+        'paymob_order_id',
+        'created_at',
     ];
 
     /**
@@ -45,14 +47,14 @@ class Order extends Resource
     public function fields(Request $request)
     {
         return [
-
             ID::make()->sortable(),
-            Text::make('Paymob Order Id', 'paymob_order_id'),
+            Text::make('Paymob Order Id', 'paymob_order_id')->sortable(),
             Currency::make('Total Cost', 'totalCost')->sortable()->format('%.2n'),
             Text::make('Success', 'success'),
             Code::make('Meta', 'meta'),
             BelongsTo::make('User'),
-            
+            DateTime::make('Created At', 'created_at')->sortable(),
+            DateTime::make('Updated At', 'updated_at')->sortable(),
         ];
     }
 
