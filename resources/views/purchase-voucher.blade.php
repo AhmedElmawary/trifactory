@@ -60,7 +60,7 @@
 
 <section class="container no-height">
   <div class="row">
-    <div class="col-lg-5">
+    <div class="col-lg-12">
       <label class="input-label">Credit amount</label>
 
       <div class="input-group">
@@ -86,10 +86,38 @@
           </label>
         </div>
 
+        <div class="form-check custom-radio-input">
+            <label class="form-check-label">
+              <input class="form-check-input" name="discount_amount" type="radio" value="300">
+              <span class="label-cotent">500</span>
+            </label>
+          </div>
+        
+          <div class="form-check custom-radio-input">
+              <label class="form-check-label">
+                <input class="form-check-input" name="discount_amount" type="radio" value="300">
+                <span class="label-cotent">800</span>
+              </label>
+            </div>
+
+            <div class="form-check custom-radio-input">
+                <label class="form-check-label">
+                  <input class="form-check-input" name="discount_amount" type="radio" value="300">
+                  <span class="label-cotent">1000</span>
+                </label>
+              </div>
+
+              <div class="form-check custom-radio-input">
+                  <label class="form-check-label">
+                    <input class="form-check-input" name="discount_amount" type="radio" value="300">
+                    <span class="label-cotent">1500</span>
+                  </label>
+                </div>
+
       </div>
 
     </div>
-    <div class="col-lg-3">
+    <div class="col-lg-3" style="display:none;">
       <label class="input-label">Number of vouchers</label>
 
       <div class="custom-number">
