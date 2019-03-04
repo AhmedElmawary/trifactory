@@ -25,12 +25,12 @@ class Event extends Model
 
     protected $casts = [
         'event_start' => 'date',
-        'event_end'=>'date'
+        'event_end' => 'date'
     ];
 
-    protected $table='events';
+    protected $table = 'events';
 
-    protected $primaryKey='id';
+    protected $primaryKey = 'id';
 
     public function scopeUpcomming($query)
     {
@@ -44,11 +44,11 @@ class Event extends Model
 
     public function eventimages()
     {
-        return $this-> hasMany('App\EventImage', 'event_id');
+        return $this->hasMany('App\EventImage', 'event_id');
     }
 
     public function race()
     {
-        return $this-> hasMany('App\Race', 'event_id');
+        return $this->hasMany('App\Race', 'event_id');
     }
 }
