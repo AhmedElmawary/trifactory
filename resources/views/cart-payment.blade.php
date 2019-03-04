@@ -37,10 +37,10 @@
         </span>
     </div>
     <div class="cart-title">
-        <h3>Add Voucher Code</h3>
+        <h3>Add Gift Voucher Code</h3>
     </div>
     <div class="cart-voucher-container col-lg-12">
-        <p>You can use voucher codes to get discounts on tickets.</p>
+        <p>You can use gift voucher codes to get discounts on tickets.</p>
         <form id="voucher-form" method="POST" action="{{ url('/cart/voucher') }}">
         <div class="row col-lg-6">
             <div class="input-group">
