@@ -76,7 +76,18 @@
         </div>
         @foreach($cartItems as $key => $item)
         <div class="cart-summary-item separator">
-            {{$item['attributes']['Ticket Type']}} <span class="float-right">EGP {{$item['attributes']['Price']}}</span>
+            {{$item['attributes']['Ticket Type']}} 
+            
+            @if(count($item['conditions'])) 
+                - with Promocode: {{ $item['conditions'][0]->getAttributes()['code'] }}      
+            @endif
+            <span class="float-right"> EGP
+                @if(count($item['conditions'])) 
+                    {{ $item['conditions'][0]->parsedRawValue }}  
+                @else 
+                    {{$item['attributes']['Price']}} 
+                @endif
+            </span>
         </div>
         @endforeach
         <div class="cart-summary-item separator">

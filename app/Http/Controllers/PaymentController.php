@@ -17,10 +17,9 @@ class PaymentController extends Controller
 {
     public function buyTickets(Request $request)
     {
-
         $inputs = $request->all();
         $paymentMethod = $inputs['paymet_method'];
-        
+
         $cartTotal = \Cart::getTotal();
         $cartItems = \Cart::getContent()->toArray();
         $credit = \Cart::getCondition('Credit');
@@ -33,7 +32,7 @@ class PaymentController extends Controller
         if ($voucher) {
             $meta['voucher'] = $voucher->getAttributes();
         }
-        
+
         foreach ($cartItems as $item) {
             $meta[$item['id']] = new \stdClass();
             $meta[$item['id']]->type = 'ticket';
@@ -41,8 +40,12 @@ class PaymentController extends Controller
             foreach ($item['attributes'] as $key => $attribute) {
                 $meta[$item['id']]->$key = $attribute;
             }
+            if (count($item['conditions'])) {
+                $meta[$item['id']]->code = $item['conditions'][0]->getAttributes()['code'];
+                $meta[$item['id']]->Price = $item['conditions'][0]->parsedRawValue;
+            }
         }
-        
+
         $user = Auth::user();
 
         $order = new Order();
@@ -50,15 +53,15 @@ class PaymentController extends Controller
         $order->totalCost = $cartTotal;
         $order->user_id = $user->id;
         $order->meta = json_encode($meta);
-        
+
         if ($cartTotal > 0) {
             $order->save();
-            
+
             return $this->makePayment($order, $paymentMethod);
         } else {
             $order->success = 'true';
             $order->save();
-            
+
             return $this->postInvoice($order);
         }
     }
@@ -67,23 +70,23 @@ class PaymentController extends Controller
     {
         $inputs = $request->all();
         $paymentMethod = $inputs['paymet_method'];
-        
+
         $meta = new \stdClass();
         $meta->type = 'voucher';
-        $meta->qty = $inputs["qty"];
-        $meta->discount_amount = $inputs["discount_amount"];
-        $meta->recipient_email = $inputs["recipient_email"];
-        $meta->recipient_name = $inputs["recipient_name"];
-        $meta->recipient_phone = $inputs["recipient_phone"];
-        $meta->message = $inputs["message"];
+        $meta->qty = $inputs['qty'];
+        $meta->discount_amount = $inputs['discount_amount'];
+        $meta->recipient_email = $inputs['recipient_email'];
+        $meta->recipient_name = $inputs['recipient_name'];
+        $meta->recipient_phone = $inputs['recipient_phone'];
+        $meta->message = $inputs['message'];
         $meta->paymentMethod = $paymentMethod;
-        
+
         $user = Auth::user();
 
         $order = new Order();
         $order->id = uniqid('TFV-');
         $order->user_id = $user->id;
-        $order->totalCost = $inputs["qty"] * $inputs["discount_amount"];
+        $order->totalCost = $inputs['qty'] * $inputs['discount_amount'];
         $order->meta = json_encode($meta);
 
         $order->save();
@@ -94,7 +97,7 @@ class PaymentController extends Controller
     public function makePayment($order, $paymentMethod)
     {
         $auth = PayMob::authPaymob();
-        
+
         $paymobOrder = PayMob::makeOrderPaymob(
             $auth->token, // this is token from step 1.
             $auth->profile->id, // this is the merchant id from step 1.
@@ -133,7 +136,7 @@ class PaymentController extends Controller
             $payment = $pbc->makePayment($paymentKey->token);
 
             $this->consumeCartConditions($order);
-            
+
             \Cart::clear();
             \Cart::clearCartConditions();
 
@@ -191,10 +194,10 @@ class PaymentController extends Controller
     public function processedCallback(Request $request)
     {
         $orderId = $request['obj']['order']['id'];
-        $order   = Order::wherePaymobOrderId($orderId)->first();
+        $order = Order::wherePaymobOrderId($orderId)->first();
         // Statuses.
-        $isSuccess  = $request['obj']['success'];
-        $isVoided   = $request['obj']['is_voided'];
+        $isSuccess = $request['obj']['success'];
+        $isVoided = $request['obj']['is_voided'];
         $isRefunded = $request['obj']['is_refunded'];
         if ($isSuccess && !$isVoided && !$isRefunded) { // transcation succeeded.
             $this->succeeded($order);
@@ -227,7 +230,6 @@ class PaymentController extends Controller
 
     public function consumeCartConditions($order)
     {
-
         $user = Auth::user();
         $meta = json_decode($order->meta);
 
@@ -238,7 +240,7 @@ class PaymentController extends Controller
             $userCredit->user_id = $user->id;
             $userCredit->save();
         }
-        
+
         if (property_exists($meta, 'voucher')) {
             $voucher = Voucher::where('code', $meta->voucher->code)->first();
             if ($voucher) {
@@ -251,11 +253,10 @@ class PaymentController extends Controller
 
     public function postInvoice($order)
     {
-
         if ($order->success === 'true') {
             $user = Auth::user();
             $meta = json_decode($order->meta);
-            
+
             $this->consumeCartConditions($order);
 
             if (property_exists($meta, 'type')) {

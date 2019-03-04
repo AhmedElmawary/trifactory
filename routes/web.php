@@ -39,6 +39,8 @@ Route::get('/cart/payment', 'CartController@payment');
 Route::post('/cart/credit', 'CartController@credit');
 Route::post('/cart/voucher', 'CartController@voucher');
 
+Route::post('/cart/item/code', 'CartController@itemCode');
+
 Route::get('/profile', 'ProfileController@index');
 Route::post('/profile/image', 'ProfileController@image');
 Route::post('/profile/update', 'ProfileController@update');

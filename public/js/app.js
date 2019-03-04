@@ -204,6 +204,18 @@ $(document).ready(function() {
   }
 
   /*
+   * Cart Page
+   */
+  function initCart() {
+    $(".undo-code").click(function(event) {
+      $(this).closest('#code').val(null);
+      $(this).closest('.code-form').submit();
+      event.preventDefault();
+    });
+    
+  }
+
+  /*
    * Cart Payment Page
    */
   function initCartPayment() {
@@ -326,6 +338,9 @@ $(document).ready(function() {
       break;
     case 'cart-payment':
       initCartPayment();
+      break;
+    case 'cart':
+      initCart();
       break;
     case 'profile':
       initProfile();

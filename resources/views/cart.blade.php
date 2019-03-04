@@ -33,6 +33,36 @@
           @endif
         @endforeach
       </div>
+      <div class="row" style="margin-top:20px;margin-bottom:20px;">
+          <div class="row col-lg-6">
+            <form class="code-form" method="POST" action="{{ url('/cart/item/code') }}">
+              @csrf
+              <div class="input-group">
+                  @csrf
+                <input name="item" type="hidden" value="{{ $item['id'] }}" />
+                <input
+                    id="code"
+                    name="code"
+                    value="@if(count($item['conditions'])) {{ $item['conditions'][0]->getAttributes()['code'] }} @endif"
+                    type="text"
+                    class="form-control dark-bg"
+                    placeholder="Promocode"
+                    style="margin-right:20px"
+                    @if($item['conditions']) disabled @endif
+                />
+                <button @if(count($item['conditions'])) disabled @endif type="submit" class="btn btn-dark text-light" id="use_code_{{ $key }}">
+                    Use Promocode
+                </button>
+                <span id="undo_code_button" class="@if(count($item['conditions'])) active @endif" >
+                    Using promocode "@if(count($item['conditions'])) {{ $item['conditions'][0]->getAttributes()['code'] }} @endif". Your item
+                    price is @if(count($item['conditions'])) now @endif EGP @if(count($item['conditions'])) {{$item['conditions'][0]->parsedRawValue }} @endif
+                    <br />
+                    <a class="undo-code" href="#">Undo</a>
+                </span>
+              </div>
+            </form>
+          </div>
+      </div>
       
     </div>
     @endforeach

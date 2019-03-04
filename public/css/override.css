@@ -93,3 +93,25 @@ nav .navbar-nav .nav-item .nav-link span {
   padding: 20px;
   margin-top: 50px;
 }
+
+.cart-view section #undo_code_button {
+  display: none;
+  font-size: 20px;
+  font-weight: 400;
+  color: #747474;
+  margin: 0;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.cart-view section #undo_code_button.active {
+  display: block;
+}
+
+.cart-view section #undo_code_button a {
+  color: #000;
+  font-weight: 700;
+  font-size: 20px;
+  text-decoration: underline;
+  display: inline-block;
+}
