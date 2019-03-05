@@ -19,6 +19,7 @@ Route::get('/events', 'EventsController@index');
 Route::get('/event-details/{id}', 'EventsController@details');
 Route::get('/event-details/getTicketsByRaceId/{id}', 'EventsController@getTicketsByRaceId');
 Route::get('/event-details/getMetaByRaceId/{id}', 'EventsController@getMetaByRaceId');
+Route::get('/event-details/helper/countries', 'EventsController@getCountries');
 
 Route::get('/purchase-voucher', function () {
     return view('purchase-voucher');

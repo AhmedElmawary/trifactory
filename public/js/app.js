@@ -20,6 +20,20 @@ $(document).ready(function() {
    * Event Details Page
    */
   function initEventDetails() {
+    var countries = '';
+    $.ajax({
+      url: '/event-details/helper/countries',
+      type:"GET",
+      dataType:"json",
+
+      success:function(data) {
+        $.each(data, function(key, item){
+          // item.iso_3166_1_alpha2
+          countries += '<option value="' + item.name + '">' + item.name + '</option>';
+        });
+      }
+
+    });
 
     $('.ticket_race').on('change', function(){
 
@@ -82,11 +96,7 @@ $(document).ready(function() {
                 {
                   str += '<select class="custom-select " name="'+ meta_field_name + "_" + question.id +'" required>';
                   str += '<option value="" disabled selected>' + question.question_text + '</option>';
-                  $.each(question.answervalue, function(key, answervalue){
-                    str += '<option value="' + answervalue.id + '">' + answervalue.value + '</option>';
-                  });
-                  // temp
-                  str += '<option value="Egypt">Egypt</option>';
+                  str += countries;
                   str += '</select>';
                 }
                 
