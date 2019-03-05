@@ -6,10 +6,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
-use Laravel\Nova\Fields\BelongsToMany;
-
 use Illuminate\Http\Request;
-use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Question extends Resource
 {
@@ -50,7 +47,7 @@ class Question extends Resource
             Text::make('Question', 'question_text')->sortable(),
             BelongsTo::make('AnswerType'),
             HasMany::make('Answervalue'),
-
+            Text::make('Validation', 'validation')->sortable(),
         ];
     }
 
