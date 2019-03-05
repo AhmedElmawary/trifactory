@@ -76,15 +76,68 @@ $(document).ready(function() {
                 str = '';
                 str +='<div class="col-lg-6 mt-3"><div class="input-group">';
                 
+                var validation = [];
+                var required = false;
+                var min = false;
+                var max = false;
+                var type = 'text';
+
+                if(question.validation)
+                {
+                  validation = question.validation.split(';');
+                  for(i=0;i<validation.length;i++)
+                  {
+                    if(validation[i] === 'required')
+                    {
+                      required = true;  
+                    }
+
+                    if(validation[i].match('min'))
+                    {
+                      min = validation[i].split(':');
+                      min = min[1];
+                    }
+
+                    if(validation[i].match('max'))
+                    {
+                      max = validation[i].split(':');
+                      max = max[1];
+                    }
+
+                    if(validation[i].match('type'))
+                    {
+                      type = validation[i].split(':');
+                      type = type[1];
+                    }
+                  }  
+                }
                 
+
                 if(question.answertype.type === 'input')
                 {
-                  str += '<input type="text" class="form-control " placeholder="' + question.question_text + '" name="' + meta_field_name + "_" + question.id +'" required>';
+                  str += '<input ';
+
+                  if(required)
+                    str += ' required '
+
+                  if(min)
+                    str += ' min="'+ min +'" ';
+
+                  if(max)
+                    str += ' min="'+ max +'" ';
+                  
+                  if(type)
+                    str += ' type="'+ type +'" ';
+
+                  str +=' class="form-control " placeholder="' + question.question_text + '" name="' + meta_field_name + "_" + question.id +'" />';
                 }
                 
                 if(question.answertype.type === 'dropdown')
                 {
-                  str += '<select class="custom-select " name="'+ meta_field_name + "_" + question.id +'" required>';
+                  str += '<select ';
+                  if(required)
+                    str += 'required'
+                  str += ' class="custom-select " name="'+ meta_field_name + "_" + question.id +'">';
                   str += '<option value="" disabled selected>' + question.question_text + '</option>';
                   $.each(question.answervalue, function(key, answervalue){
                     str += '<option value="' + answervalue.id + '">' + answervalue.value + '</option>';
@@ -94,7 +147,10 @@ $(document).ready(function() {
 
                 if(question.answertype.type === 'countries')
                 {
-                  str += '<select class="custom-select " name="'+ meta_field_name + "_" + question.id +'" required>';
+                  str += '<select ';
+                  if(required)
+                    str += 'required'
+                  str += ' class="custom-select " name="'+ meta_field_name + "_" + question.id +'">';
                   str += '<option value="" disabled selected>' + question.question_text + '</option>';
                   str += countries;
                   str += '</select>';
