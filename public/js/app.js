@@ -124,7 +124,7 @@ $(document).ready(function() {
                     str += ' min="'+ min +'" ';
 
                   if(max)
-                    str += ' min="'+ max +'" ';
+                    str += ' max="'+ max +'" ';
                   
                   if(type)
                     str += ' type="'+ type +'" ';
