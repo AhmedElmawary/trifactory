@@ -120,15 +120,23 @@ $(document).ready(function() {
                   if(required)
                     str += ' required '
 
-                  if(min)
-                    str += ' min="'+ min +'" ';
-
-                  if(max)
-                    str += ' max="'+ max +'" ';
-                  
                   if(type)
                     str += ' type="'+ type +'" ';
 
+                  if(min && type === 'number')
+                  {
+                    str += ' min="'+ min +'" ';
+                  } else if(min && type === 'text') {
+                    str += ' minlength="'+ min +'" ';
+                  }
+
+                  if(max && type === 'number')
+                  {
+                    str += ' max="'+ max +'" ';
+                  } else if(max && type === 'text') {
+                    str += ' maxlength="'+ max +'" ';
+                  }
+                  
                   str +=' class="form-control " placeholder="' + question.question_text + '" name="' + meta_field_name + "_" + question.id +'" />';
                 }
                 
