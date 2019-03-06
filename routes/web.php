@@ -47,6 +47,5 @@ Route::post('/profile/image', 'ProfileController@image');
 Route::post('/profile/update', 'ProfileController@update');
 Route::post('/profile/password', 'ProfileController@password');
 
-Route::get('/test', 'HomeController@test');
-Auth::routes();
+Auth::routes(['verify' => true]);
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
