@@ -3,10 +3,8 @@
 namespace App\Providers;
 
 use Laravel\Nova\Nova;
-use Laravel\Nova\Cards\Help;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\NovaApplicationServiceProvider;
-
 use App\Nova\Metrics\NewUsers;
 use App\Nova\Metrics\NewOrders;
 use App\Nova\Metrics\TotalSales;
@@ -49,6 +47,9 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
         Gate::define('viewNova', function ($user) {
             return in_array($user->email, [
                 'admin@thetrifactory.com',
+                'ayman@thetrifactory.com',
+                'beltagy@thetrifactory.com',
+                'farida@thetrifactory.com',
             ]);
         });
     }
