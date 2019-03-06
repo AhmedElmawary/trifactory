@@ -25,7 +25,10 @@ class EventsController extends Controller
 
     public function getTicketsByRaceId($id)
     {
-        $tickets = DB::table('tickets')->where('race_id', $id)->pluck('name', 'id');
+        $tickets = DB::table('tickets')
+                        ->where('race_id', $id)
+                        ->where('published', 'YES')
+                        ->pluck('name', 'id');
         return json_encode($tickets);
     }
 
