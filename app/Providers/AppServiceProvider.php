@@ -42,7 +42,11 @@ class AppServiceProvider extends ServiceProvider
         });
 
         VerifyEmail::toMailUsing(function ($notifiable) {
-            $verifyUrl = URL::temporarySignedRoute('verification.verify', Carbon::now()->addMinutes(60), ['id' => $notifiable->getKey()]);
+            $verifyUrl = URL::temporarySignedRoute(
+                'verification.verify',
+                Carbon::now()->addMinutes(60),
+                ['id' => $notifiable->getKey()]
+            );
 
             // Return your mail here...
             return (new MailMessage)
