@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PayMob;
 use App\PayMob\PayMobCash;
+use App\PayMob\PayMobCredit;
 use App\Order;
 use App\Voucher;
 use App\Usercredit;
@@ -110,7 +111,8 @@ class PaymentController extends Controller
         $user = Auth::user();
 
         if ($paymentMethod === 'card') {
-            $paymentKey = PayMob::getPaymentKeyPaymob(
+            $pbc = new PayMobCredit();
+            $paymentKey = $pbc->getPaymentKeyPaymob(
                 $auth->token, // from step 1.
                 $order->totalCost * 100, // total amount by cents/piasters.
                 $paymobOrder->id, // paymob order id from step 2.
