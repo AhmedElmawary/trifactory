@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Event;
 use Auth;
 use Validator;
 use Illuminate\Support\Facades\Hash;
@@ -68,7 +67,6 @@ class ProfileController extends Controller
             'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
         ]);
 
-        
         if ($validator->fails()) {
             return redirect('/profile')
                         ->withErrors($validator)
@@ -92,10 +90,10 @@ class ProfileController extends Controller
             $filenameWithExt = $request->file('profile_image')->getClientOriginalName();
             // Get just filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-           // Get just ext
+            // Get just ext
             $extension = $request->file('profile_image')->getClientOriginalExtension();
             //Filename to store
-            $fileNameToStore = 'profile_image_'.time().'.'.$extension;
+            $fileNameToStore = 'profile_image_' . time() . '.' . $extension;
             // Upload Image
             $path = $request->file('profile_image')->storeAs('public/profile_images', $fileNameToStore);
 

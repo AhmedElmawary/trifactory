@@ -57,6 +57,13 @@
             </div>
         </div>
         <div class="row col-lg-12">
+            
+            @if ($errors->has('code'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('code') }}</strong>
+                </span>
+            @endif
+
             <button @if($voucher) disabled @endif type="submit" class="btn btn-dark text-light">Use Voucher Code</button>
             <span id="undo_voucher_button" class="@if($voucher) active @endif" >
                 Using voucher "@if($voucher) {{$voucher->getAttributes()['code']}} @endif". Your total cart

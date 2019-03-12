@@ -14,13 +14,14 @@
         <p>June 19th 2018, Aswan, Egypt</p>
       </div>
     </div> -->
-    @foreach($cartItems as $key => $item)
+    
+    @foreach($cartItems as $itemKey => $item)
     <div class="col-lg-12 summary-ticket">
       <span class="ticket-no mb-2 mt-3">Ticket {{$loop->iteration}}</span>
       <span style="float:right;">
         <form method="POST" action="{{ url('/cart/remove') }}">
         @csrf
-        <input name="item_key" type="hidden" value="{{$key}}" />
+        <input name="item_key" type="hidden" value="{{$itemKey}}" />
         <input type="image" src="/images/close-icon.svg" alt="Submit" width="50%" />
         </form>
       </span>
@@ -59,6 +60,13 @@
                     <br />
                     <a class="undo-code" href="#">Undo</a>
                 </span>
+                 @if($errors->$itemKey)
+                  @if ($errors->$itemKey->has('code'))
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $errors->$itemKey->first('code') }}</strong>
+                      </span>
+                    @endif
+                  @endif
               </div>
             </form>
           </div>

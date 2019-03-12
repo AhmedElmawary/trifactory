@@ -8,6 +8,7 @@ use App\Question;
 use App\Voucher;
 use Illuminate\Support\Facades\Auth;
 use App\Promocode;
+use Validator;
 
 class CartController extends Controller
 {
@@ -62,6 +63,8 @@ class CartController extends Controller
         $inputs = $request->all();
         $item = $inputs['item'];
 
+        $cartItems = \Cart::getContent()->toArray();
+
         $code = null;
         if (isset($inputs['code'])) {
             $code = $inputs['code'];
@@ -69,7 +72,20 @@ class CartController extends Controller
             \Cart::clearItemConditions($item);
         }
 
-        $cartItems = \Cart::getContent()->toArray();
+        $validator = Validator::make($request->all(), [
+            'item' => ['required'],
+            'code' => [
+                new \App\Rules\Promocode($cartItems, $item),
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+            ->action('CartController@index')
+            ->withErrors($validator, $item)
+            ->withInput();
+        }
+
         if (array_key_exists($item, $cartItems)) {
             $cartItem = $cartItems[$item];
 
@@ -114,10 +130,24 @@ class CartController extends Controller
             $code = $inputs['code'];
         }
 
+        $user = Auth::user();
+
+        $validator = Validator::make($request->all(), [
+            'code' => [
+                new \App\Rules\Voucher($user),
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+            ->action('CartController@payment')
+            ->withErrors($validator)
+            ->withInput();
+        }
+
         if ($code == null) {
             \Cart::removeCartCondition('Voucher');
         } else {
-            $user = Auth::user();
             if ($user) {
                 $voucher = Voucher::where('code', $code)
                         ->where('user_id', $user->id)
