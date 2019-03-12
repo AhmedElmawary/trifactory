@@ -47,16 +47,16 @@ class PayMobCredit extends PayMob
      * @return array
      */
     public function getPaymentKeyPaymob(
-          $token,
-          $amount_cents,
-          $order_id,
-          $email = 'null',
-          $fname = 'null',
-          $lname = 'null',
-          $phone = 'null',
-          $city = 'null',
-          $country = 'null'
-      ) {
+        $token,
+        $amount_cents,
+        $order_id,
+        $email = 'null',
+        $fname = 'null',
+        $lname = 'null',
+        $phone = 'null',
+        $city = 'null',
+        $country = 'null'
+    ) {
         // Request body
         $json = [
             'amount_cents' => $amount_cents,
