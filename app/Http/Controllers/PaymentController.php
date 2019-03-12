@@ -113,7 +113,11 @@ class PaymentController extends Controller
             $paymentKey = PayMob::getPaymentKeyPaymob(
                 $auth->token, // from step 1.
                 $order->totalCost * 100, // total amount by cents/piasters.
-                $paymobOrder->id // paymob order id from step 2.
+                $paymobOrder->id, // paymob order id from step 2.
+                $user->email,
+                $user->firstname,
+                $user->lastname,
+                $user->phone
             );
 
             return view('payment', ['paymentKey' => $paymentKey]);
