@@ -2,23 +2,22 @@
 @section('title', 'Verify')
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
-
-                <div class="card-body">
+    <section class="login-section no-height">
+       <div class="row">
+            <div class="col-lg-6 offset-lg-3 text-center">
+                <h3>{{ __('Verify Your Email Address') }}</h3>
+                    <div>
                     @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-info" role="alert">
                             {{ __('A fresh verification link has been sent to your email address.') }}
                         </div>
                     @endif
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
+                    <h6>{{ __('Before proceeding, please check your email for a verification link.') }}</h6>
+                    {{ __('If you did not receive the email') }}, <a class="dark mt-2" href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>.
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 </div>
 @endsection

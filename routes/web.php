@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
 Route::get('/events', 'EventsController@index');
 
@@ -25,8 +25,8 @@ Route::get('/purchase-voucher', function () {
     return view('purchase-voucher');
 });
 
-Route::post('/buy-vouchers', 'PaymentController@buyVouchers');
-Route::post('/buy-tickets', 'PaymentController@buyTickets');
+Route::post('/buy-vouchers', 'PaymentController@buyVouchers')->middleware('verified');
+Route::post('/buy-tickets', 'PaymentController@buyTickets')->middleware('verified');
 
 Route::get('/payment/processedCallback', 'PaymentController@processedCallback');
 Route::get('/payment/invoice', 'PaymentController@invoice');
@@ -42,7 +42,7 @@ Route::post('/cart/voucher', 'CartController@voucher');
 
 Route::post('/cart/item/code', 'CartController@itemCode');
 
-Route::get('/profile', 'ProfileController@index');
+Route::get('/profile', 'ProfileController@index')->middleware('verified');
 Route::post('/profile/image', 'ProfileController@image');
 Route::post('/profile/update', 'ProfileController@update');
 Route::post('/profile/password', 'ProfileController@password');
