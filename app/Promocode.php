@@ -9,10 +9,10 @@ class Promocode extends Model
     protected $table = 'promocodes';
     protected $primaryKey = 'id';
     public $timestamps = true;
-    protected $fillable = ['race_id', 'code', 'value', 'published', 'created_at', 'updated_at'];
+    protected $fillable = ['code', 'value', 'published', 'created_at', 'updated_at'];
 
-    public function race()
+    public function races()
     {
-        return $this->belongsTo('App\Race');
+        return $this->belongsToMany('App\Race');
     }
 }

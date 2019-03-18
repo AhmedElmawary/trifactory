@@ -7,7 +7,6 @@ use App\Ticket;
 use App\Question;
 use App\Voucher;
 use Illuminate\Support\Facades\Auth;
-use App\Promocode;
 use Validator;
 
 class CartController extends Controller
@@ -89,10 +88,11 @@ class CartController extends Controller
         if (array_key_exists($item, $cartItems)) {
             $cartItem = $cartItems[$item];
 
-            $promocode = Promocode::where('code', $code)
-                        ->where('published', 'YES')
-                        ->where('race_id', $cartItem['attributes']['_race_id'])
-                        ->first();
+            $promocode = \App\Promocode::where('code', $code)
+                   ->where('published', 'YES')
+                   ->whereHas('races', function ($query) use ($cartItem) {
+                       $query->where('race_id', '=', $cartItem['attributes']['_race_id']);
+                   })->first();
 
             if ($promocode) {
                 $value = null;

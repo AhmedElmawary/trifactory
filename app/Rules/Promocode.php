@@ -39,8 +39,9 @@ class Promocode implements Rule
     {
         $promocode = \App\Promocode::where('code', $value)
                    ->where('published', 'YES')
-                   ->where('race_id', $this->cartItem['attributes']['_race_id'])
-                   ->first();
+                   ->whereHas('races', function ($query) {
+                       $query->where('race_id', '=', $this->cartItem['attributes']['_race_id']);
+                   })->first();
 
         if (!$promocode) {
             $this->message = 'The selected code is invalid.';

@@ -2,15 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Event;
 use App\Gallery;
-use App\User;
-
-use App\Events\UserRegistered;
-use App\Events\VoucherPurchased;
-use App\Mail\SendWelcomeEmail;
-use Mail;
 
 class HomeController extends Controller
 {
@@ -38,16 +31,18 @@ class HomeController extends Controller
             'gallery' => $gallery,
             'upcomingEvents' => $upcomingEvents,
         ];
-        
+
         return view('home', $data);
     }
 
     public function test()
     {
+        $promocode = \App\Promocode::where('code', 'TF20%')
+                   ->where('published', 'YES')
+                   ->whereHas('races', function ($query) {
+                       $query->where('race_id', '=', 2);
+                   })->first();
 
-        $user = User::first();
-        
-        $event = new UserRegistered($user);
-        event($event);
+        dd($promocode);
     }
 }

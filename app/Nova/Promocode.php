@@ -5,7 +5,7 @@ namespace App\Nova;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
-use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
 
 class Promocode extends Resource
 {
@@ -48,7 +48,7 @@ class Promocode extends Resource
             Boolean::make('Published', 'published')
                 ->trueValue('yes')
                 ->falseValue('no'),
-            BelongsTo::make('Race')
+            BelongsToMany::make('Races', 'races')
         ];
     }
 
