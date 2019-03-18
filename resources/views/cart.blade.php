@@ -56,7 +56,7 @@
                 </button>
                 <span id="undo_code_button" class="@if(count($item['conditions'])) active @endif" >
                     Using promocode "@if(count($item['conditions'])) {{ $item['conditions'][0]->getAttributes()['code'] }} @endif". Your item
-                    price is @if(count($item['conditions'])) now @endif EGP @if(count($item['conditions'])) {{$item['conditions'][0]->parsedRawValue }} @endif
+                    price is @if(count($item['conditions'])) now @endif EGP @if(count($item['conditions'])) {{$item['attributes']['Price'] - $item['conditions'][0]->parsedRawValue }} @endif
                     <br />
                     <a class="undo-code" href="#">Undo</a>
                 </span>
