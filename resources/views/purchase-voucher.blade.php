@@ -127,19 +127,7 @@
     </div>
   </div>
 
-  <div class="cart-payment-container">
-    <div class="form-check mb-2">
-        <input
-            class="form-check-input"
-            type="radio"
-            id="paymet_method_cash"
-            name="paymet_method"
-            value="cash"
-        />
-        <label class="form-check-label" for="paymet_method_cash"
-            >Cash</label
-        >
-    </div>
+  <div class="cart-payment-container" style="display:none;">
     
     <div class="form-check">
         <input

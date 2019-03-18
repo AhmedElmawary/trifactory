@@ -118,20 +118,8 @@
     <div class="cart-payment-container">
         <form method="POST" action="{{ url('/buy-tickets') }}">
         @csrf
-        <div class="form-check mb-2" @if($cartTotal == 0) style="display: none;" @endif>
-            <input
-                class="form-check-input"
-                type="radio"
-                id="paymet_method_cash"
-                name="paymet_method"
-                value="cash"
-            />
-            <label class="form-check-label" for="paymet_method_cash"
-                >Cash</label
-            >
-        </div>
         
-        <div class="form-check" @if($cartTotal == 0) style="display: none;" @endif>
+        <div class="form-check" style="display: none;">
             <input
                 class="form-check-input"
                 type="radio"
@@ -145,7 +133,7 @@
             >
         </div>
 
-        <div class="row col-lg-12">
+        <div class="row col-lg-12" @if($cartTotal == 0) style="display: none;" @endif>
             <button type="submit" class="btn btn-dark text-light">Place Order</button>            
         </div>
         </form>
