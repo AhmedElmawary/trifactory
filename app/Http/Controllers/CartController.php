@@ -59,6 +59,7 @@ class CartController extends Controller
 
     public function itemCode(Request $request)
     {
+        $user = Auth::user();
         $inputs = $request->all();
         $item = $inputs['item'];
 
@@ -92,7 +93,11 @@ class CartController extends Controller
                    ->where('published', 'YES')
                    ->whereHas('races', function ($query) use ($cartItem) {
                        $query->where('race_id', '=', $cartItem['attributes']['_race_id']);
-                   })->first();
+                   })
+                   ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
+                       $query->where('user_id', '=', $user->id);
+                   })
+                   ->first();
 
             if ($promocode) {
                 $value = null;

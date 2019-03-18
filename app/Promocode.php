@@ -15,4 +15,9 @@ class Promocode extends Model
     {
         return $this->belongsToMany('App\Race');
     }
+
+    public function userPromocodeOrder()
+    {
+        return $this->belongsTo('App\UserPromocodeOrder', 'id', 'promocode_id');
+    }
 }

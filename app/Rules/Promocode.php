@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use Auth;
 use Illuminate\Contracts\Validation\Rule;
 
 class Promocode implements Rule
@@ -37,11 +38,16 @@ class Promocode implements Rule
      */
     public function passes($attribute, $value)
     {
+        $user = Auth::user();
         $promocode = \App\Promocode::where('code', $value)
                    ->where('published', 'YES')
                    ->whereHas('races', function ($query) {
                        $query->where('race_id', '=', $this->cartItem['attributes']['_race_id']);
-                   })->first();
+                   })
+                   ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
+                       $query->where('user_id', '=', $user->id);
+                   })
+                   ->first();
 
         if (!$promocode) {
             $this->message = 'The selected code is invalid.';
