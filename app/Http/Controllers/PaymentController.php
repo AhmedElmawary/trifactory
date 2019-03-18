@@ -9,6 +9,8 @@ use App\PayMob\PayMobCredit;
 use App\Order;
 use App\Voucher;
 use App\Usercredit;
+use App\Promocode;
+use App\UserPromocodeOrder;
 use App\Events\VoucherPurchased;
 use App\Events\TicketPurchased;
 use Auth;
@@ -257,6 +259,20 @@ class PaymentController extends Controller
         }
     }
 
+    public function consumePromocode($order, $code)
+    {
+        $user = Auth::user();
+
+        $promocode = Promocode::where('code', $code)->first();
+
+        $userPromocodeRace = new UserPromocodeOrder();
+        $userPromocodeRace->user_id = $user->id;
+        $userPromocodeRace->order_id = $order->id;
+        $userPromocodeRace->promocode_id = $promocode->id;
+
+        $userPromocodeRace->save();
+    }
+
     public function postInvoice($order)
     {
         if ($order->success === 'true') {
@@ -270,6 +286,7 @@ class PaymentController extends Controller
             } else {
                 foreach ($meta as $ticketId => $ticket) {
                     if ($ticketId !== 'credit' && $ticketId !== 'voucher') {
+                        $this->consumePromocode($order, $ticket->code);
                         event(new TicketPurchased($order, $ticketId, $ticket, $user));
                     }
                 }
