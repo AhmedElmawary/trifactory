@@ -90,7 +90,7 @@
             @endif
             <span class="float-right"> EGP
                 @if(count($item['conditions'])) 
-                    {{ $item['conditions'][0]->parsedRawValue }}  
+                    {{ $item['attributes']['Price'] - $item['conditions'][0]->parsedRawValue }}  
                 @else 
                     {{$item['attributes']['Price']}} 
                 @endif
