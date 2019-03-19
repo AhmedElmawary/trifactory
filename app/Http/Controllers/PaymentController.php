@@ -286,7 +286,9 @@ class PaymentController extends Controller
             } else {
                 foreach ($meta as $ticketId => $ticket) {
                     if ($ticketId !== 'credit' && $ticketId !== 'voucher') {
-                        $this->consumePromocode($order, $ticket->code);
+                        if (property_exists($ticket, 'code')) {
+                            $this->consumePromocode($order, $ticket->code);
+                        }
                         event(new TicketPurchased($order, $ticketId, $ticket, $user));
                     }
                 }
