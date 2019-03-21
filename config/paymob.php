@@ -23,10 +23,10 @@ return [
     |
     */
 
-    'username' => 'heshamsalama',
-    'password' => '95mKwQpUpKZvtCm',
-    // 'username' => 'ahakky',
-    // 'password' => 'Endurance123',
+    // 'username' => 'heshamsalama',
+    // 'password' => '95mKwQpUpKZvtCm',
+    'username' => 'ahakky',
+    'password' => 'Endurance123',
 
     /*
     |--------------------------------------------------------------------------
@@ -37,10 +37,10 @@ return [
     |
     */
 
-    'integration_id' => '2874',
-    'iframe_id' => '5895',
-    'cash_integration_id' => '3151',
-    // 'integration_id' => '4528',
-    // 'iframe_id' => '2000',
-    // 'cash_integration_id' => '4529',
+    // 'integration_id' => '2874',
+    // 'iframe_id' => '5895',
+    // 'cash_integration_id' => '3151',
+    'integration_id' => '4528',
+    'iframe_id' => '2000',
+    'cash_integration_id' => '4529',
 ];
