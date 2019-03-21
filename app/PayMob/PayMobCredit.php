@@ -67,12 +67,12 @@ class PayMobCredit extends PayMob
                 'first_name' => $fname,
                 'last_name' => $lname,
                 'phone_number' => $phone,
-                'city' => 'NA',
-                'country' => 'NA',
-                'street' => 'NA',
-                'building' => 'NA',
-                'floor' => 'NA',
-                'apartment' => 'NA'
+                'city' => $city,
+                'country' => $country,
+                'street' => 'null',
+                'building' => 'null',
+                'floor' => 'null',
+                'apartment' => 'null'
             ],
             'currency' => 'EGP',
             'card_integration_id' => config('paymob.integration_id')
