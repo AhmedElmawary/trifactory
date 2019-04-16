@@ -86,10 +86,11 @@
                                                 @change="toggleSelectAllMatching"
                                             >
                                                 <template>
-                                                    <span class="mr-1">{{
-                                                        __('Select All Matching')
-                                                    }}</span>
-                                                    <span>({{ allMatchingResourceCount }})</span>
+                                                    <span class="mr-1">
+                                                        {{ __('Select All Matching') }} ({{
+                                                            allMatchingResourceCount
+                                                        }})
+                                                    </span>
                                                 </template>
                                             </checkbox-with-label>
                                         </li>
@@ -259,18 +260,23 @@
             </div>
 
             <!-- Pagination -->
-            <pagination-links
-                v-if="resourceResponse"
-                :resource-name="resourceName"
-                :resources="resources"
-                :resource-response="resourceResponse"
-                @previous="selectPreviousPage"
-                @next="selectNextPage"
+            <component
+                :is="paginationComponent"
+                v-if="resourceResponse && resources.length > 0"
+                :next="hasNextPage"
+                :previous="hasPreviousPage"
+                @page="selectPage"
+                :pages="totalPages"
+                :page="currentPage"
             >
-                <span v-if="resourceCountLabel" class="text-sm text-80">
+                <span
+                    v-if="resourceCountLabel"
+                    class="text-sm text-80 px-4"
+                    :class="{ 'ml-auto': paginationComponent == 'pagination-links' }"
+                >
                     {{ resourceCountLabel }}
                 </span>
-            </pagination-links>
+            </component>
         </loading-card>
     </loading-view>
 </template>
@@ -409,6 +415,11 @@ export default {
                 this.getResources()
             }, 15 * 1000)
         }
+    },
+
+    beforeRouteUpdate(to, from, next) {
+        next()
+        this.initializeState(false)
     },
 
     /**
@@ -563,17 +574,14 @@ export default {
             this.actions = []
             this.pivotActions = null
             return Nova.request()
-                .get(
-                    '/nova-api/' +
-                        this.resourceName +
-                        '/actions' +
-                        '?viaResource=' +
-                        this.viaResource +
-                        '&viaResourceId=' +
-                        this.viaResourceId +
-                        '&viaRelationship=' +
-                        this.viaRelationship
-                )
+                .get(`/nova-api/${this.resourceName}/actions`, {
+                    params: {
+                        viaResource: this.viaResource,
+                        viaResourceId: this.viaResourceId,
+                        viaRelationship: this.viaRelationship,
+                        relationshipType: this.relationshipType,
+                    },
+                })
                 .then(response => {
                     this.actions = _.filter(response.data.actions, action => {
                         return !action.onlyOnDetail
@@ -670,6 +678,13 @@ export default {
         updatePerPageChanged(perPage) {
             this.perPage = perPage
             this.perPageChanged()
+        },
+
+        /**
+         * Select the next page.
+         */
+        selectPage(page) {
+            this.updateQueryString({ [this.pageParameter]: page })
         },
     },
 
@@ -999,11 +1014,13 @@ export default {
          * Return the resource count label
          */
         resourceCountLabel() {
-            let label = this.resources.length > 1 ? this.__('resources') : this.__('resource')
+            const first = this.perPage * (this.currentPage - 1)
 
             return (
                 this.resources.length &&
-                `${this.resources.length}/${this.allMatchingResourceCount} ${label}`
+                `${first + 1}-${first + this.resources.length} ${this.__('of')} ${
+                    this.allMatchingResourceCount
+                }`
             )
         },
 
@@ -1019,6 +1036,29 @@ export default {
          */
         initialEncodedFilters() {
             return this.$route.query[this.filterParameter] || ''
+        },
+
+        paginationComponent() {
+            return `pagination-${Nova.config['pagination'] || 'links'}`
+        },
+
+        hasNextPage() {
+            return Boolean(this.resourceResponse && this.resourceResponse.next_page_url)
+        },
+
+        hasPreviousPage() {
+            return Boolean(this.resourceResponse && this.resourceResponse.prev_page_url)
+        },
+
+        totalPages() {
+            return Math.ceil(this.allMatchingResourceCount / this.currentPerPage)
+        },
+
+        /**
+         * Get the current per page value from the query string.
+         */
+        currentPerPage() {
+            return this.resourceResponse ? this.resourceResponse.per_page : 25
         },
     },
 }

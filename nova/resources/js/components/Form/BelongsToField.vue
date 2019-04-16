@@ -2,7 +2,7 @@
     <default-field :field="field" :errors="errors">
         <template slot="field">
             <search-input
-                v-if="isSearchable && !isLocked"
+                v-if="isSearchable && !isLocked && !isReadonly"
                 :data-testid="`${field.resourceName}-search-input`"
                 @input="performSearch"
                 @clear="clearSelection"
@@ -31,26 +31,20 @@
                 </div>
             </search-input>
 
-            <select
-                v-if="!isSearchable || isLocked"
+            <select-control
+                v-if="!isSearchable || isLocked || isReadonly"
                 class="form-control form-select mb-3 w-full"
                 :class="{ 'border-danger': hasError }"
                 :data-testid="`${field.resourceName}-select`"
                 :dusk="field.attribute"
                 @change="selectResourceFromSelectControl"
-                :disabled="isLocked"
+                :disabled="isLocked || isReadonly"
+                :options="availableResources"
+                :selected="selectedResourceId"
+                label="display"
             >
                 <option value="" selected :disabled="!field.nullable">&mdash;</option>
-
-                <option
-                    v-for="resource in availableResources"
-                    :key="resource.value"
-                    :value="resource.value"
-                    :selected="selectedResourceId == resource.value"
-                >
-                    {{ resource.display }}
-                </option>
-            </select>
+            </select-control>
 
             <!-- Trashed State -->
             <div v-if="softDeletes && !isLocked">
@@ -233,7 +227,7 @@ export default {
         creatingViaRelatedResource() {
             return (
                 this.viaResource == this.field.resourceName &&
-                this.viaRelationship === this.field.reverseRelation &&
+                this.field.reverse &&
                 this.viaResourceId
             )
         },
@@ -267,10 +261,11 @@ export default {
         },
 
         isLocked() {
-            return (
-                this.viaResource == this.field.resourceName &&
-                this.viaRelationship === this.field.reverseRelation
-            )
+            return this.viaResource == this.field.resourceName && this.field.reverse
+        },
+
+        isReadonly() {
+            return this.field.readonly || _.get(this.field, 'extraAttributes.readonly')
         },
     },
 }

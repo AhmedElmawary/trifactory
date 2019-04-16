@@ -15,6 +15,8 @@ use Laravel\Nova\Http\Requests\ResourceIndexRequest;
 
 class MorphTo extends Field
 {
+    use ResolvesReverseRelation;
+
     /**
      * The field's component.
      *
@@ -70,13 +72,6 @@ class MorphTo extends Field
      * @var \Closure|array
      */
     public $display;
-
-    /**
-     * Indicates if the field is nullable.
-     *
-     * @var bool
-     */
-    public $nullable = false;
 
     /**
      * Indicates if this relationship is searchable.
@@ -137,8 +132,7 @@ class MorphTo extends Field
      */
     public function isNotRedundant(Request $request)
     {
-        return (! $request instanceof ResourceIndexRequest || ! $request->viaResource) ||
-               ($this->resourceName !== $request->viaResource);
+        return ! $request instanceof ResourceIndexRequest || ! $this->isReverseRelation($request);
     }
 
     /**
@@ -150,7 +144,15 @@ class MorphTo extends Field
      */
     public function resolve($resource, $attribute = null)
     {
-        $value = $resource->{$this->attribute}()->withoutGlobalScopes()->getResults();
+        $value = null;
+
+        if ($resource->relationLoaded($this->attribute)) {
+            $value = $resource->getRelation($this->attribute);
+        }
+
+        if (! $value) {
+            $value = $resource->{$this->attribute}()->withoutGlobalScopes()->getResults();
+        }
 
         [$this->morphToId, $this->morphToType] = [
             optional($value)->getKey(),
@@ -166,6 +168,18 @@ class MorphTo extends Field
                 $value, Nova::resourceForModel($value)
             );
         }
+    }
+
+    /**
+     * Resolve the field's value for display.
+     *
+     * @param  mixed  $resource
+     * @param  string|null  $attribute
+     * @return void
+     */
+    public function resolveForDisplay($resource, $attribute = null)
+    {
+        //
     }
 
     /**
@@ -240,13 +254,20 @@ class MorphTo extends Field
     {
         $instance = Nova::modelInstanceForKey($request->{$this->attribute.'_type'});
 
+        $morphType = $model->{$this->attribute}()->getMorphType();
         if ($instance) {
-            $model->{$model->{$this->attribute}()->getMorphType()} = $this->getMorphAliasForClass(
+            $model->{$morphType} = $this->getMorphAliasForClass(
                 get_class($instance)
             );
         }
 
-        parent::fillInto($request, $model, $model->{$this->attribute}()->getForeignKey());
+        $foreignKey = $this->getRelationForeignKeyName($model->{$this->attribute}());
+
+        if ($model->isDirty([$morphType, $foreignKey])) {
+            $model->unsetRelation($this->attribute);
+        }
+
+        parent::fillInto($request, $model, $foreignKey);
     }
 
     /**
@@ -455,19 +476,6 @@ class MorphTo extends Field
     }
 
     /**
-     * Indicate that the field should be nullable.
-     *
-     * @param  bool  $nullable
-     * @return $this
-     */
-    public function nullable($nullable = true)
-    {
-        $this->nullable = $nullable;
-
-        return $this;
-    }
-
-    /**
      * Get additional meta information to merge with the field payload.
      *
      * @return array
@@ -483,8 +491,8 @@ class MorphTo extends Field
             'morphToTypes' => $this->morphToTypes,
             'morphToType' => $this->morphToType,
             'morphToId' => $this->morphToId,
-            'nullable' => $this->nullable,
             'searchable' => $this->searchable,
+            'reverse' => $this->isReverseRelation(app(NovaRequest::class)),
         ], $this->meta);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Laravel\Nova\Metrics;
 
+use DateInterval;
 use Laravel\Nova\Card;
 use Laravel\Nova\Nova;
 use Illuminate\Support\Str;
@@ -31,10 +32,12 @@ abstract class Metric extends Card
                     : $this->calculate($request);
         };
 
-        if ($this->cacheFor()) {
+        if ($cacheFor = $this->cacheFor()) {
+            $cacheFor = is_numeric($cacheFor) ? new DateInterval(sprintf('PT%dS', $cacheFor * 60)) : $cacheFor;
+
             return Cache::remember(
                 $this->getCacheKey($request),
-                $this->cacheFor(),
+                $cacheFor,
                 $resolver
             );
         }

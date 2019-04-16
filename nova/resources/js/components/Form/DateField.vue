@@ -13,18 +13,17 @@
                 :first-day-of-week="firstDayOfWeek"
                 :class="errorClasses"
                 @change="handleChange"
+                :disabled="isReadonly"
             />
         </template>
     </default-field>
 </template>
 
 <script>
-import DateTimePicker from '../DateTimePicker'
 import { Errors, FormField, HandlesValidationErrors, InteractsWithDates } from 'laravel-nova'
 
 export default {
     mixins: [HandlesValidationErrors, FormField, InteractsWithDates],
-    components: { DateTimePicker },
 
     computed: {
         firstDayOfWeek() {

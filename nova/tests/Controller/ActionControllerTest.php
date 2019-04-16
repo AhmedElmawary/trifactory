@@ -18,19 +18,23 @@ use Laravel\Nova\Tests\Fixtures\EmptyAction;
 use Laravel\Nova\Tests\Fixtures\QueuedAction;
 use Laravel\Nova\Tests\Fixtures\UserResource;
 use Laravel\Nova\Tests\Fixtures\FailingAction;
+use Laravel\Nova\Tests\Fixtures\RedirectAction;
 use Laravel\Nova\Tests\Fixtures\ExceptionAction;
 use Laravel\Nova\Tests\Fixtures\UnrunnableAction;
 use Laravel\Nova\Tests\Fixtures\DestructiveAction;
+use Laravel\Nova\Tests\Fixtures\HandleResultAction;
 use Laravel\Nova\Tests\Fixtures\UnauthorizedAction;
 use Laravel\Nova\Tests\Fixtures\UpdateStatusAction;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Laravel\Nova\Tests\Fixtures\OpensInNewTabAction;
 use Laravel\Nova\Tests\Fixtures\RequiredFieldAction;
 use Laravel\Nova\Tests\Fixtures\QueuedResourceAction;
 use Laravel\Nova\Tests\Fixtures\QueuedUpdateStatusAction;
+use Laravel\Nova\Tests\Fixtures\NoopActionWithoutActionable;
 
 class ActionControllerTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 
@@ -39,7 +43,7 @@ class ActionControllerTest extends IntegrationTest
         Action::$chunkCount = 200;
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         unset($_SERVER['queuedAction.applied']);
         unset($_SERVER['queuedAction.appliedFields']);
@@ -83,6 +87,30 @@ class ActionControllerTest extends IntegrationTest
         $this->assertEquals('Noop Action', $actionEvent->name);
         $this->assertEquals(['test' => 'Taylor Otwell'], unserialize($actionEvent->fields));
         $this->assertEquals('finished', $actionEvent->status);
+    }
+
+    public function test_actions_support_redirects()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->withExceptionHandling()
+                        ->post('/nova-api/users/action?action='.(new RedirectAction)->uriKey(), [
+                            'resources' => implode(',', [$user->id]),
+                        ]);
+
+        $this->assertEquals(['redirect' => 'http://yahoo.com'], $response->original);
+    }
+
+    public function test_actions_support_opening_in_a_new_tab()
+    {
+        $user = factory(User::class)->create();
+
+        $response = $this->withExceptionHandling()
+                        ->post('/nova-api/users/action?action='.(new OpensInNewTabAction)->uriKey(), [
+                            'resources' => implode(',', [$user->id]),
+                        ]);
+
+        $this->assertEquals(['openInNewTab' => 'http://google.com'], $response->original);
     }
 
     public function test_action_fields_are_validated()
@@ -525,22 +553,19 @@ class ActionControllerTest extends IntegrationTest
         $this->assertEmpty(NoopAction::$applied);
     }
 
-    /**
-     * @expectedException \Laravel\Nova\Exceptions\MissingActionHandlerException
-     */
     public function test_exception_is_thrown_if_handle_method_is_missing()
     {
+        $this->expectException(\Laravel\Nova\Exceptions\MissingActionHandlerException::class);
         $response = $this->withoutExceptionHandling()
                         ->post('/nova-api/users/action?action='.(new EmptyAction)->uriKey(), [
                             'resources' => '1',
                         ]);
     }
 
-    /**
-     * @expectedException \Laravel\Nova\Exceptions\MissingActionHandlerException
-     */
     public function test_exception_is_thrown_if_handle_method_is_missing_for_entire_resource()
     {
+        $this->expectException(\Laravel\Nova\Exceptions\MissingActionHandlerException::class);
+
         $response = $this->withoutExceptionHandling()
                         ->post('/nova-api/users/action?action='.(new EmptyAction)->uriKey(), [
                             'resources' => 'all',
@@ -590,5 +615,33 @@ class ActionControllerTest extends IntegrationTest
         $this->assertEquals($user2->id, $actionEvent2->model_id);
 
         Relation::morphMap([], false);
+    }
+
+    public function test_actions_can_ignore_action_event()
+    {
+        $user = factory(User::class)->create();
+        $user2 = factory(User::class)->create();
+
+        $response = $this->withExceptionHandling()
+            ->post('/nova-api/users/action?action='.(new NoopActionWithoutActionable())->uriKey(), [
+                'resources' => implode(',', [$user->id, $user2->id]),
+            ]);
+
+        $response->assertStatus(200);
+
+        $this->assertCount(0, ActionEvent::all());
+    }
+
+    public function test_actions_handle_result()
+    {
+        factory(User::class)->times(201)->create();
+
+        $response = $this->withExceptionHandling()
+            ->post('/nova-api/users/action?action='.(new HandleResultAction())->uriKey(), [
+                'resources' => 'all',
+            ]);
+
+        $response->assertStatus(200);
+        $this->assertEquals(['message' => 'Processed 201 records'], $response->original);
     }
 }

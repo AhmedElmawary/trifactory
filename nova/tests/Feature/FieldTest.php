@@ -5,14 +5,16 @@ namespace Laravel\Nova\Tests\Feature;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Tests\IntegrationTest;
+use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Tests\Fixtures\UserResource;
 
 class FieldTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
     }
@@ -149,5 +151,51 @@ class FieldTest extends IntegrationTest
         $this->assertContains([
             'extraAttributes' => ['placeholder' => 'This is a placeholder'],
         ], $field->jsonSerialize());
+    }
+
+    public function test_select_fields_options_with_additional_parameters()
+    {
+        $expected = [
+            ['label' => 'A', 'value' => 'a'],
+            ['label' => 'B', 'value' => 'b'],
+            ['label' => 'C', 'value' => 'c'],
+            ['label' => 'D', 'value' => 'd', 'group' => 'E'],
+        ];
+        $field = Select::make('Name')->options([
+            'a' => 'A',
+            'b' => ['label' => 'B'],
+            ['value' => 'c', 'label' => 'C'],
+            ['value' => 'd', 'label' => 'D', 'group' => 'E'],
+        ]);
+
+        $this->assertJsonStringEqualsJsonString(json_encode($expected), json_encode($field->jsonSerialize()['options']));
+    }
+
+    public function test_field_can_be_set_to_readonly()
+    {
+        $field = Text::make('Avatar');
+        $field->readonly(true);
+
+        $this->assertTrue($field->isReadonly(NovaRequest::create('/', 'get')));
+    }
+
+    public function test_field_can_be_set_to_readonly_using_a_callback()
+    {
+        $field = Text::make('Avatar');
+        $field->readonly(function () {
+            return true;
+        });
+
+        $this->assertTrue($field->isReadonly(NovaRequest::create('/', 'get')));
+    }
+
+    public function test_field_can_be_set_to_not_be_readonly_using_a_callback()
+    {
+        $field = Text::make('Avatar');
+        $field->readonly(function () {
+            return false;
+        });
+
+        $this->assertFalse($field->isReadonly(NovaRequest::create('/', 'get')));
     }
 }

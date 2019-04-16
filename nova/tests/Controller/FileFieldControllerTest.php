@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class FileFieldControllerTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
 
@@ -49,6 +49,45 @@ class FileFieldControllerTest extends IntegrationTest
             ->postJson('/nova-api/files', [
                 'avatar' => UploadedFile::fake()->image('avatar.png'),
             ]);
+
+        $_SERVER['__nova.fileResource.imageName'] = 'avatar2.png';
+
+        $file = File::first();
+
+        $filename = $file->avatar;
+        Storage::disk('public')->assertExists($file->avatar);
+
+        $this->withExceptionHandling()
+            ->postJson('/nova-api/files/'.$file->id, [
+                '_method'=>'PUT',
+                'avatar' => UploadedFile::fake()->image('avatar2.png'),
+            ]);
+
+        unset($_SERVER['nova.fileResource.imageField']);
+
+        $file = File::first();
+
+        Storage::disk('public')->assertMissing($filename);
+        Storage::disk('public')->assertExists($file->avatar);
+        $this->assertnotEquals($filename, $file->avatar);
+    }
+
+    public function test_update_prunable_file_with_custom_delete_callback()
+    {
+        $_SERVER['nova.fileResource.imageField'] = function () {
+            return Image::make('Avatar', 'avatar')
+                ->prunable()
+                ->delete(function ($request, $model, $disk, $path) {
+                    Storage::disk($disk)->delete($path);
+                });
+        };
+
+        $response = $this->withExceptionHandling()
+            ->postJson('/nova-api/files', [
+                'avatar' => UploadedFile::fake()->image('avatar.png'),
+            ]);
+
+        $response->assertStatus(201);
 
         $_SERVER['__nova.fileResource.imageName'] = 'avatar2.png';
 
@@ -126,7 +165,7 @@ class FileFieldControllerTest extends IntegrationTest
                         ->deleteJson('/nova-api/files/'.File::first()->id.'/field/avatar');
 
         $response->assertStatus(200);
-        $this->assertCount(1, File::first()->actions);
+        $this->assertCount(2, File::first()->actions);
     }
 
     public function test_pivot_file_field_can_be_deleted()
@@ -263,7 +302,7 @@ class FileFieldControllerTest extends IntegrationTest
         $file = File::first();
         $this->assertEquals('avatars/avatar.png', $file->avatar);
         $this->assertEquals('avatar.png', $file->original_name);
-        $this->assertEquals(91, $file->size);
+        $this->assertGreaterThan(0, $file->size);
     }
 
     public function test_file_fields_are_deleted_when_resource_is_deleted()

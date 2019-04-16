@@ -43,27 +43,21 @@
                             </div>
                         </search-input>
 
-                        <select
+                        <select-control
                             v-else
                             dusk="attachable-select"
                             class="form-control form-select mb-3 w-full"
                             :class="{ 'border-danger': validationErrors.has(field.attribute) }"
                             :data-testid="`${field.resourceName}-select`"
                             @change="selectResourceFromSelectControl"
+                            :options="availableResources"
+                            :label="'display'"
+                            :selected="selectedResourceId"
                         >
                             <option value="" disabled selected
                                 >{{ __('Choose') }} {{ relatedResourceLabel }}</option
                             >
-
-                            <option
-                                v-for="resource in availableResources"
-                                :key="resource.value"
-                                :value="resource.value"
-                                :selected="selectedResourceId == resource.value"
-                            >
-                                {{ resource.display }}
-                            </option>
-                        </select>
+                        </select-control>
 
                         <!-- Trashed State -->
                         <div v-if="softDeletes">
@@ -213,7 +207,13 @@ export default {
                     '/nova-api/' +
                         this.resourceName +
                         '/creation-pivot-fields/' +
-                        this.relatedResourceName
+                        this.relatedResourceName,
+                    {
+                        params: {
+                            editing: true,
+                            editMode: 'attach',
+                        },
+                    }
                 )
                 .then(({ data }) => {
                     this.fields = data

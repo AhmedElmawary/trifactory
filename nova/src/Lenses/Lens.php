@@ -2,7 +2,6 @@
 
 namespace Laravel\Nova\Lenses;
 
-use Closure;
 use stdClass;
 use ArrayAccess;
 use JsonSerializable;
@@ -10,6 +9,9 @@ use Laravel\Nova\Nova;
 use Illuminate\Support\Str;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\ResolvesCards;
+use Laravel\Nova\AuthorizedToSee;
+use Laravel\Nova\ResolvesActions;
 use Laravel\Nova\ResolvesFilters;
 use Illuminate\Support\Collection;
 use Laravel\Nova\ProxiesCanSeeToGate;
@@ -23,9 +25,13 @@ use Illuminate\Http\Resources\ConditionallyLoadsAttributes;
 
 abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
 {
-    use ConditionallyLoadsAttributes,
+    use
+        AuthorizedToSee,
+        ConditionallyLoadsAttributes,
         DelegatesToResource,
         ProxiesCanSeeToGate,
+        ResolvesActions,
+        ResolvesCards,
         ResolvesFilters;
 
     /**
@@ -41,13 +47,6 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
      * @var \Illuminate\Database\Eloquent\Model
      */
     public $resource;
-
-    /**
-     * The callback used to authorize viewing the action.
-     *
-     * @var \Closure|null
-     */
-    public $seeCallback;
 
     /**
      * Execute the query for the lens.
@@ -78,30 +77,6 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
     }
 
     /**
-     * Determine if the action should be available for the given request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return bool
-     */
-    public function authorizedToSee(Request $request)
-    {
-        return $this->seeCallback ? call_user_func($this->seeCallback, $request) : true;
-    }
-
-    /**
-     * Set the callback to be run to authorize viewing the action.
-     *
-     * @param  \Closure  $callback
-     * @return $this
-     */
-    public function canSee(Closure $callback)
-    {
-        $this->seeCallback = $callback;
-
-        return $this;
-    }
-
-    /**
      * Get the displayable name of the action.
      *
      * @return string
@@ -119,6 +94,17 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
     public function uriKey()
     {
         return Str::slug($this->name());
+    }
+
+    /**
+     * Get the actions available on the lens.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    public function actions(Request $request)
+    {
+        return $request->newResource()->actions($request);
     }
 
     /**
@@ -158,7 +144,7 @@ abstract class Lens implements ArrayAccess, JsonSerializable, UrlRoutable
      * @param  \Laravel\Nova\Http\Requests\NovaRequest  $request
      * @return \Illuminate\Support\Collection
      */
-    protected function availableFields(NovaRequest $request)
+    public function availableFields(NovaRequest $request)
     {
         return collect(array_values($this->filter($this->fields($request))));
     }

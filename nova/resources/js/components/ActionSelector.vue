@@ -56,12 +56,13 @@
         <!-- Action Confirmation Modal -->
         <!-- <portal to="modals"> -->
         <transition name="fade">
-            <confirm-action-modal
+            <component
+                :is="selectedAction.component"
                 :working="working"
                 v-if="confirmActionModalOpened"
                 :selected-resources="selectedResources"
                 :resource-name="resourceName"
-                :selected-action="selectedAction"
+                :action="selectedAction"
                 :errors="errors"
                 @confirm="executeAction"
                 @close="confirmActionModalOpened = false"
@@ -136,9 +137,9 @@ export default {
         determineActionStrategy() {
             if (this.selectedAction.withoutConfirmation) {
                 this.executeAction()
+            } else {
+                this.openConfirmationModal()
             }
-
-            this.openConfirmationModal()
         },
 
         /**
@@ -231,6 +232,8 @@ export default {
                 document.body.removeChild(link)
             } else if (response.redirect) {
                 window.location = response.redirect
+            } else if (response.openInNewTab) {
+                window.open(response.openInNewTab, '_blank')
             } else {
                 this.$emit('actionExecuted')
                 this.$toasted.show(this.__('The action ran successfully!'), { type: 'success' })

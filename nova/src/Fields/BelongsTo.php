@@ -8,11 +8,11 @@ use Laravel\Nova\TrashedStatus;
 use Laravel\Nova\Rules\Relatable;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Http\Requests\ResourceIndexRequest;
-use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 
 class BelongsTo extends Field
 {
     use FormatsRelatableDisplayValues;
+    use ResolvesReverseRelation;
 
     /**
      * The field's component.
@@ -57,11 +57,11 @@ class BelongsTo extends Field
     public $display;
 
     /**
-     * Indicates if the field is nullable.
+     * Indicates if the related resource can be viewed.
      *
      * @var bool
      */
-    public $nullable = false;
+    public $viewable = true;
 
     /**
      * Indicates if this relationship is searchable.
@@ -90,13 +90,6 @@ class BelongsTo extends Field
      * @var string
      */
     public $singularLabel;
-
-    /**
-     * The reverse relation for the related resource.
-     *
-     * @var string
-     */
-    public $reverseRelation;
 
     /**
      * Create a new field.
@@ -144,57 +137,6 @@ class BelongsTo extends Field
     }
 
     /**
-     * Determine if the field is the reverse relation of a showed index view.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return bool
-     */
-    public function isReverseRelation(Request $request)
-    {
-        if (! $request->viaResource || $this->resourceName !== $request->viaResource) {
-            return false;
-        }
-
-        $reverse = $this->getReverseRelation($request);
-
-        return $reverse === $request->viaRelationship;
-    }
-
-    /**
-     * Get reverse relation field name.
-     *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
-     * @return string
-     */
-    public function getReverseRelation(NovaRequest $request)
-    {
-        if (is_null($this->reverseRelation)) {
-            $viaModel = forward_static_call(
-                [$resourceClass = $this->resourceClass, 'newModel']
-            );
-
-            $viaResource = new $resourceClass($viaModel);
-
-            $resource = $request->newResource();
-
-            $this->reverseRelation = $viaResource->availableFields($request)
-                    ->first(function ($field) use ($viaModel, $resource) {
-                        if (! isset($field->resourceName) || $field->resourceName !== $resource::uriKey()) {
-                            return false;
-                        }
-
-                        $relation = $viaModel->{$field->attribute}();
-
-                        $method = $relation instanceof HasOneOrMany ? 'getForeignKeyName' : 'getForeignKey';
-
-                        return $relation->{$method}() === $resource->model()->{$this->attribute}()->getForeignKey();
-                    })->attribute ?? '';
-        }
-
-        return $this->reverseRelation;
-    }
-
-    /**
      * Resolve the field's value.
      *
      * @param  mixed  $resource
@@ -203,13 +145,38 @@ class BelongsTo extends Field
      */
     public function resolve($resource, $attribute = null)
     {
-        $value = $resource->{$this->attribute}()->withoutGlobalScopes()->first();
+        $value = null;
+
+        if ($resource->relationLoaded($this->attribute)) {
+            $value = $resource->getRelation($this->attribute);
+        }
+
+        if (! $value) {
+            $value = $resource->{$this->attribute}()->withoutGlobalScopes()->getResults();
+        }
 
         if ($value) {
             $this->belongsToId = $value->getKey();
 
-            $this->value = $this->formatDisplayValue($value);
+            $resource = new $this->resourceClass($value);
+
+            $this->value = $this->formatDisplayValue($resource);
+
+            $this->viewable = $this->viewable
+                && $resource->authorizedToView(request());
         }
+    }
+
+    /**
+     * Resolve the field's value for display.
+     *
+     * @param  mixed  $resource
+     * @param  string|null  $attribute
+     * @return void
+     */
+    public function resolveForDisplay($resource, $attribute = null)
+    {
+        //
     }
 
     /**
@@ -241,7 +208,13 @@ class BelongsTo extends Field
      */
     public function fill(NovaRequest $request, $model)
     {
-        parent::fillInto($request, $model, $model->{$this->attribute}()->getForeignKey());
+        $foreignKey = $this->getRelationForeignKeyName($model->{$this->attribute}());
+
+        parent::fillInto($request, $model, $foreignKey);
+
+        if ($model->isDirty($foreignKey)) {
+            $model->unsetRelation($this->attribute);
+        }
 
         if ($this->filledCallback) {
             call_user_func($this->filledCallback, $request, $model);
@@ -333,6 +306,19 @@ class BelongsTo extends Field
     }
 
     /**
+     * Specify if the related resource can be viewed.
+     *
+     * @param  bool  $value
+     * @return $this
+     */
+    public function viewable($value = true)
+    {
+        $this->viewable = $value;
+
+        return $this;
+    }
+
+    /**
      * Specify a callback that should be run when the field is filled.
      *
      * @param  \Closure  $callback
@@ -354,19 +340,6 @@ class BelongsTo extends Field
     public function inverse($inverse)
     {
         $this->inverse = $inverse;
-
-        return $this;
-    }
-
-    /**
-     * Indicate that the field should be nullable.
-     *
-     * @param  bool  $nullable
-     * @return $this
-     */
-    public function nullable($nullable = true)
-    {
-        $this->nullable = $nullable;
 
         return $this;
     }
@@ -396,9 +369,9 @@ class BelongsTo extends Field
             'singularLabel' => $this->singularLabel ?? $this->name ?? forward_static_call([$this->resourceClass, 'singularLabel']),
             'belongsToRelationship' => $this->belongsToRelationship,
             'belongsToId' => $this->belongsToId,
-            'nullable' => $this->nullable,
             'searchable' => $this->searchable,
-            'reverseRelation' => $this->getReverseRelation(app(NovaRequest::class)),
+            'viewable' => $this->viewable,
+            'reverse' => $this->isReverseRelation(app(NovaRequest::class)),
         ], $this->meta);
     }
 }

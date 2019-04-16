@@ -40,13 +40,18 @@ export default {
             type: [Number, String],
             default: '',
         },
+
+        lens: {
+            type: String,
+            default: '',
+        },
     },
 
     data: () => ({
         loading: true,
         value: '',
         data: [],
-        format: '(0.00a)',
+        format: '(0[.]00a)',
         prefix: '',
         suffix: '',
         selectedRangeKey: null,
@@ -120,12 +125,13 @@ export default {
         },
 
         metricEndpoint() {
+            const lens = this.lens !== '' ? `/lens/${this.lens}` : ''
             if (this.resourceName && this.resourceId) {
-                return `/nova-api/${this.resourceName}/${this.resourceId}/metrics/${
+                return `/nova-api/${this.resourceName}${lens}/${this.resourceId}/metrics/${
                     this.card.uriKey
                 }`
             } else if (this.resourceName) {
-                return `/nova-api/${this.resourceName}/metrics/${this.card.uriKey}`
+                return `/nova-api/${this.resourceName}${lens}/metrics/${this.card.uriKey}`
             } else {
                 return `/nova-api/metrics/${this.card.uriKey}`
             }

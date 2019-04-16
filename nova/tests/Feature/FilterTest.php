@@ -9,7 +9,7 @@ use Laravel\Nova\Tests\Fixtures\CreateDateFilter;
 
 class FilterTest extends IntegrationTest
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
     }
@@ -48,7 +48,7 @@ class FilterTest extends IntegrationTest
     {
         $filter = new CreateDateFilter;
 
-        $this->assertArraySubset([
+        $this->assertSubset([
             'class' => get_class($filter),
             'name' => $filter->name(),
             'component' => $filter->component(),
@@ -63,7 +63,7 @@ class FilterTest extends IntegrationTest
             'extraAttributes' => ['placeholder' => 'This is a placeholder'],
         ]);
 
-        $this->assertArraySubset([
+        $this->assertSubset([
             'extraAttributes' => ['placeholder' => 'This is a placeholder'],
         ], $filter->jsonSerialize());
     }

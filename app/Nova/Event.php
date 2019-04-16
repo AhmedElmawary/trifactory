@@ -55,14 +55,14 @@ class Event extends Resource
             Text::make('Name', 'name')->sortable(),
             Text::make('Country', 'country')->sortable()->hideFromIndex(),
             Place::make('City', 'city')->onlyCities()
-                                       ->countries(['EG'])
-                                       ->hideFromIndex(),
+                ->countries(['EG'])
+                ->hideFromIndex(),
             Place::make('Address', 'address')->countries(['EG'])->hideFromIndex(),
             Date::make('From', 'event_start')->sortable(),
             Date::make('To', 'event_end')->sortable(),
             Boolean::make('Published', 'published')
-            ->trueValue('yes')
-            ->falseValue('no'),
+                ->trueValue('yes')
+                ->falseValue('no'),
 
             Trix::make('Details', 'details')->sortable(),
             HasMany::make('Eventimages'),
@@ -79,7 +79,9 @@ class Event extends Resource
      */
     public function cards(Request $request)
     {
-        return [];
+        return [
+            new \Sparclex\NovaImportCard\NovaImportCard(LeaderboardData::class),
+        ];
     }
 
     /**

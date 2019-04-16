@@ -7,27 +7,21 @@
                 <!-- Related Resource -->
                 <default-field :field="field" :errors="validationErrors">
                     <template slot="field">
-                        <select
+                        <select-control
                             class="form-control form-select mb-3 w-full"
                             dusk="attachable-select"
                             :class="{ 'border-danger': validationErrors.has(field.attribute) }"
                             :data-testid="`${field.resourceName}-select`"
                             @change="selectResourceFromSelectControl"
                             disabled
+                            :options="availableResources"
+                            :label="'display'"
+                            :selected="selectedResourceId"
                         >
                             <option value="" disabled selected
                                 >{{ __('Choose') }} {{ field.name }}</option
                             >
-
-                            <option
-                                v-for="resource in availableResources"
-                                :key="resource.value"
-                                :value="resource.value"
-                                :selected="selectedResourceId == resource.value"
-                            >
-                                {{ resource.display }}
-                            </option>
-                        </select>
+                        </select-control>
                     </template>
                 </default-field>
 
@@ -183,7 +177,13 @@ export default {
                     `/nova-api/${this.resourceName}/${this.resourceId}/update-pivot-fields/${
                         this.relatedResourceName
                     }/${this.relatedResourceId}`,
-                    { params: { viaRelationship: this.viaRelationship } }
+                    {
+                        params: {
+                            editing: true,
+                            editMode: 'update-attached',
+                            viaRelationship: this.viaRelationship,
+                        },
+                    }
                 )
                 .catch(error => {
                     if (error.response.status == 404) {

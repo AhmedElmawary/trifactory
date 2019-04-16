@@ -87,7 +87,7 @@ export default {
         // and use the label for that as the one we use for the title and buttons
         if (this.isRelation) {
             const { data } = await Nova.request(
-                '/nova-api/' + this.viaResource + '/field/' + this.viaRelationship
+                `/nova-api/${this.viaResource}/field/${this.viaRelationship}`
             )
             this.relationResponse = data
         }
@@ -107,7 +107,15 @@ export default {
             this.fields = []
 
             const { data: fields } = await Nova.request()
-                .get(`/nova-api/${this.resourceName}/${this.resourceId}/update-fields`)
+                .get(`/nova-api/${this.resourceName}/${this.resourceId}/update-fields`, {
+                    params: {
+                        editing: true,
+                        editMode: 'update',
+                        viaResource: this.viaResource,
+                        viaResourceId: this.viaResourceId,
+                        viaRelationship: this.viaRelationship,
+                    },
+                })
                 .catch(error => {
                     if (error.response.status == 404) {
                         this.$router.push({ name: '404' })
@@ -211,7 +219,14 @@ export default {
         updateRequest() {
             return Nova.request().post(
                 `/nova-api/${this.resourceName}/${this.resourceId}`,
-                this.updateResourceFormData
+                this.updateResourceFormData,
+                {
+                    params: {
+                        viaResource: this.viaResource,
+                        viaResourceId: this.viaResourceId,
+                        viaRelationship: this.viaRelationship,
+                    },
+                }
             )
         },
 
