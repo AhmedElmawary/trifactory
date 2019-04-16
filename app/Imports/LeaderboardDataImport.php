@@ -34,8 +34,9 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
     {
         $row = $row->toArray(null, true, true);
 
-        if (!stripos($this->sheetName, '-'))
+        if (!stripos($this->sheetName, '-')) {
             return;
+        }
 
         $sheetName = explode('-', $this->sheetName);
 
