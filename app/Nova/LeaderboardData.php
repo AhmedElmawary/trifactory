@@ -38,6 +38,7 @@ class LeaderboardData extends Resource
      */
     public static $search = [
         'name',
+        'email',
     ];
 
     /**
@@ -55,6 +56,7 @@ class LeaderboardData extends Resource
             Text::make('Email', 'email')->sortable(),
             Text::make('Club', 'club')->sortable(),
             Text::make('Gender', 'gender')->sortable(),
+            Text::make('Gender Position', 'gender_position')->sortable(),
             Text::make('Category', 'category')->sortable(),
             Text::make('Category Position', 'category_position')->sortable(),
             Text::make('Country code', 'country_code')->sortable(),
