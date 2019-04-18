@@ -64,6 +64,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                         }}, {{$event->city}}, {{$event->country}}
                     </p>
                 </div>
@@ -98,15 +107,17 @@
 
 <section class="results-section container no-height">
     <h3 class="section-title">
-        <img src="images/results-icon.svg" alt="results-icon" class="icon" />All
-        Time Results
+        <img
+            src="images/results-icon.svg"
+            alt="results-icon"
+            class="icon"
+        />Leaderboard
     </h3>
 
     <div class="row">
-        <!-- <div class="col-lg-12 results-head">
-            <h5>Event Name</h5>
-            <p>March 7th 2018, Cairo, Egypt</p>
-        </div> -->
+        <div class="col-lg-12 results-head">
+            <h5>Male</h5>
+        </div>
 
         <div class="col-lg-12 table-responsive-lg">
             <table class="table table-striped table-bordered">
@@ -115,20 +126,80 @@
                         <th scope="col">Rank</th>
                         <th scope="col">Name</th>
                         <th scope="col">Nationality</th>
-                        <!-- <th scope="col">Group</th> -->
+                        <th scope="col">Age Group</th>
                         <th scope="col">Club</th>
                         <th scope="col">Points</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($leaderboard as $leader)
+                    @foreach($leaderboardMale as $male)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{$leader->name}}</td>
-                        <td>{{$leader->country_code}}</td>
-                        <!-- <td>{{$leader->category}}</td> -->
-                        <td>{{$leader->club}}</td>
-                        <td>{{$leader->total_points}}</td>
+                        <td>{{$male->name}}</td>
+                        <td>{{$male->country_code}}</td>
+                        <td>{{$male->category}}</td>
+                        <td>{{$male->club}}</td>
+                        <td>{{$male->total_points}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 results-head">
+            <h5>Female</h5>
+        </div>
+
+        <div class="col-lg-12 table-responsive-lg">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Rank</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Nationality</th>
+                        <th scope="col">Age Group</th>
+                        <th scope="col">Club</th>
+                        <th scope="col">Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($leaderboardFemale as $female)
+                    <tr>
+                        <td>{{$loop->iteration}}</td>
+                        <td>{{$female->name}}</td>
+                        <td>{{$female->country_code}}</td>
+                        <td>{{$female->category}}</td>
+                        <td>{{$female->club}}</td>
+                        <td>{{$female->total_points}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 results-head">
+            <h5>Club</h5>
+        </div>
+
+        <div class="col-lg-12 table-responsive-lg">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Rank</th>
+                        <th scope="col">Club</th>
+                        <th scope="col">Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($leaderboardClub as $club)
+                    <tr>
+                        <td>{{$loop->iteration}}</td>
+                        <td>{{$club->club}}</td>
+                        <td>{{$club->total_points}}</td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -45,7 +45,7 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
         if (stripos($this->sheetName, 'relay')) {
             $names = explode('/', $row['name']);
             $count = count($names);
-            \Log::info($row);
+
             $data = [
                 'race_id' => $race_id,
                 'bib' => $row['bib'],
@@ -55,6 +55,7 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
                 'name' => $row['swimmer_name'],
                 'email' => $row['swimmer_email'],
                 'club' => $row['swimmer_club'],
+                'gender' => $row['swimmer_gender'],
             ];
             LeaderboardData::firstOrCreate($data);
 
@@ -67,6 +68,7 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
                 'name' => $row['runner_name'],
                 'email' => $row['runner_email'],
                 'club' => $row['runner_club'],
+                'gender' => $row['runner_gender'],
             ];
             LeaderboardData::firstOrCreate($data);
 
@@ -80,6 +82,7 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
                     'name' => $row['cyclist_name'],
                     'email' => $row['cyclist_email'],
                     'club' => $row['cyclist_club'],
+                    'gender' => $row['cyclist_gender'],
                 ];
                 LeaderboardData::firstOrCreate($data);
             }

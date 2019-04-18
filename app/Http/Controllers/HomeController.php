@@ -27,17 +27,35 @@ class HomeController extends Controller
         $gallery = Gallery::latest('created_at')->with('galleryimage')->first();
         $upcomingEvents = Event::upcomming()->published()->get();
 
-        $leaderboard = \DB::table('leaderboard_data')
+        $leaderboardMale = \DB::table('leaderboard_data')
             ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
+            ->where('gender', 'M')
             ->orderByRaw('total_points desc')
             ->groupBy('name')
-            ->limit(10)
+            ->limit(5)
+            ->get();
+
+        $leaderboardFemale = \DB::table('leaderboard_data')
+            ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
+            ->where('gender', 'F')
+            ->orderByRaw('total_points desc')
+            ->groupBy('name')
+            ->limit(5)
+            ->get();
+
+        $leaderboardClub = \DB::table('leaderboard_data')
+            ->select('points', 'club', \DB::raw('SUM(points) as total_points'))
+            ->orderByRaw('total_points desc')
+            ->groupBy('club')
+            ->limit(5)
             ->get();
 
         $data = [
             'gallery' => $gallery,
             'upcomingEvents' => $upcomingEvents,
-            'leaderboard' => $leaderboard,
+            'leaderboardMale' => $leaderboardMale,
+            'leaderboardFemale' => $leaderboardFemale,
+            'leaderboardClub' => $leaderboardClub,
         ];
 
         return view('home', $data);
