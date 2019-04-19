@@ -17,7 +17,9 @@
     <img src="/images/home.jpg" alt="Hero Image" class="hero-image" />
 </section>
 
-<section class="events-section container">
+<section
+    class="events-section container @if($upcomingEvents->count() === 0) vouchers-section @endif"
+>
     <h3 class="section-title">
         <img
             src="images/events-icon.svg"
@@ -54,33 +56,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                         }}, {{$event->city}}, {{$event->country}}
                     </p>
                 </div>
@@ -88,7 +63,16 @@
         </div>
         @endforeach
     </div>
-    @endforeach
+    @endforeach @if($upcomingEvents->count() === 0)
+    <div class="row">
+        <div
+            class="col-lg-12 d-flex justify-content-center align-items-center flex-column voucher-box"
+        >
+            <h4>Stay tuned for our upcoming 2019 events</h4>
+            <a href="/events" class="btn btn-dark">Previous Events</a>
+        </div>
+    </div>
+    @endif
 </section>
 
 <section class="vouchers-section container no-height">
