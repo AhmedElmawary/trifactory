@@ -47,6 +47,8 @@ Route::post('/profile/image', 'ProfileController@image');
 Route::post('/profile/update', 'ProfileController@update');
 Route::post('/profile/password', 'ProfileController@password');
 
+Route::get('/leaderboard', 'LeaderboardController@index')->middleware('verified');
+
 Auth::routes(['verify' => true]);
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
