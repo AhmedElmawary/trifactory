@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use DB;
 
 class LeaderboardController extends Controller
