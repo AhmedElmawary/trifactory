@@ -73,6 +73,14 @@
 
 
 
+
+
+
+
+
+
+
+
                         }}, {{$event->city}}, {{$event->country}}
                     </p>
                 </div>
@@ -146,6 +154,15 @@
             </table>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-12 results-head">
+            <a
+                href="/leaderboard#pills-rankings-male"
+                class="bbtn dark btn-clear float-right mt-2"
+                >View More</a
+            >
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-lg-12 results-head">
@@ -179,6 +196,15 @@
             </table>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-12 results-head">
+            <a
+                href="/leaderboard#pills-rankings-female"
+                class="bbtn dark btn-clear float-right mt-2"
+                >View More</a
+            >
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-lg-12 results-head">
@@ -204,6 +230,15 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 results-head">
+            <a
+                href="/leaderboard#pills-rankings-club"
+                class="bbtn dark btn-clear float-right mt-2"
+                >View More</a
+            >
         </div>
     </div>
 </section>
