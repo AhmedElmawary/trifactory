@@ -159,3 +159,9 @@ nav .navbar-nav .nav-item .nav-link span {
 .home-view section.hero-section .hero-content-bg {
     left: -70vw;
 }
+
+@media only screen and (max-width: 500px) {
+    .custom-radio-input {
+        margin: 0;
+    }
+}
