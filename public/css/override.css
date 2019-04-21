@@ -147,3 +147,15 @@ nav .navbar-nav .nav-item .nav-link span {
 .page-link:hover {
     color: #e21c21;
 }
+
+.home-view section.hero-section .hero-content-container h1 {
+    font-size: 40px;
+}
+
+.home-view section.hero-section .hero-content-container h3 {
+    font-size: 16px;
+}
+
+.home-view section.hero-section .hero-content-bg {
+    left: -70vw;
+}
