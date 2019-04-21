@@ -71,10 +71,10 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-1"></div>
-      <div class="col-lg-5">
-        <img src="/images/logo.png" alt="Trifactory Logo" class="logo">
+      <div class="col-lg-5 col-sm-12">
+        <img width="50%" src="/images/logo.png" alt="Trifactory Logo" class="logo" style="margin-bottom:20px">
       </div>
-      <div class="col-lg-3">
+      <div class="col-lg-3 col-sm-12 clearfix">
         <span class="contact-item clearfix">
           <img src="/images/location-icon.svg" alt="Location Icon" class="icon">
           <p>17, Al Mansour Mohamed Street, Zamalek, Cairo, Egypt</p>
@@ -84,7 +84,7 @@
           <a href="mailto:info@thetrifactory.com">info@thetrifactory.com</a>
         </span>
       </div>
-      <div class="col-lg-2 text-right">
+      <div class="col-lg-2 col-sm-12 text-right">
         <a target="_blank" href="https://www.facebook.com/thetrifactory"><img src="/images/facebook-icon.svg" alt="facebook" class="social-icon"></a>
         <a target="_blank" href="https://www.instagram.com/thetrifactory"><img src="/images/instagram-icon.svg" alt="instagram" class="social-icon"></a>
       </div>
