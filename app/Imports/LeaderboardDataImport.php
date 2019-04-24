@@ -56,6 +56,7 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
                 'email' => $row['swimmer_email'],
                 'club' => $row['swimmer_club'],
                 'gender' => $row['swimmer_gender'],
+                'country_code' => $row['swimmer_countrycode'],
             ];
             LeaderboardData::firstOrCreate($data);
 
@@ -69,6 +70,7 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
                 'email' => $row['runner_email'],
                 'club' => $row['runner_club'],
                 'gender' => $row['runner_gender'],
+                'country_code' => $row['runner_countrycode'],
             ];
             LeaderboardData::firstOrCreate($data);
 
@@ -83,6 +85,7 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
                     'email' => $row['cyclist_email'],
                     'club' => $row['cyclist_club'],
                     'gender' => $row['cyclist_gender'],
+                    'country_code' => $row['cyclist_countrycode'],
                 ];
                 LeaderboardData::firstOrCreate($data);
             }
