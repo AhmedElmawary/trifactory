@@ -3,7 +3,7 @@
     <tr>
         <td>
             <span style="font-family: AvenirNext-Bold;font-size: 24px;color: #000000;">
-                Hello!
+                Welcome {{ $user->name }},
             </span>
         </td>
     </tr>

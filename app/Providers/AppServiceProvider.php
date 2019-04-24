@@ -51,7 +51,7 @@ class AppServiceProvider extends ServiceProvider
             // Return your mail here...
             return (new MailMessage)
                 ->subject('Verify your email address')
-                ->view('emails.verify', ['verifyUrl' => $verifyUrl]);
+                ->view('emails.verify', ['verifyUrl' => $verifyUrl, 'user' => $notifiable]);
         });
     }
 }
