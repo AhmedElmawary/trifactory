@@ -8,7 +8,7 @@
         class="hero-content d-flex justify-content-center align-items-center flex-column"
     >
         <div class="hero-content-container">
-            <h1>The Trifactory</h1>
+            <h1>The TriFactory</h1>
             <h3>THE HOME OF ENDURANCE SPORTS IN EGYPT</h3>
             <a href="/events" class="btn btn-dark">Explore Events</a>
         </div>

@@ -48,13 +48,13 @@ return [
         'start' => [
             //
         ],
-        
+
         // Code and composer vendors are ready but nothing is built.
         'build' => [
             // 'yarn:install',
             // 'yarn:production',
         ],
-        
+
         // Deployment is done but not live yet (before symlink)
         'ready' => [
             'artisan:storage:link',
@@ -65,17 +65,17 @@ return [
             // 'artisan:nova:publish --force',
             // 'artisan:horizon:terminate',
         ],
-        
+
         // Deployment is done and live
         'done' => [
             //
         ],
-        
+
         // Deployment succeeded.
         'success' => [
             //
         ],
-        
+
         // Deployment failed.
         'fail' => [
             //
@@ -94,7 +94,7 @@ return [
     */
 
     'options' => [
-        'application' => env('APP_NAME', 'The Trifactory'),
+        'application' => env('APP_NAME', 'The TriFactory'),
         'repository' => 'git@gitlab.com:breadcrumbsegypt/thetrifactory.com.git',
         'http_user' => 'www-data',
         'writable_mode' => 'chmod',

@@ -31,10 +31,10 @@ class VoucherPurchase extends Mailable
     public function build()
     {
         return $this
-                ->subject('The Trifactory - Voucher purchased')
-                ->view('emails.voucher-purchase', [
-                    'meta' => $this->event->meta,
-                    'user' => $this->event->user
-                ]);
+            ->subject('The TriFactory - Voucher purchased')
+            ->view('emails.voucher-purchase', [
+                'meta' => $this->event->meta,
+                'user' => $this->event->user
+            ]);
     }
 }

@@ -31,7 +31,7 @@ class SendWelcomeEmail extends Mailable
     public function build()
     {
         return $this
-                ->subject('The Trifactory - Welcome')
-                ->view('emails.send-welcome', ['user' => $this->user]);
+            ->subject('The TriFactory - Welcome')
+            ->view('emails.send-welcome', ['user' => $this->user]);
     }
 }

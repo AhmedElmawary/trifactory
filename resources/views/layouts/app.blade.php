@@ -138,7 +138,7 @@
                         <img
                             width="50%"
                             src="/images/logo.png"
-                            alt="Trifactory Logo"
+                            alt="TriFactory Logo"
                             class="logo"
                             style="margin-bottom:20px"
                         />
@@ -189,7 +189,7 @@
 
                 <div class="row">
                     <div class="col-lg-6 col-12 text-lg-left text-center">
-                        <p class="footer-text">Copyright 2019 The Trifactory</p>
+                        <p class="footer-text">Copyright 2019 The TriFactory</p>
                     </div>
                     <div class="col-lg-6 col-12 text-lg-right text-center">
                         <p class="footer-text">
