@@ -47,7 +47,7 @@ class Usercredit extends Resource
             ID::make()->sortable(),
             BelongsTo::make('User'),
             Number::make('Amount', 'amount'),
-            Text::make('Action', 'action'),
+            Text::make('Action', 'action')->rules('required', 'max:255'),
         ];
     }
 
