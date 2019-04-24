@@ -34,7 +34,7 @@ class Event extends Model
 
     public function scopeUpcomming($query)
     {
-        return $query->where('event_start', '>=', Carbon::today());
+        return $query->where('event_end', '>=', Carbon::today());
     }
 
     public function scopePublished($query)

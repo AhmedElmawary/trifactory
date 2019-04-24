@@ -26,17 +26,17 @@ class EventsController extends Controller
     public function getTicketsByRaceId($id)
     {
         $tickets = DB::table('tickets')
-                        ->where('race_id', $id)
-                        ->where('published', 'YES')
-                        ->pluck('name', 'id');
+            ->where('race_id', $id)
+            ->where('published', 'YES')->get();
+        // ->pluck('name', 'id', 'ticket_end');
         return json_encode($tickets);
     }
 
     public function getMetaByRaceId($id)
     {
         $raceQuestions = Race::where('id', $id)
-        ->with('question', 'question.answertype', 'question.answervalue')
-        ->get();
+            ->with('question', 'question.answertype', 'question.answervalue')
+            ->get();
 
         return json_encode($raceQuestions);
     }

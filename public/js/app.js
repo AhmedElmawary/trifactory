@@ -81,9 +81,24 @@ $(document).ready(function() {
                         '<option value="" disabled selected>Ticket Type</option>'
                     );
 
-                    $.each(data, function(key, value) {
+                    $.each(data, function(item, itemData) {
+                        var d1 = new Date();
+                        var d2 = new Date(itemData.ticket_end);
+
+                        var disabled = "";
+
+                        if (d2 < d1) {
+                            disabled = "disabled";
+                        }
+
                         $('select[name="' + drop_name + '"]').append(
-                            '<option value="' + key + '">' + value + "</option>"
+                            "<option " +
+                                disabled +
+                                ' value="' +
+                                itemData.id +
+                                '">' +
+                                itemData.name +
+                                "</option>"
                         );
                     });
                 }
