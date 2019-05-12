@@ -81,23 +81,36 @@ class CartController extends Controller
 
         if ($validator->fails()) {
             return redirect()
-            ->action('CartController@index')
-            ->withErrors($validator, $item)
-            ->withInput();
+                ->action('CartController@index')
+                ->withErrors($validator, $item)
+                ->withInput();
         }
 
         if (array_key_exists($item, $cartItems)) {
             $cartItem = $cartItems[$item];
 
-            $promocode = \App\Promocode::where('code', $code)
-                   ->where('published', 'YES')
-                   ->whereHas('races', function ($query) use ($cartItem) {
-                       $query->where('race_id', '=', $cartItem['attributes']['_race_id']);
-                   })
-                   ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
-                       $query->where('user_id', '=', $user->id);
-                   })
-                   ->first();
+            $promocode = \App\Promocode::where('code', $code)->first();
+            $races = $promocode->races()->get();
+            $promocode = null;
+
+            if (count($races) > 0) {
+                $promocode = \App\Promocode::where('code', $code)
+                    ->where('published', 'YES')
+                    ->whereHas('races', function ($query) use ($cartItem) {
+                        $query->where('race_id', '=', $cartItem['attributes']['_race_id']);
+                    })
+                    ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
+                        $query->where('user_id', '=', $user->id);
+                    })
+                    ->first();
+            } else {
+                $promocode = \App\Promocode::where('code', $code)
+                    ->where('published', 'YES')
+                    ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
+                        $query->where('user_id', '=', $user->id);
+                    })
+                    ->first();
+            }
 
             if ($promocode) {
                 $value = null;
@@ -145,9 +158,9 @@ class CartController extends Controller
 
         if ($validator->fails()) {
             return redirect()
-            ->action('CartController@payment')
-            ->withErrors($validator)
-            ->withInput();
+                ->action('CartController@payment')
+                ->withErrors($validator)
+                ->withInput();
         }
 
         if ($code == null) {
@@ -155,10 +168,10 @@ class CartController extends Controller
         } else {
             if ($user) {
                 $voucher = Voucher::where('code', $code)
-                        ->where('user_id', $user->id)
-                        ->where('usedOn', null)
-                        ->where('order_id', null)
-                        ->first();
+                    ->where('user_id', $user->id)
+                    ->where('usedOn', null)
+                    ->where('order_id', null)
+                    ->first();
 
                 if ($voucher) {
                     $condition = new \Darryldecode\Cart\CartCondition([
@@ -280,8 +293,8 @@ class CartController extends Controller
 
             foreach ($metas as $meta) {
                 $question = Question::where('id', $meta)
-                            ->with('answertype', 'answervalue')
-                            ->first();
+                    ->with('answertype', 'answervalue')
+                    ->first();
 
                 $answervalues = $question->answervalue()->get();
 

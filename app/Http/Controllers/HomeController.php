@@ -64,20 +64,9 @@ class HomeController extends Controller
 
     public function test()
     {
-
-        $leaderboard = \DB::table('leaderboard_data')
-            ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
-            ->orderByRaw('points desc')
-            ->groupBy('name')
-            ->limit(10)
-            ->get();
-
-        foreach ($leaderboard as $leader) {
-            echo $leader->name;
-            echo $leader->points;
-            echo '<br>';
-        }
-
-        // dd($leaderboard);
+        $value = 'TF25';
+        $promocode = \App\Promocode::where('code', $value)->first();
+        $races = $promocode->races()->get();
+        dd(count($races));
     }
 }

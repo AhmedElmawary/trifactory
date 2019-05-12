@@ -39,15 +39,30 @@ class Promocode implements Rule
     public function passes($attribute, $value)
     {
         $user = Auth::user();
-        $promocode = \App\Promocode::where('code', $value)
-                   ->where('published', 'YES')
-                   ->whereHas('races', function ($query) {
-                       $query->where('race_id', '=', $this->cartItem['attributes']['_race_id']);
-                   })
-                   ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
-                       $query->where('user_id', '=', $user->id);
-                   })
-                   ->first();
+
+        $promocode = \App\Promocode::where('code', $value)->first();
+        $races = $promocode->races()->get();
+        $promocode = null;
+
+        if (count($races) > 0) {
+            $promocode = \App\Promocode::where('code', $value)
+                ->where('published', 'YES')
+                ->whereHas('races', function ($query) {
+                    $query->where('race_id', '=', $this->cartItem['attributes']['_race_id']);
+                })
+                ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
+                    $query->where('user_id', '=', $user->id);
+                })
+                ->first();
+        } else {
+            $promocode = \App\Promocode::where('code', $value)
+                ->where('published', 'YES')
+                ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
+                    $query->where('user_id', '=', $user->id);
+                })
+                ->first();
+        }
+
 
         if (!$promocode) {
             $this->message = 'The selected code is invalid.';
