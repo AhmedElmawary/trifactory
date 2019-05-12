@@ -66,4 +66,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\Voucher');
     }
+
+    public function pastEvents()
+    {
+        return $this->hasMany('App\LeaderboardData', 'email', 'email');
+    }
 }

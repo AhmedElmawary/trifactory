@@ -28,6 +28,8 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         if ($user) {
+            $data['past_events'] = \App\LeaderboardData::with('race.event')->where('email', $user->email)->get();
+            $data['points'] = \App\LeaderboardData::where('email', $user->email)->sum('points');
             $data['user'] = $user;
             $data['profile_image'] = '/images/placeholder.svg';
             if ($user->profile_image) {
@@ -47,8 +49,8 @@ class ProfileController extends Controller
 
         if ($validator->fails()) {
             return redirect('/profile')
-                        ->withErrors($validator)
-                        ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $user = Auth::user();
@@ -69,8 +71,8 @@ class ProfileController extends Controller
 
         if ($validator->fails()) {
             return redirect('/profile')
-                        ->withErrors($validator)
-                        ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $user = Auth::user();

@@ -19,4 +19,9 @@ class LeaderboardData extends Model
         'country_code',
         'points'
     ];
+
+    public function race()
+    {
+        return $this->belongsTo('App\Race', 'race_id');
+    }
 }

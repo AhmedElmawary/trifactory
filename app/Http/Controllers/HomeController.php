@@ -64,9 +64,11 @@ class HomeController extends Controller
 
     public function test()
     {
-        $value = 'TF25';
-        $promocode = \App\Promocode::where('code', $value)->first();
-        $races = $promocode->races()->get();
-        dd(count($races));
+        $value = 'a_yakoub@link.net';
+        // $user = \App\User::where('email', $value)->first();
+
+        $pastEvents = \App\LeaderboardData::with('race.event')->where('email', $value)->get();
+
+        dd($pastEvents);
     }
 }
