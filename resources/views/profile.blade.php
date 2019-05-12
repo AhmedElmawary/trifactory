@@ -15,7 +15,7 @@
                 >{{ $credit }} Credits (EGP {{ $credit }})</span
             >
             <span class="profile-name"
-                ><b>Endurance points:</b> {{ $points }}</span
+                ><b>Endurance league points:</b> {{ $points }}</span
             >
         </div>
         <div class="col-lg-9 profile-content-container">
