@@ -59,16 +59,19 @@
         </div>
       </div>
       <div class="row">
+        @if($pastEvent)
+        <div class="col-lg-12">Registration Closed</div>
+        @else
         <div class="col-lg-2 tickets-quantity">
           <div class="custom-number">
             <input name="number_of_tickets" type="number" class="form-control form-number" value="1" min="1" max="10">
           </div>
-
         </div>
         <div class="col-lg-10">
           <button type="button" class="btn btn-dark dropdown-button-icon" data-toggle="collapse" data-target="#tickets_info"
             aria-expanded="false">Fill Tickets Details</button>
         </div>
+        @endif
       </div>
     </div>
   </div>

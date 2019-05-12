@@ -9,7 +9,12 @@
   <img src="/images/events.jpg" alt="Hero Image" class="hero-image">
 </section>
 
-<section class="events-section container no-separator">
+<section
+    class="events-section container no-separator"
+>
+<h3 class="section-title">
+  <img src="images/events-icon.svg" alt="events-icon" class="icon">Past Events
+</h3>
   <div class="row event-cards-container">
 
     @foreach($events as $event)

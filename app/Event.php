@@ -37,6 +37,11 @@ class Event extends Model
         return $query->where('event_end', '>=', Carbon::today());
     }
 
+    public function scopePast($query)
+    {
+        return $query->where('event_end', '<', Carbon::today());
+    }
+
     public function scopePublished($query)
     {
         return $query->where('published', 'yes');

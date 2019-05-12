@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\Race;
 use DB;
+use Carbon\Carbon;
 
 class EventsController extends Controller
 {
     public function index()
     {
-        $events = Event::with('eventimages')->published()->get();
+        $events = Event::with('eventimages')->past()->published()->get();
         return view('events', ['events' => $events]);
     }
 
@@ -18,8 +19,16 @@ class EventsController extends Controller
     {
         $event = Event::find($id)->with('eventimages')->first();
 
+        $today = Carbon::now();
+        $pastEvent = false;
+
+        if ($event->start_date < $today) {
+            $pastEvent = true;
+        }
+
         return view('event-details', [
             'event' => $event,
+            'pastEvent' => $pastEvent
         ]);
     }
 
@@ -28,7 +37,7 @@ class EventsController extends Controller
         $tickets = DB::table('tickets')
             ->where('race_id', $id)
             ->where('published', 'YES')->get();
-        // ->pluck('name', 'id', 'ticket_end');
+
         return json_encode($tickets);
     }
 
