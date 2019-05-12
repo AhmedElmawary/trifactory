@@ -44,7 +44,7 @@
                         >Rankings</a
                     >
                 </li> -->
-                <!-- <li class="nav-item">
+                <li class="nav-item">
                     <a
                         class="nav-link"
                         id="pills-upcoming-events-tab"
@@ -55,7 +55,7 @@
                         aria-selected="false"
                         >Upcoming Events</a
                     >
-                </li> -->
+                </li>
                 <li class="nav-item">
                     <a
                         class="nav-link"
@@ -238,92 +238,54 @@
                     Rankings
                 </div> -->
                 <!-- Upcoming Events -->
-                <!-- <div
+                <div
                     class="tab-pane"
                     id="pills-upcoming-events"
                     role="tabpanel"
                     aria-labelledby="pills-upcoming-events-tab"
                 >
+                    @if(count($upcoming_events) > 0)
                     <div class="col-lg-12 table-responsive-lg">
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th scope="col">Event</th>
-
-                                    <th scope="col">Total</th>
-
+                                    <th scope="col">Race</th>
                                     <th scope="col">Date</th>
-
-                                    <th scope="col">Action</th>
+                                    {{-- <th scope="col">Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($upcoming_events as $event)
                                 <tr>
-                                    <th scope="row">Event Name</th>
-
-                                    <td>EGP 800</td>
-
-                                    <td>2018 6th June</td>
-
-                                    <td>
+                                    <td scope="row">{{ $event->race->event->name }}</td>
+                                    <td>{{ $event->race->name }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($event->race->event->event_start)->format('F jS Y')}}</td>
+                                    {{-- <td>
                                         <a
                                             href="#0"
                                             class="event-details-trigger"
                                             >Details & Cancellation</a
                                         >
-                                    </td>
+                                    </td> --}}
                                 </tr>
-
-                                <tr>
-                                    <th scope="row">Event Name</th>
-
-                                    <td>EGP 950</td>
-
-                                    <td>2018 6th June</td>
-
-                                    <td>
-                                        <a
-                                            href="#0"
-                                            class="event-details-trigger"
-                                            >Details & Cancellation</a
-                                        >
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Event Name</th>
-
-                                    <td>EGP 700</td>
-
-                                    <td>2018 6th June</td>
-
-                                    <td>
-                                        <a
-                                            href="#0"
-                                            class="event-details-trigger"
-                                            >Details & Cancellation</a
-                                        >
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <th scope="row">Event Name</th>
-
-                                    <td>EGP 800</td>
-
-                                    <td>2018 6th June</td>
-
-                                    <td>
-                                        <a
-                                            href="#0"
-                                            class="event-details-trigger"
-                                            >Details & Cancellation</a
-                                        >
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
+                    @else
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {{-- <span class="wallet-title">You don't have any upcoming events</span> --}}
+                                <a
+                                    href="/"
+                                    class="btn btn-dark text-light mt-5"
+                                    >Explore Events Now</a
+                                >
+                        </div>
+                    </div>
+                    @endif
+                    
 
                     <div class="event-details">
                         <div class="row">
@@ -414,144 +376,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="custom-dropdown">
-                                    <span
-                                        class="dropdown-trigger"
-                                        data-toggle="collapse"
-                                        data-target="#upcoming_races"
-                                    >
-                                        Races
-                                    </span>
-                                    <div
-                                        class="dropdown-content collapse"
-                                        id="upcoming_races"
-                                    >
-                                        <ul class="mb-0">
-                                            <li>Full Marathon - 42.2 KM</li>
-
-                                            <li>Half Marathon - 21.1 KM</li>
-
-                                            <li>Kids Race - 1 KM</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="custom-dropdown">
-                                    <span
-                                        class="dropdown-trigger"
-                                        data-toggle="collapse"
-                                        data-target="#upcoming_schedule"
-                                    >
-                                        Schedule
-                                    </span>
-                                    <div
-                                        class="dropdown-content collapse"
-                                        id="upcoming_schedule"
-                                    >
-                                        <ul class="mb-0">
-                                            <li>Full Marathon - 42.2 KM</li>
-
-                                            <li>Half Marathon - 21.1 KM</li>
-
-                                            <li>Kids Race - 1 KM</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="custom-dropdown">
-                                    <span
-                                        class="dropdown-trigger"
-                                        data-toggle="collapse"
-                                        data-target="#upcoming_race_course"
-                                    >
-                                        Race course
-                                    </span>
-                                    <div
-                                        class="dropdown-content collapse"
-                                        id="upcoming_race_course"
-                                    >
-                                        <ul class="mb-0">
-                                            <li>Full Marathon - 42.2 KM</li>
-
-                                            <li>Half Marathon - 21.1 KM</li>
-
-                                            <li>Kids Race - 1 KM</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="custom-dropdown">
-                                    <span
-                                        class="dropdown-trigger"
-                                        data-toggle="collapse"
-                                        data-target="#upcoming_training"
-                                    >
-                                        Training
-                                    </span>
-                                    <div
-                                        class="dropdown-content collapse"
-                                        id="upcoming_training"
-                                    >
-                                        <ul class="mb-0">
-                                            <li>Full Marathon - 42.2 KM</li>
-
-                                            <li>Half Marathon - 21.1 KM</li>
-
-                                            <li>Kids Race - 1 KM</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="custom-dropdown">
-                                    <span
-                                        class="dropdown-trigger"
-                                        data-toggle="collapse"
-                                        data-target="#upcoming_travel"
-                                    >
-                                        Travel
-                                    </span>
-                                    <div
-                                        class="dropdown-content collapse"
-                                        id="upcoming_travel"
-                                    >
-                                        <ul class="mb-0">
-                                            <li>Full Marathon - 42.2 KM</li>
-
-                                            <li>Half Marathon - 21.1 KM</li>
-
-                                            <li>Kids Race - 1 KM</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="custom-dropdown">
-                                    <span
-                                        class="dropdown-trigger"
-                                        data-toggle="collapse"
-                                        data-target="#upcoming_registration"
-                                    >
-                                        Registration
-                                    </span>
-                                    <div
-                                        class="dropdown-content collapse"
-                                        id="upcoming_registration"
-                                    >
-                                        <ul class="mb-0">
-                                            <li>Full Marathon - 42.2 KM</li>
-
-                                            <li>Half Marathon - 21.1 KM</li>
-
-                                            <li>Kids Race - 1 KM</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <div class="col-lg-6 mt-4">
                                 <button
                                     class="btn btn-danger btn-block"
@@ -569,7 +394,7 @@
                             </div>
                         </div>
                     </div>
-                </div> -->
+                </div>
                 <!-- Previous Events -->
                 <div
                     class="tab-pane"
@@ -577,6 +402,7 @@
                     role="tabpanel"
                     aria-labelledby="pills-previous-events-tab"
                 >
+                    @if(count($past_events) > 0)
                     <div class="col-lg-12 table-responsive-lg">
                         <table class="table table-striped table-bordered">
                             <thead>
@@ -599,6 +425,18 @@
                             </tbody>
                         </table>
                     </div>
+                    @else
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {{-- <span class="wallet-title">You don't have any upcoming events</span> --}}
+                                <a
+                                    href="/"
+                                    class="btn btn-dark text-light mt-5"
+                                    >Explore Events Now</a
+                                >
+                        </div>
+                    </div>
+                    @endif
                 </div>
                 <!-- My Wallet -->
                 <div

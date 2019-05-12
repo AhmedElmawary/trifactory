@@ -64,11 +64,15 @@ class HomeController extends Controller
 
     public function test()
     {
-        $value = 'a_yakoub@link.net';
-        // $user = \App\User::where('email', $value)->first();
+        $user = \Auth::user();
 
-        $pastEvents = \App\LeaderboardData::with('race.event')->where('email', $value)->get();
+        $upcoming = \App\UserRace::with('race.event')
+            ->whereHas('race.event', function ($query) {
+                $query->where('event_start', '>', \Carbon\Carbon::today()->toDateTimeString());
+            })
+            ->where('user_id', $user->id)
+            ->get();
 
-        dd($pastEvents);
+        dd($upcoming);
     }
 }

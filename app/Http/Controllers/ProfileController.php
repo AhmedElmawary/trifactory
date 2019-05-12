@@ -29,6 +29,12 @@ class ProfileController extends Controller
         $user = Auth::user();
         if ($user) {
             $data['past_events'] = \App\LeaderboardData::with('race.event')->where('email', $user->email)->get();
+            $data['upcoming_events'] = \App\UserRace::with('race.event')
+                ->whereHas('race.event', function ($query) {
+                    $query->where('event_start', '>', \Carbon\Carbon::today()->toDateTimeString());
+                })
+                ->where('user_id', $user->id)
+                ->get();
             $data['points'] = \App\LeaderboardData::where('email', $user->email)->sum('points');
             $data['user'] = $user;
             $data['profile_image'] = '/images/placeholder.svg';

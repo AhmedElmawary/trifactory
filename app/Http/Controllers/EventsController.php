@@ -22,7 +22,7 @@ class EventsController extends Controller
         $today = Carbon::now();
         $pastEvent = false;
 
-        if ($event->start_date < $today) {
+        if ($event->event_start < $today) {
             $pastEvent = true;
         }
 
