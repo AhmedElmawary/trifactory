@@ -40,9 +40,12 @@ class Promocode implements Rule
     {
         $user = Auth::user();
 
+        $races = [];
         $promocode = \App\Promocode::where('code', $value)->first();
-        $races = $promocode->races()->get();
-        $promocode = null;
+        if ($promocode) {
+            $races = $promocode->races()->get();
+            $promocode = null;
+        }
 
         if (count($races) > 0) {
             $promocode = \App\Promocode::where('code', $value)

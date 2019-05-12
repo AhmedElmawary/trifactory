@@ -133,7 +133,7 @@
             >
         </div>
 
-        <div class="row col-lg-12" @if($cartTotal == 0 && !$condition) style="display: none;" @endif>
+        <div class="row col-lg-12" @if($cartTotal == 0 && !$cartItems) style="display: none;" @endif>
             <button type="submit" class="btn btn-dark text-light">Place Order</button>            
         </div>
         </form>

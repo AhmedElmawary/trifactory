@@ -89,9 +89,12 @@ class CartController extends Controller
         if (array_key_exists($item, $cartItems)) {
             $cartItem = $cartItems[$item];
 
+            $races = [];
             $promocode = \App\Promocode::where('code', $code)->first();
-            $races = $promocode->races()->get();
-            $promocode = null;
+            if ($promocode) {
+                $races = $promocode->races()->get();
+                $promocode = null;
+            }
 
             if (count($races) > 0) {
                 $promocode = \App\Promocode::where('code', $code)
