@@ -165,3 +165,7 @@ nav .navbar-nav .nav-item .nav-link span {
         margin: 0;
     }
 }
+
+.event-details-view section.event-summary .event-sub-details .details-text {
+    font-size: 12px;
+}
