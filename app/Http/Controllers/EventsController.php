@@ -17,7 +17,7 @@ class EventsController extends Controller
 
     public function details($id)
     {
-        $event = Event::find($id)->with('eventimages')->first();
+        $event = Event::with('eventimages')->find($id);
 
         $today = Carbon::now();
         $pastEvent = false;
