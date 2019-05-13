@@ -38,7 +38,7 @@
             <span class="dropdown-trigger" data-toggle="collapse" data-target="#general_info">
               General info
             </span>
-            <div class="dropdown-content collapse" id="general_info">
+            <div class="dropdown-content collapse" id="general_info" style="overflow-wrap: break-word;">
               {!! $event->details !!}
             </div>
           </div>
