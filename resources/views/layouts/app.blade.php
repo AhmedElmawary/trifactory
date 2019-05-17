@@ -206,7 +206,8 @@
         <script src="/js/jquery-3.2.1.slim.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/slick.min.js"></script>
-        <script src="/js/app.js"></script>
+        <!-- <script src="/js/app.js"></script>-->
+        <script src="/js/main.js"></script>
 
         <!-- End JS -->
     </body>
