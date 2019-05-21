@@ -47,7 +47,7 @@ class UserRace extends Resource
             BelongsTo::make('User'),
             Text::make('Tracker ID', 'tracker_id'),
             BelongsTo::make('Race'),
-            BelongsTo::make('Order'),
+            BelongsTo::make('Order')->nullable(),
             BelongsTo::make('Ticket'),
         ];
     }
