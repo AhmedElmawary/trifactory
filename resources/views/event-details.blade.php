@@ -68,8 +68,13 @@
           </div>
         </div>
         <div class="col-lg-10">
+          @auth
           <button type="button" class="btn btn-dark dropdown-button-icon" data-toggle="collapse" data-target="#tickets_info"
-            aria-expanded="false">Fill Tickets Details</button>
+              aria-expanded="false">Fill Tickets Details</button>
+          @endauth
+          @guest
+          <button class="btn btn-dark" id="open_login_modal">Fill Tickets Details</button>
+          @endguest
         </div>
         @endif
       </div>
