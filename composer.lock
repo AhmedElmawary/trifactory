@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87690576b11ed3f6aad6125b38efa93d",
+    "content-hash": "fccbab5c07d73e0dcca41b333531634d",
     "packages": [
         {
             "name": "baklysystems/laravel-paymob",
@@ -1337,6 +1337,59 @@
                 "phpspreadsheet"
             ],
             "time": "2019-03-19T10:54:38+00:00"
+        },
+        {
+            "name": "maatwebsite/laravel-nova-excel",
+            "version": "1.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Maatwebsite/Laravel-Nova-Excel.git",
+                "reference": "8294060d375898caa58bc0a92d177ead7b6ff8b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Nova-Excel/zipball/8294060d375898caa58bc0a92d177ead7b6ff8b2",
+                "reference": "8294060d375898caa58bc0a92d177ead7b6ff8b2",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "*",
+                "maatwebsite/excel": "^3.1",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Maatwebsite\\LaravelNovaExcel\\LaravelNovaExcelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Maatwebsite\\LaravelNovaExcel\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Patrick Brouwers",
+                    "email": "patrick@maatwebsite.nl"
+                }
+            ],
+            "description": "Supercharged Excel exports for Laravel Nova Resources",
+            "keywords": [
+                "PHPExcel",
+                "actions",
+                "laravel",
+                "laravel-nova",
+                "nova",
+                "phpspreadsheet"
+            ],
+            "time": "2019-05-09T14:12:15+00:00"
         },
         {
             "name": "markbaker/complex",
