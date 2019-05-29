@@ -6,12 +6,12 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithCustomValueBinder;
-use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use App\Race;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 
-class UserQuestionsAnswers extends DownloadExcel implements WithCustomValueBinder, WithMapping, WithHeadingRow, ShouldAutoSize
+class UserQuestionsAnswers extends DownloadExcel
+implements WithCustomValueBinder, WithMapping, WithHeadingRow, ShouldAutoSize
 {
     public function __construct(int $raceId)
     {
