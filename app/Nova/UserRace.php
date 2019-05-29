@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
+use App\Nova\Filters\Race;
+use App\Nova\Actions\UserQuestionsAnswers;
 
 class UserRace extends Resource
 {
@@ -71,7 +73,7 @@ class UserRace extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [new Race];
     }
 
     /**
@@ -93,6 +95,17 @@ class UserRace extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        $raceId = 0;
+        $filters = json_decode(base64_decode($request->filters));
+        if ($filters) {
+            foreach ($filters as $filter) {
+                if ($filter->class === 'App\\Nova\\Filters\\Race') {
+                    $raceId = $filter->value;
+                }
+            }
+        }
+        return [
+            (new UserQuestionsAnswers($raceId))->askForFilename()
+        ];
     }
 }
