@@ -10,8 +10,11 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use App\Race;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 
-class UserQuestionsAnswers extends DownloadExcel
-implements WithCustomValueBinder, WithMapping, WithHeadingRow, ShouldAutoSize
+class UserQuestionsAnswers extends DownloadExcel implements
+    WithCustomValueBinder,
+    WithMapping,
+    WithHeadingRow,
+    ShouldAutoSize
 {
     public function __construct(int $raceId)
     {
