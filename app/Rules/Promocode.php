@@ -41,31 +41,32 @@ class Promocode implements Rule
         $user = Auth::user();
 
         $races = [];
-        $refPromocode = \App\Promocode::where('code', $value)->first();
+        $userPromocodeOrder = null;
+        $promocode = \App\Promocode::where('code', $value)->first();
 
-        $promocode = $refPromocode;
+
         if ($promocode) {
             $races = $promocode->races()->get();
+            $userPromocodeOrder = \App\UserPromocodeOrder::where('promocode_id', $promocode->id)->first();
             $promocode = null;
         }
 
-        if (count($races) > 0) {
-            $promocode = \App\Promocode::where('code', $value)
-                ->where('published', 'YES')
-                ->whereHas('races', function ($query) {
-                    $query->where('race_id', '=', $this->cartItem['attributes']['_race_id']);
-                })
-                ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
-                    $query->where('user_id', '=', $user->id);
-                })
-                ->first();
-        } else {
-            $promocode = \App\Promocode::where('code', $value)
-                ->where('published', 'YES')
-                ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user, $refPromocode) {
-                    $query->where('promocode_id', '=', $refPromocode->id);
-                })
-                ->first();
+        if (!$userPromocodeOrder) {
+            if (count($races) > 0) {
+                $promocode = \App\Promocode::where('code', $value)
+                    ->where('published', 'YES')
+                    ->whereHas('races', function ($query) {
+                        $query->where('race_id', '=', $this->cartItem['attributes']['_race_id']);
+                    })
+                    ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
+                        $query->where('user_id', '=', $user->id);
+                    })
+                    ->first();
+            } else {
+                $promocode = \App\Promocode::where('code', $value)
+                    ->where('published', 'YES')
+                    ->first();
+            }
         }
 
 
