@@ -26,7 +26,13 @@ class Race extends Resource
      *
      * @var string
      */
-    public static $title = 'name';
+    // public static $title = 'name';
+    public static $with = ['event'];
+
+    public function title()
+    {
+        return $this->event->name . ' ' . $this->name;
+    }
 
     /**
      * The columns that should be searched.
@@ -58,8 +64,8 @@ class Race extends Resource
             HasMany::make('Ticket'),
             // HasMany::make('UserRace'),
             Boolean::make('Published', 'published')
-            ->trueValue('yes')
-            ->falseValue('no'),
+                ->trueValue('yes')
+                ->falseValue('no'),
             BelongsToMany::make('Question'),
 
             BelongsTo::make('Event'),
