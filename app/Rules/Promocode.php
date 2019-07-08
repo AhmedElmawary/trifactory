@@ -60,8 +60,8 @@ class Promocode implements Rule
         } else {
             $promocode = \App\Promocode::where('code', $value)
                 ->where('published', 'YES')
-                ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
-                    $query->where('user_id', '=', $user->id);
+                ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user, $value) {
+                    $query->where('promocode', '=', $value);
                 })
                 ->first();
         }
