@@ -41,7 +41,9 @@ class Promocode implements Rule
         $user = Auth::user();
 
         $races = [];
-        $promocode = \App\Promocode::where('code', $value)->first();
+        $refPromocode = \App\Promocode::where('code', $value)->first();
+
+        $promocode = $refPromocode;
         if ($promocode) {
             $races = $promocode->races()->get();
             $promocode = null;
@@ -60,8 +62,8 @@ class Promocode implements Rule
         } else {
             $promocode = \App\Promocode::where('code', $value)
                 ->where('published', 'YES')
-                ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user, $promocode) {
-                    $query->where('promocode_id', '=', $promocode->id);
+                ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user, $refPromocode) {
+                    $query->where('promocode_id', '=', $refPromocode->id);
                 })
                 ->first();
         }
