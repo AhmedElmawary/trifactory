@@ -16,9 +16,7 @@
     </div>
     <div class="cart-points-container col-lg-12">
         <p>
-            You can redeem your credits that you have in your balance to buy
-            tickets. If your credits are not enough to buy a full ticket, you
-            will pay the remaining cost in cash or credit.
+            If you have credit in your wallet, you can now use it to purchase your ticket by clicking on "Use Credit".
         </p>
         <h4 class="mt-3">You have {{$credit}} credits (EGP {{$credit}}) in your wallet</h4>
         <form id="credit-form" method="POST" action="{{ url('/cart/credit') }}">
@@ -134,7 +132,7 @@
         </div>
 
         <div class="row col-lg-12" @if($cartTotal == 0 && !$cartItems) style="display: none;" @endif>
-            <button type="submit" class="btn btn-dark text-light">Place Order</button>            
+            <button type="submit" class="btn btn-dark text-light">Online Payment</button>            
         </div>
         </form>
     </div>
