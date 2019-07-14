@@ -245,35 +245,49 @@ $(document).ready(function() {
             centerMode: true,
             focusOnSelect: true
         });
+        var data = null;
         // Handle Ticket Usage Radio Buttons
         $('input[type="radio"]').change(function() {
             if ($(this).val() == "myself") {
                 $(this)
                     .parents(".ticket-info-section")
-                    .find("*[own-ticket-hide]")
-                    .hide();
-                $(this)
-                    .parents(".ticket-info-section")
                     .find("*[own-ticket-hide] input")
-                    .attr("required", false);
+                    .attr("disabled", true);
+
+                if (data) {
+                    var inputs = $(this)
+                        .parents(".ticket-info-section")
+                        .find("*[own-ticket-hide] input");
+                    for (i = 0; i < 4; i++) inputs[i].value = data[i];
+                }
             }
             if ($(this).val() == "someone") {
-                $(this)
-                    .parents(".ticket-info-section")
-                    .find("*[own-ticket-hide]")
-                    .show();
+                if (!data) {
+                    data = [];
+                    var inputs = $(this)
+                        .parents(".ticket-info-section")
+                        .find("*[own-ticket-hide] input");
+
+                    for (i = 0; i < 4; i++) data[i] = inputs[i].value;
+                }
+
                 $(this)
                     .parents(".ticket-info-section")
                     .find("*[own-ticket-hide] input")
-                    .attr("required", true);
+                    .attr("disabled", false);
+
+                var inputs = $(this)
+                    .parents(".ticket-info-section")
+                    .find("*[own-ticket-hide] input");
+                for (i = 0; i < 4; i++) inputs[i].value = "";
             }
         });
         $('input[type="radio"]').each(function() {
             if ($(this).prop("checked", true) && $(this).val() == "myself") {
                 $(this)
                     .parents(".ticket-info-section")
-                    .find("*[own-ticket-hide]")
-                    .hide();
+                    .find("*[own-ticket-hide] input")
+                    .attr("disabled", true);
             }
             if ($(this).prop("checked", true) && $(this).val() == "someone") {
                 $(this)

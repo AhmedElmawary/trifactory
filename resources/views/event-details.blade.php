@@ -110,25 +110,25 @@
       </div>
       <div class="col-lg-6 mt-3" own-ticket-hide>
         <div class="input-group">
-          <input type="text" class="form-control " placeholder="First Name" name="ticket_1_firstname">
+          <input type="text" required class="form-control " placeholder="First Name" name="ticket_1_firstname" value="{{ $user->firstname }}" />
         </div>
 
       </div>
       <div class="col-lg-6 mt-3" own-ticket-hide>
         <div class="input-group">
-          <input type="text" class="form-control " placeholder="Last Name" name="ticket_1_lastname">
+          <input type="text" required class="form-control " placeholder="Last Name" name="ticket_1_lastname" value="{{ $user->lastname }}" />
         </div>
 
       </div>
       <div class="col-lg-6 mt-3" own-ticket-hide>
         <div class="input-group">
-          <input type="text" class="form-control " placeholder="Phone" name="ticket_1_phone">
+          <input type="text" required class="form-control " placeholder="Phone" name="ticket_1_phone" value="{{ $user->phone }}" />
         </div>
 
       </div>
       <div class="col-lg-6 mt-3" own-ticket-hide>
         <div class="input-group">
-          <input type="text" class="form-control " placeholder="E-mail" name="ticket_1_email">
+          <input type="text" required class="form-control " placeholder="E-mail" name="ticket_1_email" value="{{ $user->email }}" />
         </div>
 
       </div>

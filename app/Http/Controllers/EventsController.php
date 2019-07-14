@@ -6,6 +6,7 @@ use App\Event;
 use App\Race;
 use DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class EventsController extends Controller
 {
@@ -17,6 +18,8 @@ class EventsController extends Controller
 
     public function details($id)
     {
+        $user = Auth::user();
+
         $event = Event::with('eventimages')->find($id);
 
         $today = Carbon::now();
@@ -28,7 +31,8 @@ class EventsController extends Controller
 
         return view('event-details', [
             'event' => $event,
-            'pastEvent' => $pastEvent
+            'pastEvent' => $pastEvent,
+            'user' => $user
         ]);
     }
 
