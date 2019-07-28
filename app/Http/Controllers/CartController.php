@@ -307,11 +307,11 @@ class CartController extends Controller
                     $attributes[$question->question_text] = $answer->value;
                     $attributes['_qid' . $question->id] = $answer->id;
                     $user = Auth::user();
-                    if ($user->year_of_birth == 0 && preg_match("/year of birth/i", $question->question_text)){
+                    if ($user->year_of_birth == 0 && preg_match("/year of birth/i", $question->question_text)) {
                         $user->year_of_birth = $answer->value;
                         $user->save();
                     }
-                    if ($user->club == '' && preg_match("/club/i", $question->question_text)){
+                    if ($user->club == '' && preg_match("/club/i", $question->question_text)) {
                         $user->club = $answer->value;
                         $user->save();
                     }

@@ -67,7 +67,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $data['years'] = range(1930, date('Y'));
-        if ($data['club'] == 'Other'){
+        if ($data['club'] == 'Other') {
             return Validator::make($data, [
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
@@ -79,16 +79,16 @@ class RegisterController extends Controller
                 'other_club' => ['required', 'string', 'max:255']
             ]);
         } else {
-        return Validator::make($data, [
-            'firstname' => ['required', 'string', 'max:255'],
-            'lastname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
-            'nationality' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930', 'max:'.(date('Y')-12), 'in_array:years.*'],
-            'club' => ['required', 'string', 'max:255']
-        ]);
+            return Validator::make($data, [
+                'firstname' => ['required', 'string', 'max:255'],
+                'lastname' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
+                'nationality' => ['required', 'string'],
+                'password' => ['required', 'string', 'min:6', 'confirmed'],
+                'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930', 'max:'.(date('Y')-12), 'in_array:years.*'],
+                'club' => ['required', 'string', 'max:255']
+            ]);
         }
     }
 
@@ -100,7 +100,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if ($data['club'] == 'Other'){
+        if ($data['club'] == 'Other') {
             $data['club'] = $data['other_club'];
         }
         $user = User::create([

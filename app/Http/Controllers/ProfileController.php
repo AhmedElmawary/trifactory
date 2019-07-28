@@ -49,7 +49,8 @@ class ProfileController extends Controller
         return view('profile', $data);
     }
 
-    public function getUser(){
+    public function getUser()
+    {
         $user = Auth::user();
         return json_encode($user);
     }
@@ -91,7 +92,7 @@ class ProfileController extends Controller
                 ->withInput();
         }
 
-        if ($request->club == 'Other'){
+        if ($request->club == 'Other') {
             $request->club = $request->other_club;
         }
 
