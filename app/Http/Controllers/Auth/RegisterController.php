@@ -75,7 +75,7 @@ class RegisterController extends Controller
                 'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
                 'nationality' => ['required', 'string'],
                 'password' => ['required', 'string', 'min:6', 'confirmed'],
-                'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930', 
+                'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
                 'max:'.(date('Y')-5), 'in_array:years.*'],
                 'other_club' => ['required', 'string', 'max:255']
             ]);
@@ -87,7 +87,7 @@ class RegisterController extends Controller
                 'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
                 'nationality' => ['required', 'string'],
                 'password' => ['required', 'string', 'min:6', 'confirmed'],
-                'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930', 
+                'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
                 'max:'.(date('Y')-12), 'in_array:years.*'],
                 'club' => ['required', 'string', 'max:255']
             ]);
