@@ -13,21 +13,21 @@ class LeaderboardController extends Controller
             ->where('gender', 'M')
             ->orderByRaw('total_points desc')
             ->groupBy('name')
-            ->simplePaginate(25);
+            ->paginate(25);
 
         $leaderboardFemale = \DB::table('leaderboard_data')
             ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
             ->where('gender', 'F')
             ->orderByRaw('total_points desc')
             ->groupBy('name')
-            ->simplePaginate(25);
+            ->paginate(25);
 
         $leaderboardClub = \DB::table('leaderboard_data')
             ->select('points', 'club', \DB::raw('SUM(points) as total_points'))
             ->whereNotIn('club', ['NA', 'Independent', 'Other', 'I am an independent athlete.'])
             ->orderByRaw('total_points desc')
             ->groupBy('club')
-            ->simplePaginate(25);
+            ->paginate(25);
 
         $data = [
             'leaderboardMale' => $leaderboardMale,

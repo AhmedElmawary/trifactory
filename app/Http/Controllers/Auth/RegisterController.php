@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Question;
+use App\Answervalue;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Events\UserRegistered;
 use Illuminate\Auth\Events\Registered;
+use Request;
 
 class RegisterController extends Controller
 {
@@ -44,11 +47,14 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
+        $question = Question::where('question_text', 'like', '%club%')->first();
+        $clubs = Answervalue::where('question_id', $question->id)->get();
         $nationalities = \countries();
         unset($nationalities['il']);
 
         return view('auth.register', [
-            'nationalities' => $nationalities
+            'nationalities' => $nationalities,
+            'clubs' => $clubs
         ]);
     }
 
@@ -60,6 +66,19 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $data['years'] = range(1930, date('Y'));
+        if ($data['club'] == 'Other'){
+            return Validator::make($data, [
+                'firstname' => ['required', 'string', 'max:255'],
+                'lastname' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
+                'nationality' => ['required', 'string'],
+                'password' => ['required', 'string', 'min:6', 'confirmed'],
+                'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930', 'max:'.(date('Y')-5), 'in_array:years.*'],
+                'other_club' => ['required', 'string', 'max:255']
+            ]);
+        } else {
         return Validator::make($data, [
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
@@ -67,7 +86,10 @@ class RegisterController extends Controller
             'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
             'nationality' => ['required', 'string'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930', 'max:'.(date('Y')-12), 'in_array:years.*'],
+            'club' => ['required', 'string', 'max:255']
         ]);
+        }
     }
 
     /**
@@ -78,6 +100,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        if ($data['club'] == 'Other'){
+            $data['club'] = $data['other_club'];
+        }
         $user = User::create([
             'name' => $data['firstname'] . ' ' . $data['lastname'],
             'firstname' => $data['firstname'],
@@ -86,6 +111,8 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'nationality' => $data['nationality'],
             'password' => Hash::make($data['password']),
+            'year_of_birth' => (int) $data['year_of_birth'],
+            'club' => $data['club']
         ]);
 
         $event = new UserRegistered($user);

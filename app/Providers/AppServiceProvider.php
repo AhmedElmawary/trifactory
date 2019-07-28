@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -53,5 +54,6 @@ class AppServiceProvider extends ServiceProvider
                 ->subject('Verify your email address')
                 ->view('emails.verify', ['verifyUrl' => $verifyUrl, 'user' => $notifiable]);
         });
+        Schema::defaultStringLength(191);
     }
 }

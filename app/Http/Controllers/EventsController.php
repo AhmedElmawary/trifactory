@@ -50,7 +50,7 @@ class EventsController extends Controller
         $raceQuestions = Race::where('id', $id)
             ->with('question', 'question.answertype', 'question.answervalue')
             ->get();
-
+        $raceQuestions[0]['user'] = Auth::user();
         return json_encode($raceQuestions);
     }
 
