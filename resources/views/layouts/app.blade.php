@@ -207,7 +207,7 @@
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/slick.min.js"></script>
         <!-- <script src="/js/app.js"></script>-->
-        <script src="/js/main.js"></script>
+        <script src="/js/main.js?v1.1"></script>
 
         <!-- End JS -->
     </body>
