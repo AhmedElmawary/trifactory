@@ -212,8 +212,8 @@
                                     @endif
                                 </div>
                             <div class="col-lg-6 mb-5">
-                                <label class="input-label other_club">Other club</label>
-                            <div class="input-group other_club">
+                                <label class="input-label other_club" style='display: none'>Other club</label>
+                            <div class="input-group other_club" style='display: none'>
                                     <input
                                         placeholder="Please specify..."
                                         id="other_club"
