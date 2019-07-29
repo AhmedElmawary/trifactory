@@ -174,7 +174,11 @@
     
                                 <div class="input-group">
                                         <select style="margin-top:20px;" class="custom-select" name="year_of_birth" required>
-                                                <option value="{{$user->year_of_birth}}" selected>{{ $user->year_of_birth}}</option>
+                                                @if ($user->year_of_birth == 0)
+                                                    <option value="" disabled selected>Year of Birth</option>
+                                                @else
+                                                    <option value="{{$user->year_of_birth}}" selected>{{$user->year_of_birth}}</option>
+                                                @endif
                                                 @for ($i = 1930; $i <= date('Y')-5; $i++)
                                                     <option value="{{$i}}">{{$i}}</option>
                                                 @endfor
@@ -190,7 +194,11 @@
                                 <label class="input-label clubs">Club</label>
     
                                 <select style="margin-top:20px;" class="custom-select clubs" name="club" required>
-                                        <option value="{{$user->club}}" selected>{{$user->club}}</option>
+                                        @if ($user->club == '')
+                                            <option value="" disabled selected>What club do you represent (if any)?</option>
+                                        @else
+                                            <option value="{{$user->club}}" selected>{{$user->club}}</option>
+                                        @endif
                                         @foreach ($clubs as $club)
                                             @if ($club->value != $user->club)
                                             <option value="{{$club->value}}">{{$club->value}}</option>
