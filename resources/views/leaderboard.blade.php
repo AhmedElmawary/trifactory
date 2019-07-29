@@ -69,7 +69,7 @@
                                 <tbody>
                                     @foreach($leaderboardMale as $male)
                                     <tr>
-                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{ ($leaderboardMale ->currentpage()-1) * $leaderboardMale ->perpage() + $loop->index + 1 }}</td>
                                         <td>{{$male->name}}</td>
                                         <td>{{$male->country_code}}</td>
                                         <td>{{$male->category}}</td>
@@ -82,9 +82,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12">
-                            {{ $leaderboardMale->fragment('pills-rankings-male')->links() }}
+                        <div class="col-sm-4">
+                            Showing {{$leaderboardMale->count()}} from {{$leaderboardMale->total()}} users
                         </div>
+                        <div class="col-sm-4">
+                            <span >{{ $leaderboardMale->fragment('pills-rankings-male')->links() }}</span>
+                        </div>
+                        <div class="col-sm-4"></div>
                     </div>
                 </div>
                 <div
@@ -124,9 +128,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12">
-                            {{ $leaderboardFemale->fragment('pills-rankings-female')->links() }}
-                        </div>
+                            <div class="col-sm-4">
+                                Showing {{$leaderboardFemale->count()}} from {{$leaderboardFemale->total()}} users
+                            </div>
+                            <div class="col-sm-4">
+                                <span >{{ $leaderboardFemale->fragment('pills-rankings-male')->links() }}</span>
+                            </div>
+                            <div class="col-sm-4"></div>
                     </div>
                 </div>
                 <div
@@ -158,9 +166,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-12">
-                            {{ $leaderboardClub->fragment('pills-rankings-club')->links() }}
-                        </div>
+                            <div class="col-sm-4">
+                                Showing {{$leaderboardClub->count()}} from {{$leaderboardClub->total()}} users
+                            </div>
+                            <div class="col-sm-4">
+                                <span >{{ $leaderboardClub->fragment('pills-rankings-male')->links() }}</span>
+                            </div>
+                            <div class="col-sm-4"></div>
                     </div>
                 </div>
             </div>

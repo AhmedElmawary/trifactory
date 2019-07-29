@@ -98,7 +98,54 @@
                         </span>
                         @endif
                     </div>
+                    <div class="input-group">
+                            <select style="margin-top:20px;" class="custom-select" name="year_of_birth" required>
+                                    <option disabled value="" selected>Year of birth</option>
+                                    @for ($i = 1930; $i <= date('Y')-5; $i++)
+                                        <option value="{{$i}}">{{$i}}</option>
+                                    @endfor
+                            </select>
+    
+                            @if ($errors->has('year_of_birth'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('year_of_birth') }}</strong>
+                            </span>
+                            @endif
+                    </div>
 
+                    <div class="input-group">
+                            <select style="margin-top:20px;" class="custom-select clubs" name="club" required>
+                                    <option disabled value="" selected>Club</option>
+                                    @foreach ($clubs as $club)
+                                        <option value="{{$club->value}}">{{$club->value}}</option>
+                                    @endforeach
+                            </select>
+    
+                            @if ($errors->has('club'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('club') }}</strong>
+                            </span>
+                            @endif
+                    </div>
+                    <div class="input-group other_club">
+                            <input
+                                placeholder="Please specify..."
+                                id="other_club"
+                                type="text"
+                                class="form-control{{ $errors->has('other_club') ? ' is-invalid' : '' }}"
+                                name="other_club"
+                                value="{{ old('other_club') }}"
+                                autofocus
+                            />
+    
+                            @if ($errors->has('other_club'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('other_club') }}</strong>
+                            </span>
+                            @endif
+                    </div>
+
+                    
                     <div class="input-group">
                         <input
                             placeholder="Password"

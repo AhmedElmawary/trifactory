@@ -27,7 +27,7 @@
       </span>
       <div class="row">
         @foreach($item['attributes'] as $key => $val)
-          @if(strpos($key, '_') === false)
+          @if(strpos($key, '_') === false && $val != null)
             <div class="col-lg-4 mb-2 ticket-data">
               {{$key}}: <b>{{$val}}</b>
             </div>

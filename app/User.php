@@ -16,7 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'firstname', 'lastname', 'email', 'phone', 'nationality', 'password',
+        'name', 'firstname', 'lastname', 'email', 'phone', 'nationality', 'password', 'year_of_birth', 'club'
     ];
 
     /**
@@ -70,5 +70,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function pastEvents()
     {
         return $this->hasMany('App\LeaderboardData', 'email', 'email');
+    }
+
+    // Generate token for API Authentication
+    public function generateToken()
+    {
+        $this->api_token = str_random(60);
+        $this->save();
+
+        return $this->api_token;
     }
 }

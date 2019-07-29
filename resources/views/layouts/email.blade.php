@@ -34,12 +34,12 @@
         <td>
             <span>
                 <a style="text-decoration: none;" href="https://www.facebook.com/thetrifactory">
-                    <img src="{{ $message->embed(public_path() . '/images/facebook-icon.svg') }}" alt="facebook">
+                    <img style="height:32px; width:32px;" src="{{ $message->embed(public_path() . '/images/facebook.png') }}" alt="facebook">
                 </a>
             </span>
             <span>
                 <a style="text-decoration: none;" href="https://www.instagram.com/thetrifactory/">
-                    <img src="{{ $message->embed(public_path() . '/images/instagram-icon.svg') }}" alt="instagram">
+                    <img style="height:32px; width:32px;" src="{{ $message->embed(public_path() . '/images/instagram.png') }}" alt="instagram">
                 </a>
             </span>
         </td>

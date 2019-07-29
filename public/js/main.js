@@ -60,7 +60,30 @@ $(document).ready(function() {
                 });
             }
         });
+        $("#ticket_1_use_myself").on("change", function(){
+            if ($("#year_of_birth").length){
+                $.ajax({
+                    url: "/getUser",
+                    type: "GET",
+                    dataType: "json",   
+                success: function(user) {
+                    if (user['year_of_birth'] != 0){
+                    var val = $('#year_of_birth option:contains('+user['year_of_birth']+')').val();
+                    $("#year_of_birth").val(val);
+                    $("#year_of_birth").prop("selected", true);
+                    $("#year_of_birth").prop("disabled", true);
+                    }
+                }
+                })
+            }
+        });
 
+        $("#ticket_1_use_someone").on("change", function(){
+            if ($("#year_of_birth").length){
+                $("#year_of_birth").prop("disabled", false);
+                $('#open_added_to_cart_modal').prop("disabled", false);
+            }
+        });
         $(".ticket_race").on("change", function() {
             var raceId = $(this).val();
 
@@ -115,8 +138,10 @@ $(document).ready(function() {
                         var questions = data[0].question;
                         $.each(questions, function(key, question) {
                             str = "";
+                            str += "<script>var usedNames = {};$(\".clubs > option\").each(function () {if(usedNames[this.text]) {$(this).remove();} else {usedNames[this.text] = this.value;}});</script>";
+                            str += "<script>if ($(\".clubs option:selected\").text() != 'Other'){$(\".other_club\").hide();}$(\".clubs\").on(\"change\", function() {if ($(\".clubs option:selected\").text() == 'Other'){$(\".other_club\").show();$(\"#other_club\").prop('required',true);$(\"#others\").prop('required',true);} else {$(\"#others\").val('');$(\"#others\").prop('required',false);$(\".other_club\").hide();$(\"#other_club\").prop('required',false);}});</script>";
                             str +=
-                                '<div class="col-lg-6 mt-3"><div class="input-group">';
+                                '<div class="col-lg-6 mt-3 '+(question.question_text.search(/other/i) > -1 ? 'other_club' : '')+'"><div class="input-group">';
 
                             var validation = [];
                             var required = false;
@@ -167,6 +192,12 @@ $(document).ready(function() {
                                     str += ' maxlength="' + max + '" ';
                                 }
 
+                                if (question.question_text.search(/others/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].club !== ''){
+                                    if ($(".clubs option:selected").text() == 'Other') { 
+                                        str += 'value="'+data[0]['user'].club+'"';
+                                    }
+                                    str += " id=\"others\" ";
+                                }
                                 str +=
                                     ' class="form-control " placeholder="' +
                                     question.question_text +
@@ -174,27 +205,91 @@ $(document).ready(function() {
                                     meta_field_name +
                                     "_" +
                                     question.id +
-                                    '" />';
-                            }
+                                    '" '+(question.question_text.search(/year of birth/i) > -1 && data[0]['user'].year_of_birth != 0 ? 'value=\"Year of birth: '+data[0]['user'].year_of_birth+'\" disabled ' : '')+'/>';
+                                }
 
                             if (question.answertype.type === "dropdown") {
                                 str += "<select ";
                                 if (required) str += "required";
                                 str +=
-                                    ' class="custom-select " name="' +
+                                    ' class="custom-select '+(question.question_text.search(/club/i) > -1 ? 'clubs' : '')+'" name="' +
                                     meta_field_name +
                                     "_" +
                                     question.id +
-                                    '">';
-                                str +=
+                                    '" '
+                                    +
+                                    (question.question_text.search(/year of birth/i) > -1 && data[0]['user'].year_of_birth != 0 ? " id=\"year_of_birth\" "  : "")
+                                    +(question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth != 0 ? "disabled" : "")
+                                    +'>';
+                                    if (question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth !== 0){
+                                        var found = false;
+                                        $.each(question.answervalue, function(
+                                            key,
+                                            answervalue
+                                        ) {
+
+                                            if (answervalue.value == data[0]['user'].year_of_birth){
+                                                str +=
+                                                '<option value="' +
+                                                answervalue.id +
+                                                '" selected>' +
+                                                answervalue.value +
+                                                "</option>";
+                                                found = true;
+                                                return;
+                                            }
+                                        });
+                                        $('#open_added_to_cart_modal').prop("disabled", false);
+                                        if (!found){
+                                        str +=
+                                        '<option value="" selected disabled>' +
+                                        'Your age is not qualified for this race' +
+                                        "</option>";
+                                        $('#open_added_to_cart_modal').prop("disabled", true);
+                                        }
+                                    } else {
+                                    str +=
                                     '<option value="" disabled selected>' +
                                     question.question_text +
                                     "</option>";
+                                    }
+                                    if (question.question_text.search(/club/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].club !== ''){
+                                        var flag = false;
+                                        $.each(question.answervalue, function(
+                                            key,
+                                            answervalue
+                                        ) {
+                                            if (answervalue.value == data[0]['user'].club){
+                                                str +=
+                                                '<option value="' +
+                                                answervalue.id +
+                                                '" selected>' +
+                                                answervalue.value +
+                                                "</option>";
+                                                flag = true;
+                                            }
+                                        });
+                                        if (!flag){
+                                            $.each(question.answervalue, function(
+                                                key,
+                                                answervalue
+                                            ) {
+                                                if (answervalue.value == 'Other'){
+                                                    str +=
+                                                    '<option value="' +
+                                                    answervalue.id +
+                                                    '" selected>' +
+                                                    answervalue.value +
+                                                    "</option>";
+                                                }
+                                            });
+                                        }
+                                    }
                                 $.each(question.answervalue, function(
                                     key,
                                     answervalue
                                 ) {
-                                    str +=
+                                        str +=
                                         '<option value="' +
                                         answervalue.id +
                                         '">' +
@@ -542,4 +637,14 @@ $(document).ready(function() {
             break;
         default:
     }
+    $(".other_club").hide();
+    $(".clubs").on("change", function() {
+        if ($(this).val() == 'Other'){
+            $(".other_club").show();
+            $("#other_club").prop('required',true);
+        } else {
+            $(".other_club").hide();
+            $("#other_club").prop('required',false);
+        }
+    });
 });
