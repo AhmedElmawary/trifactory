@@ -138,8 +138,8 @@ $(document).ready(function() {
                         var questions = data[0].question;
                         $.each(questions, function(key, question) {
                             str = "";
-                            // str += "<script>$(document).ready(function(){$(\"#clubs\").change(function(){alert(\"changed\");})})</script>";
-                            str += "<script>$(\".other_club\").hide();$(\".clubs\").on(\"change\", function() {if ($(\".clubs option:selected\").text() == 'Other'){$(\".other_club\").show();$(\"#other_club\").prop('required',true);} else {$(\".other_club\").hide();$(\"#other_club\").prop('required',false);}});</script>";
+                            str += "<script>var usedNames = {};$(\".clubs > option\").each(function () {if(usedNames[this.text]) {$(this).remove();} else {usedNames[this.text] = this.value;}});</script>";
+                            str += "<script>if ($(\".clubs option:selected\").text() != 'Other'){$(\".other_club\").hide();}$(\".clubs\").on(\"change\", function() {if ($(\".clubs option:selected\").text() == 'Other'){$(\".other_club\").show();$(\"#other_club\").prop('required',true);$(\"#others\").prop('required',true);} else {$(\"#others\").val('');$(\"#others\").prop('required',false);$(\".other_club\").hide();$(\"#other_club\").prop('required',false);}});</script>";
                             str +=
                                 '<div class="col-lg-6 mt-3 '+(question.question_text.search(/other/i) > -1 ? 'other_club' : '')+'"><div class="input-group">';
 
@@ -192,6 +192,12 @@ $(document).ready(function() {
                                     str += ' maxlength="' + max + '" ';
                                 }
 
+                                if (question.question_text.search(/others/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].club !== ''){
+                                    if ($(".clubs option:selected").text() == 'Other') { 
+                                        str += 'value="'+data[0]['user'].club+'"';
+                                    }
+                                    str += " id=\"others\" ";
+                                }
                                 str +=
                                     ' class="form-control " placeholder="' +
                                     question.question_text +
@@ -225,9 +231,9 @@ $(document).ready(function() {
                                             if (answervalue.value == data[0]['user'].year_of_birth){
                                                 str +=
                                                 '<option value="' +
-                                                data[0]['user'].year_of_birth +
+                                                answervalue.id +
                                                 '" selected>' +
-                                                data[0]['user'].year_of_birth +
+                                                answervalue.value +
                                                 "</option>";
                                                 found = true;
                                                 return;
@@ -247,14 +253,36 @@ $(document).ready(function() {
                                     question.question_text +
                                     "</option>";
                                     }
-                                    if (question.question_text.search(/club/i) > -1){
-                                        if (data[0]['user'].club !== ''){
-                                            str +=
-                                            '<option value="' +
-                                            data[0]['user'].club.id +
-                                            '" selected>' +
-                                            data[0]['user'].club +
-                                            "</option>";
+                                    if (question.question_text.search(/club/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].club !== ''){
+                                        var flag = false;
+                                        $.each(question.answervalue, function(
+                                            key,
+                                            answervalue
+                                        ) {
+                                            if (answervalue.value == data[0]['user'].club){
+                                                str +=
+                                                '<option value="' +
+                                                answervalue.id +
+                                                '" selected>' +
+                                                answervalue.value +
+                                                "</option>";
+                                                flag = true;
+                                            }
+                                        });
+                                        if (!flag){
+                                            $.each(question.answervalue, function(
+                                                key,
+                                                answervalue
+                                            ) {
+                                                if (answervalue.value == 'Other'){
+                                                    str +=
+                                                    '<option value="' +
+                                                    answervalue.id +
+                                                    '" selected>' +
+                                                    answervalue.value +
+                                                    "</option>";
+                                                }
+                                            });
                                         }
                                     }
                                 $.each(question.answervalue, function(
