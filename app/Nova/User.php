@@ -4,8 +4,9 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Gravatar;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Password;
 
 class User extends Resource
@@ -16,6 +17,7 @@ class User extends Resource
      * @var string
      */
     public static $model = 'App\\User';
+    public static $group = 'Operations';
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -44,7 +46,7 @@ class User extends Resource
         return [
             ID::make()->sortable(),
 
-            Gravatar::make(),
+            Avatar::make('Image', 'profile_image')->disk('profile_images'),
 
             Text::make('Name')
                 ->sortable()
@@ -54,12 +56,29 @@ class User extends Resource
                 ->sortable()
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}'),
+                ->updateRules('unique:users,email,{{resourceId}}')
+                ->hideWhenUpdating(),
+
+            Text::make('Phone')
+                ->sortable()
+                ->rules('required', 'phone', 'max:11')
+                ->creationRules('unique:users,phone')
+                ->updateRules('unique:users,phone,{{resourceId}}')
+                ->hideWhenUpdating(),
+
+            Text::make('Nationality'),
 
             Password::make('Password')
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:6')
                 ->updateRules('nullable', 'string', 'min:6'),
+
+            HasMany::make('Usercredit'),
+            HasMany::make('Voucher'),
+            HasMany::make('UserRace'),
+            HasMany::make('Order'),
+
+
         ];
     }
 
