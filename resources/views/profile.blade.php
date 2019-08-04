@@ -173,7 +173,7 @@
                                 <label class="input-label">Year of birth</label>
     
                                 <div class="input-group">
-                                        <select style="margin-top:20px;" class="custom-select" name="year_of_birth" required>
+                                        <select style="margin-top:20px;" class="custom-select" name="year_of_birth" @if ($user->year_of_birth == 0) disabled @endif required>
                                                 @if ($user->year_of_birth == 0)
                                                     <option value="" disabled selected>Year of Birth</option>
                                                 @else
@@ -193,7 +193,7 @@
                             <div class="col-lg-6 mb-5">
                                 <label class="input-label clubs">Club</label>
     
-                                <select style="margin-top:20px;" class="custom-select clubs" name="club" required>
+                                <select style="margin-top:20px;" class="custom-select clubs" name="club" @if ($user->club == '') disabled @endif required>
                                         @if ($user->club == '')
                                             <option value="" disabled selected>What club do you represent (if any)?</option>
                                         @else
