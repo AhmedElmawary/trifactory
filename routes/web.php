@@ -27,6 +27,7 @@ Route::get('/purchase-voucher', function () {
 
 Route::post('/buy-vouchers', 'PaymentController@buyVouchers')->middleware('verified');
 Route::post('/buy-tickets', 'PaymentController@buyTickets')->middleware('verified');
+Route::post('/refund-ticket', 'PaymentController@refundTicket')->name('refund-ticket')->middleware('verified');
 
 Route::get('/payment/processedCallback', 'PaymentController@processedCallback');
 Route::get('/payment/invoice', 'PaymentController@invoice');

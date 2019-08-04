@@ -314,7 +314,7 @@
                                     <th scope="col">Event</th>
                                     <th scope="col">Race</th>
                                     <th scope="col">Date</th>
-                                    {{-- <th scope="col">Action</th> --}}
+                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -323,15 +323,17 @@
                                     <td scope="row">{{ $event->race->event->name }}</td>
                                     <td>{{ $event->race->name }}</td>
                                     <td>{{ \Carbon\Carbon::parse($event->race->event->event_start)->format('F jS Y')}}</td>
-                                    {{-- <td>
+                                    <td>
                                         <a
-                                            href="#0"
-                                            class="event-details-trigger"
+                                            class="event-details-trigger" style="cursor: pointer" onclick="show_details({{$event->id}})"
                                             >Details & Cancellation</a
                                         >
-                                    </td> --}}
+                                    </td>
                                 </tr>
                                 @endforeach
+                                @php
+                                $event = null
+                                @endphp
                             </tbody>
                         </table>
                     </div>
@@ -348,15 +350,16 @@
                     </div>
                     @endif
                     
-
-                    <div class="event-details">
+                    @foreach ($upcoming_events as $event)
+                    <div id="{{$event->id}}" class="event-details event-show">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="event-title mb-3">
-                                    Event Name<img
+                                {{$event->race->name}}<img
                                         class="close-icon event-details-trigger float-right"
                                         src="images/close-icon.svg"
                                         alt="close icon"
+                                        onclick="hideevents()"
                                     />
                                 </div>
                                 <div class="event-sub-details mb-3">
@@ -365,7 +368,7 @@
                                         src="images/calendar-icon.svg"
                                     />
                                     <span class="details-text"
-                                        >June 19th 2018</span
+                                        >{{ \Carbon\Carbon::parse($event->race->event->event_start)->format('F jS Y')}}</span
                                     >
                                 </div>
                                 <div class="event-sub-details mb-3">
@@ -374,7 +377,7 @@
                                         src="images/location-icon.svg"
                                     />
                                     <span class="details-text"
-                                        >Aswan, Egypt</span
+                                        >{!! $event->race->event->city !!}, Egypt</span
                                     >
                                 </div>
                                 <div class="event-sub-details mb-3">
@@ -383,35 +386,29 @@
                                         src="images/money-icon.svg"
                                     />
                                     <span class="details-text align-top">
-                                        - Standard: EGP 1000
+                                        - Ticket Price: EGP {{$event->ticket->price}}
                                         <br />
-                                        - Discounted: EGP 800
+                                        - Ticket Type: {{$event->ticket->name}}
                                         <br />
-                                        - Early Bird: EGP 650
+                                        - Total Cost: EGP {{$event->order->totalCost}}
                                     </span>
                                 </div>
                             </div>
-
+                            
                             <div class="col-lg-6 mb-4">
                                 <div class="custom-dropdown">
                                     <span
                                         class="dropdown-trigger"
                                         data-toggle="collapse"
-                                        data-target="#upcoming_general_info"
+                                        data-target="#upcoming_general_info_{{$event->id}}"
                                     >
                                         General info
                                     </span>
                                     <div
                                         class="dropdown-content collapse"
-                                        id="upcoming_general_info"
+                                        id="upcoming_general_info_{{$event->id}}"
                                     >
-                                        <ul class="mb-0">
-                                            <li>Full Marathon - 42.2 KM</li>
-
-                                            <li>Half Marathon - 21.1 KM</li>
-
-                                            <li>Kids Race - 1 KM</li>
-                                        </ul>
+                                        {!! $event->race->event->details !!}
                                     </div>
                                 </div>
                             </div>
@@ -420,43 +417,68 @@
                                     <span
                                         class="dropdown-trigger"
                                         data-toggle="collapse"
-                                        data-target="#upcoming_destination"
+                                        data-target="#upcoming_destination_{{$event->id}}"
                                     >
                                         Destination
                                     </span>
                                     <div
                                         class="dropdown-content collapse"
-                                        id="upcoming_destination"
+                                        id="upcoming_destination_{{$event->id}}"
                                     >
                                         <ul class="mb-0">
-                                            <li>Full Marathon - 42.2 KM</li>
+                                            <li>City: {!! $event->race->event->city !!}</li>
 
-                                            <li>Half Marathon - 21.1 KM</li>
+                                            <li>Address: {!! $event->race->event->address !!}</li>
 
-                                            <li>Kids Race - 1 KM</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="col-lg-6 mt-4">
-                                <button
-                                    class="btn btn-danger btn-block"
-                                    id="trigger_cancel_event_modal"
-                                >
-                                    Cancel Event
-                                </button>
+                                <form id="form_{{$event->id}}" action="{{ route('refund-ticket', ['userrace_id'=>$event->id, 'order_id'=>$event->order_id, 'race_id'=>$event->race_id, 'ticket_id'=>$event->ticket_id, 'user_id'=>$event->user_id]) }}" method="post">
+                                    @csrf
+                                    <input
+                                        class="btn btn-danger btn-block trigger_cancel_event_modal"
+                                        onclick="opencancelmodal({{$event->id}})"
+                                        value="Cancel Event"
+                                        type="submit"
+                                        id="cancel_{{$event->id}}"
+                                    >
+                                </form>
                                 <p class="terms-text">
                                     You will be refunded in points according to
                                     eligibility & cancellation terms.
-                                    <a href="#0"
+                                    <a style="cursor: pointer"
                                         >Read our terms & conditions here</a
                                     >
                                 </p>
                             </div>
                         </div>
                     </div>
+                    @endforeach
                 </div>
+                @foreach ($upcoming_events as $event)
+                <div class="modal fade custom-modal" id="cancel_event_modal_{{$event->id}}" tabindex="-1" role="dialog"
+                aria-labelledby="phone_verify_modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                        <div class="header">
+                                <!-- <h3 class="modal-title">Verification code sent to this number:</h3> -->
+                                <img src="/images/success-icon.svg" class="modal-icon">
+                                <span class="modal-sub-title">{{ $event->ticket->name }} has been canceled<br><br>{{ $event->order->totalCost }} Points has been refunded to your credit</span>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <img src="/images/close-icon.svg" alt="close icon" onclick="refresh()">
+                                </button>
+                              </div>
+                              <div class="content">
+                                <p class="modal-text"></p>
+                                <a href="/events" class="btn btn-dark light">Explore More Events</a>
+                              </div>
+                              <br>
+                </div>
+                </div>
+                </div>
+                @endforeach
                 <!-- Previous Events -->
                 <div
                     class="tab-pane"

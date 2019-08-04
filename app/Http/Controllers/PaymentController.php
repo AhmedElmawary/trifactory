@@ -13,20 +13,28 @@ use App\Promocode;
 use App\UserPromocodeOrder;
 use App\Events\VoucherPurchased;
 use App\Events\TicketPurchased;
+use App\Events\TicketRefund;
+use App\UserRace;
 use Auth;
 use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
+    /**
+     * POST Request from cart-payment for online payment button
+     * 
+     */
     public function buyTickets(Request $request)
     {
         $inputs = $request->all();
         $paymentMethod = $inputs['paymet_method'];
 
         $cartTotal = \Cart::getTotal();
+        $cartSubTotal = \Cart::getSubTotal();
         $cartItems = \Cart::getContent()->toArray();
         $credit = \Cart::getCondition('Credit');
         $voucher = \Cart::getCondition('Voucher');
+        $user = Auth::user();
 
         if ($credit) {
             $meta['credit'] = $credit->parsedRawValue;
@@ -34,6 +42,13 @@ class PaymentController extends Controller
 
         if ($voucher) {
             $meta['voucher'] = $voucher->getAttributes();
+            $voucher = Voucher::where('code', $meta['voucher']['code'])->first();
+            $voucher_credit = $voucher->amount - ($credit ? $credit->parsedRawValue : 0) - $cartSubTotal;
+            $usercredit = new Usercredit();
+            $usercredit->user_id = $user->id;
+            $usercredit->amount = $voucher_credit;
+            $usercredit->action = 'Voucher Remaining';
+            $usercredit->save();
         }
 
         foreach ($cartItems as $item) {
@@ -49,11 +64,10 @@ class PaymentController extends Controller
             }
         }
 
-        $user = Auth::user();
 
         $order = new Order();
         $order->id = uniqid('TFT-');
-        $order->totalCost = $cartTotal;
+        $order->totalCost = $cartTotal + ($credit ? $credit->parsedRawValue : 0) + ($voucher ? $voucher->amount - $voucher_credit : 0);
         $order->user_id = $user->id;
         $order->meta = json_encode($meta);
 
@@ -310,4 +324,24 @@ class PaymentController extends Controller
     {
         return view('cash-success', ['order' => $order]);
     }
+    
+    public function refundTicket(Request $request){
+        
+        $user = Auth::user();
+        if ($request->user_id == $user->id)
+        {
+            $userrace = UserRace::find($request->userrace_id);
+            $order = Order::where('id', $request->order_id)->first();
+            $userrace->questionanswer()->delete();
+            $userrace->delete();
+
+            $usercredit = new Usercredit();
+            $usercredit->user_id = $user->id;
+            $usercredit->amount = $order->totalCost;
+            $usercredit->action = 'Refund';
+            $usercredit->save();
+        }
+        return back();
+    }
+
 }

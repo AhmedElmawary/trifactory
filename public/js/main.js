@@ -1,3 +1,35 @@
+function refresh(){
+    location.reload();
+}
+function hideevents(){
+
+    $(".event-show").hide();
+}
+function show_details(event_id){
+    $(".event-show").hide();
+    $("#"+event_id).show();
+}
+function opencancelmodal(event_id){
+    $("#form_"+event_id).submit(function(e) {
+        $.ajax({
+            type: $("#form_"+event_id).attr("method"),
+            url: $("#form_"+event_id).attr("action"),
+            data: $("#form_"+event_id).serialize(),
+            success: function(data) {
+                $("#form_"+event_id)
+                    .get(0)
+                    .reset();
+                $("#cancel_event_modal_"+event_id).modal();
+            },
+            error: function(data) {
+                console.log("An error occurred.");
+            }
+        });
+        return false;
+    });
+    // e.preventDefault();
+    $("#cancel_event_modal").unbind();
+}
 $(document).ready(function() {
     $("#open_login_modal").click(function() {
         $("#login_modal").modal();
@@ -472,7 +504,7 @@ $(document).ready(function() {
                             $("#add_to_cart")
                                 .get(0)
                                 .reset();
-                            $("#added_to_cart_modal").modal();
+                                $("#added_to_cart_modal").modal();
                         },
                         error: function(data) {
                             console.log("An error occurred.");
