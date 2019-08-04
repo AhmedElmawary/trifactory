@@ -328,8 +328,7 @@ class PaymentController extends Controller
     public function refundTicket(Request $request)
     {
         $user = Auth::user();
-        if ($request->user_id == $user->id) 
-        {
+        if ($request->user_id == $user->id) {
             $userrace = UserRace::find($request->userrace_id);
             $order = Order::where('id', $request->order_id)->first();
             $userrace->questionanswer()->delete();
