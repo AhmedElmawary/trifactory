@@ -173,7 +173,7 @@
                                 <label class="input-label">Year of birth</label>
     
                                 <div class="input-group">
-                                        <select style="margin-top:20px;" class="custom-select" name="year_of_birth" @if ($user->year_of_birth == 0) disabled @endif required>
+                                        <select style="margin-top:20px;" class="custom-select" name="year_of_birth" @if ($user->year_of_birth != 0) disabled @endif required>
                                                 @if ($user->year_of_birth == 0)
                                                     <option value="" disabled selected>Year of Birth</option>
                                                 @else
@@ -183,6 +183,9 @@
                                                     <option value="{{$i}}">{{$i}}</option>
                                                 @endfor
                                         </select>
+                                        @if ($user->year_of_birth != 0)
+                                        <input type="hidden" name="year_of_birth" value="{{$user->year_of_birth}}" />
+                                        @endif
                                     @if ($errors->has('year_of_birth'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('year_of_birth') }}</strong>
@@ -193,7 +196,7 @@
                             <div class="col-lg-6 mb-5">
                                 <label class="input-label clubs">Club</label>
     
-                                <select style="margin-top:20px;" class="custom-select clubs" name="club" @if ($user->club == '') disabled @endif required>
+                                <select style="margin-top:20px;" class="custom-select clubs" name="club" @if ($user->club != '') disabled @endif required>
                                         @if ($user->club == '')
                                             <option value="" disabled selected>What club do you represent (if any)?</option>
                                         @else
@@ -205,6 +208,9 @@
                                             @endif
                                         @endforeach
                                 </select>
+                                @if ($user->club != '')
+                                <input type="hidden" name="club" value="{{$user->club}}" />
+                                @endif
                                     @if ($errors->has('club'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('club') }}</strong>
