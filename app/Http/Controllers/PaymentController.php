@@ -22,7 +22,6 @@ class PaymentController extends Controller
 {
     /**
      * POST Request from cart-payment for online payment button
-     * 
      */
     public function buyTickets(Request $request)
     {
@@ -67,7 +66,8 @@ class PaymentController extends Controller
 
         $order = new Order();
         $order->id = uniqid('TFT-');
-        $order->totalCost = $cartTotal + ($credit ? $credit->parsedRawValue : 0) + ($voucher ? $voucher->amount - $voucher_credit : 0);
+        $order->totalCost = $cartTotal + ($credit ? $credit->parsedRawValue : 0)
+        + ($voucher ? $voucher->amount - $voucher_credit : 0);
         $order->user_id = $user->id;
         $order->meta = json_encode($meta);
 
@@ -325,8 +325,8 @@ class PaymentController extends Controller
         return view('cash-success', ['order' => $order]);
     }
     
-    public function refundTicket(Request $request){
-        
+    public function refundTicket(Request $request)
+    {    
         $user = Auth::user();
         if ($request->user_id == $user->id)
         {
@@ -343,5 +343,4 @@ class PaymentController extends Controller
         }
         return back();
     }
-
 }
