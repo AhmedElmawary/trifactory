@@ -9,6 +9,9 @@ function show_details(event_id){
     $(".event-show").hide();
     $("#"+event_id).show();
 }
+function showlogoutmodal(){
+    $("#logout_modal").modal();
+}
 function opencancelmodal(event_id){
     $("#form_"+event_id).submit(function(e) {
         $.ajax({

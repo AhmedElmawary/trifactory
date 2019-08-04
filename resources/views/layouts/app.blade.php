@@ -94,8 +94,8 @@
                             </span>
                             <a
                                 class="nav-link "
-                                style="display:inline"
-                                href="{{ route('logout') }}"
+                                style="display:inline;cursor:pointer;"
+                                onclick="showlogoutmodal()"
                                 >Logout</a
                             >
                             @endauth @guest
@@ -124,6 +124,27 @@
                 </div>
             </div>
         </nav>
+
+        <div class="modal fade custom-modal" id="logout_modal" tabindex="-1" role="dialog"
+                            aria-labelledby="phone_verify_modal" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="header">
+                                <!-- <h3 class="modal-title">Verification code sent to this number:</h3> -->
+                                <img src="/images/success-icon.svg" class="modal-icon">
+                                <span class="modal-sub-title">Logout</span>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <img src="/images/close-icon.svg" alt="close icon">
+                                </button>
+                                </div>
+                                <div class="content">
+                                <p class="modal-text">Are you sure you want to logout?</p>
+                                <a href="/logout" class="btn btn-dark light">Proceed to Logout</a>
+                                </div>
+                                <br>
+                            </div>
+                            </div>
+                            </div>
 
         <!-- End Header -->
 
