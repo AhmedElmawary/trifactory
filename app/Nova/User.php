@@ -68,6 +68,10 @@ class User extends Resource
 
             Text::make('Nationality'),
 
+            Text::make('Year of Birth', 'year_of_birth'),
+
+            Text::make('Club', 'club'),
+
             Password::make('Password')
                 ->onlyOnForms()
                 ->creationRules('required', 'string', 'min:6')
