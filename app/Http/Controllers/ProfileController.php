@@ -7,6 +7,7 @@ use Auth;
 use Validator;
 use App\Question;
 use App\Answervalue;
+use App\Ticket;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
@@ -31,7 +32,7 @@ class ProfileController extends Controller
         $user = Auth::user();
         if ($user) {
             $data['past_events'] = \App\LeaderboardData::with('race.event')->where('email', $user->email)->get();
-            $data['upcoming_events'] = \App\UserRace::with('race.event')
+            $data['upcoming_events'] = \App\UserRace::with('race.event', 'ticket')
                 ->whereHas('race.event', function ($query) {
                     $query->where('event_start', '>', \Carbon\Carbon::today()->toDateTimeString());
                 })

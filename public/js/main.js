@@ -1,3 +1,35 @@
+function refresh(){
+    location.reload();
+}
+function hideevents(){
+
+    $(".event-show").hide();
+}
+function show_details(event_id){
+    $(".event-show").hide();
+    $("#"+event_id).show();
+}
+function opencancelmodal(event_id){
+    $("#form_"+event_id).submit(function(e) {
+        $.ajax({
+            type: $("#form_"+event_id).attr("method"),
+            url: $("#form_"+event_id).attr("action"),
+            data: $("#form_"+event_id).serialize(),
+            success: function(data) {
+                $("#form_"+event_id)
+                    .get(0)
+                    .reset();
+                $("#cancel_event_modal_"+event_id).modal();
+            },
+            error: function(data) {
+                console.log("An error occurred.");
+            }
+        });
+        return false;
+    });
+    // e.preventDefault();
+    $("#cancel_event_modal").unbind();
+}
 $(document).ready(function() {
     $("#open_login_modal").click(function() {
         $("#login_modal").modal();
@@ -73,6 +105,13 @@ $(document).ready(function() {
                     $("#year_of_birth").prop("selected", true);
                     $("#year_of_birth").prop("disabled", true);
                     }
+                    if (user['club'] != ''){
+                    var val = $('#club option:contains('+user['club']+')').val();
+                    $("#club").val(val);
+                    $("#club").prop("selected", true);
+                    $("#others").prop("disabled", true);
+                    $("#club").prop("disabled", true);
+                    }
                 }
                 })
             }
@@ -81,6 +120,11 @@ $(document).ready(function() {
         $("#ticket_1_use_someone").on("change", function(){
             if ($("#year_of_birth").length){
                 $("#year_of_birth").prop("disabled", false);
+                $('#open_added_to_cart_modal').prop("disabled", false);
+            }
+            if ($("#club").length){
+                $("#club").prop("disabled", false);
+                $("#others").prop("disabled", false);
                 $('#open_added_to_cart_modal').prop("disabled", false);
             }
         });
@@ -197,6 +241,7 @@ $(document).ready(function() {
                                         str += 'value="'+data[0]['user'].club+'"';
                                     }
                                     str += " id=\"others\" ";
+                                    str += " disabled "
                                 }
                                 str +=
                                     ' class="form-control " placeholder="' +
@@ -217,9 +262,10 @@ $(document).ready(function() {
                                     "_" +
                                     question.id +
                                     '" '
-                                    +
-                                    (question.question_text.search(/year of birth/i) > -1 && data[0]['user'].year_of_birth != 0 ? " id=\"year_of_birth\" "  : "")
+                                    +(question.question_text.search(/year of birth/i) > -1 && data[0]['user'].year_of_birth != 0 ? " id=\"year_of_birth\" "  : "")
                                     +(question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth != 0 ? "disabled" : "")
+                                    +(question.question_text.search(/club/i) > -1 && data[0]['user'].club != '' ? " id=\"club\" "  : "")
+                                    +(question.question_text.search(/club/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].club != 0 ? "disabled" : "")
                                     +'>';
                                     if (question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth !== 0){
                                         var found = false;
@@ -472,7 +518,7 @@ $(document).ready(function() {
                             $("#add_to_cart")
                                 .get(0)
                                 .reset();
-                            $("#added_to_cart_modal").modal();
+                                $("#added_to_cart_modal").modal();
                         },
                         error: function(data) {
                             console.log("An error occurred.");
