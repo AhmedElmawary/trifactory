@@ -109,6 +109,7 @@ $(document).ready(function() {
                     var val = $('#club option:contains('+user['club']+')').val();
                     $("#club").val(val);
                     $("#club").prop("selected", true);
+                    $("#others").prop("disabled", true);
                     $("#club").prop("disabled", true);
                     }
                 }
@@ -123,6 +124,7 @@ $(document).ready(function() {
             }
             if ($("#club").length){
                 $("#club").prop("disabled", false);
+                $("#others").prop("disabled", false);
                 $('#open_added_to_cart_modal').prop("disabled", false);
             }
         });
@@ -239,6 +241,7 @@ $(document).ready(function() {
                                         str += 'value="'+data[0]['user'].club+'"';
                                     }
                                     str += " id=\"others\" ";
+                                    str += " disabled "
                                 }
                                 str +=
                                     ' class="form-control " placeholder="' +
