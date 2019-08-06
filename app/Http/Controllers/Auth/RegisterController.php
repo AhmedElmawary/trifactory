@@ -51,11 +51,17 @@ class RegisterController extends Controller
         $clubs = Answervalue::where('question_id', $question->id)->get();
         $nationalities = \countries();
         unset($nationalities['il']);
-
-        return view('auth.register', [
-            'nationalities' => $nationalities,
-            'clubs' => $clubs
-        ]);
+        if (Request::is('api*') || Request::wantsJson()) {
+            return response()->json([
+                'nationalities' => $nationalities,
+                'clubs' => $clubs
+            ]);
+        } else {
+            return view('auth.register', [
+                'nationalities' => $nationalities,
+                'clubs' => $clubs
+            ]);
+        }
     }
 
     /**
@@ -67,7 +73,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $data['years'] = range(1930, date('Y'));
-        if ($data['club'] == 'Other') {
+        if (isset($data['club']) && $data['club'] == 'Other') {
             return Validator::make($data, [
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
@@ -139,5 +145,20 @@ class RegisterController extends Controller
 
         return $this->registered($request, $user)
                         ?: redirect($this->redirectPath());
+    }
+    
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(\Illuminate\Http\Request $request, $user)
+    {
+        if (Request::is('api*') || Request::wantsJson()) {
+            $user->generateToken();
+            return response()->json(['data' => $user->toArray()], 201);
+        }
     }
 }
