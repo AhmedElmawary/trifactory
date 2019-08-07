@@ -318,7 +318,12 @@ class PaymentController extends Controller
     public function success($order)
     {
         if (Request::is('api*') || Request::wantsJson()) {
-            return response()->json(['status' => 200, 'success' => true, 'message' => 'payment-success', 'data' => $order]);
+            return response()->json([
+                'status' => 200,
+                'success' => true,
+                'message' => 'payment-success',
+                'data' => $order
+            ]);
         } else {
             return view('payment-success', ['order' => $order]);
         }
@@ -327,7 +332,12 @@ class PaymentController extends Controller
     public function successCash($order)
     {
         if (Request::is('api*') || Request::wantsJson()) {
-            return response()->json(['status' => 200, 'success' => true, 'message' => 'cash-success', 'data' => $order]);
+            return response()->json([
+                'status' => 200,
+                'success' => true,
+                'message' => 'cash-success',
+                'data' => $order
+            ]);
         } else {
             return view('cash-success', ['order' => $order]);
         }
