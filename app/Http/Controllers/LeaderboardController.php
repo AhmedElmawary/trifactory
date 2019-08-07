@@ -34,7 +34,7 @@ class LeaderboardController extends Controller
             'leaderboardFemale' => $leaderboardFemale,
             'leaderboardClub' => $leaderboardClub,
         ];
-        if (Request::is('api*') || Request::wantsJson()) {
+        if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json(['data' => $data]);
         } else {
             return view('leaderboard', $data);

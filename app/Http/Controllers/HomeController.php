@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\Gallery;
-use Request;
 
 class HomeController extends Controller
 {
@@ -15,10 +14,10 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        if (Request::is('api*') || Request::wantsJson()) {
-            $this->middleware(['auth:api', 'verified']);
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            // $this->middleware(['auth:api', 'verified']);
         } else {
-        // $this->middl eware('auth');
+            // $this->middleware('auth');
         }
     }
 
@@ -63,7 +62,7 @@ class HomeController extends Controller
             'leaderboardFemale' => $leaderboardFemale,
             'leaderboardClub' => $leaderboardClub,
         ];
-        if (Request::is('api*') || Request::wantsJson()) {
+        if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json(['status' => 200, 'data' => $data]);
         } else {
             return view('home', $data);

@@ -19,7 +19,11 @@ class ProfileController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            $this->middleware(['auth:api']);
+        } else {
+            $this->middleware('auth');
+        }
     }
 
     /**
@@ -47,7 +51,7 @@ class ProfileController extends Controller
                 $data['profile_image'] = '/storage/profile_images/' . $user->profile_image;
             }
         }
-        if (Request::is('api*') || Request::wantsJson()) {
+        if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json(['status' => 200, 'data' => $data]);
         } else {
             return view('profile', $data);
@@ -77,7 +81,7 @@ class ProfileController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        if (Request::is('api*') || Request::wantsJson()) {
+        if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json(['status' => 200, 'message' => 'Password updated successfully', 'success' => true]);
         } else {
             return redirect('/profile');
@@ -115,7 +119,7 @@ class ProfileController extends Controller
         $user->club = $request->club;
         $user->save();
 
-        if (Request::is('api*') || Request::wantsJson()) {
+        if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json([
                 'status' => 200,
                 'message' => 'Profile updated successfully',

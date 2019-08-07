@@ -317,7 +317,7 @@ class PaymentController extends Controller
 
     public function success($order)
     {
-        if (Request::is('api*') || Request::wantsJson()) {
+        if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json([
                 'status' => 200,
                 'success' => true,
@@ -331,7 +331,7 @@ class PaymentController extends Controller
 
     public function successCash($order)
     {
-        if (Request::is('api*') || Request::wantsJson()) {
+        if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json([
                 'status' => 200,
                 'success' => true,
@@ -358,7 +358,7 @@ class PaymentController extends Controller
             $usercredit->action = 'Refund';
             $usercredit->save();
         }
-        if (Request::is('api*') || Request::wantsJson()) {
+        if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json(['status' => 200, 'message' => 'refund-success', 'data' => $usercredit]);
         } else {
             return back();

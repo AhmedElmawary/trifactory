@@ -11,13 +11,26 @@ use Validator;
 
 class CartController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            $this->middleware(['auth:api', 'verified']);
+        } else {
+            $this->middleware('auth');
+        }
+    }
     public function index(Request $request)
     {
         $cartSubTotal = \Cart::getSubTotal();
         $cartTotal = \Cart::getTotal();
         $cartItems = \Cart::getContent()->toArray();
 
-        if (Request::is('api*') || Request::wantsJson()) {
+        if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json([
                 'cartItems' => $cartItems,
                 'cartSubTotal' => $cartSubTotal,
@@ -61,7 +74,7 @@ class CartController extends Controller
         if ($voucher && $voucher->getValue() != 0) {
             $data['voucher'] = $voucher;
         }
-        if (Request::is('api*') || Request::wantsJson()) {
+        if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json(['status' => 200, 'data' => $data]);
         } else {
             return view('cart-payment', $data);
