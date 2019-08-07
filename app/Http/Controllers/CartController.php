@@ -11,17 +11,38 @@ use Validator;
 
 class CartController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            $this->middleware(['auth:api', 'verified']);
+        } else {
+            $this->middleware('auth');
+        }
+    }
     public function index(Request $request)
     {
         $cartSubTotal = \Cart::getSubTotal();
         $cartTotal = \Cart::getTotal();
         $cartItems = \Cart::getContent()->toArray();
 
-        return view('cart', [
-            'cartItems' => $cartItems,
-            'cartSubTotal' => $cartSubTotal,
-            'cartTotal' => $cartTotal,
-        ]);
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            return response()->json([
+                'cartItems' => $cartItems,
+                'cartSubTotal' => $cartSubTotal,
+                'cartTotal' => $cartTotal,
+                ]);
+        } else {
+            return view('cart', [
+                'cartItems' => $cartItems,
+                'cartSubTotal' => $cartSubTotal,
+                'cartTotal' => $cartTotal,
+            ]);
+        }
     }
 
     public function payment(Request $request)
@@ -53,8 +74,11 @@ class CartController extends Controller
         if ($voucher && $voucher->getValue() != 0) {
             $data['voucher'] = $voucher;
         }
-
-        return view('cart-payment', $data);
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            return response()->json(['status' => 200, 'data' => $data]);
+        } else {
+            return view('cart-payment', $data);
+        }
     }
 
     public function itemCode(Request $request)

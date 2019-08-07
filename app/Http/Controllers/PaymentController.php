@@ -317,12 +317,30 @@ class PaymentController extends Controller
 
     public function success($order)
     {
-        return view('payment-success', ['order' => $order]);
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            return response()->json([
+                'status' => 200,
+                'success' => true,
+                'message' => 'payment-success',
+                'data' => $order
+            ]);
+        } else {
+            return view('payment-success', ['order' => $order]);
+        }
     }
 
     public function successCash($order)
     {
-        return view('cash-success', ['order' => $order]);
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            return response()->json([
+                'status' => 200,
+                'success' => true,
+                'message' => 'cash-success',
+                'data' => $order
+            ]);
+        } else {
+            return view('cash-success', ['order' => $order]);
+        }
     }
     
     public function refundTicket(Request $request)
@@ -340,6 +358,10 @@ class PaymentController extends Controller
             $usercredit->action = 'Refund';
             $usercredit->save();
         }
-        return back();
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            return response()->json(['status' => 200, 'message' => 'refund-success', 'data' => $usercredit]);
+        } else {
+            return back();
+        }
     }
 }
