@@ -117,9 +117,9 @@ class ProfileController extends Controller
 
         if (Request::is('api*') || Request::wantsJson()) {
             return response()->json([
-                'status' => 200, 
-                'message' => 'Profile updated successfully', 
-                'success' => true, 
+                'status' => 200,
+                'message' => 'Profile updated successfully',
+                'success' => true,
                 'data' => $user
             ]);
         } else {
