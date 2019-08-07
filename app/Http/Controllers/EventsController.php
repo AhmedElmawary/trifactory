@@ -53,7 +53,7 @@ class EventsController extends Controller
             ->where('race_id', $id)
             ->where('published', 'YES')->get();
 
-        return json_encode($tickets);
+        return response()->json($tickets);
     }
 
     public function getMetaByRaceId($id)
@@ -62,7 +62,7 @@ class EventsController extends Controller
             ->with('question', 'question.answertype', 'question.answervalue')
             ->get();
         $raceQuestions[0]['user'] = Auth::user();
-        return json_encode($raceQuestions);
+        return response()->json($raceQuestions);
     }
 
     public function getCountries()
@@ -70,6 +70,6 @@ class EventsController extends Controller
         $nationalities = \countries();
         unset($nationalities['il']);
 
-        return json_encode($nationalities);
+        return response()->json($nationalities);
     }
 }
