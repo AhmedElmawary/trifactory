@@ -13,7 +13,11 @@ class EventsController extends Controller
     public function index()
     {
         $events = Event::with('eventimages')->past()->published()->get();
-        return view('events', ['events' => $events]);
+        if (Request::is('api*') || Request::wantsJson()) {
+            return response()->json(['status' => 200, 'events' => $events]);
+        } else {
+            return view('events', ['events' => $events]);
+        }
     }
 
     public function details($id)
@@ -28,12 +32,19 @@ class EventsController extends Controller
         if ($event->event_start < $today) {
             $pastEvent = true;
         }
-
-        return view('event-details', [
-            'event' => $event,
-            'pastEvent' => $pastEvent,
-            'user' => $user
-        ]);
+        if (Request::is('api*') || Request::wantsJson()) {
+            return response()->json([
+                'event' => $event,
+                'pastEvent' => $pastEvent,
+                'user' => $user
+            ]);
+        } else {
+            return view('event-details', [
+                'event' => $event,
+                'pastEvent' => $pastEvent,
+                'user' => $user
+            ]);
+        }
     }
 
     public function getTicketsByRaceId($id)
