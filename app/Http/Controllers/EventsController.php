@@ -13,10 +13,11 @@ class EventsController extends Controller
     public function index()
     {
         $events = Event::with('eventimages')->past()->published()->get();
+        $upcoming_events = Event::with('eventimages')->upcomming()->published()->get();
         if (\Request::is('api*') || \Request::wantsJson()) {
-            return response()->json(['status' => 200, 'events' => $events]);
+            return response()->json(['status' => 200, 'events' => $events, 'upcoming_events' => $upcoming_events]);
         } else {
-            return view('events', ['events' => $events]);
+            return view('events', ['events' => $events, 'upcoming_events' => $upcoming_events]);
         }
     }
 
