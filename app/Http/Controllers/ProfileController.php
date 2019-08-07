@@ -61,7 +61,7 @@ class ProfileController extends Controller
     public function getUser()
     {
         $user = Auth::user();
-        return json_encode($user);
+        return response()->json($user);
     }
 
     public function password(Request $request)
