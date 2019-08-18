@@ -59,7 +59,7 @@ class PaymentController extends Controller
             }
             if (count($item['conditions'])) {
                 $meta[$item['id']]->code = $item['conditions'][0]->getAttributes()['code'];
-                $meta[$item['id']]->Price = $item['conditions'][0]->parsedRawValue;
+                $meta[$item['id']]->Price = $meta[$item['id']]->Price - $item['conditions'][0]->parsedRawValue;
             }
         }
 
@@ -303,6 +303,8 @@ class PaymentController extends Controller
                         if (property_exists($ticket, 'code')) {
                             $this->consumePromocode($order, $ticket->code);
                         }
+                        \Log::info(json_encode($order));
+                        \Log::info(json_encode($ticket));
                         event(new TicketPurchased($order, $ticketId, $ticket, $user));
                     }
                 }
