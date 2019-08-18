@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Password;
+use Laravel\Nova\Fields\DateTime;
 
 class User extends Resource
 {
@@ -71,6 +72,8 @@ class User extends Resource
             Text::make('Year of Birth', 'year_of_birth'),
 
             Text::make('Club', 'club'),
+
+            DateTime::make('Verified', 'email_verified_at')->hideFromIndex(),
 
             Password::make('Password')
                 ->onlyOnForms()
