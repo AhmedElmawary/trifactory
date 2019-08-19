@@ -9,6 +9,7 @@ use App\Nova\Metrics\NewUsers;
 use App\Nova\Metrics\NewOrders;
 use App\Nova\Metrics\TotalSales;
 use App\Nova\Metrics\NewVouchers;
+use App\Nova\Metrics\UserRaceCount;
 
 class NovaServiceProvider extends NovaApplicationServiceProvider
 {
@@ -66,6 +67,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
             new TotalSales,
             new NewOrders,
             new NewVouchers,
+            new UserRaceCount
         ];
     }
 

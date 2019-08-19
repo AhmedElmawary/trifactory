@@ -36,3 +36,6 @@ https://nova.laravel.com/docs/1.0/installation.html#installing-nova
 ### Production changes
 run `composer install --no-dev`
 or add `laravel/dusk` in composer.json extra/laravel/dont-discover
+
+### Video Explaination for Laravel Nova
+https://laracasts.com/series/laravel-nova-mastery/
