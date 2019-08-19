@@ -10,11 +10,13 @@ class RaceQuestion extends Model
 
     protected $primaryKey='id';
 
-    public function race() {
+    public function race()
+    {
         return $this->belongsTo('App\Race', 'race_id');
     }
 
-    public function question() {
+    public function question()
+    {
         return $this->belongsTo('App\Question', 'question_id');
     }
 }

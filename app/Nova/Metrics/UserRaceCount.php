@@ -16,7 +16,7 @@ class UserRaceCount extends Partition
      */
     public function calculate(Request $request)
     {
-        $user_races = UserRace::with(['race', 'race.event'])->whereHas('race.event', function($q){
+        $user_races = UserRace::with(['race', 'race.event'])->whereHas('race.event', function($q) {
             $q->where('published', 'yes')->where('event_end', '>=', date("Y-m-d"));
         })->join('races', 'races.id', '=', 'race_id');
         return $this->count($request, $user_races, 'races.name');
