@@ -58,30 +58,20 @@ class EmailTicket
                 $year_of_birth = 0;
                 $club = '';
 
-                \Log::info("Ticket: ");
-                \Log::info(json_encode($ticket));
-
-
-                foreach ($ticket as $key => $value){
-                    \Log::info($key);
-                    \Log::info($value);
-                    \Log::info("");
-                    if (preg_match("/nationality/i", $key)){
-                        \Log::info('entered nationality');
+                foreach ($ticket as $key => $value) {
+                    if (preg_match("/nationality/i", $key)) {
                         $nationality = $value;
                     }
-                    if (preg_match("/year of birth/i", $key)){
-                        \Log::info('entered birth');
+                    if (preg_match("/year of birth/i", $key)) {
                         $year_of_birth = $value;
                     }
-                    if (preg_match("/club/i", $key)){
-                        \Log::info('entered club');
+                    if (preg_match("/club/i", $key)) {
                         $club = $value;
                     }
-                    if (preg_match("/others/i", $key)){
-                        \Log::info('entered other');
-                        if ($value)
+                    if (preg_match("/others/i", $key)) {
+                        if ($value) {
                             $club = $value;
+                        }
                     }
                 }
 
