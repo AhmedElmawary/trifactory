@@ -62,7 +62,7 @@
         @if($pastEvent)
         <div class="col-lg-12">Registration Closed</div>
         @else
-        <div class="col-lg-2 tickets-quantity">
+        <div class="col-lg-2 tickets-quantity" hidden>
           <div class="custom-number">
             <input name="number_of_tickets" type="number" class="form-control form-number" value="1" min="1" max="10">
           </div>
@@ -70,7 +70,7 @@
         <div class="col-lg-10">
           @auth
           <button type="button" class="btn btn-dark dropdown-button-icon" data-toggle="collapse" data-target="#tickets_info"
-              aria-expanded="false">Fill Tickets Details</button>
+              aria-expanded="false" onclick="ticket_details()">Fill Tickets Details</button>
           @endauth
           @guest
           <button class="btn btn-dark" id="open_login_modal">Fill Tickets Details</button>
@@ -122,9 +122,8 @@
       </div>
       <div class="col-lg-6 mt-3" own-ticket-hide>
         <div class="input-group">
-          <input type="text" required class="form-control " placeholder="Phone" name="ticket_1_phone" value="@auth{{ $user->phone }}@endauth" />
+          <input type="text" minlength="11" maxlength="11" required class="form-control " placeholder="Phone" name="ticket_1_phone" value="@auth{{ $user->phone }}@endauth" />
         </div>
-
       </div>
       <div class="col-lg-6 mt-3" own-ticket-hide>
         <div class="input-group">
@@ -162,7 +161,7 @@
     <div class="row">
       <div class="col-lg-12 text-right">
         @auth
-        <button class="btn btn-dark" id="open_added_to_cart_modal">Add Ticket(s) to Cart</button>
+        <button class="btn btn-dark" id="open_added_to_cart_modal" onclick="add_to_cart()">Add Ticket(s) to Cart</button>
         @endauth
         @guest
         <button class="btn btn-dark" id="open_login_modal">Add Ticket(s) to Cart</button>

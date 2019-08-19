@@ -9,6 +9,7 @@ use App\Question;
 use App\Answervalue;
 use App\Ticket;
 use Illuminate\Support\Facades\Hash;
+use App\User;
 
 class ProfileController extends Controller
 {
@@ -20,7 +21,7 @@ class ProfileController extends Controller
     public function __construct()
     {
         if (\Request::is('api*') || \Request::wantsJson()) {
-            $this->middleware(['auth:api']);
+            $this->middleware(['auth:api'])->except(['getUser', 'validatePhone']);
         } else {
             $this->middleware('auth');
         }
@@ -62,6 +63,18 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         return response()->json($user);
+    }
+
+    public function validatePhone()
+    {
+        $phone_exist = User::where('phone', $_GET['phone'])->first();
+        \Log::info($phone_exist);
+        \Log::info($_GET['phone']);
+        if ($phone_exist) {
+            return 'true';
+        } else {
+            return 'false';
+        }
     }
 
     public function password(Request $request)

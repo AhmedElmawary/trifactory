@@ -33,6 +33,30 @@ function opencancelmodal(event_id){
     // e.preventDefault();
     $("#cancel_event_modal").unbind();
 }
+function validatePhone(){
+    $.ajax({
+        async: false,
+        url: "/phoneValidation",
+        type: "GET",
+        data: { phone: document.getElementsByName("ticket_1_phone")[0].value} ,
+        dataType: "json",   
+        success: function(result) {
+            console.log(result);
+            if (result) {
+                console.log('entered');
+                document.getElementsByName("ticket_1_phone")[0].setCustomValidity("Phone already exists");
+            } else {
+                console.log('no');
+                document.getElementsByName("ticket_1_phone")[0].setCustomValidity('');  
+            }
+        }
+    });
+}
+
+function ticket_details(){
+    document.getElementById("open_added_to_cart_modal").onclick = validatePhone;
+}
+
 $(document).ready(function() {
     $("#open_login_modal").click(function() {
         $("#login_modal").modal();
