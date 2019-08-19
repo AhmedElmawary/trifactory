@@ -67,6 +67,10 @@ class ProfileController extends Controller
 
     public function validatePhone()
     {
+        $email_exist = User::where('email', $_GET['email'])->first();
+        if ($email_exist) {
+            return 'false';
+        }
         $phone_exist = User::where('phone', $_GET['phone'])->first();
         \Log::info($phone_exist);
         \Log::info($_GET['phone']);

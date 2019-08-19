@@ -38,15 +38,12 @@ function validatePhone(){
         async: false,
         url: "/phoneValidation",
         type: "GET",
-        data: { phone: document.getElementsByName("ticket_1_phone")[0].value} ,
+        data: { phone: document.getElementsByName("ticket_1_phone")[0].value, email: document.getElementsByName("ticket_1_email")[0].value} ,
         dataType: "json",   
         success: function(result) {
-            console.log(result);
             if (result) {
-                console.log('entered');
                 document.getElementsByName("ticket_1_phone")[0].setCustomValidity("Phone already exists");
             } else {
-                console.log('no');
                 document.getElementsByName("ticket_1_phone")[0].setCustomValidity('');  
             }
         }
