@@ -30,7 +30,8 @@ class PaymentController extends Controller
         if (\Request::is('api*') || \Request::wantsJson()) {
             $this->middleware(['auth:api', 'verified'])->only('consumePromocode');
         } else {
-            $this->middleware(['auth', 'verified'])->only('consumePromocode');  // Middleware added for other functions in routes
+            // Middleware added for other functions in routes
+            $this->middleware(['auth', 'verified'])->only('consumePromocode');  
         }
     }
     /**

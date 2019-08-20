@@ -71,7 +71,7 @@ class ProfileController extends Controller
         if ($email_exist) {
             return 'false';
         }
-        if (!isset($_GET['email'])){
+        if (!isset($_GET['email'])) {
             return 'false';
         }
         $phone_exist = User::where('phone', $_GET['phone'])->first();

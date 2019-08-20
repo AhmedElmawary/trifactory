@@ -35,7 +35,11 @@ class UserQuestionsAnswers extends DownloadExcel implements
 
     public function map($userRace): array
     {
-        if (empty($userRace->user()->get()[0]) || empty($userRace->race()->get()[0]) || empty($userRace->race()->get()[0]->event()->get()[0]) || empty($userRace->ticket()->get()[0]) || empty($userRace->order()->get()[0])){
+        if (empty($userRace->user()->get()[0]) || 
+        empty($userRace->race()->get()[0]) || 
+        empty($userRace->race()->get()[0]->event()->get()[0]) || 
+        empty($userRace->ticket()->get()[0]) || 
+        empty($userRace->order()->get()[0])) {
             return [];
         }
         \Log::info($userRace);
@@ -57,7 +61,7 @@ class UserQuestionsAnswers extends DownloadExcel implements
         $answers[] = $order->id;
         $question_answers = $userRace->questionanswer()->get();
 
-        foreach ($question_answers as $qa){
+        foreach ($question_answers as $qa) {
             $answers[] = strval($qa->question()->get()[0]->question_text).': '.strval($qa->answer_value);
         }
 
