@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsToMany;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Promocode extends Resource
 {
@@ -93,6 +94,8 @@ class Promocode extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
     }
 }

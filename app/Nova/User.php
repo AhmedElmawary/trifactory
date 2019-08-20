@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\DateTime;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class User extends Resource
 {
@@ -130,6 +131,8 @@ class User extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
     }
 }

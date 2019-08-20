@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Text;
 use App\Nova\Filters\Race;
 use App\Nova\Actions\UserQuestionsAnswers;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class UserRace extends Resource
 {
@@ -100,12 +101,14 @@ class UserRace extends Resource
         if ($filters) {
             foreach ($filters as $filter) {
                 if ($filter->class === 'App\\Nova\\Filters\\Race') {
-                    $raceId = $filter->value;
+                    $raceId = (int) $filter->value;
                 }
             }
         }
+
         return [
-            (new UserQuestionsAnswers($raceId))->askForFilename()
+            (new UserQuestionsAnswers($raceId))->askForFilename(),
+            (new DownloadExcel)->withHeadings()->askForFilename(),
         ];
     }
 }

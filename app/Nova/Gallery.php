@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\HasMany;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Gallery extends Resource
 {
@@ -91,6 +92,8 @@ class Gallery extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
     }
 }

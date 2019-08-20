@@ -7,6 +7,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Nova\Fields\Text;
 use App\Imports\LeaderboardDataImport;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class LeaderboardData extends Resource
 {
@@ -107,6 +108,8 @@ class LeaderboardData extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
     }
 }

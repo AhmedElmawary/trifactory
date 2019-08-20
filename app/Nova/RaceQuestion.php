@@ -6,6 +6,7 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Number;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class RaceQuestion extends Resource
 {
@@ -94,6 +95,8 @@ class RaceQuestion extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
     }
 }

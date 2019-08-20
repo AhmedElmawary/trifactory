@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsTo;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Ticket extends Resource
 {
@@ -102,6 +103,8 @@ class Ticket extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
     }
 }

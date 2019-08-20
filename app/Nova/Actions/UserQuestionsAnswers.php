@@ -29,13 +29,39 @@ class UserQuestionsAnswers extends DownloadExcel implements
 
     public function headings(): array
     {
-        $questions = Race::find($this->raceId)->question()->pluck('question_text')->toArray();
+        $questions = ['id', 'name', 'email', 'phone', 'year_of_birth', 'club', 'event', 'race', 'ticket', 'order id'];
         return $questions;
     }
 
     public function map($userRace): array
     {
-        $answers = $userRace->questionanswer()->pluck('answer_value')->toArray();
+        if (empty($userRace->user()->get()[0]) || empty($userRace->race()->get()[0]) || empty($userRace->race()->get()[0]->event()->get()[0]) || empty($userRace->ticket()->get()[0]) || empty($userRace->order()->get()[0])){
+            return [];
+        }
+        \Log::info($userRace);
+        $user = $userRace->user()->get()[0];
+        $race = $userRace->race()->get()[0];
+        $event = $userRace->race()->get()[0]->event()->get()[0];
+        $ticket = $userRace->ticket()->get()[0];
+        $order = $userRace->order()->get()[0];
+        $answers = array();
+        $answers[] = $user->id;
+        $answers[] = $user->name;
+        $answers[] = $user->email;
+        $answers[] = $user->phone;
+        $answers[] = $user->year_of_birth;
+        $answers[] = $user->club;
+        $answers[] = $event->name;
+        $answers[] = $race->name;
+        $answers[] = $ticket->name;
+        $answers[] = $order->id;
+        $question_answers = $userRace->questionanswer()->get();
+
+        foreach ($question_answers as $qa){
+            $answers[] = strval($qa->question()->get()[0]->question_text).': '.strval($qa->answer_value);
+        }
+
+        // $answers = array_merge($answers, $userRace->questionanswer()->pluck('answer_value')->toArray());
         return $answers;
     }
 }

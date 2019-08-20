@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Boolean;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Race extends Resource
 {
@@ -114,6 +115,8 @@ class Race extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
     }
 }

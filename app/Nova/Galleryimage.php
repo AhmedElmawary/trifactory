@@ -6,6 +6,7 @@ use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Image;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Galleryimage extends Resource
 {
@@ -89,6 +90,8 @@ class Galleryimage extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
     }
 }

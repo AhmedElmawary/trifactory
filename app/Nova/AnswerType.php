@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\HasMany;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class AnswerType extends Resource
 {
@@ -96,6 +97,8 @@ class AnswerType extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
     }
 }

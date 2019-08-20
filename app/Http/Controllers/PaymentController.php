@@ -21,6 +21,19 @@ use Carbon\Carbon;
 class PaymentController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            $this->middleware(['auth:api', 'verified'])->only('consumePromocode');
+        } else {
+            $this->middleware(['auth', 'verified'])->only('consumePromocode');  // Middleware added for other functions in routes
+        }
+    }
+    /**
      * POST Request from cart-payment for online payment button
      */
     public function buyTickets(Request $request)

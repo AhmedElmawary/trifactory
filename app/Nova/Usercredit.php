@@ -8,6 +8,7 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Usercredit extends Resource
 {
@@ -93,6 +94,8 @@ class Usercredit extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
     }
 }

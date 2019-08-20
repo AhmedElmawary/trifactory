@@ -13,6 +13,7 @@ use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Boolean;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Event extends Resource
 {
@@ -114,6 +115,8 @@ class Event extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
     }
 }

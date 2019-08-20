@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class UserPromocodeOrder extends Resource
 {
@@ -88,6 +89,8 @@ class UserPromocodeOrder extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
     }
 }

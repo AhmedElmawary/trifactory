@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\Currency;
 
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Number;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Voucher extends Resource
 {
@@ -100,6 +101,8 @@ class Voucher extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
     }
 }
