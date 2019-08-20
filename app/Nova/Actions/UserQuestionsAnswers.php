@@ -35,10 +35,10 @@ class UserQuestionsAnswers extends DownloadExcel implements
 
     public function map($userRace): array
     {
-        if (empty($userRace->user()->get()[0]) || 
-        empty($userRace->race()->get()[0]) || 
-        empty($userRace->race()->get()[0]->event()->get()[0]) || 
-        empty($userRace->ticket()->get()[0]) || 
+        if (empty($userRace->user()->get()[0]) ||
+        empty($userRace->race()->get()[0]) ||
+        empty($userRace->race()->get()[0]->event()->get()[0]) ||
+        empty($userRace->ticket()->get()[0]) ||
         empty($userRace->order()->get()[0])) {
             return [];
         }

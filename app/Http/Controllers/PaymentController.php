@@ -31,7 +31,7 @@ class PaymentController extends Controller
             $this->middleware(['auth:api', 'verified'])->only('consumePromocode');
         } else {
             // Middleware added for other functions in routes
-            $this->middleware(['auth', 'verified'])->only('consumePromocode');  
+            $this->middleware(['auth', 'verified'])->only('consumePromocode');
         }
     }
     /**
