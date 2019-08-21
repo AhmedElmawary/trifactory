@@ -29,12 +29,21 @@ class UserQuestionsAnswers extends DownloadExcel implements
 
     public function headings(): array
     {
+        if (isset($this->raceId)) {
+            $questions = Race::find($this->raceId)->question()->pluck('question_text')->toArray();
+            return $questions;
+        }
         $questions = ['id', 'name', 'email', 'phone', 'year_of_birth', 'club', 'event', 'race', 'ticket', 'order id'];
         return $questions;
     }
 
     public function map($userRace): array
     {
+        if (isset($this->raceId)) {
+            $answers = $userRace->questionanswer()->pluck('answer_value')->toArray();
+            return $answers;
+        }
+
         if (empty($userRace->user()->get()[0]) ||
         empty($userRace->race()->get()[0]) ||
         empty($userRace->race()->get()[0]->event()->get()[0]) ||
@@ -64,8 +73,6 @@ class UserQuestionsAnswers extends DownloadExcel implements
         foreach ($question_answers as $qa) {
             $answers[] = strval($qa->question()->get()[0]->question_text).': '.strval($qa->answer_value);
         }
-
-        // $answers = array_merge($answers, $userRace->questionanswer()->pluck('answer_value')->toArray());
         return $answers;
     }
 }
