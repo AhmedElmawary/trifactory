@@ -21,20 +21,6 @@ use Carbon\Carbon;
 class PaymentController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        if (\Request::is('api*') || \Request::wantsJson()) {
-            $this->middleware(['auth:api', 'verified'])->only('consumePromocode');
-        } else {
-            // Middleware added for other functions in routes
-            $this->middleware(['auth', 'verified'])->only('consumePromocode');
-        }
-    }
-    /**
      * POST Request from cart-payment for online payment button
      */
     public function buyTickets(Request $request)
@@ -268,7 +254,7 @@ class PaymentController extends Controller
 
     public function consumeCartConditions($order)
     {
-        $user = Auth::user();
+        $user = $order->user()->first();
         $meta = json_decode($order->meta);
 
         if (property_exists($meta, 'credit')) {
@@ -294,7 +280,7 @@ class PaymentController extends Controller
         $user = Auth::user();
 
         $promocode = Promocode::where('code', $code)->first();
-
+        
         $userPromocodeRace = new UserPromocodeOrder();
         $userPromocodeRace->user_id = $user->id;
         $userPromocodeRace->order_id = $order->id;
@@ -306,7 +292,7 @@ class PaymentController extends Controller
     public function postInvoice($order)
     {
         if ($order->success === 'true') {
-            $user = Auth::user();
+            $user = $order->user()->first();
             $meta = json_decode($order->meta);
 
             $this->consumeCartConditions($order);
