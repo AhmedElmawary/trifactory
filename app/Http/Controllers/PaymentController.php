@@ -87,7 +87,7 @@ class PaymentController extends Controller
 
         if ($cartTotal > 0) {
             $order->save();
-
+            $order->totalCost = $cartTotal;
             return $this->makePayment($order, $paymentMethod);
         } else {
             $order->success = 'true';
@@ -127,6 +127,8 @@ class PaymentController extends Controller
 
     public function makePayment($order, $paymentMethod)
     {
+        \Log::info("Order Total Cost: ");
+        \Log::info($order->totalCost);
         $auth = PayMob::authPaymob();
 
         $paymobOrder = PayMob::makeOrderPaymob(
@@ -317,8 +319,6 @@ class PaymentController extends Controller
                         if (property_exists($ticket, 'code')) {
                             $this->consumePromocode($order, $ticket->code);
                         }
-                        \Log::info(json_encode($order));
-                        \Log::info(json_encode($ticket));
                         event(new TicketPurchased($order, $ticketId, $ticket, $user));
                     }
                 }
