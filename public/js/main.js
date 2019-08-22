@@ -127,14 +127,14 @@ $(document).ready(function() {
                     var val = $('#year_of_birth option:contains('+user['year_of_birth']+')').val();
                     $("#year_of_birth").val(val);
                     $("#year_of_birth").prop("selected", true);
-                    $("#year_of_birth").prop("hidden", true);
+                    $("#year_of_birth").prop("disabled", true);
                     }
                     if (user['club'] != ''){
                     var val = $('#club option:contains('+user['club']+')').val();
                     $("#club").val(val);
                     $("#club").prop("selected", true);
-                    $("#others").prop("hidden", true);
-                    $("#club").prop("hideen", true);
+                    $("#others").prop("disabled", true);
+                    $("#club").prop("disabled", true);
                     }
                 }
                 })
@@ -143,12 +143,12 @@ $(document).ready(function() {
 
         $("#ticket_1_use_someone").on("change", function(){
             if ($("#year_of_birth").length){
-                $("#year_of_birth").show();
+                $("#year_of_birth").prop("disabled", false);
                 $('#open_added_to_cart_modal').prop("disabled", false);
             }
             if ($("#club").length){
-                $("#club").show();
-                $("#others").show();
+                $("#club").prop("disabled", false);
+                $("#others").prop("disabled", false);
                 $('#open_added_to_cart_modal').prop("disabled", false);
             }
         });
@@ -265,7 +265,7 @@ $(document).ready(function() {
                                         str += 'value="'+data[0]['user'].club+'"';
                                     }
                                     str += " id=\"others\" ";
-                                    str += " hidden "
+                                    str += " disabled "
                                 }
                                 str +=
                                     ' class="form-control " placeholder="' +
@@ -274,7 +274,7 @@ $(document).ready(function() {
                                     meta_field_name +
                                     "_" +
                                     question.id +
-                                    '" '+(question.question_text.search(/year of birth/i) > -1 && data[0]['user'].year_of_birth != 0 ? 'value=\"Year of birth: '+data[0]['user'].year_of_birth+'\" hidden ' : '')+'/>';
+                                    '" '+(question.question_text.search(/year of birth/i) > -1 && data[0]['user'].year_of_birth != 0 ? 'value=\"Year of birth: '+data[0]['user'].year_of_birth+'\" disabled ' : '')+'/>';
                                 }
 
                             if (question.answertype.type === "dropdown") {
@@ -287,9 +287,9 @@ $(document).ready(function() {
                                     question.id +
                                     '" '
                                     +(question.question_text.search(/year of birth/i) > -1 && data[0]['user'].year_of_birth != 0 ? " id=\"year_of_birth\" "  : "")
-                                    +(question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth != 0 ? "hidden" : "")
+                                    +(question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth != 0 ? "disabled" : "")
                                     +(question.question_text.search(/club/i) > -1 && data[0]['user'].club != '' ? " id=\"club\" "  : "")
-                                    +(question.question_text.search(/club/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].club != 0 ? "hidden" : "")
+                                    +(question.question_text.search(/club/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].club != 0 ? "disabled" : "")
                                     +'>';
                                     if (question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth !== 0){
                                         var found = false;
