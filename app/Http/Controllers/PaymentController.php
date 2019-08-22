@@ -277,7 +277,7 @@ class PaymentController extends Controller
 
     public function consumePromocode($order, $code)
     {
-        $user = Auth::user();
+        $user = $order->user()->first();
 
         $promocode = Promocode::where('code', $code)->first();
         
