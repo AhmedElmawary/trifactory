@@ -275,8 +275,11 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
+
         $input = $request->all();
         $number_of_tickets = $input['number_of_tickets'];
+        \Log::info('Input: ');
+        \Log::info(json_encode($input));
 
         $grouppedInput = [];
 
@@ -286,7 +289,8 @@ class CartController extends Controller
                 $grouppedInput['ticket_' . $i][$key] = $input['ticket_' . $i . '_' . $key];
             }
         }
-
+        \Log::info('Groupped Input: ');
+        \Log::info(json_encode($grouppedInput));
         foreach ($grouppedInput as $ticketValues) {
             $ticket = Ticket::find($ticketValues['type']);
             $race = $ticket->race()->first();
