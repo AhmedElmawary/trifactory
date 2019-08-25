@@ -30,14 +30,12 @@ class UserTicketDetails extends DownloadExcel implements
 
     public function __construct()
     {
-
     }
 
     public function bindValue(Cell $cell, $value)
     {
         $cell->setValueExplicit($value, \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
         return true;
-        
     }
 
     public function headings(): array
@@ -52,12 +50,12 @@ class UserTicketDetails extends DownloadExcel implements
         $order = json_decode($order, true);
 
         $result = array();
-        if ($order['success'] == true){
-            // $result[] = 
+        if ($order['success'] == true) {
+            // $result[] =
             // $result[] = strval("For: ").strval($order["meta"]);
-            if (preg_match("/TFT/i", $order['id'])){
+            if (preg_match("/TFT/i", $order['id'])) {
                 foreach (json_decode($order['meta'], true) as $key => $value) {
-                    if (preg_match("/TFT/i", $key) && isset($value['E-mail'])){
+                    if (preg_match("/TFT/i", $key) && isset($value['E-mail'])) {
                         $record = array();
                         // foreach ($value as $key2 => $value2) {
                         $record[] = User::select('id')->where("email", $value['E-mail'])->first()['id'];
@@ -81,7 +79,6 @@ class UserTicketDetails extends DownloadExcel implements
                                 }
                                 $record[] = $q.": ".$a;
                             }
-                            
                         }
 
                         $result[] = $record;
