@@ -50,7 +50,8 @@ class UserTicketDetails extends DownloadExcel implements
         $order = json_decode($order, true);
 
         $result = array();
-        if ($order['success'] == true) {
+        
+        if ($order['success'] == 'true') {
             // $result[] =
             // $result[] = strval("For: ").strval($order["meta"]);
             if (preg_match("/TFT/i", $order['id'])) {
