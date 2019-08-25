@@ -41,4 +41,4 @@ or add `laravel/dusk` in composer.json extra/laravel/dont-discover
 https://laracasts.com/series/laravel-nova-mastery/
 
 ### Using Maatwebsite for Nova Excel Export
-https://github.com/Maatwebsite/Laravel-Nova-Excel
+https://github.com/Maatwebsite/Laravel-Nova-Excel 

@@ -10,6 +10,7 @@ use Laravel\Nova\Fields\Code;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use App\Nova\Actions\UserTicketDetails;
 
 class Order extends Resource
 {
@@ -50,7 +51,7 @@ class Order extends Resource
         return [
             ID::make()->sortable(),
             Text::make('Paymob Order Id', 'paymob_order_id')->sortable(),
-            Currency::make('Total Cost', 'totalCost')->sortable()->format('%.2n'),
+            // Currency::make('Total Cost', 'totalCost')->sortable()->format('%.2n'),
             Text::make('Success', 'success'),
             Code::make('Meta', 'meta'),
             BelongsTo::make('User'),
@@ -101,6 +102,7 @@ class Order extends Resource
     public function actions(Request $request)
     {
         return [
+            (new UserTicketDetails)->askForFilename(),
             (new DownloadExcel)->withHeadings()->askForFilename(),
         ];
     }

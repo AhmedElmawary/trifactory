@@ -128,6 +128,9 @@ $(document).ready(function() {
                     $("#year_of_birth").val(val);
                     $("#year_of_birth").prop("selected", true);
                     $("#year_of_birth").prop("disabled", true);
+                    // document.getElementById("year_of_birth").style.pointerEvents='none';
+                    // document.getElementById("year_of_birth").style.cursor='not-allowed';
+
                     }
                     if (user['club'] != ''){
                     var val = $('#club option:contains('+user['club']+')').val();
