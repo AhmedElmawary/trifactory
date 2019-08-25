@@ -46,7 +46,6 @@ class UserTicketDetails extends DownloadExcel implements
 
     public function map($order): array
     {
-        ini_set('memory_limit', '-1');
         $order = json_decode($order, true);
 
         $result = array();
@@ -79,6 +78,12 @@ class UserTicketDetails extends DownloadExcel implements
                                     }
                                 } else {
                                     $a = $answer;
+                                }
+                                if (preg_match("/club/i", $q) && empty($a)) {
+                                    $a = $value[$q];
+                                }
+                                if (preg_match("/others/i", $q) && empty($a)) {
+                                    $a = $value[$q];
                                 }
                                 $record[] = $q.": ".$a;
                             }
