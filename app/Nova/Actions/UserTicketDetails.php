@@ -40,7 +40,7 @@ class UserTicketDetails extends DownloadExcel implements
 
     public function headings(): array
     {
-        $questions = ['id', 'For', 'E-Mail', 'Phone', 'Event', 'Race', 'Order ID', 'Paymob ID'];
+        $questions = ['id', 'For', 'E-Mail', 'Phone', 'Event', 'Race', 'Order ID', 'Ticket Type', 'Paymob ID'];
         return $questions;
     }
 
@@ -65,6 +65,7 @@ class UserTicketDetails extends DownloadExcel implements
                         $record[] = $value['Event'];
                         $record[] = $value['Race'];
                         $record[] = $order['id'];
+                        $record[] = $value['Ticket Type'];
                         $record[] = $order['paymob_order_id'];
                         
                         foreach ($value as $question => $answer) {
