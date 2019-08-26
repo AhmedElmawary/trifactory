@@ -278,8 +278,6 @@ class CartController extends Controller
 
         $input = $request->all();
         $number_of_tickets = $input['number_of_tickets'];
-        \Log::info('Input: ');
-        \Log::info(json_encode($input));
 
         $grouppedInput = [];
 
@@ -289,8 +287,6 @@ class CartController extends Controller
                 $grouppedInput['ticket_' . $i][$key] = $input['ticket_' . $i . '_' . $key];
             }
         }
-        \Log::info('Groupped Input: ');
-        \Log::info(json_encode($grouppedInput));
         foreach ($grouppedInput as $ticketValues) {
             $ticket = Ticket::find($ticketValues['type']);
             $race = $ticket->race()->first();
@@ -344,11 +340,14 @@ class CartController extends Controller
                         $user->save();
                     }
                 } else {
+                    if ($user->club == 'Other' && preg_match("/other/i", $question->question_text)) {
+                        $user->club = $ticketValues['meta_' . $meta];
+                        $user->save();
+                    }
                     $attributes[$question->question_text] = $ticketValues['meta_' . $meta];
                     $attributes['_qid' . $question->id] = $ticketValues['meta_' . $meta];
                 }
             }
-
             \Cart::add([
                 'id' => uniqid('TFT-' . $ticket->id),
                 'name' => $ticket->name,
