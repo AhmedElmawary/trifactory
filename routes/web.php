@@ -56,3 +56,6 @@ Auth::routes(['verify' => true]);
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::get('/test', 'HomeController@test');
+
+Route::get('/test', );
+
