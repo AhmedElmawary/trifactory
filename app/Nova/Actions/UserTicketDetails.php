@@ -19,6 +19,13 @@ use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use App\User;
 use App\Question;
 use App\Answervalue;
+use App\Race;
+
+use Maatwebsite\Excel\Facades\Excel;
+use Laravel\Nova\Http\Requests\ActionRequest;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
+use Laravel\Nova\Fields\Number;
 
 class UserTicketDetails extends DownloadExcel implements
     WithCustomValueBinder,
@@ -28,8 +35,33 @@ class UserTicketDetails extends DownloadExcel implements
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
-    public function __construct()
+        /**
+     * @param ActionRequest $request
+     * @param Action        $exportable
+     *
+     * @return array
+     */
+    public function handle(ActionRequest $request, Action $exportable): array
     {
+        $this->race_id = $request->race_id;
+        $response = Excel::download(
+        $exportable,
+        $this->getFilename(),
+        $this->getWriterType()
+        );
+
+        if (!$response instanceof BinaryFileResponse || $response->isInvalid()) {
+            return \is_callable($this->onFailure)
+                ? ($this->onFailure)($request, $response)
+                : Action::danger(__('Resource could not be exported.'));
+        }
+
+        return \is_callable($this->onSuccess)
+            ? ($this->onSuccess)($request, $response)
+            : Action::download(
+                $this->getDownloadUrl($response),
+                $this->getFilename()
+            );
     }
 
     public function bindValue(Cell $cell, $value)
@@ -41,6 +73,8 @@ class UserTicketDetails extends DownloadExcel implements
     public function headings(): array
     {
         $questions = ['id', 'For', 'E-Mail', 'Phone', 'Event', 'Race', 'Order ID', 'Paymob ID'];
+        $user_questions = Race::find($this->race_id)->question()->pluck('question_text')->toArray(); 
+        $questions = array_merge($questions, $user_questions);
         return $questions;
     }
 
@@ -55,7 +89,7 @@ class UserTicketDetails extends DownloadExcel implements
             // $result[] = strval("For: ").strval($order["meta"]);
             if (preg_match("/TFT/i", $order['id'])) {
                 foreach (json_decode($order['meta'], true) as $key => $value) {
-                    if (preg_match("/TFT/i", $key) && isset($value['E-mail'])) {
+                    if (preg_match("/TFT/i", $key) && isset($value['E-mail']) && $value['_race_id'] == $this->race_id) {
                         $record = array();
                         // foreach ($value as $key2 => $value2) {
                         $record[] = User::select('id')->where("email", $value['E-mail'])->first()['id'];
@@ -85,7 +119,7 @@ class UserTicketDetails extends DownloadExcel implements
                                 if (preg_match("/others/i", $q) && empty($a)) {
                                     $a = $value[$q];
                                 }
-                                $record[] = $q.": ".$a;
+                                $record[] = $a;
                             }
                         }
 
@@ -96,5 +130,17 @@ class UserTicketDetails extends DownloadExcel implements
             }
         }
         return $result;
+    }
+
+    /**
+     * Get the fields available on the action.
+     *
+     * @return array
+     */
+    public function fields()
+    {
+        return [
+            Number::make('Race ID')
+        ];
     }
 }

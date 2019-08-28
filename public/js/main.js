@@ -140,7 +140,6 @@ $(document).ready(function() {
                         $(".other_club").hide();
                         $("#other_club").prop('required',false);
                     } else {
-                        console.log(user['club']);
                         $("#club").val($('#club option:contains(Other)').val());
                         $("#others").val(user['club']);
                         $(".other_club").show();
