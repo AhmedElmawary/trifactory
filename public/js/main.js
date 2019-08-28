@@ -35,7 +35,6 @@ function opencancelmodal(event_id){
 }
 function validatePhone(){
     $.ajax({
-        async: false,
         url: "/phoneValidation",
         type: "GET",
         data: { phone: document.getElementsByName("ticket_1_phone")[0].value, email: document.getElementsByName("ticket_1_email")[0].value} ,
@@ -127,17 +126,31 @@ $(document).ready(function() {
                     var val = $('#year_of_birth option:contains('+user['year_of_birth']+')').val();
                     $("#year_of_birth").val(val);
                     $("#year_of_birth").prop("selected", true);
-                    $("#year_of_birth").prop("disabled", true);
-                    // document.getElementById("year_of_birth").style.pointerEvents='none';
-                    // document.getElementById("year_of_birth").style.cursor='not-allowed';
+                    // $("#year_of_birth").prop("disabled", true);
+                    document.getElementById("year_of_birth").style.pointerEvents='none';
+                    document.getElementById("year_of_birth").style.backgroundColor='#e9ecef';
 
                     }
                     if (user['club'] != ''){
                     var val = $('#club option:contains('+user['club']+')').val();
-                    $("#club").val(val);
+                    if (val) {
+                        $("#club").val(val);
+                        $("#others").val('');
+                        $("#others").prop('required',false);
+                        $(".other_club").hide();
+                        $("#other_club").prop('required',false);
+                    } else {
+                        $("#club").val($('#club option:contains(Other)').val());
+                        $("#others").val(user['club']);
+                        $(".other_club").show();
+                    }
                     $("#club").prop("selected", true);
-                    $("#others").prop("disabled", true);
-                    $("#club").prop("disabled", true);
+                    // $("#others").prop("disabled", true);
+                    // $("#club").prop("disabled", true);
+                    document.getElementById("club").style.pointerEvents='none';
+                    document.getElementById("club").style.backgroundColor='#e9ecef';
+                    document.getElementById("others").style.pointerEvents='none';
+                    document.getElementById("others").style.backgroundColor='#e9ecef';
                     }
                 }
                 })
@@ -146,12 +159,18 @@ $(document).ready(function() {
 
         $("#ticket_1_use_someone").on("change", function(){
             if ($("#year_of_birth").length){
-                $("#year_of_birth").prop("disabled", false);
+                // $("#year_of_birth").prop("disabled", false);
+                document.getElementById("year_of_birth").style.pointerEvents=null;
+                document.getElementById("year_of_birth").style.backgroundColor='#f5f5f5';
                 $('#open_added_to_cart_modal').prop("disabled", false);
             }
             if ($("#club").length){
-                $("#club").prop("disabled", false);
-                $("#others").prop("disabled", false);
+                // $("#club").prop("disabled", false);
+                // $("#others").prop("disabled", false);
+                document.getElementById("club").style.pointerEvents=null;
+                document.getElementById("club").style.backgroundColor='#f5f5f5';
+                document.getElementById("others").style.pointerEvents=null;
+                document.getElementById("others").style.backgroundColor='#f5f5f5';
                 $('#open_added_to_cart_modal').prop("disabled", false);
             }
         });
@@ -263,12 +282,14 @@ $(document).ready(function() {
                                     str += ' maxlength="' + max + '" ';
                                 }
 
-                                if (question.question_text.search(/others/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].club !== ''){
+                                if (question.question_text.search(/others/i) > -1){
                                     if ($(".clubs option:selected").text() == 'Other') { 
                                         str += 'value="'+data[0]['user'].club+'"';
+                                    } else {
+                                        str += 'value=\'\'';
                                     }
                                     str += " id=\"others\" ";
-                                    str += " disabled "
+                                    str += " style=\"pointer-events: none; background-color: #e9ecef\" ";
                                 }
                                 str +=
                                     ' class="form-control " placeholder="' +
@@ -277,7 +298,7 @@ $(document).ready(function() {
                                     meta_field_name +
                                     "_" +
                                     question.id +
-                                    '" '+(question.question_text.search(/year of birth/i) > -1 && data[0]['user'].year_of_birth != 0 ? 'value=\"Year of birth: '+data[0]['user'].year_of_birth+'\" disabled ' : '')+'/>';
+                                    '" '+(question.question_text.search(/year of birth/i) > -1 && data[0]['user'].year_of_birth != 0 ? 'value=\"Year of birth: '+data[0]['user'].year_of_birth+'\" style="pointer-events: none; background-color: #e9ecef" ' : '')+'/>';
                                 }
 
                             if (question.answertype.type === "dropdown") {
@@ -290,9 +311,9 @@ $(document).ready(function() {
                                     question.id +
                                     '" '
                                     +(question.question_text.search(/year of birth/i) > -1 && data[0]['user'].year_of_birth != 0 ? " id=\"year_of_birth\" "  : "")
-                                    +(question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth != 0 ? "disabled" : "")
+                                    +(question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth != 0 ? "style=\"pointer-events: none; background-color: #e9ecef\"" : "")
                                     +(question.question_text.search(/club/i) > -1 && data[0]['user'].club != '' ? " id=\"club\" "  : "")
-                                    +(question.question_text.search(/club/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].club != 0 ? "disabled" : "")
+                                    +(question.question_text.search(/club/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].club != 0 ? "style=\"pointer-events: none; background-color: #e9ecef\"" : "")
                                     +'>';
                                     if (question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth !== 0){
                                         var found = false;
