@@ -15,8 +15,6 @@ use App\User;
 use App\Answervalue;
 use App\Question;
 
-
-
 class FixOrderData extends Action
 {
     use InteractsWithQueue, Queueable, SerializesModels;
@@ -57,16 +55,16 @@ class FixOrderData extends Action
                             }
                         }
                         foreach ($value as $question => $answer) {
-
                             if (preg_match("/_qid/i", $question)) {
                                 $question_id = substr($question, 4);
                                 $q = Question::find($question_id);
-                                if (preg_match("/gender/i", $q['question_text']) && !$birth_exists) {  // add the year of birth
+                                if (preg_match("/gender/i", $q['question_text']) && 
+                                !$birth_exists) {  // add the year of birth
                                     $race_questions = RaceQuestion::where('race_id', $value['_race_id'])->get();
                                     $birth_question_id = 0;
                                     $birth_question_text = '';
                                     
-                                    foreach($race_questions as $ques) {
+                                    foreach ($race_questions as $ques) {
                                         $quest = Question::find($ques['question_id']);
                                         if (preg_match("/year of birth/i", $quest['question_text'])) {
                                             $birth_question_id = $quest['id'];
@@ -76,7 +74,8 @@ class FixOrderData extends Action
                                     }
                                     $updated_ticket_details[$question] = $answer;
                                     $updated_ticket_details[$birth_question_text] = $user->year_of_birth;
-                                    $updated_ticket_details["_qid".$birth_question_id] = Answervalue::where('value', $user->year_of_birth)->first()['id'];
+                                    $updated_ticket_details["_qid".$birth_question_id] = 
+                                    Answervalue::where('value', $user->year_of_birth)->first()['id'];
                                 } else {
                                     if (preg_match("/size/i", $q['question_text']) && !$club_exists && !$other_exists) {    // add the club and others
                                         $race_questions = RaceQuestion::where('race_id', $value['_race_id'])->get();
@@ -85,7 +84,7 @@ class FixOrderData extends Action
                                         $other_question_id = 0;
                                         $other_question_text = '';
                                         
-                                        foreach($race_questions as $ques) {
+                                        foreach ($race_questions as $ques) {
                                             $quest = Question::find($ques['question_id']);
                                             if (preg_match("/club/i", $quest['question_text'])) {
                                                 $club_question_id = $quest['id'];
@@ -97,11 +96,15 @@ class FixOrderData extends Action
                                             }
                                         }
                                         $updated_ticket_details[$question] = $answer;
-                                        if (isset($value[$club_question_text]) && isset($value["_qid".$club_question_id])) {
-                                            $updated_ticket_details[$club_question_text] = $value[$club_question_text];
-                                            $updated_ticket_details["_qid".$club_question_id] = $value["_qid".$club_question_id];
+                                        if (isset($value[$club_question_text]) && 
+                                        isset($value["_qid".$club_question_id])) {
+                                            $updated_ticket_details[$club_question_text] = 
+                                            $value[$club_question_text];
+                                            $updated_ticket_details["_qid".$club_question_id] = 
+                                            $value["_qid".$club_question_id];
                                         } else {
-                                            $question_answers = Answervalue::where('question_id', $club_question_id)->get();
+                                            $question_answers = Answervalue::where('question_id', $club_question_id)
+                                            ->get();
                                             foreach ($question_answers as $qa) {
                                                 if (preg_match("/other/i", $qa)) {
                                                     $user_club_id = $qa['id'];
@@ -114,16 +117,22 @@ class FixOrderData extends Action
                                                     $user_club_text = $qa['value'];
                                                 }
                                             }
-                                            $updated_ticket_details[$club_question_text] = $user_club_text;
-                                            $updated_ticket_details["_qid".$club_question_id] = $user_club_id;
+                                            $updated_ticket_details[$club_question_text] = 
+                                            $user_club_text;
+                                            $updated_ticket_details["_qid".$club_question_id] = 
+                                            $user_club_id;
                                         }
-                                        if (isset($value[$other_question_text]) && isset($value["_qid".$other_question_id])) {
-                                            $updated_ticket_details[$other_question_text] = $value[$other_question_text];
-                                            $updated_ticket_details["_qid".$other_question_id] = $value["_qid".$other_question_id];
+                                        if (isset($value[$other_question_text]) && 
+                                        isset($value["_qid".$other_question_id])) {
+                                            $updated_ticket_details[$other_question_text] = 
+                                            $value[$other_question_text];
+                                            $updated_ticket_details["_qid".$other_question_id] = 
+                                            $value["_qid".$other_question_id];
                                         } else {
                                             $user_other_id = null;
                                             $user_other_text = null;
-                                            $question_answers = Answervalue::where('question_id', $club_question_id)->get();
+                                            $question_answers = Answervalue::where('question_id', $club_question_id)
+                                            ->get();
                                             $found = false;
                                             foreach ($question_answers as $qa) {
                                                 if ($user->club == $qa['value']) {
@@ -148,12 +157,10 @@ class FixOrderData extends Action
                             $new_meta[$key] = $updated_ticket_details;
                         }
                     }
-                    
                 }
                 $order['meta'] = json_encode($new_meta);
                 $order->save();
             }
-            
         }
     }
 }

@@ -45,9 +45,9 @@ class UserTicketDetails extends DownloadExcel implements
     {
         $this->race_id = $request->race_id;
         $response = Excel::download(
-        $exportable,
-        $this->getFilename(),
-        $this->getWriterType()
+            $exportable,
+            $this->getFilename(),
+            $this->getWriterType()
         );
 
         if (!$response instanceof BinaryFileResponse || $response->isInvalid()) {
@@ -73,7 +73,7 @@ class UserTicketDetails extends DownloadExcel implements
     public function headings(): array
     {
         $questions = ['id', 'For', 'E-Mail', 'Phone', 'Event', 'Race', 'Order ID', 'Paymob ID'];
-        $user_questions = Race::find($this->race_id)->question()->pluck('question_text')->toArray(); 
+        $user_questions = Race::find($this->race_id)->question()->pluck('question_text')->toArray();
         $questions = array_merge($questions, $user_questions);
         return $questions;
     }
