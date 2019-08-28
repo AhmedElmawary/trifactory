@@ -11,6 +11,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\DateTime;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use App\Nova\Actions\UserTicketDetails;
+use App\Nova\Actions\FixOrderData;
 
 class Order extends Resource
 {
@@ -104,6 +105,7 @@ class Order extends Resource
         return [
             (new UserTicketDetails)->askForFilename(),
             (new DownloadExcel)->withHeadings()->askForFilename(),
+            new FixOrderData
         ];
     }
 }
