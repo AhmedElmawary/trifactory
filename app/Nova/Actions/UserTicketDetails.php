@@ -75,6 +75,7 @@ class UserTicketDetails extends DownloadExcel implements
         $questions = ['id', 'For', 'E-Mail', 'Phone', 'Event', 'Race', 'Order ID', 'Paymob ID'];
         $user_questions = Race::find($this->race_id)->question()->pluck('question_text')->toArray();
         $questions = array_merge($questions, $user_questions);
+
         return $questions;
     }
 
@@ -99,6 +100,7 @@ class UserTicketDetails extends DownloadExcel implements
                         $record[] = $value['Event'];
                         $record[] = $value['Race'];
                         $record[] = $order['id'];
+                        $record[] = $value['Ticket Type'];
                         $record[] = $order['paymob_order_id'];
                         
                         foreach ($value as $question => $answer) {
