@@ -81,6 +81,10 @@ staging:
     - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 /bin/bash -c "cd /code/current && php artisan nova:publish --force"
     - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 /bin/bash -c "cd /code/current && php artisan telescope:publish --force"
     - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 chmod -R 777 /code/shared/storage
+    - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 php artisan config:clear
+    - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 php artisan cache:clear
+    - docker run --network=trifactory_network -v trifactory_code:/code -v /home/gitlabci/.ssh:/root/.ssh -v /home/gitlabci/git/thetrifactory.com:/var/www/html breadcrumbsstudio/laravel-gitlab-ci:1.0 php artisan config:cache
+
   environment:
     name: staging
     url: https://beta.thetrifactory.com
