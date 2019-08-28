@@ -58,7 +58,7 @@ class FixOrderData extends Action
                             if (preg_match("/_qid/i", $question)) {
                                 $question_id = substr($question, 4);
                                 $q = Question::find($question_id);
-                                if (preg_match("/gender/i", $q['question_text']) && 
+                                if (preg_match("/gender/i", $q['question_text']) &&
                                 !$birth_exists) {  // add the year of birth
                                     $race_questions = RaceQuestion::where('race_id', $value['_race_id'])->get();
                                     $birth_question_id = 0;
@@ -74,7 +74,7 @@ class FixOrderData extends Action
                                     }
                                     $updated_ticket_details[$question] = $answer;
                                     $updated_ticket_details[$birth_question_text] = $user->year_of_birth;
-                                    $updated_ticket_details["_qid".$birth_question_id] = 
+                                    $updated_ticket_details["_qid".$birth_question_id] =
                                     Answervalue::where('value', $user->year_of_birth)->first()['id'];
                                 } else {
                                     if (preg_match("/size/i", $q['question_text']) && !$club_exists && !$other_exists) {    // add the club and others
@@ -96,11 +96,11 @@ class FixOrderData extends Action
                                             }
                                         }
                                         $updated_ticket_details[$question] = $answer;
-                                        if (isset($value[$club_question_text]) && 
+                                        if (isset($value[$club_question_text]) &&
                                         isset($value["_qid".$club_question_id])) {
-                                            $updated_ticket_details[$club_question_text] = 
+                                            $updated_ticket_details[$club_question_text] =
                                             $value[$club_question_text];
-                                            $updated_ticket_details["_qid".$club_question_id] = 
+                                            $updated_ticket_details["_qid".$club_question_id] =
                                             $value["_qid".$club_question_id];
                                         } else {
                                             $question_answers = Answervalue::where('question_id', $club_question_id)
@@ -117,16 +117,16 @@ class FixOrderData extends Action
                                                     $user_club_text = $qa['value'];
                                                 }
                                             }
-                                            $updated_ticket_details[$club_question_text] = 
+                                            $updated_ticket_details[$club_question_text] =
                                             $user_club_text;
-                                            $updated_ticket_details["_qid".$club_question_id] = 
+                                            $updated_ticket_details["_qid".$club_question_id] =
                                             $user_club_id;
                                         }
-                                        if (isset($value[$other_question_text]) && 
+                                        if (isset($value[$other_question_text]) &&
                                         isset($value["_qid".$other_question_id])) {
-                                            $updated_ticket_details[$other_question_text] = 
+                                            $updated_ticket_details[$other_question_text] =
                                             $value[$other_question_text];
-                                            $updated_ticket_details["_qid".$other_question_id] = 
+                                            $updated_ticket_details["_qid".$other_question_id] =
                                             $value["_qid".$other_question_id];
                                         } else {
                                             $user_other_id = null;
