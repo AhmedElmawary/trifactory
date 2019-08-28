@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a67719dc0d9bf0be29e5513158425ab",
+    "content-hash": "4b4be426f78153025db3826cc0322a72",
     "packages": [
         {
             "name": "baklysystems/laravel-paymob",
