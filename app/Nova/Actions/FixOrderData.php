@@ -30,6 +30,7 @@ class FixOrderData extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         ini_set('memory_limit', '-1');
+        ini_set('max_execution_time', 180); //3 minutes
         foreach ($models as $order) {
             $order_copy = json_decode($order, true);
             if (preg_match("/TFT/i", $order_copy['id'])) {
