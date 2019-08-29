@@ -35,11 +35,13 @@ function opencancelmodal(event_id){
 }
 function validatePhone(){
     $.ajax({
+        async: false,
         url: "/phoneValidation",
         type: "GET",
         data: { phone: document.getElementsByName("ticket_1_phone")[0].value, email: document.getElementsByName("ticket_1_email")[0].value} ,
         dataType: "json",   
         success: function(result) {
+            console.log(result);
             if (result) {
                 document.getElementsByName("ticket_1_phone")[0].setCustomValidity("Phone already exists");
             } else {
@@ -50,6 +52,7 @@ function validatePhone(){
 }
 
 function ticket_details(){
+    validatePhone();
     document.getElementById("open_added_to_cart_modal").onclick = validatePhone;
 }
 
