@@ -112,7 +112,7 @@ class FixOrderData extends Action
                                                 }
                                             }
                                             foreach ($question_answers as $qa) {
-                                                if ($user->club == $qa['value']) {
+                                                if (strtolower($user->club) == strtolower($qa['value'])) {
                                                     $user_club_id = $qa['id'];
                                                     $user_club_text = $qa['value'];
                                                 }
@@ -135,7 +135,7 @@ class FixOrderData extends Action
                                             ->get();
                                             $found = false;
                                             foreach ($question_answers as $qa) {
-                                                if ($user->club == $qa['value']) {
+                                                if (strtolower($user->club) == strtolower($qa['value'])) {
                                                     $found = true;
                                                 }
                                             }
