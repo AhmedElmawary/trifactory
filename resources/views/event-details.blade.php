@@ -78,6 +78,19 @@
         </div>
         @endif
       </div>
+      @if(preg_match("/mudder/i", $event->name))
+      <br>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+      <div class="row">
+          <div class="alert alert-warning" role="alert">
+              <div>
+                <i class="fas fa-exclamation-triangle"></i>
+                **Participants taking on Tough Mudder Egypt together should select the same date and same team name when registering. Final timeslots for all participants and teams will be determined following the General Registration Deadline on November 30th, 2019.
+          </div>
+          </div>
+      </div>
+      @endif
     </div>
   </div>
 </section>
