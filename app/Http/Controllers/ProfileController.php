@@ -112,8 +112,8 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,id,'.Auth::user()->id],
-            'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users,email,'.Auth::user()->id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.Auth::user()->id],
+            'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users,phone,'.Auth::user()->id],
             'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
             'max:'.(date('Y')-5), 'in_array:years.*'],
         ]);
