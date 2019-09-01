@@ -11,6 +11,8 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\Text;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
+use App\Nova\Actions\RemoveUnlinkedQuestionAnswers;
+
 class QuestionAnswer extends Resource
 {
     public static $group = "Operations";
@@ -97,6 +99,7 @@ class QuestionAnswer extends Resource
     {
         return [
             (new DownloadExcel)->withHeadings()->askForFilename(),
+            new RemoveUnlinkedQuestionAnswers
         ];
     }
 }

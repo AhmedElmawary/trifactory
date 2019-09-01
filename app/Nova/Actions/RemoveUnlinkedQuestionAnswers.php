@@ -12,7 +12,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\UserRace;
 
-class RemoveUserRaceDuplicates extends Action
+class RemoveUnlinkedQuestionAnswers extends Action
 {
     use InteractsWithQueue, Queueable, SerializesModels;
 
@@ -26,10 +26,8 @@ class RemoveUserRaceDuplicates extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            $duplicate_count = UserRace::where('race_id', $model->race_id)
-            ->where('ticket_id', $model->ticket_id)
-            ->where('user_id', $model->user_id)->count();
-            if ($duplicate_count >= 2) {
+            $userrace_count = UserRace::where('id', $model->userrace_id)->count();
+            if ($userrace_count == 0) {
                 $model->delete();
             }
         }
