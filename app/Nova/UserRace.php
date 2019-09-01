@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\Text;
 use App\Nova\Filters\Race;
 use App\Nova\Actions\UserQuestionsAnswers;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
+use App\Nova\Actions\RemoveUserRaceDuplicates;
 
 class UserRace extends Resource
 {
@@ -109,6 +110,7 @@ class UserRace extends Resource
         return [
             (new UserQuestionsAnswers($raceId))->askForFilename(),
             (new DownloadExcel)->withHeadings()->askForFilename(),
+            new RemoveUserRaceDuplicates
         ];
     }
 }
