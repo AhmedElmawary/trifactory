@@ -39,7 +39,7 @@ class CreateUserRace
         $duplicate_count = UserRace::where('race_id', $meta->$ticketId->_race_id)
         ->where('ticket_id', $model->$meta->$ticketId->_ticket_id)
         ->where('user_id', $user->id)->count();
-        if ($duplicate_count >= 2) {
+        if ($duplicate_count >= 1) {
             return;
         }
 
