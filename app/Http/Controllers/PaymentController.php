@@ -358,9 +358,19 @@ class PaymentController extends Controller
 
             $ticket = Ticket::find($request->ticket_id);
 
+            $ticket_cost = $ticket->price;
+
+            foreach ($order['meta'] as $key => $value) {
+                if (preg_match("/TFT/i", $key)) {
+                    if ($value['_ticket_id'] == $request->ticket_id) {
+                        $ticket_cost = $value['Price'];
+                    }
+                }
+            }
+
             $usercredit = new Usercredit();
             $usercredit->user_id = $user->id;
-            $usercredit->amount = $ticket->price;
+            $usercredit->amount = $ticket_cost;
             $usercredit->action = 'Refund: '.$ticket->name;
             $usercredit->save();
         }

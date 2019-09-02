@@ -396,7 +396,14 @@
                                         <br />
                                         - Ticket Type: {{$event->ticket->name}}
                                         <br />
-                                        - Total Cost: EGP {{$event->ticket->price}}
+                                        - Total Cost: EGP 
+                                        @foreach (json_decode($event->order['meta'], true) as $key => $value) 
+                                            @if (preg_match("/TFT/i", $key)) 
+                                                @if ($value['_ticket_id'] == $event->ticket->id)
+                                                    {{$value['Price']}}
+                                                @endif
+                                            @endif
+                                        @endforeach
                                     </span>
                                 </div>
                             </div>
@@ -471,7 +478,15 @@
                         <div class="header">
                                 <!-- <h3 class="modal-title">Verification code sent to this number:</h3> -->
                                 <img src="/images/success-icon.svg" class="modal-icon">
-                                <span class="modal-sub-title">{{ $event->ticket->name }} has been canceled<br><br>{{ $event->ticket->price }} Points has been refunded to your credit</span>
+                                <span class="modal-sub-title">{{ $event->ticket->name }} has been canceled<br><br>
+                                    @foreach (json_decode($event->order['meta'], true) as $key => $value) 
+                                            @if (preg_match("/TFT/i", $key)) 
+                                                @if ($value['_ticket_id'] == $event->ticket->id)
+                                                    {{$value['Price']}}
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    Points has been refunded to your credit</span>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <img src="/images/close-icon.svg" alt="close icon" onclick="refresh()">
                                 </button>
