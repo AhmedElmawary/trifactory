@@ -234,7 +234,7 @@ $(document).ready(function() {
                             str += "<script>var usedNames = {};$(\".clubs > option\").each(function () {if(usedNames[this.text]) {$(this).remove();} else {usedNames[this.text] = this.value;}});</script>";
                             str += "<script>if ($(\".clubs option:selected\").text() != 'Other'){$(\".other_club\").hide();}$(\".clubs\").on(\"change\", function() {if ($(\".clubs option:selected\").text() == 'Other'){$(\".other_club\").show();$(\"#other_club\").prop('required',true);$(\"#others\").prop('required',true);} else {$(\"#others\").val('');$(\"#others\").prop('required',false);$(\".other_club\").hide();$(\"#other_club\").prop('required',false);}});</script>";
                             str +=
-                                '<div class="col-lg-6 mt-3 '+(question.question_text.search(/other/i) > -1 ? 'other_club' : '')+'"><div class="input-group">';
+                                '<div class="col-lg-6 mt-3 '+((question.question_text.search(/other/i) > -1 && data[0].event_id != 6) ? 'other_club' : '')+'"><div class="input-group">';
 
                             var validation = [];
                             var required = false;
@@ -285,7 +285,7 @@ $(document).ready(function() {
                                     str += ' maxlength="' + max + '" ';
                                 }
 
-                                if (question.question_text.search(/others/i) > -1){
+                                if (question.question_text.search(/others/i) > -1 && data[0].event_id != 6){
                                     if ($(".clubs option:selected").text() == 'Other') { 
                                         str += 'value="'+data[0]['user'].club+'"';
                                     } else {
