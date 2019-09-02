@@ -396,7 +396,7 @@
                                         <br />
                                         - Ticket Type: {{$event->ticket->name}}
                                         <br />
-                                        - Total Cost: EGP {{$event->order->totalCost}}
+                                        - Total Cost: EGP {{$event->ticket->price}}
                                     </span>
                                 </div>
                             </div>
@@ -471,7 +471,7 @@
                         <div class="header">
                                 <!-- <h3 class="modal-title">Verification code sent to this number:</h3> -->
                                 <img src="/images/success-icon.svg" class="modal-icon">
-                                <span class="modal-sub-title">{{ $event->ticket->name }} has been canceled<br><br>{{ $event->order->totalCost }} Points has been refunded to your credit</span>
+                                <span class="modal-sub-title">{{ $event->ticket->name }} has been canceled<br><br>{{ $event->ticket->price }} Points has been refunded to your credit</span>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <img src="/images/close-icon.svg" alt="close icon" onclick="refresh()">
                                 </button>

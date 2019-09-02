@@ -15,6 +15,7 @@ use App\Events\VoucherPurchased;
 use App\Events\TicketPurchased;
 use App\Events\TicketRefund;
 use App\UserRace;
+use App\Ticket;
 use Auth;
 use Carbon\Carbon;
 
@@ -348,16 +349,19 @@ class PaymentController extends Controller
     public function refundTicket(Request $request)
     {
         $user = Auth::user();
+
         if ($request->user_id == $user->id) {
             $userrace = UserRace::find($request->userrace_id);
             $order = Order::where('id', $request->order_id)->first();
             $userrace->questionanswer()->delete();
             $userrace->delete();
 
+            $ticket = Ticket::find($request->ticket_id);
+
             $usercredit = new Usercredit();
             $usercredit->user_id = $user->id;
-            $usercredit->amount = $order->totalCost;
-            $usercredit->action = 'Refund';
+            $usercredit->amount = $ticket->price;
+            $usercredit->action = 'Refund: '.$ticket->name;
             $usercredit->save();
         }
         if (\Request::is('api*') || \Request::wantsJson()) {
