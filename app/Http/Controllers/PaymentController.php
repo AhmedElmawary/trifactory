@@ -360,7 +360,7 @@ class PaymentController extends Controller
 
             $ticket_cost = $ticket->price;
 
-            foreach ($order['meta'] as $key => $value) {
+            foreach (json_decode($order['meta'], true) as $key => $value) {
                 if (preg_match("/TFT/i", $key)) {
                     if ($value['_ticket_id'] == $request->ticket_id) {
                         $ticket_cost = $value['Price'];
