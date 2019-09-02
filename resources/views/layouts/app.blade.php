@@ -12,7 +12,7 @@
             content="The home of triathlon in Egypt. All the information about upcoming events, trips and training services."
         />
         <!-- CSS -->
-        <link rel="stylesheet" href="/css/main.css" />
+        <link rel="stylesheet" href="/css/main.css?v1.0" />
         <link rel="stylesheet" href="/css/override.css" />
         <link rel="stylesheet" href="/css/font-awesome.min.css" />
     </head>
