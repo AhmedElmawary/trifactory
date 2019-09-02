@@ -72,7 +72,7 @@ class UserTicketDetails extends DownloadExcel implements
 
     public function headings(): array
     {
-        $questions = ['id', 'For', 'E-Mail', 'Phone', 'Event', 'Race', 'Order ID', 'Paymob ID'];
+        $questions = ['id', 'For', 'E-Mail', 'Phone', 'Event', 'Race', 'Order ID', 'Ticket Name', 'Paymob ID'];
         $user_questions = Race::find($this->race_id)->question()->pluck('question_text')->toArray();
         $questions = array_merge($questions, $user_questions);
 
