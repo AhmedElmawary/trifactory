@@ -285,7 +285,7 @@ $(document).ready(function() {
                                     str += ' maxlength="' + max + '" ';
                                 }
 
-                                if (question.question_text.search(/others/i) > -1 && data[0].event_id != 6){
+                                if (question.question_text.search(/other/i) > -1 && data[0].event_id != 6){
                                     if ($(".clubs option:selected").text() == 'Other') { 
                                         str += 'value="'+data[0]['user'].club+'"';
                                     } else {

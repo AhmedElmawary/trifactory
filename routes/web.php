@@ -56,3 +56,15 @@ Auth::routes(['verify' => true]);
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 Route::get('/test', 'HomeController@test');
+
+use Illuminate\Support\Facades\Schema;
+use App\TelescopeEntries;
+use App\TelescopeEntriesTags;
+
+Route::get('/empty-telescope', function() {
+    Schema::disableForeignKeyConstraints();
+    TelescopeEntries::truncate();
+    TelescopeEntriesTags::truncate();
+    Schema::enableForeignKeyConstraints();
+    return "Done!";
+});
