@@ -86,8 +86,9 @@
           <div class="alert alert-light" role="alert">
               <div>
                 <i class="fas fa-exclamation-triangle"></i>
-                <strong> Important Note: </strong><br> Participants taking on Tough Mudder Egypt together should select the same date and same team name when registering. Final timeslots for all participants and teams will be determined following the General Registration Deadline on November 30th, 2019.
-          </div>
+                <strong> Important Notes: </strong><br> <ul><li>Participants taking on Tough Mudder Egypt together should select the same date and same team name when registering. Final timeslots for all participants and teams will be determined following the General Registration Deadline on November 30th, 2019. </li></ul>
+                <ul><li>Participants under 16 years old and participating in Tough Mudder 5K must be accompanied by a parent/guardian at all times.</li></ul>
+              </div>
           </div>
       </div>
       @endif
