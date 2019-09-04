@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\Race;
+use App\Ticket;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,16 @@ class EventsController extends Controller
 
         $today = Carbon::now();
         $pastEvent = false;
+        $closed = true;
+        
+        foreach ($event->race()->get() as $race) {
+            $race_tickets = $race->ticket()->get();
+            foreach ($race_tickets as $race_ticket) {
+                if ($race_ticket->ticket_end > date('Y-m-d H:i:s') && $race_ticket->published == 'yes') {
+                    $closed = false;
+                }
+            }
+        }
 
         if ($event->event_start < $today) {
             $pastEvent = true;
@@ -37,13 +48,15 @@ class EventsController extends Controller
             return response()->json([
                 'event' => $event,
                 'pastEvent' => $pastEvent,
-                'user' => $user
+                'user' => $user,
+                'closed' => $closed
             ]);
         } else {
             return view('event-details', [
                 'event' => $event,
                 'pastEvent' => $pastEvent,
-                'user' => $user
+                'user' => $user,
+                'closed' => $closed
             ]);
         }
     }

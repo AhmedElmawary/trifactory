@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="row">
-        @if($pastEvent)
+        @if($pastEvent || $closed)
         <div class="col-lg-12">Registration Closed</div>
         @else
         <div class="col-lg-2 tickets-quantity" hidden>
