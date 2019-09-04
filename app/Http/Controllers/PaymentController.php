@@ -281,6 +281,10 @@ class PaymentController extends Controller
         $user = $order->user()->first();
 
         $promocode = Promocode::where('code', $code)->first();
+
+        if ($promocode->unlimited == 1) {
+            return;
+        }
         
         $userPromocodeRace = new UserPromocodeOrder();
         $userPromocodeRace->user_id = $user->id;

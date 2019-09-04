@@ -49,6 +49,9 @@ class Promocode extends Resource
             Boolean::make('Published', 'published')
                 ->trueValue('yes')
                 ->falseValue('no'),
+            Boolean::make('Unlimited', 'unlimited')
+                ->trueValue(1)
+                ->falseValue(0),
             BelongsToMany::make('Races', 'races')
         ];
     }

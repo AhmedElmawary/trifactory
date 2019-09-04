@@ -10,6 +10,8 @@ use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class RaceQuestion extends Resource
 {
+    public static $displayInNavigation = false;
+    
     /**
      * The model the resource corresponds to.
      *
