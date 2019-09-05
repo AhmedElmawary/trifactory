@@ -72,7 +72,7 @@ class UserTicketDetails extends DownloadExcel implements
 
     public function headings(): array
     {
-        $questions = ['id', 'For', 'E-Mail', 'Phone', 'Event', 'Race', 'Order ID', 'Ticket Name', 'Paymob ID'];
+        $questions = ['id', 'For', 'E-Mail', 'Phone', 'Event', 'Race', 'Price', 'Order ID', 'Ticket Name', 'Paymob ID'];
         $user_questions = Race::find($this->race_id)->question()->pluck('question_text')->toArray();
         $questions = array_merge($questions, $user_questions);
 
@@ -85,12 +85,12 @@ class UserTicketDetails extends DownloadExcel implements
 
         $result = array();
         
-        if ($order['success'] == 'true') {
+        if ($order['success'] == 'true' || strpos($order['success'], 'refund')) {
             // $result[] =
             // $result[] = strval("For: ").strval($order["meta"]);
             if (preg_match("/TFT/i", $order['id'])) {
                 foreach (json_decode($order['meta'], true) as $key => $value) {
-                    if (preg_match("/TFT/i", $key) && isset($value['E-mail']) && $value['_race_id'] == $this->race_id) {
+                    if (preg_match("/TFT/i", $key) && isset($value['E-mail']) && $value['_race_id'] == $this->race_id && !strpos($order['success'], $key)) {
                         $record = array();
                         // foreach ($value as $key2 => $value2) {
                         $record[] = User::select('id')->where("email", $value['E-mail'])->first()['id'];
@@ -99,6 +99,7 @@ class UserTicketDetails extends DownloadExcel implements
                         $record[] = $value['Phone'];
                         $record[] = $value['Event'];
                         $record[] = $value['Race'];
+                        $record[] = $value['Price'];
                         $record[] = $order['id'];
                         $record[] = $value['Ticket Type'];
                         $record[] = $order['paymob_order_id'];

@@ -357,12 +357,6 @@ class PaymentController extends Controller
         if ($request->user_id == $user->id) {
             $userrace = UserRace::find($request->userrace_id);
             $order = Order::where('id', $request->order_id)->first();
-            if ($order->success == 'true') {
-                $order->success = 'refunded: '.$userrace['id'];
-            } else {
-                $order->success .= ', refunded: '.$userrace['id'];
-            }
-            $order->save();
             $userrace->questionanswer()->delete();
             $userrace->delete();
 
@@ -374,6 +368,12 @@ class PaymentController extends Controller
                 if (preg_match("/TFT/i", $key)) {
                     if ($value['_ticket_id'] == $request->ticket_id) {
                         $ticket_cost = $value['Price'];
+                        if ($order->success == 'true') {
+                            $order->success = 'refunded: '.$key;
+                        } else {
+                            $order->success .= ', refunded: '.$key;
+                        }
+                        $order->save();
                     }
                 }
             }
