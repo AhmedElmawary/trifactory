@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\HasMany;
@@ -35,6 +36,7 @@ class UserRace extends Resource
      * @var array
      */
     public static $search = [
+        'id',
         'User',
     ];
 
@@ -47,6 +49,7 @@ class UserRace extends Resource
     public function fields(Request $request)
     {
         return [
+            ID::make()->sortable(),
             HasMany::make('QuestionAnswer'),
             BelongsTo::make('User'),
             Text::make('Tracker ID', 'tracker_id'),

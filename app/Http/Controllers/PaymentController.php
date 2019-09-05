@@ -357,6 +357,12 @@ class PaymentController extends Controller
         if ($request->user_id == $user->id) {
             $userrace = UserRace::find($request->userrace_id);
             $order = Order::where('id', $request->order_id)->first();
+            if ($order->success == 'true') {
+                $order->success = 'refunded: '.$userrace['id'];
+            } else {
+                $order->success .= ', refunded: '.$userrace['id'];
+            }
+            $order->save();
             $userrace->questionanswer()->delete();
             $userrace->delete();
 
