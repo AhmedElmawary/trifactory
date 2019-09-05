@@ -456,8 +456,13 @@
                                         value="Cancel Event"
                                         type="submit"
                                         id="cancel_{{$event->id}}"
+                                        
+                                        @if (!$event->race->event['cancel_availablility'])
+                                            disabled
+                                        @endif
                                     >
                                 </form>
+                                @if ($event->race->event['cancel_availablility'])
                                 <p class="terms-text">
                                     You will be refunded in points according to
                                     eligibility & cancellation terms.
@@ -465,6 +470,11 @@
                                         >Read our terms & conditions here</a
                                     >
                                 </p>
+                                @else 
+                                <p class="terms-text">
+                                    Cancellation feature has ended for this event.
+                                </p>
+                                @endif
                             </div>
                         </div>
                     </div>
