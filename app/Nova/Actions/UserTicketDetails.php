@@ -90,7 +90,9 @@ class UserTicketDetails extends DownloadExcel implements
             // $result[] = strval("For: ").strval($order["meta"]);
             if (preg_match("/TFT/i", $order['id'])) {
                 foreach (json_decode($order['meta'], true) as $key => $value) {
-                    if (preg_match("/TFT/i", $key) && isset($value['E-mail']) && $value['_race_id'] == $this->race_id && !strpos($order['success'], $key)) {
+                    if (preg_match("/TFT/i", $key) && isset($value['E-mail'])
+                    && $value['_race_id'] == $this->race_id
+                    && !strpos($order['success'], $key)) {
                         $record = array();
                         // foreach ($value as $key2 => $value2) {
                         $record[] = User::select('id')->where("email", $value['E-mail'])->first()['id'];
