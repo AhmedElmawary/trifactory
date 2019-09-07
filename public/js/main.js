@@ -356,8 +356,7 @@ $(document).ready(function() {
                                             key,
                                             answervalue
                                         ) {
-                                            
-                                            if (answervalue.value.toLowerCase().includes(data[0]['user'].club.toLowerCase())) {
+                                            if (answervalue.value == data[0]['user'].club){
                                                 str +=
                                                 '<option value="' +
                                                 answervalue.id +
@@ -372,7 +371,7 @@ $(document).ready(function() {
                                                 key,
                                                 answervalue
                                             ) {
-                                                if (answervalue.value.toLowerCase().includes('other')){
+                                                if (answervalue.value == 'Other'){
                                                     str +=
                                                     '<option value="' +
                                                     answervalue.id +
