@@ -63,10 +63,16 @@ class EventsController extends Controller
 
     public function getTicketsByRaceId($id)
     {
-        $tickets = DB::table('tickets')
-            ->where('race_id', $id)
-            ->where('published', 'YES')->get();
-
+        if (Auth::user()->id == 465 || Auth::user()->id == 469) {
+            $tickets = DB::table('tickets')
+                ->where('race_id', $id)->get();
+            $tickets->admin = true;
+        } else {
+            $tickets = DB::table('tickets')
+                ->where('race_id', $id)
+                ->where('published', 'YES')->get();
+            $tickets->admin = false;
+        }
         return response()->json($tickets);
     }
 

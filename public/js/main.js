@@ -220,7 +220,7 @@ $(document).ready(function() {
 
                         var disabled = "";
 
-                        if (d2 < d1) {
+                        if (d2 < d1 && itemData['admin'] == false) {
                             disabled = "disabled";
                         }
 
@@ -331,11 +331,11 @@ $(document).ready(function() {
                                     question.id +
                                     '" '
                                     +(question.question_text.search(/year of birth/i) > -1 && data[0]['user'].year_of_birth != 0 ? " id=\"year_of_birth\" "  : "")
-                                    +(question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth != 0 ? "style=\"pointer-events: none; background-color: #e9ecef\"" : "")
+                                    +(question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth != 0 && $(".year_of_birth").length < 1 ? "style=\"pointer-events: none; background-color: #e9ecef\"" : "")
                                     +(question.question_text.search(/club/i) > -1 && data[0]['user'].club != '' ? " id=\"club\" "  : "")
                                     +(question.question_text.search(/club/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].club != '' ? "style=\"pointer-events: none; background-color: #e9ecef\"" : "")
                                     +'>';
-                                    if (question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth !== 0){
+                                    if (question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth !== 0 && $(".year_of_birth").length < 1){
                                         var found = false;
                                         $.each(question.answervalue, function(
                                             key,
