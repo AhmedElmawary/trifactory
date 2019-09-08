@@ -224,7 +224,7 @@
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/slick.min.js"></script>
         <!-- <script src="/js/app.js"></script>-->
-        <script src="/js/main.js?v1.5"></script>
+        <script src="/js/main.js?v1.6"></script>
 
         <!-- End JS -->
     </body>

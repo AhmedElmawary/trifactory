@@ -132,13 +132,17 @@ $(document).ready(function() {
                     // $("#year_of_birth").prop("disabled", true);
                     document.getElementById("year_of_birth").style.pointerEvents='none';
                     document.getElementById("year_of_birth").style.backgroundColor='#e9ecef';
+                    var elems = document.getElementsByClassName("year_of_birth");
+                    // document.getElementsByClassName("year_of_birth").style.backgroundColor='#f5f5f5';
+                    if (elems.length > 1)
+                    for (var i = 0; i < elems.length; i++) {
+                        elems[i].style.pointerEvents=null;
+                        elems[i].style.backgroundColor='#f5f5f5';
+                  }
 
                     }
                     if (user['club'] != ''){
-                    var val = $("#club").filter(function() {
-                        return $(this).text() === user['club'];
-                    }).val();
-                    console.log(val);
+                        var val = $('#club option:contains('+user['club']+')').val();
                     if (val) {
                         $("#club").val(val);
                         $("#others").val('');
@@ -153,10 +157,14 @@ $(document).ready(function() {
                     $("#club").prop("selected", true);
                     // $("#others").prop("disabled", true);
                     // $("#club").prop("disabled", true);
+                    if ($("#club").length){
                     document.getElementById("club").style.pointerEvents='none';
                     document.getElementById("club").style.backgroundColor='#e9ecef';
+                    }
+                    if ($("#other").length){
                     document.getElementById("others").style.pointerEvents='none';
                     document.getElementById("others").style.backgroundColor='#e9ecef';
+                    }
                     }
                 }
                 })
@@ -164,10 +172,14 @@ $(document).ready(function() {
         });
 
         $("#ticket_1_use_someone").on("change", function(){
-            if ($("#year_of_birth").length){
+            if ($(".year_of_birth").length){
                 // $("#year_of_birth").prop("disabled", false);
-                document.getElementById("year_of_birth").style.pointerEvents=null;
-                document.getElementById("year_of_birth").style.backgroundColor='#f5f5f5';
+                var elems = document.getElementsByClassName("year_of_birth");
+                // document.getElementsByClassName("year_of_birth").style.backgroundColor='#f5f5f5';
+                for (var i = 0; i < elems.length; i++) {
+                    elems[i].style.pointerEvents=null;
+                    elems[i].style.backgroundColor='#f5f5f5';
+                  }
                 $('#open_added_to_cart_modal').prop("disabled", false);
             }
             if ($("#club").length){
@@ -175,8 +187,10 @@ $(document).ready(function() {
                 // $("#others").prop("disabled", false);
                 document.getElementById("club").style.pointerEvents=null;
                 document.getElementById("club").style.backgroundColor='#f5f5f5';
-                document.getElementById("others").style.pointerEvents=null;
-                document.getElementById("others").style.backgroundColor='#f5f5f5';
+                if ($("#other").length){
+                    document.getElementById("others").style.pointerEvents=null;
+                    document.getElementById("others").style.backgroundColor='#f5f5f5';
+                }
                 $('#open_added_to_cart_modal').prop("disabled", false);
             }
         });
@@ -311,7 +325,7 @@ $(document).ready(function() {
                                 str += "<select ";
                                 if (required) str += "required";
                                 str +=
-                                    ' class="custom-select '+(question.question_text.search(/club/i) > -1 ? 'clubs' : '')+'" name="' +
+                                    ' class="custom-select '+(question.question_text.search(/club/i) > -1 ? 'clubs' : '')+' '+(question.question_text.search(/year of birth/i) > -1 ? 'year_of_birth' : '')+'" name="' +
                                     meta_field_name +
                                     "_" +
                                     question.id +
