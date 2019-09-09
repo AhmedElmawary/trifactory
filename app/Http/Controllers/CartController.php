@@ -341,7 +341,7 @@ class CartController extends Controller
                         $user->club = $answer->value;
                         $user->save();
                     }
-                    if ($user->club == 'Other' && preg_match("/other/i", $question->question_text)) {
+                    if ($user->club == 'Other' && preg_match("/other/i", $question->question_text)) { //change
                         $user->club = $ticketValues['meta_' . $meta];
                         $user->save();
                     }
