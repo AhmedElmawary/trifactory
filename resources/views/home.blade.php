@@ -2,7 +2,7 @@
 @section('content')
 <!-- Start Content -->
 <section
-    class="hero-section d-flex justify-content-center no-separator no-padding"
+    class="hero-section d-flex justify-content-center no-padding"
 >
     <div
         class="hero-content d-flex justify-content-center align-items-center flex-column"
@@ -12,7 +12,7 @@
             <h3>THE HOME OF ENDURANCE SPORTS IN EGYPT</h3>
             <a href="/events" class="btn btn-dark">Explore Events</a>
         </div>
-        <div class="hero-content-bg"></div>
+    <div class="hero-content-bg"></div>
     </div>
     <img src="/images/home.jpg" alt="Hero Image" class="hero-image" />
 </section>
