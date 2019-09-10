@@ -175,7 +175,7 @@
     <div class="row">
       <div class="col-lg-12 text-right">
         @auth
-        <button class="btn btn-dark" id="open_added_to_cart_modal" onclick="add_to_cart()">Add Ticket(s) to Cart</button>
+        <input type="submit" class="btn btn-dark" id="open_added_to_cart_modal" value="Add Ticket(s) to Cart" onClick="this.form.submit(); this.disabled=true; this.value='Submitting…'; ">
         @endauth
         @guest
         <button class="btn btn-dark" id="open_login_modal">Add Ticket(s) to Cart</button>

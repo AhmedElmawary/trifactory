@@ -68,3 +68,8 @@ Route::get('/empty-telescope', function() {
     Schema::enableForeignKeyConstraints();
     return "Done!";
 });
+
+// Route::get('/payment_success', function() {
+//     // \Log::info(json_encode($request));
+//     return view('payment-success', ['order' => Input::get('order')]);
+// })->name('payment_success');

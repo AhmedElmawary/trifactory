@@ -324,7 +324,7 @@ class CartController extends Controller
                     ->first();
 
                 $answervalues = $question->answervalue()->get();
-
+                $user = Auth::user();
                 // for lists
                 if (count($answervalues)) {
                     $answer = $answervalues->firstWhere('id', $ticketValues['meta_' . $meta]);
@@ -332,7 +332,6 @@ class CartController extends Controller
                     $answer->value : $ticketValues['meta_' . $meta];
                     $attributes['_qid' . $question->id] = (isset($answer->id)) ?
                     $answer->id : $ticketValues['meta_' . $meta];
-                    $user = Auth::user();
                     if ($user->year_of_birth == 0 && preg_match("/year of birth/i", $question->question_text)) {
                         $user->year_of_birth = $answer->value;
                         $user->save();

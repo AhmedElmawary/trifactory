@@ -333,6 +333,7 @@ class PaymentController extends Controller
             ]);
         } else {
             return view('payment-success', ['order' => $order]);
+            // return redirect()->route('payment_success', ['order' => $order]);
         }
     }
 
