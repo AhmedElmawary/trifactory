@@ -161,7 +161,7 @@ $(document).ready(function() {
                     document.getElementById("club").style.pointerEvents='none';
                     document.getElementById("club").style.backgroundColor='#e9ecef';
                     }
-                    if ($("#other").length){
+                    if ($("#others").length){
                     document.getElementById("others").style.pointerEvents='none';
                     document.getElementById("others").style.backgroundColor='#e9ecef';
                     }
@@ -187,7 +187,7 @@ $(document).ready(function() {
                 // $("#others").prop("disabled", false);
                 document.getElementById("club").style.pointerEvents=null;
                 document.getElementById("club").style.backgroundColor='#f5f5f5';
-                if ($("#other").length){
+                if ($("#others").length){
                     document.getElementById("others").style.pointerEvents=null;
                     document.getElementById("others").style.backgroundColor='#f5f5f5';
                 }
@@ -249,7 +249,8 @@ $(document).ready(function() {
                         $.each(questions, function(key, question) {
                             str = "";
                             str += "<script>var usedNames = {};$(\".clubs > option\").each(function () {if(usedNames[this.text]) {$(this).remove();} else {usedNames[this.text] = this.value;}});</script>";
-                            str += "<script>if (!$(\".clubs option:selected\").text().toLowerCase().includes('other') ){$(\".other_club\").hide();}$(\".clubs\").on(\"change\", function() {if ($(\".clubs option:selected\").text().toLowerCase().includes('other')){$(\".other_club\").show();$(\"#other_club\").prop('required',true);$(\"#others\").prop('required',true); document.getElementById(\"others\").style.pointerEvents=null;document.getElementById(\"others\").style.backgroundColor='#f5f5f5';} else {$(\"#others\").val('');$(\"#others\").prop('required',false);$(\".other_club\").hide();$(\"#other_club\").prop('required',false);}});</script>";
+                            str += "<script>if (!$(\".clubs option:selected\").text().toLowerCase().includes('other') ){$(\".other_club\").hide();}$(\".clubs\").on(\"change\", function() {if ($(\".clubs option:selected\").text().toLowerCase().includes('other')){$(\".other_club\").show();$(\"#other_club\").prop('required',true);$(\"#others\").prop('required',true); document.getElementById(\"others\").style.pointerEvents=null;document.getElementById(\"others\").style.backgroundColor='#f5f5f5';} else {$(\"#others\").val('');$(\"#others\").prop('required',false);$(\".other_club\").hide();$(\"#other_club\").prop('required',false);document.getElementById(\"others\").style.pointerEvents='none';document.getElementById(\"others\").style.backgroundColor='#e9ecef';}});</script>";
+                            // str += "<script>function sortList() {var list, i, switching, b, shouldSwitch;list = document.getElementsByClassName(\"clubs\")[0];switching = true;while (switching) {switching = false;b = list.getElementsByTagName(\"LI\");for (i = 0; i < (b.length - 1); i++) {shouldSwitch = false;if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {shouldSwitch = true;break;}}if (shouldSwitch) {b[i].parentNode.insertBefore(b[i + 1], b[i]);switching = true;}}}</script>"
                             str +=
                                 '<div class="col-lg-6 mt-3 '+((question.question_text.search(/other/i) > -1 && data[0].event_id != 6) ? 'other_club' : '')+'"><div class="input-group">';
 
