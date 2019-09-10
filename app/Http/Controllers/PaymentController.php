@@ -332,8 +332,8 @@ class PaymentController extends Controller
                 'data' => $order
             ]);
         } else {
-            return view('payment-success', ['order' => $order]);
-            // return redirect()->route('payment_success', ['order' => $order]);
+            // return view('payment-success', ['order' => $order]);
+            return redirect()->route('payment_success', ['order' => $order]);
         }
     }
 
