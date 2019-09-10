@@ -41,7 +41,6 @@ function validatePhone(){
         data: { phone: document.getElementsByName("ticket_1_phone")[0].value, email: document.getElementsByName("ticket_1_email")[0].value} ,
         dataType: "json",   
         success: function(result) {
-            console.log(result);
             if (result) {
                 document.getElementsByName("ticket_1_phone")[0].setCustomValidity("Phone already exists");
             } else {
@@ -91,11 +90,9 @@ function sortList() {
         b = list[0].getElementsByTagName("option");
         for (let i = 0; i < b.length - 1; i++) {
             if (b[i].innerHTML.toLowerCase().search("other") != -1) {
-                console.log(b[i]);
                 b[b.length-1].parentNode.insertBefore(b[i], b[b.length-1].nextSibling);
             }
             if (b[i].innerHTML.toLowerCase().search("club") != -1) {
-                console.log(b[i]);
                 b[0].parentNode.insertBefore(b[i], b[0]);
             }
         }
