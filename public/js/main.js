@@ -55,7 +55,55 @@ function ticket_details(){
     validatePhone();
     document.getElementById("open_added_to_cart_modal").onclick = validatePhone;
 }
-
+function sortList() {
+    var list, i, switching, b, shouldSwitch;
+    list = document.getElementsByClassName("clubs");
+    if (list.length > 0) {
+    switching = true;
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      b = list[0].getElementsByTagName("option");
+      // Loop through all list items:
+      for (i = 0; i < (b.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Check if the next item should
+        switch place with the current item: */
+        
+        if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+          /* If next item is alphabetically lower than current item,
+          mark as a switch and break the loop: */
+          
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark the switch as done: */
+        b[i].parentNode.insertBefore(b[i + 1], b[i]);
+        switching = true;
+      }
+      if (!switching) {
+        b = list[0].getElementsByTagName("option");
+        for (let i = 0; i < b.length - 1; i++) {
+            if (b[i].innerHTML.toLowerCase().search("other") != -1) {
+                console.log(b[i]);
+                b[b.length-1].parentNode.insertBefore(b[i], b[b.length-1].nextSibling);
+            }
+            if (b[i].innerHTML.toLowerCase().search("club") != -1) {
+                console.log(b[i]);
+                b[0].parentNode.insertBefore(b[i], b[0]);
+            }
+        }
+      }
+    }
+    }
+    
+  }
 $(document).ready(function() {
     $("#open_login_modal").click(function() {
         $("#login_modal").modal();
@@ -250,7 +298,6 @@ $(document).ready(function() {
                             str = "";
                             str += "<script>var usedNames = {};$(\".clubs > option\").each(function () {if(usedNames[this.text]) {$(this).remove();} else {usedNames[this.text] = this.value;}});</script>";
                             str += "<script>if (!$(\".clubs option:selected\").text().toLowerCase().includes('other') ){$(\".other_club\").hide();}$(\".clubs\").on(\"change\", function() {if ($(\".clubs option:selected\").text().toLowerCase().includes('other')){$(\".other_club\").show();$(\"#other_club\").prop('required',true);$(\"#others\").prop('required',true); document.getElementById(\"others\").style.pointerEvents=null;document.getElementById(\"others\").style.backgroundColor='#f5f5f5';} else {$(\"#others\").val('');$(\"#others\").prop('required',false);$(\".other_club\").hide();$(\"#other_club\").prop('required',false);document.getElementById(\"others\").style.pointerEvents='none';document.getElementById(\"others\").style.backgroundColor='#e9ecef';}});</script>";
-                            // str += "<script>function sortList() {var list, i, switching, b, shouldSwitch;list = document.getElementsByClassName(\"clubs\")[0];switching = true;while (switching) {switching = false;b = list.getElementsByTagName(\"LI\");for (i = 0; i < (b.length - 1); i++) {shouldSwitch = false;if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {shouldSwitch = true;break;}}if (shouldSwitch) {b[i].parentNode.insertBefore(b[i + 1], b[i]);switching = true;}}}</script>"
                             str +=
                                 '<div class="col-lg-6 mt-3 '+((question.question_text.search(/other/i) > -1 && data[0].event_id != 6) ? 'other_club' : '')+'"><div class="input-group">';
 
@@ -434,6 +481,7 @@ $(document).ready(function() {
                             str += "</div></div>";
 
                             $(meta_name).append(str);
+                            sortList();
                         });
                     }
                 }
