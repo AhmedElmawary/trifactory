@@ -249,7 +249,7 @@ $(document).ready(function() {
                         $.each(questions, function(key, question) {
                             str = "";
                             str += "<script>var usedNames = {};$(\".clubs > option\").each(function () {if(usedNames[this.text]) {$(this).remove();} else {usedNames[this.text] = this.value;}});</script>";
-                            str += "<script>if (!$(\".clubs option:selected\").text().toLowerCase().includes('other') ){$(\".other_club\").hide();}$(\".clubs\").on(\"change\", function() {if ($(\".clubs option:selected\").text().toLowerCase().includes('other')){$(\".other_club\").show();$(\"#other_club\").prop('required',true);$(\"#others\").prop('required',true);} else {$(\"#others\").val('');$(\"#others\").prop('required',false);$(\".other_club\").hide();$(\"#other_club\").prop('required',false);}});</script>";
+                            str += "<script>if (!$(\".clubs option:selected\").text().toLowerCase().includes('other') ){$(\".other_club\").hide();}$(\".clubs\").on(\"change\", function() {if ($(\".clubs option:selected\").text().toLowerCase().includes('other')){$(\".other_club\").show();$(\"#other_club\").prop('required',true);$(\"#others\").prop('required',true); document.getElementById(\"others\").style.pointerEvents=null;document.getElementById(\"others\").style.backgroundColor='#f5f5f5';} else {$(\"#others\").val('');$(\"#others\").prop('required',false);$(\".other_club\").hide();$(\"#other_club\").prop('required',false);}});</script>";
                             str +=
                                 '<div class="col-lg-6 mt-3 '+((question.question_text.search(/other/i) > -1 && data[0].event_id != 6) ? 'other_club' : '')+'"><div class="input-group">';
 
@@ -331,11 +331,11 @@ $(document).ready(function() {
                                     question.id +
                                     '" '
                                     +(question.question_text.search(/year of birth/i) > -1 && data[0]['user'].year_of_birth != 0 ? " id=\"year_of_birth\" "  : "")
-                                    +(question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth != 0 && $(".year_of_birth").length < 1 ? "style=\"pointer-events: none; background-color: #e9ecef\"" : "") //change
+                                    +(question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth != 0 && $(".ticket_race option:selected").text().toLowerCase().indexOf("relay") == -1 ? "style=\"pointer-events: none; background-color: #e9ecef\"" : "") //change
                                     +(question.question_text.search(/club/i) > -1 && data[0]['user'].club != '' ? " id=\"club\" "  : "")
                                     +(question.question_text.search(/club/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].club != '' ? "style=\"pointer-events: none; background-color: #e9ecef\"" : "")
                                     +'>';
-                                    if (question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth !== 0 && $(".year_of_birth").length < 1){ //change
+                                    if (question.question_text.search(/year of birth/i) > -1 && $( '#ticket_1_use_myself' ).is( ':checked' ) && data[0]['user'].year_of_birth !== 0 && $(".ticket_race option:selected").text().toLowerCase().indexOf("relay") == -1){ //change
                                         var found = false;
                                         $.each(question.answervalue, function(
                                             key,

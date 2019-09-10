@@ -341,11 +341,11 @@ class CartController extends Controller
                         $user->club = $answer->value;
                         $user->save();
                     }
+                } else {
                     if (preg_match("/other/i", $user->club) && preg_match("/other/i", $question->question_text)) { //change
                         $user->club = $ticketValues['meta_' . $meta];
                         $user->save();
                     }
-                } else {
                     $attributes[$question->question_text] = $ticketValues['meta_' . $meta];
                     $attributes['_qid' . $question->id] = $ticketValues['meta_' . $meta];
                 }
