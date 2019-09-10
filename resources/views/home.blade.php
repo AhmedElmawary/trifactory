@@ -32,7 +32,7 @@
     <div class="row">
         @foreach($events as $event)
         <div class="col-lg-6 event-card" style="padding-top: 5%">
-            @if(file_exists(storage_path().'\\'.$event->eventimages()->cover()->first()->image))
+            @if($event->eventimages()->cover()->first()))
             <img
                 src="/storage/{{ $event->eventimages()->cover()->first()->image }}"
                 alt="Event Image"
