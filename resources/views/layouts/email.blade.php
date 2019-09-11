@@ -1,7 +1,11 @@
 <table border="0" cellspacing="0" cellpadding="0" align="center" width="600p">
     <tr>
         <td style="text-align: center;">
+            @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event))
+            <img width="166px" src="{{ $message->embed(public_path() . '/images/toughmudderlogo.png') }}" />
+            @else
             <img width="166px" src="{{ $message->embed(public_path() . '/images/logo.png') }}" />
+            @endif
         </td>
     </tr>
     <tr style="height:50px;"></tr>

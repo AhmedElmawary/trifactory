@@ -43,7 +43,7 @@ class SendTicketEmail extends Mailable
     public function build()
     {
         return $this
-            ->subject('The TriFactory - Ticket information')
+            ->subject( (preg_match("/mudder/i", $this->ticket->Event)) ? "Tough Mudder - Ticket information" : 'The TriFactory - Ticket information')
             ->view('emails.send-ticket', [
                 'ticketId' => $this->ticketId,
                 'user' => $this->user,
