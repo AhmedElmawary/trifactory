@@ -72,7 +72,8 @@ class UserTicketDetails extends DownloadExcel implements
 
     public function headings(): array
     {
-        $questions = ['id', 'First Name', 'Last Name', 'E-Mail', 'Phone', 'Event', 'Race', 'Price', 'Order ID', 'Ticket Name', 'Paymob ID', 'Payment Methods', 'Promocode'];
+        $questions = ['id', 'First Name', 'Last Name', 'E-Mail', 'Phone', 'Event', 'Race', 'Price', 'Order ID',
+        'Ticket Name', 'Paymob ID', 'Payment Methods', 'Promocode'];
         $user_questions = Race::find($this->race_id)->question()->pluck('question_text')->toArray();
         $questions = array_merge($questions, $user_questions);
 
@@ -107,7 +108,9 @@ class UserTicketDetails extends DownloadExcel implements
                         $record[] = $order['id'];
                         $record[] = $value['Ticket Type'];
                         $record[] = $order['paymob_order_id'];
-                        $record[] = ((isset(json_decode($order['meta'], true)['credit'])) ? 'C' : '').((isset(json_decode($order['meta'], true)['voucher'])) ? 'V' : '').((isset($value['code'])) ? 'P' : '').'';
+                        $record[] = ((isset(json_decode($order['meta'], true)['credit'])) ?
+                        'C' : '').((isset(json_decode($order['meta'], true)['voucher'])) ?
+                        'V' : '').((isset($value['code'])) ? 'P' : '').'';
                         $record[] = (isset($value['code'])) ? $value['code'] : '';
                         
                         foreach ($value as $question => $answer) {

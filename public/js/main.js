@@ -42,7 +42,7 @@ function validatePhone(){
         dataType: "json",   
         success: function(result) {
             if (result) {
-                document.getElementsByName("ticket_1_phone")[0].setCustomValidity("Phone already exists");
+                document.getElementsByName("ticket_1_phone")[0].setCustomValidity("This phone is linked to a different email address");
             } else {
                 document.getElementsByName("ticket_1_phone")[0].setCustomValidity('');  
             }
