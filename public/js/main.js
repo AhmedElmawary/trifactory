@@ -625,6 +625,7 @@ $(document).ready(function() {
             if ($("#add_to_cart")[0].checkValidity()) {
                 $("#add_to_cart").submit(function(e) {
                     $.ajax({
+                        async: false,
                         type: $("#add_to_cart").attr("method"),
                         url: $("#add_to_cart").attr("action"),
                         data: $("#add_to_cart").serialize(),
