@@ -59,7 +59,12 @@
 
                         @if ($errors->has('email'))
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('email') }}</strong>
+                            <strong>
+                                @if (preg_match("/taken/i", $errors->first('email')))
+                                The email has already been taken or someone has previously <br>registered a ticket for you.<br>Please reset your password from <a href="{{url("password/reset")}}">here</a>
+                                @else
+                                {{$errors->first('email')}}
+                                @endif
                         </span>
                         @endif
                     </div>

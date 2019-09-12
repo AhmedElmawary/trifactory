@@ -9,6 +9,7 @@ use App\User;
 use App\UserRace;
 use App\Question;
 use App\QuestionAnswer;
+use App\Order;
 
 class CreateUserRace
 {
@@ -42,9 +43,14 @@ class CreateUserRace
         if ($duplicate_count >= 1) {
             return;
         }
+        $participant_meta = json_decode(Order::find($order->id)['meta'], true)[$ticketId];
+        $participant_email = $participant_meta['E-mail'];
+        $participant_user = User::where('email', $participant_email)->first();
 
         $userRace = new UserRace;
         $userRace->order_id = $order->id;
+        $userRace->participant_ticket_id = $ticketId;
+        $userRace->participant_user_id = $participant_user['id'];
         $userRace->user_id = $user->id;
         $userRace->race_id = $meta->$ticketId->_race_id;
         $userRace->ticket_id = $meta->$ticketId->_ticket_id;

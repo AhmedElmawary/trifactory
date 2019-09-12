@@ -317,22 +317,30 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
+                                    <th scope="col">For</th>
                                     <th scope="col">Event</th>
                                     <th scope="col">Race</th>
                                     <th scope="col">Date</th>
+                                    {{-- <th scope="col">meta</th> --}}
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($upcoming_events as $event)
                                 <tr>
+                                    @if (isset($event->participant_user) && $event->participant_user->id != $user->id)
+                                    <td>{{ $event->participant_user->name }}</td>
+                                    @else
+                                    <td>Myself</td>
+                                    @endif
                                     <td scope="row">{{ $event->race->event->name }}</td>
                                     <td>{{ $event->race->name }}</td>
                                     <td>{{ \Carbon\Carbon::parse($event->race->event->event_start)->format('F jS Y')}}</td>
+                                    {{-- <td>{{ $event }}</td> --}}
                                     <td>
                                         <a
                                             class="event-details-trigger" style="cursor: pointer" onclick="show_details({{$event->id}})"
-                                            >Details & Cancellation</a
+                                            >Details @if (!(isset($event->participant_user) && $event->participant_user->id != $user->id)) & Cancellation @endif</a
                                         >
                                     </td>
                                 </tr>
@@ -447,8 +455,9 @@
                                     </div>
                                 </div>
                             </div>
+                            @if (!(isset($event->participant_user) && $event->participant_user->id != $user->id))
                             <div class="col-lg-6 mt-4">
-                                <form id="form_{{$event->id}}" action="{{ route('refund-ticket', ['userrace_id'=>$event->id, 'order_id'=>$event->order_id, 'race_id'=>$event->race_id, 'ticket_id'=>$event->ticket_id, 'user_id'=>$event->user_id]) }}" method="post">
+                                <form id="form_{{$event->id}}" action="{{ route('refund-ticket', ['userrace_id'=>$event->id, 'order_id'=>$event->order_id, 'race_id'=>$event->race_id, 'ticket_id'=>$event->ticket_id, 'user_id'=>$event->user_id, 'participant_user_id'=>$event->participant_user_id, 'participant_ticket_id'=>$event->participant_ticket_id]) }}" method="post">
                                     @csrf
                                     <input
                                         class="btn btn-danger btn-block trigger_cancel_event_modal"
@@ -476,6 +485,7 @@
                                 </p>
                                 @endif
                             </div>
+                            @endif
                         </div>
                     </div>
                     @endforeach
