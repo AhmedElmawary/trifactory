@@ -265,10 +265,11 @@ $(document).ready(function() {
 
                         var disabled = "";
 
-                        if (d2 < d1 && itemData['admin'] == false) {
+                        if (d2 < d1 && data['admin'] == false) {
                             disabled = "disabled";
                         }
 
+                        if (!(itemData == false || itemData == true)) {
                         $('select[name="' + drop_name + '"]').append(
                             "<option " +
                                 disabled +
@@ -278,6 +279,7 @@ $(document).ready(function() {
                                 itemData.name +
                                 "</option>"
                         );
+                        }
                     });
                 }
             });
