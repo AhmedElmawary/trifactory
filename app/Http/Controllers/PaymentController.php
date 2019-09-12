@@ -366,7 +366,8 @@ class PaymentController extends Controller
             $ticket_cost = $ticket->price;
 
             foreach (json_decode($order['meta'], true) as $key => $value) {
-                if (preg_match("/TFT/i", $key) && (!isset($request->participant_ticket_id) || $request->participant_ticket_id == $key)) {
+                if (preg_match("/TFT/i", $key) &&
+                (!isset($request->participant_ticket_id) || $request->participant_ticket_id == $key)) {
                     if ($value['_ticket_id'] == $request->ticket_id) {
                         $ticket_cost = $value['Price'];
                         if ($order->success == 'true') {
