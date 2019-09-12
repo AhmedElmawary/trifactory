@@ -73,7 +73,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $data['years'] = range(1930, date('Y'));
-        if (isset($data['club']) && $data['club'] == 'Other') {
+        if (isset($data['club']) && preg_match("/other/i", $data['club'])) {
             return Validator::make($data, [
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
@@ -108,7 +108,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if ($data['club'] == 'Other') {
+        if (preg_match("/other/i", $data['club'])) {
             $data['club'] = $data['other_club'];
         }
         $user = User::create([
