@@ -2,7 +2,7 @@
 @section('title', 'Events')
 @section('content')
 <!-- Start Content -->
-<section class="hero-section d-flex justify-content-center align-items-center no-separator no-padding">
+<section class="hero-section d-flex justify-content-center align-items-center no-padding">
   <div class="hero-content d-flex justify-content-center align-items-center flex-column">
     <h1>Events</h1>
   </div>
