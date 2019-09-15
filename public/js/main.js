@@ -99,6 +99,50 @@ function sortList() {
       }
     }
     }
+    var list, i, switching, b, shouldSwitch;
+    list = document.getElementsByClassName("teams");
+    if (list.length > 0) {
+    switching = true;
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      b = list[0].getElementsByTagName("option");
+      // Loop through all list items:
+      for (i = 0; i < (b.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Check if the next item should
+        switch place with the current item: */
+        
+        if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+          /* If next item is alphabetically lower than current item,
+          mark as a switch and break the loop: */
+          
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark the switch as done: */
+        b[i].parentNode.insertBefore(b[i + 1], b[i]);
+        switching = true;
+      }
+      if (!switching) {
+        b = list[0].getElementsByTagName("option");
+        for (let i = 0; i < b.length - 1; i++) {
+            if (b[i].innerHTML.toLowerCase().search("other") != -1) {
+                b[b.length-1].parentNode.insertBefore(b[i], b[b.length-1].nextSibling);
+            }
+            if (b[i].innerHTML.toLowerCase().search("team name") != -1) {
+                b[0].parentNode.insertBefore(b[i], b[0]);
+            }
+        }
+      }
+    }
+    }
     
   }
 $(document).ready(function() {
@@ -372,7 +416,7 @@ $(document).ready(function() {
                                 str += "<select ";
                                 if (required) str += "required";
                                 str +=
-                                    ' class="custom-select '+(question.question_text.search(/club/i) > -1 ? 'clubs' : '')+' '+(question.question_text.search(/year of birth/i) > -1 ? 'year_of_birth' : '')+'" name="' +
+                                    ' class="custom-select '+(question.question_text.search(/club/i) > -1 ? 'clubs' : '')+' '+(question.question_text.search(/year of birth/i) > -1 ? 'year_of_birth' : '')+' '+(question.question_text.search(/team/i) > -1 ? 'teams' : '')+'" name="' +
                                     meta_field_name +
                                     "_" +
                                     question.id +
