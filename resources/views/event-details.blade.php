@@ -45,7 +45,11 @@
 
           <div class="custom-dropdown">
             <span class="dropdown-trigger" data-toggle="collapse" data-target="#available_races">
+              @if(preg_match("/mudder/i", $event->name))
+              Available Distances
+              @else
               Available Races
+              @endif
             </span>
             <div class="dropdown-content collapse" id="available_races">
               <ul class="mb-0">

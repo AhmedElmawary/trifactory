@@ -15,21 +15,21 @@
                     <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">
                         Thank you for registering in 
                     </span>
-                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">{{$ticket->Event}}</span>
+                    <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Bold;font-size: 16px;color: #474747;" @else style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;" @endif>{{$ticket->Event}}</span>
                     <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">.  This is your registration confirmation for </span>   
-                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">{{$ticket->Event}}</span>
+                    <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Bold;font-size: 16px;color: #474747;" @else style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;" @endif>{{$ticket->Event}}</span>
                     <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">.</span> 
                 @else
                     <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">
                         You successfully registered in
                     </span>
-                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">{{$ticket->Event}}</span>
+                    <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Bold;font-size: 16px;color: #474747;" @else style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;" @endif>{{$ticket->Event}}</span>
                     <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">, a ticket to </span>   
-                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">{{$ticket->Race}}</span>
+                    <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Bold;font-size: 16px;color: #474747;" @else style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;" @endif>{{$ticket->Race}}</span>
                     <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">
                         for 
                     </span> 
-                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">
+                    <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Bold;font-size: 16px;color: #474747;" @else style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;" @endif>
                         {{$ticket->For}}
                     </span>
                 @endif
@@ -38,13 +38,13 @@
                     <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">
                         You successfully registered to
                     </span>
-                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">
+                    <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Bold;font-size: 16px;color: #474747;" @else style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;" @endif>
                         {{ $fromUser->name }}
                     </span>
                     <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">
                         to 
                     </span>   
-                    <span style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;">{{$ticket->Race}}</span>
+                    <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Bold;font-size: 16px;color: #474747;" @else style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;" @endif>{{$ticket->Race}}</span>
                     <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">.</span> 
                 @endif
             @endif
@@ -67,7 +67,7 @@
                         <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
                             <b>Ticket ID: </b>
                         </span>
-                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;">
+                        <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;" @else style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;" @endif>
                             <b>{{ $ticketId }}</b>
                         </span>
                     </li>
@@ -75,7 +75,7 @@
                         <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
                             <b>Event: </b>
                         </span>
-                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;">
+                        <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;" @else style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;" @endif>
                             <b>{{ $ticket->Event }}</b>
                         </span>
                     </li>
@@ -83,7 +83,7 @@
                         <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
                             <b>Race: </b>
                         </span>
-                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;">
+                        <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;" @else style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;" @endif>
                             <b>{{ $ticket->Race }}</b>
                         </span>
                     </li>
@@ -91,7 +91,7 @@
                         <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
                             <b>Participant Name: </b>
                         </span>
-                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;">
+                        <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;" @else style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;" @endif>
                             <b>{{ $ticket->For }}</b>
                         </span>
                     </li>
@@ -99,7 +99,7 @@
                         <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
                             <b>Price: </b>
                         </span>
-                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;">
+                        <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;" @else style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;" @endif>
                             <b>EGP {{ $ticket->Price }}</b>
                         </span>
                     </li>
@@ -107,7 +107,7 @@
                         <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
                             <b>Payment Method: </b>
                         </span>
-                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;">
+                        <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;" @else style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;" @endif>
                             <b>
                                 @if($ticket->paymentMethod === 'card')
                                     Credit Card.
@@ -137,9 +137,9 @@
             <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
                 @if($other) 
                     @if($newAccount) 
-                        To complete your account and benefit from the The TriFactory’s ranking program, <a style="text-decoration: none;color: #D31D00;" href="{{ url('/password/reset') }}">click here</a>
+                        To complete your account and benefit from the The TriFactory’s ranking program, <a @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="text-decoration: none;color: #474747;" @else style="text-decoration: none;color: #D31D00;" @endif href="{{ url('/password/reset') }}">click here</a>
                     @else
-                        To access your account and benefit from the The TriFactory’s ranking program, <a style="text-decoration: none;color: #D31D00;" href="{{ url('/login') }}">click here</a>
+                        To access your account and benefit from the The TriFactory’s ranking program, <a @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="text-decoration: none;color: #474747;" @else style="text-decoration: none;color: #D31D00;" @endif href="{{ url('/login') }}">click here</a>
                     @endif
                 @endif
             </span>
