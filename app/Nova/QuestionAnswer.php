@@ -99,7 +99,7 @@ class QuestionAnswer extends Resource
     {
         return [
             (new DownloadExcel)->withHeadings()->askForFilename(),
-            new RemoveUnlinkedQuestionAnswers
+            // new RemoveUnlinkedQuestionAnswers
         ];
     }
 }

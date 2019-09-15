@@ -33,7 +33,7 @@ class FixOrderData extends Action
         ini_set('max_execution_time', 180); //3 minutes
         foreach ($models as $order) {
             $order_copy = json_decode($order, true);
-            if (preg_match("/TFT/i", $order_copy['id'])) {
+            if (preg_match("/TFT/i", $order_copy['id']) || preg_match("/TFO/i", $order_copy['id'])) {
                 $new_meta = null;
 
                 foreach (json_decode($order_copy['meta'], true) as $key => $value) {

@@ -66,7 +66,7 @@ class PaymentController extends Controller
 
 
         $order = new Order();
-        $order->id = uniqid('TFT-');
+        $order->id = uniqid('TFO-');
         $order->totalCost = $cartTotal + ($credit ? $credit->parsedRawValue : 0)
         + ($voucher ? $voucher->amount - $voucher_credit : 0);
         $order->user_id = $user->id;

@@ -105,7 +105,7 @@ class Order extends Resource
         return [
             (new UserTicketDetails)->askForFilename(),
             (new DownloadExcel)->withHeadings()->askForFilename(),
-            new FixOrderData
+            // new FixOrderData
         ];
     }
 }
