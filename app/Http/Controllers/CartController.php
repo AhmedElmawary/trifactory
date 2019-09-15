@@ -318,6 +318,10 @@ class CartController extends Controller
             $metas = preg_filter('/^meta_(.*)/', '$1', array_keys($ticketValues));
             $metas = array_values($metas);
 
+            if (!isset($metas) || count($metas) == 0) {
+                return redirect()->back();
+            }
+
             foreach ($metas as $meta) {
                 $question = Question::where('id', $meta)
                     ->with('answertype', 'answervalue')

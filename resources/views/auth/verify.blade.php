@@ -14,7 +14,7 @@
                     @endif
 
                     <h6>{{ __('Before proceeding, please check your email for a verification link.') }}</h6>
-                    {{ __('If you did not receive the email') }}, <a class="dark mt-2" href="{{ route('verification.resend') }}">{{ __('click here to resend the verification email') }}</a>.
+                    {{ __('If you did not receive the email') }}, <a class="dark mt-2" style="color: #D31D00;" href="{{ route('verification.resend') }}">{{ __('click here to resend the verification email') }}</a>.
                 </div>
             </div>
         </div>
