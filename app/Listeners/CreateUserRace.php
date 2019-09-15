@@ -37,9 +37,7 @@ class CreateUserRace
         $order = $event->order;
         $meta = json_decode($event->order->meta);
 
-        $duplicate_count = UserRace::where('race_id', $meta->$ticketId->_race_id)
-        ->where('ticket_id', $meta->$ticketId->_ticket_id)
-        ->where('user_id', $user->id)->count();
+        $duplicate_count = UserRace::where('participant_ticket_id', $ticketId)->count();
         if ($duplicate_count >= 1) {
             return;
         }

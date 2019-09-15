@@ -45,7 +45,7 @@ Route::post('/cart/item/code', 'CartController@itemCode');
 
 Route::get('/profile', 'ProfileController@index')->middleware('verified');
 Route::get('/getUser', 'ProfileController@getUser');
-Route::get('/phoneAndEmailValidation', 'ProfileController@validatePhone');
+Route::get('/phoneValidation', 'ProfileController@validatePhone');
 Route::post('/profile/image', 'ProfileController@image');
 Route::post('/profile/update', 'ProfileController@update');
 Route::post('/profile/password', 'ProfileController@password');
