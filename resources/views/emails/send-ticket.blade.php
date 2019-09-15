@@ -39,12 +39,12 @@
                         You successfully registered to
                     </span>
                     <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Bold;font-size: 16px;color: #474747;" @else style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;" @endif>
-                        {{ $fromUser->name }}
+                        {{$ticket->Race}}
                     </span>
                     <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">
-                        to 
+                        by 
                     </span>   
-                    <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Bold;font-size: 16px;color: #474747;" @else style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;" @endif>{{$ticket->Race}}</span>
+                    <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Bold;font-size: 16px;color: #474747;" @else style="font-family: AvenirNext-Bold;font-size: 16px;color: #D31D00;" @endif>{{ $fromUser->name }}</span>
                     <span style="font-family: AvenirNext-Medium;font-size: 16px;color: #000000;line-height: 22px;">.</span> 
                 @endif
             @endif
@@ -134,7 +134,7 @@
     <tr style="height:10px;"></tr>
     <tr>
         <td>
-            <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+            <span style="font-family: AvenirNext-Medium;font-size: 12   px;color: #474747;">
                 @if($other) 
                     @if($newAccount) 
                         To complete your account and benefit from the The TriFactory’s ranking program, <a @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="text-decoration: none;color: #474747;" @else style="text-decoration: none;color: #D31D00;" @endif href="{{ url('/password/reset') }}">click here</a>
