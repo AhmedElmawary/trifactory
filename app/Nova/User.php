@@ -74,7 +74,7 @@ class User extends Resource
 
             Text::make('Club', 'club'),
 
-            DateTime::make('Verified', 'email_verified_at')->hideFromIndex(),
+            DateTime::make('Verified', 'email_verified_at'),
 
             Password::make('Password')
                 ->onlyOnForms()
