@@ -41,4 +41,9 @@ class UserRace extends Model
     {
         return $this->belongsTo('App\Order', 'order_id');
     }
+
+    public function participant()
+    {
+        return $this->belongsTo('App\User', 'participant_user_id');
+    }
 }

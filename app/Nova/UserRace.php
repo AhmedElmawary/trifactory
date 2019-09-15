@@ -56,6 +56,8 @@ class UserRace extends Resource
             BelongsTo::make('Race'),
             BelongsTo::make('Order')->nullable(),
             BelongsTo::make('Ticket'),
+            BelongsTo::make('Participant','participant' , 'App\Nova\User'),
+            Text::make('Ticket ID', 'participant_ticket_id')
         ];
     }
 

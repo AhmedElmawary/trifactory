@@ -141,7 +141,7 @@
       </div>
       <div class="col-lg-6 mt-3" own-ticket-hide>
         <div class="input-group">
-          <input type="text" required class="form-control " placeholder="E-mail" name="ticket_1_email" value="@auth{{ $user->email }}@endauth" />
+          <input type="email" required class="form-control " placeholder="E-mail" name="ticket_1_email" value="@auth{{ $user->email }}@endauth" />
         </div>
 
       </div>
