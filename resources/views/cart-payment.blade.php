@@ -132,7 +132,7 @@
         </div>
 
         <div class="row col-lg-12" @if($cartTotal == 0 && !$cartItems) style="display: none;" @endif>
-            <input type="submit" class="btn btn-dark text-light" value="Online Payment" onClick="this.form.submit(); this.disabled=true; this.value='Submitting…'; ">           
+            <input type="submit" class="btn btn-dark text-light" @if($cartTotal == 0) value="Confirm Order" @else value="Online Payment" @endif onClick="this.form.submit(); this.disabled=true; this.value='Submitting…'; ">           
         </div>
         </form>
     </div>
