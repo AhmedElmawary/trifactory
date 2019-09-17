@@ -146,6 +146,9 @@ function sortList() {
     
   }
 $(document).ready(function() {
+    $("#tickets_info").on('shown.bs.collapse', function() {
+        window.location = "#tickets_info";
+    })
     $("#open_login_modal").click(function() {
         $("#login_modal").modal();
     });

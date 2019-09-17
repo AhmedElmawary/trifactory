@@ -4,6 +4,11 @@
 <!-- Start Content -->
 <form id="add_to_cart" method="POST" action="{{ url('/cart') }}">
 @csrf
+<style>
+  html, body {
+    scroll-behavior: auto;
+  }
+</style>
 <section class="event-summary container">
   <div class="row">
     <div class="col-lg-6 order-lg-1">
@@ -73,7 +78,7 @@
         </div>
         <div class="col-lg-10">
           @auth
-          <button type="button" class="btn btn-dark dropdown-button-icon" data-toggle="collapse" data-target="#tickets_info"
+          <button id="fill_ticket_details" type="button" class="btn btn-dark dropdown-button-icon" data-toggle="collapse" data-target="#tickets_info"
               aria-expanded="false" onclick="ticket_details()">Fill Tickets Details</button>
           @endauth
           @guest
