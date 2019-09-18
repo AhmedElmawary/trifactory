@@ -63,9 +63,8 @@ class User extends Resource
 
             Text::make('Phone')
                 ->sortable()
-                ->rules('required', 'phone', 'max:11')
-                ->creationRules('unique:users,phone')
-                ->updateRules('unique:users,phone,{{resourceId}}'),
+                ->rules('required', 'max:11')
+                ->creationRules('unique:users'),
                 // ->hideWhenUpdating(),
 
             Text::make('Nationality'),
