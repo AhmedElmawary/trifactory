@@ -58,15 +58,15 @@ class User extends Resource
                 ->sortable()
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
-                ->updateRules('unique:users,email,{{resourceId}}')
-                ->hideWhenUpdating(),
+                ->updateRules('unique:users,email,{{resourceId}}'),
+                // ->hideWhenUpdating(),
 
             Text::make('Phone')
                 ->sortable()
                 ->rules('required', 'phone', 'max:11')
                 ->creationRules('unique:users,phone')
-                ->updateRules('unique:users,phone,{{resourceId}}')
-                ->hideWhenUpdating(),
+                ->updateRules('unique:users,phone,{{resourceId}}'),
+                // ->hideWhenUpdating(),
 
             Text::make('Nationality'),
 
