@@ -103,12 +103,12 @@ class LoginController extends Controller
     public function logout(\Illuminate\Http\Request $request)
     {
         if (Request::is('api*') || Request::wantsJson()) {
-            $user = Auth::guard('api')->user();
+            $user = \Auth::guard('api')->user();
             if ($user) {
                 $user->api_token = null;
                 $user->save();
             }
-            return response()->json(['data' => 'User logged out.'], 200);
+            return response()->json(['success' => true, 'data' => 'User logged out.'], 200);
         } else {
             $this->guard()->logout();
             $request->session()->invalidate();

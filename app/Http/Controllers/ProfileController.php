@@ -21,7 +21,7 @@ class ProfileController extends Controller
     public function __construct()
     {
         if (\Request::is('api*') || \Request::wantsJson()) {
-            $this->middleware(['auth:api'])->except(['getUser', 'validatePhone']);
+            $this->middleware(['auth:api'])->except(['validatePhone']);
         } else {
             $this->middleware('auth');
         }
@@ -115,7 +115,7 @@ class ProfileController extends Controller
         $request['years'] = range(1930, date('Y'));
         $validator = Validator::make($request->all(), [
             'firstname' => ['required', 'string', 'max:255'],
-            'lastname' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'str ing', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.Auth::user()->id],
             'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users,phone,'.Auth::user()->id],
             'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
@@ -155,6 +155,7 @@ class ProfileController extends Controller
 
     public function image(Request $request)
     {
+        \Log::info($request);
         if ($request->hasFile('profile_image')) {
             // Get filename with extension
             $filenameWithExt = $request->file('profile_image')->getClientOriginalName();
