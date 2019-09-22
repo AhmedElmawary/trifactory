@@ -39,9 +39,9 @@ Route::get('/purchase-voucher', function () {
     return view('purchase-voucher');
 });
 
-Route::post('/buy-vouchers', 'PaymentController@buyVouchers')->middleware('verified');
-Route::post('/buy-tickets', 'PaymentController@buyTickets')->middleware('verified');
-Route::post('/refund-ticket', 'PaymentController@refundTicket')->name('refund-ticket')->middleware('verified');
+Route::post('/buy-vouchers', 'PaymentController@buyVouchers');
+Route::post('/buy-tickets', 'PaymentController@buyTickets');
+Route::post('/refund-ticket', 'PaymentController@refundTicket')->name('refund-ticket');
 
 Route::get('/payment/processedCallback', 'PaymentController@processedCallback');
 Route::get('/payment/invoice', 'PaymentController@invoice');
@@ -57,7 +57,7 @@ Route::post('/cart/voucher', 'CartController@voucher');
 
 Route::post('/cart/item/code', 'CartController@itemCode');
 
-Route::get('/profile', 'ProfileController@index')->middleware('verified');
+Route::get('/profile', 'ProfileController@index');
 Route::get('/getUser', 'ProfileController@getUser');
 Route::post('/profile/image', 'ProfileController@image');
 Route::post('/profile/update', 'ProfileController@update');

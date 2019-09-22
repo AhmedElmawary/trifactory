@@ -21,6 +21,16 @@ use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
+
+    public function __construct()
+    {
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            $this->middleware(['auth:api']);
+        } else {
+            $this->middleware('auth');
+        }
+    }
+
     /**
      * POST Request from cart-payment for online payment button
      */
@@ -86,6 +96,7 @@ class PaymentController extends Controller
 
     public function buyVouchers(Request $request)
     {
+        \Log::info("input");
         $inputs = $request->all();
         $paymentMethod = $inputs['paymet_method'];
 
@@ -114,8 +125,6 @@ class PaymentController extends Controller
 
     public function makePayment($order, $paymentMethod)
     {
-        \Log::info("Order Total Cost: ");
-        \Log::info($order->totalCost);
         $auth = PayMob::authPaymob();
 
         $paymobOrder = PayMob::makeOrderPaymob(

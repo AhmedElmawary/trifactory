@@ -6,7 +6,7 @@
 @csrf
 <style>
   html, body {
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
   }
 </style>
 <section class="event-summary container">
