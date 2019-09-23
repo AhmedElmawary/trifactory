@@ -129,7 +129,7 @@ class UserTicketDetails extends DownloadExcel implements
                                     $a = $value[$q];
                                 }
                                 if (preg_match("/others/i", $q) && empty($a)) {
-                                    $a = $value[$q];
+                                    $a = $value["_qid".$question_id];
                                 }
                                 $record[] = $a;
                             }
