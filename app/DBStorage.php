@@ -4,9 +4,8 @@ namespace App;
 
 use Darryldecode\Cart\CartCollection;
 
-class DBStorage 
+class DBStorage
 {
-
     public function has($key)
     {
         return DatabaseStorage::find($key);
