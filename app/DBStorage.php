@@ -4,39 +4,34 @@ namespace App;
 
 use Darryldecode\Cart\CartCollection;
 
-class DBStorage {
-
-public function has($key)
+class DBStorage 
 {
-    return DatabaseStorage::find($key);
-}
 
-public function get($key)
-{
-    if($this->has($key))
+    public function has($key)
     {
-        return new CartCollection(DatabaseStorage::find($key)->cart_data);
+        return DatabaseStorage::find($key);
     }
-    else
-    {
-        return [];
-    }
-}
 
-public function put($key, $value)
-{
-    if($row = DatabaseStorage::find($key))
+    public function get($key)
     {
-        // update
-        $row->cart_data = $value;
-        $row->save();
+        if ($this->has($key)) {
+            return new CartCollection(DatabaseStorage::find($key)->cart_data);
+        } else {
+            return [];
+        }
     }
-    else
+
+    public function put($key, $value)
     {
-        DatabaseStorage::create([
-            'id' => $key,
-            'cart_data' => $value
-        ]);
+        if ($row = DatabaseStorage::find($key)) {
+            // update
+            $row->cart_data = $value;
+            $row->save();
+        } else {
+            DatabaseStorage::create([
+                'id' => $key,
+                'cart_data' => $value
+            ]);
+        }
     }
-}
 }
