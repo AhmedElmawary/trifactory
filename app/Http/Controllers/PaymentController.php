@@ -39,12 +39,13 @@ class PaymentController extends Controller
         $inputs = $request->all();
         $paymentMethod = $inputs['paymet_method'];
 
+        $user = Auth::user();
+        \Cart::session($user->id);
         $cartTotal = \Cart::getTotal();
         $cartSubTotal = \Cart::getSubTotal();
         $cartItems = \Cart::getContent()->toArray();
         $credit = \Cart::getCondition('Credit');
         $voucher = \Cart::getCondition('Voucher');
-        $user = Auth::user();
 
         if ($credit) {
             $meta['credit'] = $credit->parsedRawValue;
@@ -169,7 +170,7 @@ class PaymentController extends Controller
             $payment = $pbc->makePayment($paymentKey->token);
 
             $this->consumeCartConditions($order);
-
+            \Cart::session($user->id);
             \Cart::clear();
             \Cart::clearCartConditions();
 
@@ -322,7 +323,7 @@ class PaymentController extends Controller
                     }
                 }
             }
-
+            \Cart::session($user->id);
             \Cart::clear();
             \Cart::clearCartConditions();
         }

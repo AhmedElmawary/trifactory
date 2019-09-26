@@ -13,6 +13,10 @@ class EventsController extends Controller
 {
     public function index()
     {
+        if(\Auth::check()) {
+            $user = \Auth::user();
+            \Cart::session($user->id);
+        }
         $events = Event::with('eventimages')->past()->published()->get();
         $upcoming_events = Event::with('eventimages')->upcomming()->published()->get();
         if (\Request::is('api*') || \Request::wantsJson()) {
@@ -24,6 +28,10 @@ class EventsController extends Controller
 
     public function details($id)
     {
+        if(\Auth::check()) {
+            $user = \Auth::user();
+            \Cart::session($user->id);
+        }
         $user = Auth::user();
 
         $event = Event::with('eventimages')->find($id);

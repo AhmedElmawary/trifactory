@@ -8,6 +8,10 @@ class LeaderboardController extends Controller
 {
     public function index()
     {
+        if(\Auth::check()) {
+            $user = \Auth::user();
+            \Cart::session($user->id);
+        }
         $leaderboardMale = \DB::table('leaderboard_data')
             ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
             ->where('gender', 'M')

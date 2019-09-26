@@ -21,11 +21,13 @@ class CartController extends Controller
         if (\Request::is('api*') || \Request::wantsJson()) {
             $this->middleware(['auth:api', 'verified']);
         } else {
-            // $this->middleware('auth');
+            $this->middleware('auth');
         }
     }
     public function index(Request $request)
     {
+        $user = Auth::user();
+        \Cart::session($user->id);
         $cartSubTotal = \Cart::getSubTotal();
         $cartTotal = \Cart::getTotal();
         $cartItems = \Cart::getContent()->toArray();
@@ -47,6 +49,8 @@ class CartController extends Controller
 
     public function payment(Request $request)
     {
+        $user = Auth::user();
+        \Cart::session($user->id);
         $cartSubTotal = \Cart::getSubTotal();
         $cartTotal = \Cart::getTotal();
         $cartItems = \Cart::getContent()->toArray();
@@ -62,7 +66,6 @@ class CartController extends Controller
             'credit' => 0,
         ];
 
-        $user = Auth::user();
         if ($user) {
             $data['credit'] = $user->credit->sum('amount');
         }
@@ -84,6 +87,7 @@ class CartController extends Controller
     public function itemCode(Request $request)
     {
         $user = Auth::user();
+        \Cart::session($user->id);
         $inputs = $request->all();
         $item = $inputs['item'];
 
@@ -169,6 +173,8 @@ class CartController extends Controller
 
     public function voucher(Request $request)
     {
+        $user = Auth::user();
+        \Cart::session($user->id);
         $inputs = $request->all();
         $code = null;
         if (isset($inputs['code'])) {
@@ -223,6 +229,8 @@ class CartController extends Controller
 
     public function credit(Request $request)
     {
+        $user = Auth::user();
+        \Cart::session($user->id);
         $inputs = $request->all();
         $credit = $inputs['credit'];
 
@@ -257,12 +265,16 @@ class CartController extends Controller
 
     public function emptyCart(Request $request)
     {
+        $user = Auth::user();
+        \Cart::session($user->id);
         \Cart::clear();
         \Cart::clearCartConditions();
     }
 
     public function removeFromCart(Request $request)
     {
+        $user = Auth::user();
+        \Cart::session($user->id);
         $inputs = $request->all();
         $itemKey = $inputs['item_key'];
 
@@ -275,7 +287,8 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-
+        $user = Auth::user();
+        \Cart::session($user->id);
         $input = $request->all();
         $number_of_tickets = $input['number_of_tickets'];
 

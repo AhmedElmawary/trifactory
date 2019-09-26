@@ -35,6 +35,10 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
+        if(\Auth::check()) {
+            $user = \Auth::user();
+            \Cart::session($user->id);
+        }
         if ($user) {
             $data['past_events'] = \App\LeaderboardData::with('race.event')->where('email', $user->email)->get();
             $data['upcoming_events'] = \App\UserRace::with('race.event', 'ticket')

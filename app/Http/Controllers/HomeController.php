@@ -28,6 +28,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(\Auth::check()) {
+            $user = \Auth::user();
+            \Cart::session($user->id);
+        }
         $gallery = Gallery::latest('created_at')->with('galleryimage')->first();
         $upcomingEvents = Event::upcomming()->published()->get();
 
