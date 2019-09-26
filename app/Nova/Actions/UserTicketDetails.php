@@ -105,15 +105,15 @@ class UserTicketDetails extends DownloadExcel implements
                         $record[] = $value['Race'];
                         $record[] = $value['Price'];
                         $record[] = $order['id'];
-                        $record[] = $key;   // Ticket ID here
+                        $record[] = $key;
                         $record[] = $value['Ticket Type'];
                         $record[] = $order['paymob_order_id'];
                         $record[] = ((isset(json_decode($order['meta'], true)['credit'])) ?
                         'C' : '').((isset(json_decode($order['meta'], true)['voucher'])) ?
                         'V' : '').((isset($value['code'])) ? 'P' : '').'';
                         $record[] = (isset($value['code'])) ? $value['code'] : '';
-                        $record[] = UserRace::where('participant_ticket_id', $key)->first()['comment'];    // Comments here
-                        $record[] = $order['created_at'];  // Created Date here
+                        $record[] = UserRace::where('participant_ticket_id', $key)->first()['comment'];
+                        $record[] = $order['created_at'];
                         
                         foreach ($value as $question => $answer) {
                             if (preg_match("/_qid/i", $question)) {
