@@ -13,7 +13,7 @@ class EventsController extends Controller
 {
     public function index()
     {
-        if(\Auth::check()) {
+        if (\Auth::check()) {
             $user = \Auth::user();
             \Cart::session($user->id);
         }
@@ -28,7 +28,7 @@ class EventsController extends Controller
 
     public function details($id)
     {
-        if(\Auth::check()) {
+        if (\Auth::check()) {
             $user = \Auth::user();
             \Cart::session($user->id);
         }

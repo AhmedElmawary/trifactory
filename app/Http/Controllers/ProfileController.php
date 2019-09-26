@@ -35,7 +35,7 @@ class ProfileController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if(\Auth::check()) {
+        if (\Auth::check()) {
             $user = \Auth::user();
             \Cart::session($user->id);
         }

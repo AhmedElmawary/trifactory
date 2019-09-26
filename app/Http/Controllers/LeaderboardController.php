@@ -8,7 +8,7 @@ class LeaderboardController extends Controller
 {
     public function index()
     {
-        if(\Auth::check()) {
+        if (\Auth::check()) {
             $user = \Auth::user();
             \Cart::session($user->id);
         }
