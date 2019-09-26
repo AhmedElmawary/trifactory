@@ -96,7 +96,6 @@ class PaymentController extends Controller
 
     public function buyVouchers(Request $request)
     {
-        \Log::info("input");
         $inputs = $request->all();
         $paymentMethod = $inputs['paymet_method'];
 

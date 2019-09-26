@@ -31,12 +31,20 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        
         view()->composer('*', function ($view) {
-            $cart_items = \Cart::getContent()->toArray();
-            $view->with('cart_items_count', count($cart_items));
-
             $user = Auth::user();
             if ($user) {
+                \Cart::session($user->id);
+                $cart_items = \Cart::getContent()->toArray();
+                $view->with('cart_items_count', count($cart_items));
+            } else {
+                $cart_items = \Cart::getContent()->toArray();
+                $view->with('cart_items_count', 0);
+            }
+
+            if ($user) {
+                
                 $credit = $user->credit->sum('amount');
                 $view->with('credit', $credit);
             }
