@@ -37,7 +37,14 @@ class UserRace extends Resource
      */
     public static $search = [
         'id',
-        'User',
+        'participant_ticket_id',
+    ];
+
+    public static $searchRelations = [
+        'User' => ['name'],
+        'Order' => ['id'],
+        'Ticket' => ['name'],
+        'Participant' => ['name'],
     ];
 
     /**
@@ -57,7 +64,8 @@ class UserRace extends Resource
             BelongsTo::make('Order')->nullable(),
             BelongsTo::make('Ticket'),
             BelongsTo::make('Participant', 'participant', 'App\Nova\User'),
-            Text::make('Ticket ID', 'participant_ticket_id')
+            Text::make('Ticket ID', 'participant_ticket_id'),
+            Text::make('Comments', 'comment')
         ];
     }
 

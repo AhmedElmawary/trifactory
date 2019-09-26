@@ -22,7 +22,8 @@
         "rinvex/countries": "^5.0",
         "sparclex/nova-import-card": "^2.0",
         "spatie/laravel-backup": "^6.3",
-        "spatie/nova-backup-tool": "^3.1"
+        "spatie/nova-backup-tool": "^3.1",
+        "titasgailius/search-relations": "^1.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

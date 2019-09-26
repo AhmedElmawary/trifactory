@@ -20,6 +20,7 @@ use App\User;
 use App\Question;
 use App\Answervalue;
 use App\Race;
+use App\UserRace;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Laravel\Nova\Http\Requests\ActionRequest;
@@ -73,7 +74,7 @@ class UserTicketDetails extends DownloadExcel implements
     public function headings(): array
     {
         $questions = ['id', 'First Name', 'Last Name', 'E-Mail', 'Phone', 'Event', 'Race', 'Price', 'Order ID',
-        'Ticket Name', 'Paymob ID', 'Payment Methods', 'Promocode'];
+        'Ticket ID', 'Ticket Name', 'Paymob ID', 'Payment Methods', 'Promocode', 'Comments', 'Date Created'];
         $user_questions = Race::find($this->race_id)->question()->pluck('question_text')->toArray();
         $questions = array_merge($questions, $user_questions);
 
@@ -95,9 +96,7 @@ class UserTicketDetails extends DownloadExcel implements
                     && $value['_race_id'] == $this->race_id
                     && !strpos($order['success'], $key)) {
                         $record = array();
-                        // foreach ($value as $key2 => $value2) {
                         $record[] = User::select('id')->where("email", $value['E-mail'])->first()['id'];
-                        // $record[] = $value['For'];
                         $record[] = strtok($value['For'], " ");
                         $record[] = strstr($value['For'], " ");
                         $record[] = $value['E-mail'];
@@ -106,12 +105,15 @@ class UserTicketDetails extends DownloadExcel implements
                         $record[] = $value['Race'];
                         $record[] = $value['Price'];
                         $record[] = $order['id'];
+                        $record[] = $key;   // Ticket ID here
                         $record[] = $value['Ticket Type'];
                         $record[] = $order['paymob_order_id'];
                         $record[] = ((isset(json_decode($order['meta'], true)['credit'])) ?
                         'C' : '').((isset(json_decode($order['meta'], true)['voucher'])) ?
                         'V' : '').((isset($value['code'])) ? 'P' : '').'';
                         $record[] = (isset($value['code'])) ? $value['code'] : '';
+                        $record[] = UserRace::where('participant_ticket_id', $key)->first()['comment'];    // Comments here
+                        $record[] = $order['created_at'];  // Created Date here
                         
                         foreach ($value as $question => $answer) {
                             if (preg_match("/_qid/i", $question)) {
