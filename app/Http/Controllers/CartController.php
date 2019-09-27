@@ -161,6 +161,7 @@ class CartController extends Controller
                         'code' => $code
                     ]
                 ]);
+                $condition->parsedRawValue = $value;  // not auto-set incase of custom storage storage
 
                 \Cart::addItemCondition($item, $condition);
             }
@@ -217,6 +218,9 @@ class CartController extends Controller
                         ]
                     ]);
 
+                    // not auto-set incase of custom storage storage
+                    $condition->parsedRawValue = $voucher->amount * -1;  
+
                     \Cart::condition($condition);
                 }
             }
@@ -254,6 +258,8 @@ class CartController extends Controller
                 'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
                 'value' => $credit * -1,
             ]);
+
+            $condition->parsedRawValue = $credit * -1;  // not auto-set incase of custom storage storage
 
             \Cart::condition($condition);
         }
