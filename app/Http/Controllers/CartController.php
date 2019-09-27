@@ -219,7 +219,7 @@ class CartController extends Controller
                     ]);
 
                     // not auto-set incase of custom storage storage
-                    $condition->parsedRawValue = $voucher->amount * -1;  
+                    $condition->parsedRawValue = $voucher->amount * -1;
 
                     \Cart::condition($condition);
                 }
