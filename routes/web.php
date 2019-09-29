@@ -69,6 +69,15 @@ Route::get('/empty-telescope', function() {
     return "Done!";
 });
 
+use App\DatabaseStorage;
+
+Route::get('/empty-cart_storage', function() {
+    Schema::disableForeignKeyConstraints();
+    DatabaseStorage::truncate();
+    Schema::enableForeignKeyConstraints();
+    return "Done!";
+});
+
 Route::get('/payment_success', function() {
     $order = App\Order::find(Illuminate\Support\Facades\Input::get('order'));
     return view('payment-success', ['order' => $order]);

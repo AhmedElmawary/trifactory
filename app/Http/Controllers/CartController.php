@@ -148,7 +148,7 @@ class CartController extends Controller
 
                 if (strpos($promocode->value, '%')) {
                     $value = $cartItem['price'] * $cartItem['quantity'] * str_replace('%', '', $promocode->value);
-                    $value = '- ' . ceil($value / 100);
+                    $value = '-' . ceil($value / 100);
                 } else {
                     $value = '-' . $promocode->value;
                 }
