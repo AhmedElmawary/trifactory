@@ -260,7 +260,7 @@ class CartController extends Controller
                 'value' => $credit * -1,
             ]);
 
-            $condition->parsedRawValue = $credit * -1;  // not auto-set incase of custom storage storage
+            $condition->parsedRawValue = $credit;  // not auto-set incase of custom storage storage
 
             \Cart::condition($condition);
         }
