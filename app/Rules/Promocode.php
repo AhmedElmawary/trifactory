@@ -81,7 +81,7 @@ class Promocode implements Rule
             }
         }
 
-        if (in_array($value, $this->cartCodes)) {
+        if (in_array($value, $this->cartCodes) && $promocode->unlimited = 0) {
             $this->message = 'The selected code can only be used once.';
             return false;
         }

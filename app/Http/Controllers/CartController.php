@@ -161,7 +161,8 @@ class CartController extends Controller
                         'code' => $code
                     ]
                 ]);
-                $condition->parsedRawValue = $value;  // not auto-set incase of custom storage storage
+                // not auto-set incase of custom storage storage
+                $condition->parsedRawValue = -intval($value);
 
                 \Cart::addItemCondition($item, $condition);
             }

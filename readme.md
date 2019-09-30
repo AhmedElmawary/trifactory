@@ -42,3 +42,6 @@ https://laracasts.com/series/laravel-nova-mastery/
 
 ### Using Maatwebsite for Nova Excel Export
 https://github.com/Maatwebsite/Laravel-Nova-Excel 
+
+### Docker Commands
+docker run -p 3306:3306 --name thetrifactory -e MYSQL_ROOT_PASSWORD=root -d mysql:latest
