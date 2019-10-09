@@ -1,3 +1,6 @@
+function closeModal(){
+    $('.custom-modal').modal('hide');
+}
 function refresh(){
     location.reload();
 }
@@ -12,26 +15,27 @@ function show_details(event_id){
 function showlogoutmodal(){
     $("#logout_modal").modal();
 }
+function openconfirmcancelmodal(event_id){
+    $("#confirm_cancel_event_modal_"+event_id).modal();
+    $("#confirm_cancel_event_modal_"+event_id).unbind();
+}
 function opencancelmodal(event_id){
-    $("#form_"+event_id).submit(function(e) {
-        $.ajax({
-            type: $("#form_"+event_id).attr("method"),
-            url: $("#form_"+event_id).attr("action"),
-            data: $("#form_"+event_id).serialize(),
-            success: function(data) {
-                $("#form_"+event_id)
-                    .get(0)
-                    .reset();
-                $("#cancel_event_modal_"+event_id).modal();
-            },
-            error: function(data) {
-                console.log("An error occurred.");
-            }
-        });
-        return false;
+    $.ajax({
+        type: $("#form_"+event_id).attr("method"),
+        url: $("#form_"+event_id).attr("action"),
+        data: $("#form_"+event_id).serialize(),
+        success: function(data) {
+            $("#form_"+event_id)
+                .get(0)
+                .reset();
+            $('#confirm_cancel_event_modal_'+event_id).modal('hide')
+            $("#cancel_event_modal_"+event_id).modal();
+        },
+        error: function(data) {
+            console.log("An error occurred.");
+        }
     });
-    // e.preventDefault();
-    $("#cancel_event_modal").unbind();
+    $("#cancel_event_modal_"+event_id).unbind();
 }
 function validatePhone(){
     $.ajax({

@@ -461,9 +461,9 @@
                                     @csrf
                                     <input
                                         class="btn btn-danger btn-block trigger_cancel_event_modal"
-                                        onclick="opencancelmodal({{$event->id}})"
+                                        onclick="openconfirmcancelmodal({{$event->id}})"
                                         value="Cancel Event"
-                                        type="submit"
+                                        type="button"
                                         id="cancel_{{$event->id}}"
                                         
                                         @if (!$event->race->event['cancel_availablility'])
@@ -491,6 +491,57 @@
                     @endforeach
                 </div>
                 @foreach ($upcoming_events as $event)
+                @php
+                $general_ticket = \App\Ticket::where('race_id', $event->race_id)->where('name', 'like', '%general%' )->first();
+                $general_ticket_ticket_end = $general_ticket['ticket_end'];
+                $date_now = date("Y-m-d");
+                @endphp
+                <div class="modal fade custom-modal" id="confirm_cancel_event_modal_{{$event->id}}" tabindex="-1" role="dialog"
+                aria-labelledby="phone_verify_modal" aria-hidden="true" data-backdrop="true" data-keyboard="false">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                        <div class="header">
+                                <!-- <h3 class="modal-title">Verification code sent to this number:</h3> -->
+                                <!-- <img src="/images/success-icon.svg" class="modal-icon"> -->
+                                <div class="modal-sub-title" style="color:#dc3545;font-size: 120%">Are you sure you want to Cancel your ticket?</div>
+                                @if ($general_ticket_ticket_end < $date_now)
+                                <span style="font-weight:bold">
+                                    {{ $event->ticket->name }}<br><br>
+                                    An amount of
+                                    @foreach (json_decode($event->order['meta'], true) as $key => $value) 
+                                            @if (preg_match("/TFT/i", $key)) 
+                                                @if ($value['_ticket_id'] == $event->ticket->id)
+                                                    <span>{{round($value['Price']*0.2, 0)}}</span>
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        will be refuned to your credit<br>and your race will be cancelled</span><br><br>
+                                    **After the General registration deadline, 20% of the amount paid will be refunded
+                                @else
+                                <span style="font-weight:bold">
+                                    {{ $event->ticket->name }}<br><br>
+                                    An amount of
+                                    @foreach (json_decode($event->order['meta'], true) as $key => $value) 
+                                            @if (preg_match("/TFT/i", $key)) 
+                                                @if ($value['_ticket_id'] == $event->ticket->id)
+                                                <span>{{$value['Price']}} </span>
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        will be refuned to your credit<br>and your race will be cancelled</span>
+                                @endif
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <img src="/images/close-icon.svg" alt="close icon" onclick="closeModal()">
+                                </button>
+                                </div>
+                                <div class="content">
+                                <p class="modal-text"></p>
+                                <button onclick="opencancelmodal({{$event->id}})" class="btn btn-dark light">Confirm</button>
+                                </div>
+                                <br>
+                </div>
+                </div>
+                </div>
                 <div class="modal fade custom-modal" id="cancel_event_modal_{{$event->id}}" tabindex="-1" role="dialog"
                 aria-labelledby="phone_verify_modal" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -502,7 +553,11 @@
                                     @foreach (json_decode($event->order['meta'], true) as $key => $value) 
                                             @if (preg_match("/TFT/i", $key)) 
                                                 @if ($value['_ticket_id'] == $event->ticket->id)
-                                                    {{$value['Price']}}
+                                                @if ($general_ticket_ticket_end < $date_now)
+                                                {{round($value['Price']*0.2, 0)}}
+                                                @else
+                                                {{$value['Price']}}
+                                                @endif
                                                 @endif
                                             @endif
                                         @endforeach

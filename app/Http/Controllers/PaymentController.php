@@ -372,13 +372,19 @@ class PaymentController extends Controller
 
             $ticket = Ticket::find($request->ticket_id);
 
-            $ticket_cost = $ticket->price;
+            $general_ticket = Ticket::where('race_id', $request->race_id)->where('name', 'like', '%general%' )->first();
+            $general_ticket_ticket_end = date("Y-m-d", strtotime($general_ticket['ticket_end']));
+            $date_now = date("Y-m-d");            
 
             foreach (json_decode($order['meta'], true) as $key => $value) {
                 if (preg_match("/TFT/i", $key) &&
                 (!isset($request->participant_ticket_id) || $request->participant_ticket_id == $key)) {
                     if ($value['_ticket_id'] == $request->ticket_id) {
-                        $ticket_cost = $value['Price'];
+                        if ($general_ticket_ticket_end < $date_now) {
+                            $ticket_cost = round($value['Price']*0.2, 0);
+                        } else {
+                            $ticket_cost = $value['Price'];
+                        }
                         if ($order->success == 'true') {
                             $order->success = 'refunded: '.$key;
                         } else {

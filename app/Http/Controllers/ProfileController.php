@@ -159,7 +159,6 @@ class ProfileController extends Controller
 
     public function image(Request $request)
     {
-        \Log::info($request);
         if ($request->hasFile('profile_image')) {
             // Get filename with extension
             $filenameWithExt = $request->file('profile_image')->getClientOriginalName();
