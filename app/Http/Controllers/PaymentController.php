@@ -372,9 +372,9 @@ class PaymentController extends Controller
 
             $ticket = Ticket::find($request->ticket_id);
 
-            $general_ticket = Ticket::where('race_id', $request->race_id)->where('name', 'like', '%general%' )->first();
+            $general_ticket = Ticket::where('race_id', $request->race_id)->where('name', 'like', '%general%')->first();
             $general_ticket_ticket_end = date("Y-m-d", strtotime($general_ticket['ticket_end']));
-            $date_now = date("Y-m-d");            
+            $date_now = date("Y-m-d");
 
             foreach (json_decode($order['meta'], true) as $key => $value) {
                 if (preg_match("/TFT/i", $key) &&
