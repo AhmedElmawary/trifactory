@@ -387,8 +387,8 @@ class CartController extends Controller
                             $fileNameToStore = $race->id.'_'.str_replace(' ', '', $user->name).'_'.$user->id.'_'
                             .$uniqueid.'.'.$extension;
                             // Upload Image
-                            $path = $request->file($ticket_number.'_meta_'.$meta)->storeAs('public/tickets_images',
-                            $fileNameToStore);
+                            $path = $request->file($ticket_number.'_meta_'.$meta)
+                            ->storeAs('public/tickets_images', $fileNameToStore);
 
                             $attributes[$question->question_text] = $fileNameToStore;
                             $attributes['_qid' . $question->id] = $fileNameToStore;
