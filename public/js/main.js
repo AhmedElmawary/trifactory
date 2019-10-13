@@ -430,17 +430,18 @@ $(document).ready(function() {
                             }
 
                             if (question.answertype.type === "file") {
+                                str += '<label style="cursor: pointer;" class="form-control" for="national_id_image">';
                                 str += '<input ';
                                 str += ' type="file"';
                                 str += ' accept="image/*"';
                                 str += ' id="national_id_image"';
-                                str += ' class="form-control"';
                                 str += ' name="' + meta_field_name + '_' + question.id + '"';
-                                str += ' required hidden';
+                                str += ' required';
                                 str += ' form="add_to_cart"';
                                 str += ' onchange="onFileChange()"';
+                                str += ' style="opacity: 0;width: 1%;float: left;"';
                                 str += ' />';
-                                str += '<label style="cursor: pointer;" class="form-control" for="national_id_image"><span class="fas fa-upload"></span> &nbsp;&nbsp;Upload valid photocopy of your National ID/Passport <span style="float:right;color:green; display:none;" class="far fa-check-circle"></span><span style="float:right;color:red;" class="far fa-times-circle"></span></label>';
+                                str += ' <span class="fas fa-upload"></span> &nbsp;&nbsp;Upload valid photocopy of your National ID/Passport <span style="float:right;color:green; display:none;" class="far fa-check-circle"></span><span style="float:right;color:red;" class="far fa-times-circle"></span></label>';
                             }
 
                             if (question.answertype.type === "dropdown") {

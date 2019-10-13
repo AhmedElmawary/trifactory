@@ -63,7 +63,7 @@ class EmailTicket
                         $nationalities = \countries();
                         unset($nationalities['il']);
                         $nationality = $value;
-                        foreach ($nationalities as $key=>$n) {
+                        foreach ($nationalities as $key => $n) {
                             if ($n['name'] == $value) {
                                 $nationality = $n['iso_3166_1_alpha2'];
                             }

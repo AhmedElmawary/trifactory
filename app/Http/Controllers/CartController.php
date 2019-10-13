@@ -307,7 +307,7 @@ class CartController extends Controller
                 $grouppedInput['ticket_' . $i][$key] = $input['ticket_' . $i . '_' . $key];
             }
         }
-        foreach ($grouppedInput as $ticket_number =>$ticketValues) {
+        foreach ($grouppedInput as $ticket_number => $ticketValues) {
             $ticket = Ticket::find($ticketValues['type']);
             $race = $ticket->race()->first();
 
@@ -384,9 +384,11 @@ class CartController extends Controller
                             // Get just ext
                             $extension = $request->file($ticket_number.'_meta_'.$meta)->getClientOriginalExtension();
                             //Filename to store
-                            $fileNameToStore = $race->id.'_'.str_replace(' ', '', $user->name).'_'.$user->id.'_'.$uniqueid.'.'.$extension;
+                            $fileNameToStore = $race->id.'_'.str_replace(' ', '', $user->name).'_'.$user->id.'_'
+                            .$uniqueid.'.'.$extension;
                             // Upload Image
-                            $path = $request->file($ticket_number.'_meta_'.$meta)->storeAs('public/tickets_images', $fileNameToStore);
+                            $path = $request->file($ticket_number.'_meta_'.$meta)->storeAs('public/tickets_images',
+                            $fileNameToStore);
 
                             $attributes[$question->question_text] = $fileNameToStore;
                             $attributes['_qid' . $question->id] = $fileNameToStore;
