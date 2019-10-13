@@ -54,6 +54,16 @@ function validatePhone(){
     });
 }
 
+function onFileChange(){
+    if ($('#national_id_image').val()) {
+        $('.fa-times-circle').hide();
+        $('.fa-check-circle').show();
+    } else {
+        $('.fa-times-circle').show();
+        $('.fa-check-circle').hide();
+    }
+}
+
 function ticket_details(){
     validatePhone();
     document.getElementById("open_added_to_cart_modal").onclick = validatePhone;
@@ -417,7 +427,21 @@ $(document).ready(function() {
                                     "_" +
                                     question.id +
                                     '" '+(question.question_text.search(/year of birth/i) > -1 && data[0]['user'].year_of_birth != 0 ? 'value=\"Year of birth: '+data[0]['user'].year_of_birth+'\" style="pointer-events: none; background-color: #e9ecef" ' : '')+'/>';
-                                }
+                            }
+
+                            if (question.answertype.type === "file") {
+                                str += '<input ';
+                                str += ' type="file"';
+                                str += ' accept="image/*"';
+                                str += ' id="national_id_image"';
+                                str += ' class="form-control"';
+                                str += ' name="' + meta_field_name + '_' + question.id + '"';
+                                str += ' required hidden';
+                                str += ' form="add_to_cart"';
+                                str += ' onchange="onFileChange()"';
+                                str += ' />';
+                                str += '<label style="cursor: pointer;" class="form-control" for="national_id_image"><span class="fas fa-upload"></span> &nbsp;&nbsp;Upload valid photocopy of your National ID/Passport <span style="float:right;color:green; display:none;" class="far fa-check-circle"></span><span style="float:right;color:red;" class="far fa-times-circle"></span></label>';
+                            }
 
                             if (question.answertype.type === "dropdown") {
                                 str += "<select ";
@@ -677,16 +701,25 @@ $(document).ready(function() {
         $("#open_added_to_cart_modal").click(function(e) {
             if ($("#add_to_cart")[0].checkValidity()) {
                 $("#add_to_cart").submit(function(e) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
                     $.ajax({
                         async: false,
                         type: $("#add_to_cart").attr("method"),
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        contentType: false,
+                        cache: false,
                         url: $("#add_to_cart").attr("action"),
-                        data: $("#add_to_cart").serialize(),
+                        data: new FormData($("#add_to_cart")[0]),
                         success: function(data) {
                             $("#add_to_cart")
                                 .get(0)
                                 .reset();
-                                $("#added_to_cart_modal").modal();
+                            $("#added_to_cart_modal").modal();
                         },
                         error: function(data) {
                             console.log("An error occurred.");

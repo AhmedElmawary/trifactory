@@ -2,7 +2,7 @@
 @section('title', $event->name)
 @section('content')
 <!-- Start Content -->
-<form id="add_to_cart" method="POST" action="{{ url('/cart') }}">
+<form enctype="multipart/form-data" id="add_to_cart" method="POST" action="{{ url('/cart') }}">
 @csrf
 <style>
   html, body {

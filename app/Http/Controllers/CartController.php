@@ -307,7 +307,7 @@ class CartController extends Controller
                 $grouppedInput['ticket_' . $i][$key] = $input['ticket_' . $i . '_' . $key];
             }
         }
-        foreach ($grouppedInput as $ticketValues) {
+        foreach ($grouppedInput as $ticket_number =>$ticketValues) {
             $ticket = Ticket::find($ticketValues['type']);
             $race = $ticket->race()->first();
 
@@ -342,6 +342,8 @@ class CartController extends Controller
                 return redirect()->back();
             }
 
+            $uniqueid = uniqid('TFT-' . $ticket->id);
+
             foreach ($metas as $meta) {
                 $question = Question::where('id', $meta)
                     ->with('answertype', 'answervalue')
@@ -369,12 +371,34 @@ class CartController extends Controller
                         $user->club = $ticketValues['meta_' . $meta];
                         $user->save();
                     }
-                    $attributes[$question->question_text] = $ticketValues['meta_' . $meta];
-                    $attributes['_qid' . $question->id] = $ticketValues['meta_' . $meta];
+                    \Log::info($question->question_text);
+                    if (preg_match("/upload/i", $question->question_text)) {
+                        \Log::info("enetered");
+                        if ($request->hasFile($ticket_number.'_meta_'.$meta)) {
+                            \Log::info('here');
+                            \Log::info($_FILES);
+                            // Get filename with extension
+                            $filenameWithExt = $request->file($ticket_number.'_meta_'.$meta)->getClientOriginalName();
+                            // Get just filename
+                            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                            // Get just ext
+                            $extension = $request->file($ticket_number.'_meta_'.$meta)->getClientOriginalExtension();
+                            //Filename to store
+                            $fileNameToStore = $race->id.'_'.str_replace(' ', '', $user->name).'_'.$user->id.'_'.$uniqueid.'.'.$extension;
+                            // Upload Image
+                            $path = $request->file($ticket_number.'_meta_'.$meta)->storeAs('public/tickets_images', $fileNameToStore);
+
+                            $attributes[$question->question_text] = $fileNameToStore;
+                            $attributes['_qid' . $question->id] = $fileNameToStore;
+                        }
+                    } else {
+                        $attributes[$question->question_text] = $ticketValues['meta_' . $meta];
+                        $attributes['_qid' . $question->id] = $ticketValues['meta_' . $meta];
+                    }
                 }
             }
             \Cart::add([
-                'id' => uniqid('TFT-' . $ticket->id),
+                'id' => $uniqueid,
                 'name' => $ticket->name,
                 'price' => $ticket->price,
                 'quantity' => 1,

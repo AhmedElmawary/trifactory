@@ -9,6 +9,7 @@ use Laravel\Nova\Fields\HasOne;
 use Laravel\Nova\Fields\BelongsTo;
 
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Avatar;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 use App\Nova\Actions\RemoveUnlinkedQuestionAnswers;
@@ -52,7 +53,8 @@ class QuestionAnswer extends Resource
             ID::make()->sortable(),
             BelongsTo::make('UserRace'),
             BelongsTo::make('Question'),
-            Text::make('Answer', 'answer_value')
+            Text::make('Answer', 'answer_value'),
+            Avatar::make('Image', 'answer_value')->disk('tickets_images'),
         ];
     }
 

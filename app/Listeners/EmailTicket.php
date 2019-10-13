@@ -60,7 +60,14 @@ class EmailTicket
 
                 foreach ($ticket as $key => $value) {
                     if (preg_match("/nationality/i", $key)) {
+                        $nationalities = \countries();
+                        unset($nationalities['il']);
                         $nationality = $value;
+                        foreach ($nationalities as $key=>$n) {
+                            if ($n['name'] == $value) {
+                                $nationality = $n['iso_3166_1_alpha2'];
+                            }
+                        }
                     }
                     if (preg_match("/year of birth/i", $key)) {
                         $year_of_birth = $value;

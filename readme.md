@@ -45,3 +45,7 @@ https://github.com/Maatwebsite/Laravel-Nova-Excel
 
 ### Docker Commands
 docker run -p 3306:3306 --name thetrifactory -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7
+
+### Storage linking
+storage linking is essential for images saved to appear in localhost
+`php artisan storage:link`
