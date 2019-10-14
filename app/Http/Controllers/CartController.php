@@ -371,12 +371,8 @@ class CartController extends Controller
                         $user->club = $ticketValues['meta_' . $meta];
                         $user->save();
                     }
-                    \Log::info($question->question_text);
                     if (preg_match("/upload/i", $question->question_text)) {
-                        \Log::info("enetered");
                         if ($request->hasFile($ticket_number.'_meta_'.$meta)) {
-                            \Log::info('here');
-                            \Log::info($_FILES);
                             // Get filename with extension
                             $filenameWithExt = $request->file($ticket_number.'_meta_'.$meta)->getClientOriginalName();
                             // Get just filename
