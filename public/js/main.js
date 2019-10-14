@@ -721,6 +721,7 @@ $(document).ready(function() {
                                 .get(0)
                                 .reset();
                             $("#added_to_cart_modal").modal();
+                            fbq('track', 'AddToCart');
                         },
                         error: function(data) {
                             console.log("An error occurred.");

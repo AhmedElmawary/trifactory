@@ -1,5 +1,12 @@
 @extends('layouts.app', ['body_class' => 'home-view']) @section('title', 'Home')
 @section('content')
+
+<script>
+    fbq('track', 'PageView');
+    function onEventClick() {
+        fbq('track', 'ViewContent');
+    }
+</script>
 <!-- Start Content -->
 <section
     class="hero-section d-flex justify-content-center no-padding"
@@ -40,7 +47,7 @@
             @else
             <img src="/images/placeholder.svg" alt="Event Image" />
             @endif
-            <a href="event-details/{{$event->id}}">
+            <a onclick="onEventClick()" href="event-details/{{$event->id}}">
                 <div
                     class="d-flex justify-content-center align-items-center flex-column event-details"
                 >

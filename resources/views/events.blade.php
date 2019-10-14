@@ -1,6 +1,12 @@
 @extends('layouts.app', ['body_class' => 'events-view'])
 @section('title', 'Events')
 @section('content')
+<script>
+  fbq('track', 'PageView');
+  function onEventClick() {
+    fbq('track', 'ViewContent');
+  }
+</script>
 <!-- Start Content -->
 <section class="hero-section d-flex justify-content-center align-items-center no-padding">
   <div class="hero-content d-flex justify-content-center align-items-center flex-column">
@@ -24,7 +30,7 @@
       @else
         <img class="event-cover" src="/images/placeholder-dark.svg" alt="Event Cover">
       @endif
-      <a href="/event-details/{{$event->id}}">
+      <a onclick="onEventClick()" href="/event-details/{{$event->id}}">
         <div class="d-flex justify-content-center align-items-center flex-column event-details left">
           @if($event->eventimages()->thumbnail()->first())
             <img src="/storage/{{ $event->eventimages()->thumbnail()->first()->image }}" alt="Event Thumb" class="event-thumb">
@@ -53,7 +59,7 @@
       @else
         <img class="event-cover" src="/images/placeholder-dark.svg" alt="Event Cover">
       @endif
-      <a href="/event-details/{{$event->id}}">
+      <a onclick="onEventClick()" href="/event-details/{{$event->id}}">
         <div class="d-flex justify-content-center align-items-center flex-column event-details left">
           @if($event->eventimages()->thumbnail()->first())
             <img src="/storage/{{ $event->eventimages()->thumbnail()->first()->image }}" alt="Event Thumb" class="event-thumb">

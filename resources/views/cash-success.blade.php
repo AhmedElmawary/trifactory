@@ -1,6 +1,12 @@
 @extends('layouts.app', ['body_class' => 'cart-view'])
 @section('title', 'Cash Payment Success')
 @section('content')
+<script>
+    window.onload = function() {
+      fbq('track', 'Purchase', {value: document.getElementById('costvalue').value, currency: 'EGP'});
+    }
+  </script>
+<input id="costvalue" type="number" value="{{$order->totalCost}}" hidden>
 <!-- Start Content -->
 <section class="container no-height no-separator">
   <h3 class="section-title">

@@ -1,6 +1,14 @@
 @extends('layouts.app', ['body_class' => 'cart-payment-view'])
 @section('title', 'Cart Payment')
 @section('content')
+<script>
+    function onUseCredit() {
+        fbq('track', 'AddPaymentInfo');
+    }
+    function onOnlinePayment() {
+        fbq('track', 'AddPaymentInfo');
+    }
+</script>
 <!-- Start Content -->
 <section class="container no-height no-separator">
     <h3 class="section-title">
@@ -23,7 +31,7 @@
           @csrf
           <input id="credit" name="credit" value="{{$credit}}" type="hidden">
         
-        <button @if($condition) disabled @endif @if(!$credit) disabled @endif type="submit" class="btn btn-dark text-light" id="use_points_button">
+        <button @if($condition) disabled @endif @if(!$credit) disabled @endif onclick="onUseCredit()" type="submit" class="btn btn-dark text-light" id="use_points_button">
             Use Credits
         </button>
         </form>
@@ -132,7 +140,7 @@
         </div>
 
         <div class="row col-lg-12" @if($cartTotal == 0 && !$cartItems) style="display: none;" @endif>
-            <input type="submit" class="btn btn-dark text-light" @if($cartTotal == 0) value="Confirm Order" @else value="Online Payment" @endif onClick="this.form.submit(); this.disabled=true; this.value='Submitting…'; ">           
+            <input type="submit" class="btn btn-dark text-light" @if($cartTotal == 0) value="Confirm Order" @else value="Online Payment" onclick="onOnlinePayment()" @endif onClick="this.form.submit(); this.disabled=true; this.value='Submitting…'; ">           
         </div>
         </form>
     </div>

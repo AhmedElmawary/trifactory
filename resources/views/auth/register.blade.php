@@ -1,6 +1,11 @@
 @extends('layouts.app', ['body_class' => 'sign-in-view']) 
 @section('title', 'Sign up')
 @section('content')
+<script>
+    function onSignUp() {
+        fbq('track', 'CompleteRegistration');
+    }
+</script>
 <div class="container">
     <section class="register-section no-height no-separator">
         <div class="row">
@@ -179,7 +184,7 @@
                         />
                     </div>
 
-                    <button type="submit" class="btn btn-dark light mt-3">
+                    <button onclick="onSignUp()" type="submit" class="btn btn-dark light mt-3">
                         Signup
                     </button>
                 </form>

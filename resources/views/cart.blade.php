@@ -1,6 +1,11 @@
 @extends('layouts.app', ['body_class' => 'cart-view'])
 @section('title', 'Cart')
 @section('content')
+<script>
+  function onProceedtoPayment() {
+      fbq('track', 'InitiateCheckout');
+  }
+</script>
 <!-- Start Content -->
 <section class="container no-height no-separator">
   <h3 class="section-title">
@@ -87,7 +92,7 @@
       Total <span class="float-right">EGP {{$cartTotal}}</span>
     </div>
     @if (count($cartItems) > 0)
-    <a  href="/cart/payment" class="btn btn-dark text-light mt-4 mb-4">Proceed to Payment</a>
+    <a onclick="onProceedtoPayment()" href="/cart/payment" class="btn btn-dark text-light mt-4 mb-4">Proceed to Payment</a>
     @endif
   </div>
 </section>

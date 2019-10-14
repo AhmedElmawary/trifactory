@@ -1,6 +1,11 @@
 @extends('layouts.app', ['body_class' => 'event-details-view'])
 @section('title', $event->name)
 @section('content')
+<script>
+  function onProceedtoCheckout() {
+      fbq('track', 'InitiateCheckout');
+  }
+</script>
 <!-- Start Content -->
 <form enctype="multipart/form-data" id="add_to_cart" method="POST" action="{{ url('/cart') }}">
 @csrf
@@ -208,7 +213,7 @@
       </div>
       <div class="content">
         <p class="modal-text"></p>
-        <a href="/cart" class="btn btn-dark light">Proceed to Checkout</a>
+        <a onclick="onProceedtoCheckout()" href="/cart" class="btn btn-dark light">Proceed to Checkout</a>
         <a href="/events" class="btn btn-clear text-dark">Explore More Events</a>
       </div>
     </div>
