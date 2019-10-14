@@ -3,7 +3,7 @@
 @section('content')
 <script>
   window.onload = function() {
-    fbq('track', 'Purchase', {value: document.getElementById('costvalue').value, currency: 'EGP'});
+    fbq('track', 'Purchase', {value: document.getElementById('costvalue').value, currency: 'USD'});
   }
 </script>
 <input id="costvalue" type="number" value="{{$order->totalCost}}" hidden>
