@@ -33,7 +33,7 @@ class HomeController extends Controller
             \Cart::session($user->id);
         }
         $gallery = Gallery::latest('created_at')->with('galleryimage')->first();
-        $upcomingEvents = Event::upcomming()->published()->get();
+        $upcomingEvents = Event::with('eventimages')->upcomming()->published()->get();
 
         $leaderboardMale = \DB::table('leaderboard_data')
             ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
