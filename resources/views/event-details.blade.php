@@ -186,9 +186,11 @@
     </div>
   </section>
   <section class="container no-height no-separator">
+    @if ($event->id == 7)
     <div class="row details-text" style="font-size: 12px;font-weight: 400;">
       **Photographs of valid national identification cards or passports are necessary to ensure your safety & security, and to make sure that only participants are granted access to the event venue.
     </div><br>
+    @endif
       <div class="row">
       <div class="col-lg-12 text-right">
         @auth
