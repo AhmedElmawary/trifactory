@@ -73,7 +73,7 @@
         </div>
       </div>
       <div class="row">
-        @if(($pastEvent || $closed) && !(isset($user) && ($user->id == 469 || $user->id == 465)))
+        @if(($pastEvent || $closed) && !(isset($user) && ($user->id == 469 || $user->id == 465 || $user->id == 1468)))
         <div class="col-lg-12">Registration Closed</div>
         @else
         <div class="col-lg-2 tickets-quantity" hidden>

@@ -51,6 +51,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
                 'ayman@thetrifactory.com',
                 'beltagy@thetrifactory.com',
                 'farida@thetrifactory.com',
+                'tickets@thetrifactory.com',
             ]);
         });
     }
