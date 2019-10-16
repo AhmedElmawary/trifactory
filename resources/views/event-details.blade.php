@@ -31,11 +31,11 @@
     <div class="col-lg-6">
       <div class="event-title mb-3">{{ $event->name }}</div>
       <div class="row mb-3">
-        <div class="col-lg-6 event-sub-details">
+        <div class="col-lg-7 event-sub-details">
           <img class="details-icon" src="/images/calendar-icon.svg">
           <span class="details-text">{{ \Carbon\Carbon::parse($event->event_start)->format('F jS Y')}} - {{ \Carbon\Carbon::parse($event->event_end)->format('F jS Y')}}</span>
         </div>
-        <div class="col-lg-6 event-sub-details">
+        <div class="col-lg-5 event-sub-details">
           <img class="details-icon" src="/images/location-icon.svg">
           <span class="details-text">{{$event->city}}, {{$event->country}}</span>
         </div>
@@ -186,7 +186,10 @@
     </div>
   </section>
   <section class="container no-height no-separator">
-    <div class="row">
+    <div class="row details-text" style="font-size: 12px;font-weight: 400;">
+      **Photographs of valid national identification cards or passports are necessary to ensure your safety & security, and to make sure that only participants are granted access to the event venue.
+    </div><br>
+      <div class="row">
       <div class="col-lg-12 text-right">
         @auth
         <input type="submit" class="btn btn-dark" id="open_added_to_cart_modal" value="Add Ticket(s) to Cart">
