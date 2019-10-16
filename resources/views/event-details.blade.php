@@ -33,7 +33,7 @@
       <div class="row mb-3">
         <div class="col-lg-7 event-sub-details">
           <img class="details-icon" src="/images/calendar-icon.svg">
-          <span class="details-text">{{ \Carbon\Carbon::parse($event->event_start)->format('F jS Y')}} - {{ \Carbon\Carbon::parse($event->event_end)->format('F jS Y')}}</span>
+          <span class="details-text">{{ \Carbon\Carbon::parse($event->event_start)->format('F jS Y')}}{{ ($event->event_start != $event->event_end) ? '-'. \Carbon\Carbon::parse($event->event_end)->format('F jS Y') : ''}}</span>
         </div>
         <div class="col-lg-5 event-sub-details">
           <img class="details-icon" src="/images/location-icon.svg">
@@ -185,12 +185,12 @@
         <!-- meta data placeholder -->
     </div>
   </section>
-  <section class="container no-height no-separator">
-    @if ($event->id == 7)
-    <div class="row details-text" style="font-size: 12px;font-weight: 400;">
+  @if ($event->id == 7)
+    <div class="container no-height no-separator" style="font-size: 12px;font-weight: 400;">
       **Photographs of valid national identification cards or passports are necessary to ensure your safety & security, and to make sure that only participants are granted access to the event venue.
     </div><br>
     @endif
+  <section class="container no-height no-separator">
       <div class="row">
       <div class="col-lg-12 text-right">
         @auth
