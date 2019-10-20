@@ -28,7 +28,18 @@ class EmailVoucherBuyer
      */
     public function handle($event)
     {
-        
-        Mail::to($event->user->email)->send(new VoucherPurchase($event));
+        try {
+            Mail::to($event->user->email)->send(new VoucherPurchase($event));
+        } catch (\Exception $e) {
+            \App\Exception::create([
+                'message' => $e->getMessage(),
+                'data' => json_encode($event),
+                'location' => 
+                'Line:'.__LINE__
+                .';File:'.__FILE__
+                .';Class:'.__CLASS__
+                .';Method:'.__METHOD__
+            ]); 
+        }
     }
 }

@@ -28,6 +28,18 @@ class EmailNewUser
      */
     public function handle($event)
     {
-        Mail::to($event->user->email)->send(new SendWelcomeEmail($event->user));
+        try {
+            Mail::to($event->user->email)->send(new SendWelcomeEmail($event->user));
+        } catch (\Exception $e) {
+            \App\Exception::create([
+                'message' => $e->getMessage(),
+                'data' => json_encode($event),
+                'location' => 
+                'Line:'.__LINE__
+                .';File:'.__FILE__
+                .';Class:'.__CLASS__
+                .';Method:'.__METHOD__
+            ]); 
+        }
     }
 }

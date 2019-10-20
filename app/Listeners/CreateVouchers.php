@@ -58,7 +58,19 @@ class CreateVouchers
             $voucher->sender_id = $event->user->id;
             $voucher->save();
 
-            Mail::to($event->meta->recipient_email)->send(new SendVoucher($event->meta, $event->user, $voucher));
+            try {
+                Mail::to($event->meta->recipient_email)->send(new SendVoucher($event->meta, $event->user, $voucher));
+            } catch (\Exception $e) {
+                \App\Exception::create([
+                    'message' => $e->getMessage(),
+                    'data' => json_encode($event),
+                    'location' => 
+                    'Line:'.__LINE__
+                    .';File:'.__FILE__
+                    .';Class:'.__CLASS__
+                    .';Method:'.__METHOD__
+                ]); 
+            }
         }
     }
 }

@@ -41,9 +41,33 @@ class EmailTicket
 
         if ($user->email === $ticket->$email) {
             $self = true;
-            Mail::to($user->email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, null, null));
+            try {
+                Mail::to($user->email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, null, null));
+            } catch (\Exception $e) {
+                \App\Exception::create([
+                    'message' => $e->getMessage(),
+                    'data' => json_encode($event),
+                    'location' => 
+                    'Line:'.__LINE__
+                    .';File:'.__FILE__
+                    .';Class:'.__CLASS__
+                    .';Method:'.__METHOD__
+                ]); 
+            }
         } else {
-            Mail::to($user->email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, null, null));
+            try {
+                Mail::to($user->email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, null, null));
+            } catch (\Exception $e) {
+                \App\Exception::create([
+                    'message' => $e->getMessage(),
+                    'data' => json_encode($event),
+                    'location' => 
+                    'Line:'.__LINE__
+                    .';File:'.__FILE__
+                    .';Class:'.__CLASS__
+                    .';Method:'.__METHOD__
+                ]); 
+            }
             $fromUser = $user;
             $user = User::where('email', $ticket->$email)->first();
             if (!$user) {
@@ -99,15 +123,27 @@ class EmailTicket
             
             $other = true;
             
-            Mail::to($ticket->$email)->send(new SendTicketEmail(
-                $ticketId,
-                $user,
-                $ticket,
-                $self,
-                $other,
-                $fromUser,
-                $newAccount
-            ));
+            try {
+                Mail::to($ticket->$email)->send(new SendTicketEmail(
+                    $ticketId,
+                    $user,
+                    $ticket,
+                    $self,
+                    $other,
+                    $fromUser,
+                    $newAccount
+                ));
+            } catch (\Exception $e) {
+                \App\Exception::create([
+                    'message' => $e->getMessage(),
+                    'data' => json_encode($event),
+                    'location' => 
+                    'Line:'.__LINE__
+                    .';File:'.__FILE__
+                    .';Class:'.__CLASS__
+                    .';Method:'.__METHOD__
+                ]); 
+            }
         }
     }
 }
