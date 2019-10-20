@@ -308,7 +308,20 @@ class CartController extends Controller
             }
         }
         foreach ($grouppedInput as $ticket_number => $ticketValues) {
-            $ticket = Ticket::find($ticketValues['type']);
+            try {
+                $ticket = Ticket::find($ticketValues['type']);
+            } catch (\Exception $e) {
+                \App\Exception::create([
+                    'message' => $e->getMessage(),
+                    'data' => json_encode($input),
+                    'location' => 
+                    'Line:'.__LINE__
+                    .';File:'.__FILE__
+                    .';Class:'.__CLASS__
+                    .';Method:'.__METHOD__
+                ]);
+                return redirect()->back();
+            }
             $race = $ticket->race()->first();
 
             if ($ticketValues['use'] == 'myself') {

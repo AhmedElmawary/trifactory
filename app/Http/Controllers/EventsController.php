@@ -40,6 +40,10 @@ class EventsController extends Controller
         $pastEvent = false;
         $closed = true;
         
+        if (!isset($event)) {
+            abort(404);
+        }
+
         foreach ($event->race()->get() as $race) {
             $race_tickets = $race->ticket()->get();
             foreach ($race_tickets as $race_ticket) {
@@ -89,7 +93,19 @@ class EventsController extends Controller
         $raceQuestions = Race::where('id', $id)
             ->with('question', 'question.answertype', 'question.answervalue')
             ->get();
+        try {
         $raceQuestions[0]['user'] = Auth::user();
+        } catch (\Exception $e) {
+            \App\Exception::create([
+                'message' => $e->getMessage(),
+                'data' => json_encode($id),
+                'location' => 
+                'Line:'.__LINE__
+                .';File:'.__FILE__
+                .';Class:'.__CLASS__
+                .';Method:'.__METHOD__
+            ]); 
+        }
         return response()->json($raceQuestions);
     }
 
