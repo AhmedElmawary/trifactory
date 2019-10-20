@@ -47,12 +47,12 @@ class EmailTicket
                 \App\Exception::create([
                     'message' => $e->getMessage(),
                     'data' => json_encode($event),
-                    'location' => 
+                    'location' =>
                     'Line:'.__LINE__
                     .';File:'.__FILE__
                     .';Class:'.__CLASS__
                     .';Method:'.__METHOD__
-                ]); 
+                ]);
             }
         } else {
             try {
@@ -61,12 +61,12 @@ class EmailTicket
                 \App\Exception::create([
                     'message' => $e->getMessage(),
                     'data' => json_encode($event),
-                    'location' => 
+                    'location' =>
                     'Line:'.__LINE__
                     .';File:'.__FILE__
                     .';Class:'.__CLASS__
                     .';Method:'.__METHOD__
-                ]); 
+                ]);
             }
             $fromUser = $user;
             $user = User::where('email', $ticket->$email)->first();
@@ -137,12 +137,12 @@ class EmailTicket
                 \App\Exception::create([
                     'message' => $e->getMessage(),
                     'data' => json_encode($event),
-                    'location' => 
+                    'location' =>
                     'Line:'.__LINE__
                     .';File:'.__FILE__
                     .';Class:'.__CLASS__
                     .';Method:'.__METHOD__
-                ]); 
+                ]);
             }
         }
     }

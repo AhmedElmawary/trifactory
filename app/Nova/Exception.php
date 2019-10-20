@@ -8,7 +8,6 @@ use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Code;
 
-
 class Exception extends Resource
 {
     /**

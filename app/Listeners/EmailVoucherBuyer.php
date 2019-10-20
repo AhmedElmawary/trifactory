@@ -34,12 +34,12 @@ class EmailVoucherBuyer
             \App\Exception::create([
                 'message' => $e->getMessage(),
                 'data' => json_encode($event),
-                'location' => 
+                'location' =>
                 'Line:'.__LINE__
                 .';File:'.__FILE__
                 .';Class:'.__CLASS__
                 .';Method:'.__METHOD__
-            ]); 
+            ]);
         }
     }
 }

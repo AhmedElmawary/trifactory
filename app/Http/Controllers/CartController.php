@@ -314,7 +314,7 @@ class CartController extends Controller
                 \App\Exception::create([
                     'message' => $e->getMessage(),
                     'data' => json_encode($input),
-                    'location' => 
+                    'location' =>
                     'Line:'.__LINE__
                     .';File:'.__FILE__
                     .';Class:'.__CLASS__

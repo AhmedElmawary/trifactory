@@ -94,17 +94,17 @@ class EventsController extends Controller
             ->with('question', 'question.answertype', 'question.answervalue')
             ->get();
         try {
-        $raceQuestions[0]['user'] = Auth::user();
+            $raceQuestions[0]['user'] = Auth::user();
         } catch (\Exception $e) {
             \App\Exception::create([
                 'message' => $e->getMessage(),
                 'data' => json_encode($id),
-                'location' => 
+                'location' =>
                 'Line:'.__LINE__
                 .';File:'.__FILE__
                 .';Class:'.__CLASS__
                 .';Method:'.__METHOD__
-            ]); 
+            ]);
         }
         return response()->json($raceQuestions);
     }
