@@ -78,12 +78,17 @@ class EventsController extends Controller
         if (Auth::user() && (Auth::user()->id == 465 || Auth::user()->id == 469 || Auth::user()->id == 1468)) {
             $tickets = DB::table('tickets')
                 ->where('race_id', $id)->get();
+            $tickets['exception_user'] = false;
             $tickets['admin'] = true;
         } else {
             $tickets = DB::table('tickets')
                 ->where('race_id', $id)
                 ->where('published', 'YES')->get();
+            $tickets['exception_user'] = false;
             $tickets['admin'] = false;
+            if (Auth::user() && Auth::user()->id == 1585 || Auth::user()->id == 643) {
+                $tickets['exception_user'] = true;
+            }
         }
         return response()->json($tickets);
     }

@@ -175,7 +175,7 @@
       </div>
       <div class="col-lg-6 mt-3">
         <div class="input-group">
-          <select class="custom-select " name="ticket_1_type" required>
+          <select class="custom-select ticket_type" name="ticket_1_type" required>
             <option disabled value="" selected>Ticket Type</option>
           </select>
         </div>

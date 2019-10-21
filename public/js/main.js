@@ -333,7 +333,7 @@ $(document).ready(function() {
                         if (!(itemData == false || itemData == true)) {
                         $('select[name="' + drop_name + '"]').append(
                             "<option " +
-                                disabled +
+                            ((itemData.name.includes('General') && data['exception_user'] == true) ? '' : disabled) +
                                 ' value="' +
                                 itemData.id +
                                 '">' +
