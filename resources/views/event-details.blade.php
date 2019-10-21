@@ -22,11 +22,11 @@
           <img src="/storage/{{ $image->image }}">
         @endforeach
       </div>
-      <div class="event-slider-nav">
+      {{-- <div class="event-slider-nav">
         @foreach($event->eventimages()->get() as $image)
           <img src="/storage/{{ $image->image }}">
         @endforeach
-      </div>
+      </div> --}}
     </div>
     <div class="col-lg-6">
       <div class="event-title mb-3">{{ $event->name }}</div>
