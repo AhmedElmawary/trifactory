@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Code;
+use Laravel\Nova\Fields\DateTime;
 
 class Exception extends Resource
 {
