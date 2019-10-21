@@ -55,6 +55,8 @@ class Exception extends Resource
             Text::make('Message', 'message')->sortable(),
             Code::make('Data', 'data')->sortable(),
             Text::make('Location', 'location')->sortable(),
+            DateTime::make('Created At', 'created_at')->sortable(),
+            DateTime::make('Updated At', 'updated_at')->sortable(),
         ];
     }
 
