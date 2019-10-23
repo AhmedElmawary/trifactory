@@ -58,6 +58,11 @@ function onFileChange(){
     if ($('#national_id_image').val()) {
         $('.fa-times-circle').hide();
         $('.fa-check-circle').show();
+        if (document.getElementById("national_id_image") != null && document.getElementById("national_id_image").files[0] && document.getElementById("national_id_image").files[0].size > 15728640) {
+            document.getElementById("national_id_image").setCustomValidity('Input file must be not greater than 15 MB');
+        } else {
+            document.getElementById("national_id_image").setCustomValidity('');
+        }
     } else {
         $('.fa-times-circle').show();
         $('.fa-check-circle').hide();
@@ -437,11 +442,12 @@ $(document).ready(function() {
                                 str += ' id="national_id_image"';
                                 str += ' name="' + meta_field_name + '_' + question.id + '"';
                                 str += ' required';
+                                str += ' data-max-size="1"';
                                 str += ' form="add_to_cart"';
                                 str += ' onchange="onFileChange()"';
                                 str += ' style="opacity: 0;width: 1%;float: left;"';
                                 str += ' />';
-                                str += ' <span class="fas fa-upload"></span> &nbsp;&nbsp;Upload valid copy of ID/Passport (Less than 2MB ) <span style="float:right;color:green; display:none;" class="far fa-check-circle"></span><span style="float:right;color:red;" class="far fa-times-circle"></span></label>';
+                                str += ' <span class="fas fa-upload"></span> &nbsp;&nbsp;Upload valid copy of ID/Passport (Less than 15MB ) <span style="float:right;color:green; display:none;" class="far fa-check-circle"></span><span style="float:right;color:red;" class="far fa-times-circle"></span></label>';
                             }
 
                             if (question.answertype.type === "dropdown") {
