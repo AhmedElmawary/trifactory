@@ -447,7 +447,7 @@ $(document).ready(function() {
                                 str += ' onchange="onFileChange()"';
                                 str += ' style="opacity: 0;width: 1%;float: left;"';
                                 str += ' />';
-                                str += ' <span class="fas fa-upload"></span> &nbsp;&nbsp;Upload valid copy of ID/Passport (Less than 15MB ) <span style="float:right;color:green; display:none;" class="far fa-check-circle"></span><span style="float:right;color:red;" class="far fa-times-circle"></span></label>';
+                                str += ' <span class="fas fa-upload"></span> &nbsp;&nbsp;Upload valid copy of ID/Passport (Less than 2MB ) <span style="float:right;color:green; display:none;" class="far fa-check-circle"></span><span style="float:right;color:red;" class="far fa-times-circle"></span></label>';
                             }
 
                             if (question.answertype.type === "dropdown") {
