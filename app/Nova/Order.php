@@ -12,6 +12,7 @@ use Laravel\Nova\Fields\DateTime;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use App\Nova\Actions\UserTicketDetails;
 use App\Nova\Actions\FixOrderData;
+use App\Nova\Actions\MakeUserRace;
 
 class Order extends Resource
 {
@@ -94,6 +95,20 @@ class Order extends Resource
         return [];
     }
 
+    protected static function applyOrderings($query, array $orderings)
+    {
+        if (empty($orderings)) {
+            // This is your default order
+            return $query->orderBy('created_at', 'desc');
+        }
+
+        foreach ($orderings as $column => $direction) {
+            $query->orderBy($column, $direction);
+        }
+
+        return $query;
+    }
+
     /**
      * Get the actions available for the resource.
      *
@@ -105,6 +120,7 @@ class Order extends Resource
         return [
             (new UserTicketDetails)->askForFilename(),
             (new DownloadExcel)->withHeadings()->askForFilename(),
+            new MakeUserRace
             // new FixOrderData
         ];
     }
