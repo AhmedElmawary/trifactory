@@ -58,8 +58,8 @@ function onFileChange(){
     if ($('#national_id_image').val()) {
         $('.fa-times-circle').hide();
         $('.fa-check-circle').show();
-        if (document.getElementById("national_id_image") != null && document.getElementById("national_id_image").files[0] && document.getElementById("national_id_image").files[0].size > 2097152) {   // 15728640
-            document.getElementById("national_id_image").setCustomValidity('Input file must be not greater than 2 MB');
+        if (document.getElementById("national_id_image") != null && document.getElementById("national_id_image").files[0] && document.getElementById("national_id_image").files[0].size > 26214400 ) {   // 15728640
+            document.getElementById("national_id_image").setCustomValidity('Input file must be not greater than 25MB');
         } else {
             document.getElementById("national_id_image").setCustomValidity('');
         }
@@ -447,7 +447,7 @@ $(document).ready(function() {
                                 str += ' onchange="onFileChange()"';
                                 str += ' style="opacity: 0;width: 1%;float: left;"';
                                 str += ' />';
-                                str += ' <span class="fas fa-upload"></span> &nbsp;&nbsp;Upload valid copy of ID/Passport (Less than 2MB ) <span style="float:right;color:green; display:none;" class="far fa-check-circle"></span><span style="float:right;color:red;" class="far fa-times-circle"></span></label>';
+                                str += ' <span class="fas fa-upload"></span> &nbsp;&nbsp;Upload valid copy of ID/Passport (Less than 25MB ) <span style="float:right;color:green; display:none;" class="far fa-check-circle"></span><span style="float:right;color:red;" class="far fa-times-circle"></span></label>';
                             }
 
                             if (question.answertype.type === "dropdown") {
