@@ -58,7 +58,7 @@ function onFileChange(){
     if ($('#national_id_image').val()) {
         $('.fa-times-circle').hide();
         $('.fa-check-circle').show();
-        if (document.getElementById("national_id_image") != null && document.getElementById("national_id_image").files[0] && document.getElementById("national_id_image").files[0].size > 26214400) {   // 15728640
+        if (document.getElementById("national_id_image") != null && document.getElementById("national_id_image").files[0] && document.getElementById("national_id_image").files[0].size > 2097152) {   // 15728640
             document.getElementById("national_id_image").setCustomValidity('Input file must be not greater than 2 MB');
         } else {
             document.getElementById("national_id_image").setCustomValidity('');
