@@ -86,9 +86,9 @@ class EventsController extends Controller
                 ->where('published', 'YES')->get();
             $tickets['exception_user'] = false;
             $tickets['admin'] = false;
-            // if (Auth::user() && Auth::user()->id == 1585 || Auth::user()->id == 643) {
-            //     $tickets['exception_user'] = true;
-            // }
+        }
+        if (Auth::user() && Auth::user()->id == 1481) {
+            $tickets['exception_user'] = true;
         }
         return response()->json($tickets);
     }
