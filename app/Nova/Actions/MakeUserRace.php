@@ -46,7 +46,8 @@ class MakeUserRace extends Action
                             $userrace = new UserRace();
                             $userrace->order_id = $order['id'];
                             $userrace->participant_ticket_id = $key;
-                            $userrace->participant_user_id = User::select('id')->where("email", $value['E-mail'])->first()['id'];
+                            $userrace->participant_user_id = User::select('id')->where("email", $value['E-mail'])
+                            ->first()['id'];
                             $userrace->race_id = $value['_race_id'];
                             $userrace->ticket_id = $value['_ticket_id'];
                             $userrace->user_id = $order['user_id'];
@@ -56,7 +57,8 @@ class MakeUserRace extends Action
                             ->where('ticket_id', $value['_ticket_id'])
                             ->where('user_id', $order['user_id']);
                             foreach ($old_userraces->get() as $old_userrace) {
-                                if (!isset($old_userrace['participant_ticket_id']) || !isset($old_userrace['participant_user_id'])) {
+                                if (!isset($old_userrace['participant_ticket_id'])
+                                || !isset($old_userrace['participant_user_id'])) {
                                     $old_userrace->delete();
                                 }
                             }
@@ -96,8 +98,6 @@ class MakeUserRace extends Action
             }
             // return $result;
         }
-
-        
     }
 
     /**

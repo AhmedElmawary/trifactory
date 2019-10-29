@@ -78,7 +78,8 @@ class FixOrderData extends Action
                                     $updated_ticket_details["_qid".$birth_question_id] =
                                     Answervalue::where('value', $user->year_of_birth)->first()['id'];
                                 } else {
-                                    if (preg_match("/size/i", $q['question_text']) && !$club_exists && !$other_exists) {    // add the club and others
+                                    // add the club and others
+                                    if (preg_match("/size/i", $q['question_text']) && !$club_exists && !$other_exists) {
                                         $race_questions = RaceQuestion::where('race_id', $value['_race_id'])->get();
                                         $club_question_id = 0;
                                         $club_question_text = '';
