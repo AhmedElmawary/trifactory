@@ -227,6 +227,15 @@ class PaymentController extends Controller
      */
     public function processedCallback(Request $request)
     {
+        \App\Exception::create([
+            'message' =>'Processed Callback',
+            'data' => json_encode($request),
+            'location' =>
+            'Line:'.__LINE__
+            .';File:'.__FILE__
+            .';Class:'.__CLASS__
+            .';Method:'.__METHOD__
+        ]);
         $orderId = $request['obj']['order']['id'];
         $order = Order::wherePaymobOrderId($orderId)->first();
         // Statuses.
@@ -254,6 +263,15 @@ class PaymentController extends Controller
      */
     public function invoice(Request $request)
     {
+        \App\Exception::create([
+            'message' =>'Response Callback',
+            'data' => json_encode($request),
+            'location' =>
+            'Line:'.__LINE__
+            .';File:'.__FILE__
+            .';Class:'.__CLASS__
+            .';Method:'.__METHOD__
+        ]);
         $orderId = $request->order;
         $order = Order::wherePaymobOrderId($orderId)->first();
         $order->success = $request->success;
