@@ -186,6 +186,8 @@ class PaymentController extends Controller
      */
     protected function succeeded($order)
     {
+        $order->success = "true";
+        $order->save();
     }
 
     /**
@@ -196,6 +198,8 @@ class PaymentController extends Controller
      */
     protected function voided($order)
     {
+        $order->success = "voided";
+        $order->save();
     }
 
     /**
@@ -206,6 +210,8 @@ class PaymentController extends Controller
      */
     protected function refunded($order)
     {
+        $order->success = "refunded";
+        $order->save();
     }
 
     /**
@@ -216,6 +222,8 @@ class PaymentController extends Controller
      */
     protected function failed($order)
     {
+        $order->success = "false";
+        $order->save();
     }
 
     /**
@@ -229,7 +237,7 @@ class PaymentController extends Controller
     {
         \App\Exception::create([
             'message' =>'Processed Callback',
-            'data' => json_encode($request),
+            'data' => json_encode($request['obj']),
             'location' =>
             'Line:'.__LINE__
             .';File:'.__FILE__
