@@ -27,7 +27,7 @@ class PaymentController extends Controller
         if (\Request::is('api*') || \Request::wantsJson()) {
             // $this->middleware(['auth:api']);
         } else {
-            $this->middleware('auth');
+            $this->middleware('auth', ['except' => ['processedCallback', 'invoice']]);
         }
     }
 
