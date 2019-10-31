@@ -29,7 +29,7 @@ Route::post('/buy-vouchers', 'PaymentController@buyVouchers')->middleware('verif
 Route::post('/buy-tickets', 'PaymentController@buyTickets')->middleware('verified');
 Route::post('/refund-ticket', 'PaymentController@refundTicket')->name('refund-ticket')->middleware('verified');
 
-Route::get('/payment/processedCallback', 'PaymentController@processedCallback');
+Route::post('/payment/processedCallback', 'PaymentController@processedCallback');
 Route::get('/payment/invoice', 'PaymentController@invoice');
 
 Route::get('/cart', 'CartController@index');
