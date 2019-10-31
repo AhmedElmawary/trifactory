@@ -42,7 +42,8 @@ class ProfileController extends Controller
         }
         if ($user) {
             $data['past_events'] = \App\LeaderboardData::with('race.event')->where('email', $user->email)->get();
-            $data['upcoming_events'] = \App\UserRace::with('race.event', 'ticket', 'questionanswer', 'questionanswer.question')
+            $data['upcoming_events'] = \App\UserRace::
+            with('race.event', 'ticket', 'questionanswer', 'questionanswer.question')
                 ->whereHas('race.event', function ($query) {
                     $query->where('event_start', '>', \Carbon\Carbon::today()->toDateTimeString());
                 })
@@ -158,7 +159,8 @@ class ProfileController extends Controller
         }
     }
 
-    public function updateUserRaceAnswers(Request $request) {
+    public function updateUserRaceAnswers(Request $request)
+    {
         // $user = Auth::user();
         // $userrace_id = $request->userrace->id;
         // $qa = QuestionAnswer::where('userrace_id', $userrace_id);
