@@ -43,12 +43,16 @@ class ProfileController extends Controller
         if ($user) {
             $data['past_events'] = \App\LeaderboardData::with('race.event')->where('email', $user->email)->get();
             $data['upcoming_events'] = \App\UserRace::
-            with('race.event', 'ticket', 'questionanswer',
-            'questionanswer.question',
-            'questionanswer.question.answertype',
-            'questionanswer.question.answervalue')
-                ->with(['ticket.race.ticket' => function($query){
-                    $query->where('published', 'yes'); 
+            with(
+                'race.event',
+                'ticket',
+                'questionanswer',
+                'questionanswer.question',
+                'questionanswer.question.answertype',
+                'questionanswer.question.answervalue'
+            )
+                ->with(['ticket.race.ticket' => function ($query) {
+                    $query->where('published', 'yes');
                 }])
                 ->whereHas('race.event', function ($query) {
                     $query->where('event_start', '>', \Carbon\Carbon::today()->toDateTimeString());
