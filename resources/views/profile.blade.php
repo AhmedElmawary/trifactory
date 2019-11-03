@@ -242,7 +242,7 @@
                             <hr class="line-separator" />
                         </div>
                         <div class="col-lg-12">
-                            <button type="submit" class="btn btn-dark float-right">
+                            <button type="submit" class="btn btn-dark float-right" value="Submit">
                                 Save Changes
                             </button>
                         </div>
@@ -455,8 +455,67 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-12 mb-5">
+                                    <hr class="line-separator" />
+                                </div>
+                                <div class="event-title mb-3">
+                                    Race Details
+                                </div>
+                            <form method="POST" action="{{ route('questionanswerupdate') }}">
+                                @csrf
+                                <div class="row">
+                                @foreach ($event->questionanswer as $qa)
+                                {{-- {{$countries}} --}}
+                                <div class="col-lg-6 mb-4">
+                                <div>{{$qa->question->question_text}}</div>
+                                    <div class="input-group">
+                                        @if (stripos($qa->question->answertype->type, 'countries') !== false)
+                                        <select @if (!(
+                                            stripos($qa->question->question_text, 'swimmer') !== false ||
+                                            stripos($qa->question->question_text, 'runner') !== false ||
+                                            stripos($qa->question->question_text, 'cyclist') !== false
+                                            )) disabled @endif 
+                                            name="{{$qa->id}}" required class="custom-select " placeholder="{{$qa->question->question_text}}">
+                                        @foreach ((array)json_decode($countries) as $key => $country)
+                                        <option @if ($qa->answer_value == $country->name) selected @endif value="{{$country->name}}">{{$country->name}}</option>
+                                        @endforeach
+                                        </select>
+                                        @elseif (stripos($qa->question->answertype->type, 'dropdown') !== false)
+                                        <select @if (!(
+                                            stripos($qa->question->question_text, 'size') !== false || 
+                                            stripos($qa->question->question_text, 'pace') !== false ||
+                                            stripos($qa->question->question_text, 'swimmer') !== false ||
+                                            stripos($qa->question->question_text, 'runner') !== false ||
+                                            stripos($qa->question->question_text, 'cyclist') !== false ||
+                                            stripos($qa->question->question_text, 'team') !== false
+                                            )) disabled @endif 
+                                            name="{{$qa->id}}" required class="custom-select " placeholder="{{$qa->question->question_text}}" sty>
+                                        @foreach ($qa->question->answervalue as $answervalue)
+                                        <option @if ($qa->answer_value == $answervalue->value) selected @endif value="{{$answervalue->value}}">{{$answervalue->value}}</option>
+                                        @endforeach
+                                        </select>
+                                        @else
+                                        <input @if (!(
+                                            stripos($qa->question->question_text, 'size') !== false || 
+                                            stripos($qa->question->question_text, 'pace') !== false ||
+                                            stripos($qa->question->question_text, 'swimmer') !== false ||
+                                            stripos($qa->question->question_text, 'runner') !== false ||
+                                            stripos($qa->question->question_text, 'cyclist') !== false ||
+                                            stripos($qa->question->question_text, 'team') !== false
+                                            )) disabled @endif 
+                                        name="{{$qa->id}}" required type="{{$qa->question->answertype->type}}" class="form-control " placeholder="{{$qa->question->question_text}}" value="{{$qa->answer_value}}"/>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endforeach
+                                </div>
+                                <input style="float:right" type="submit" class="btn btn-danger btn-block col-lg-6 mb-4" value="Submit Changes">
+                            </form>
+                            <div class="col-lg-12 mb-5">
+                                    <hr class="line-separator" />
+                                </div>
                             @if (!(isset($event->participant_user) && $event->participant_user->id != $user->id))
-                            <div class="col-lg-6 mt-4">
+                            <div style="margin: auto" class="col-lg-6 mt-4">
                                 <form id="form_{{$event->id}}" action="{{ route('refund-ticket', ['userrace_id'=>$event->id, 'order_id'=>$event->order_id, 'race_id'=>$event->race_id, 'ticket_id'=>$event->ticket_id, 'user_id'=>$event->user_id, 'participant_user_id'=>$event->participant_user_id, 'participant_ticket_id'=>$event->participant_ticket_id]) }}" method="post">
                                     @csrf
                                     <input

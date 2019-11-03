@@ -48,7 +48,7 @@ Route::get('/getUser', 'ProfileController@getUser');
 Route::get('/phoneValidation', 'ProfileController@validatePhone');
 Route::post('/profile/image', 'ProfileController@image');
 Route::post('/profile/update', 'ProfileController@update');
-Route::post('/userraceanswers/update', 'ProfileController@updateUserRaceAnswers');
+Route::post('/profile/userraceanswers/update', 'ProfileController@updateUserRaceAnswers')->name('questionanswerupdate');
 Route::post('/profile/password', 'ProfileController@password');
 
 Route::get('/leaderboard', 'LeaderboardController@index')->middleware('verified');

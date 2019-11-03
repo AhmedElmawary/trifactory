@@ -43,7 +43,7 @@ class ProfileController extends Controller
         if ($user) {
             $data['past_events'] = \App\LeaderboardData::with('race.event')->where('email', $user->email)->get();
             $data['upcoming_events'] = \App\UserRace::
-            with('race.event', 'ticket', 'questionanswer', 'questionanswer.question')
+            with('race.event', 'ticket', 'questionanswer', 'questionanswer.question', 'questionanswer.question.answertype', 'questionanswer.question.answervalue')
                 ->whereHas('race.event', function ($query) {
                     $query->where('event_start', '>', \Carbon\Carbon::today()->toDateTimeString());
                 })
@@ -61,6 +61,9 @@ class ProfileController extends Controller
             if ($user->profile_image) {
                 $data['profile_image'] = '/storage/profile_images/' . $user->profile_image;
             }
+            $nationalities = \countries();
+            unset($nationalities['il']);
+            $data['countries'] = json_encode($nationalities);
         }
         if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json(['status' => 200, 'data' => $data]);
@@ -165,7 +168,7 @@ class ProfileController extends Controller
         // $userrace_id = $request->userrace->id;
         // $qa = QuestionAnswer::where('userrace_id', $userrace_id);
         // if (!stripos($request->userrace->race->name, 'relay')) {}
-            \Log::info($request->all());
+        \Log::info($request->all());
         foreach ($request->all() as $key => $value) {
             $qa = QuestionAnswer::find($key);
             if (isset($qa)) {
