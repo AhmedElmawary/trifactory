@@ -465,7 +465,6 @@
                                 @csrf
                                 <div class="row">
                                 @foreach ($event->questionanswer as $qa)
-                                {{-- {{$countries}} --}}
                                 <div class="col-lg-6 mb-4">
                                 <div>{{$qa->question->question_text}}</div>
                                     <div class="input-group">
@@ -475,6 +474,9 @@
                                             stripos($qa->question->question_text, 'runner') !== false ||
                                             stripos($qa->question->question_text, 'cyclist') !== false
                                             )) disabled @endif 
+                                            @if (date("Y-m-d H:i:s") > max(array_column(json_decode($event->ticket->race->ticket, true), 'ticket_end')))
+                                            disabled
+                                            @endif
                                             name="{{$qa->id}}" required class="custom-select " placeholder="{{$qa->question->question_text}}">
                                         @foreach ((array)json_decode($countries) as $key => $country)
                                         <option @if ($qa->answer_value == $country->name) selected @endif value="{{$country->name}}">{{$country->name}}</option>
@@ -488,7 +490,10 @@
                                             stripos($qa->question->question_text, 'runner') !== false ||
                                             stripos($qa->question->question_text, 'cyclist') !== false ||
                                             stripos($qa->question->question_text, 'team') !== false
-                                            )) disabled @endif 
+                                            ) ) disabled @endif 
+                                            @if (date("Y-m-d H:i:s") > max(array_column(json_decode($event->ticket->race->ticket, true), 'ticket_end')))
+                                            disabled
+                                            @endif
                                             name="{{$qa->id}}" required class="custom-select " placeholder="{{$qa->question->question_text}}" sty>
                                         @foreach ($qa->question->answervalue as $answervalue)
                                         <option @if ($qa->answer_value == $answervalue->value) selected @endif value="{{$answervalue->value}}">{{$answervalue->value}}</option>
@@ -503,6 +508,9 @@
                                             stripos($qa->question->question_text, 'cyclist') !== false ||
                                             stripos($qa->question->question_text, 'team') !== false
                                             )) disabled @endif 
+                                            @if (date("Y-m-d H:i:s") > max(array_column(json_decode($event->ticket->race->ticket, true), 'ticket_end')))
+                                            disabled
+                                            @endif
                                         name="{{$qa->id}}" required type="{{$qa->question->answertype->type}}" class="form-control " placeholder="{{$qa->question->question_text}}" value="{{$qa->answer_value}}"/>
                                         @endif
                                     </div>
