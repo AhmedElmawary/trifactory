@@ -87,7 +87,6 @@ class UserTicketDetails extends DownloadExcel implements
 
         $result = array();
         if ($order['success'] == 'true' || stripos($order['success'], 'refund') !== false) {
-            
             if (preg_match("/TFT/i", $order['id']) || preg_match("/TFO/i", $order['id'])) {
                 foreach (json_decode($order['meta'], true) as $key => $value) {
                     if (preg_match("/TFT/i", $key) && isset($value['E-mail'])

@@ -406,7 +406,8 @@ class PaymentController extends Controller
                 if (preg_match("/TFT/i", $key) &&
                 (!isset($request->participant_ticket_id) || $request->participant_ticket_id == $key)) {
                     if ($value['_ticket_id'] == $request->ticket_id) {
-                        if ($general_ticket_ticket_end < $date_now && ($user->id != 1430)) {
+                        //  `&& ($user->id != 1430)` Removed Exception
+                        if ($general_ticket_ticket_end < $date_now) {
                             $ticket_cost = round($value['Price']*0.2, 0);
                         } else {
                             $ticket_cost = $value['Price'];
