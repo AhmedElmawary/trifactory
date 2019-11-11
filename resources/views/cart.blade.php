@@ -91,9 +91,26 @@
     <div class="cart-summary-item">
       Total <span class="float-right">EGP {{$cartTotal}}</span>
     </div>
+    <form @if ($cartTotal == 0) method="POST" action="{{ url('/buy-tickets') }}" @else method="GET" action="/cart/payment"  @endif>
+      @csrf
+      
+      <div class="form-check" style="display: none;">
+          <input
+              class="form-check-input"
+              type="radio"
+              id="paymet_method_card"
+              name="paymet_method"
+              value="card"
+              checked
+          />
+          <label class="form-check-label" for="paymet_method_card"
+              >Credit Card</label
+          >
+      </div>
     @if (count($cartItems) > 0)
-    <a onclick="onProceedtoPayment()" href="/cart/payment" class="btn btn-dark text-light mt-4 mb-4">Proceed to Payment</a>
+    <input type="submit" onclick="onProceedtoPayment()" class="btn btn-dark text-light mt-4 mb-4" value="{{($cartTotal == 0) ? "Confirm Order" : "Proceed to Payment"}}">
     @endif
+    </form>
   </div>
 </section>
 
