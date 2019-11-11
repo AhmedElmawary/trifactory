@@ -54,7 +54,7 @@ class Order extends Resource
         return [
             ID::make()->sortable(),
             Text::make('Paymob Order Id', 'paymob_order_id')->sortable(),
-            // Currency::make('Total Cost', 'totalCost')->sortable()->format('%.2n'),
+            Currency::make('Total Cost', 'totalCost')->sortable()->format('%.2n'),
             Text::make('Success', 'success'),
             Code::make('Meta', 'meta'),
             BelongsTo::make('User'),

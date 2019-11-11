@@ -81,8 +81,15 @@ class Promocode implements Rule
             }
         }
 
-        if (in_array($value, $this->cartCodes) && $promocode->unlimited = 0) {
+        if (in_array($value, $this->cartCodes) && $promocode->unlimited == 0 && $promocode->limit == -1) {
             $this->message = 'The selected code can only be used once.';
+            return false;
+        }
+        if ($promocode->limit == 0
+        || (in_array($value, $this->cartCodes)
+        && $promocode->limit <= array_count_values($this->cartCodes)[$value]
+        && $promocode->unlimited == 0)) {
+            $this->message = 'The selected code limit has exceeded.';
             return false;
         }
 

@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsToMany;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
@@ -50,6 +51,7 @@ class Promocode extends Resource
             Boolean::make('Published', 'published')
                 ->trueValue('yes')
                 ->falseValue('no'),
+            Number::make('Limit', 'limit')->sortable(),
             Boolean::make('Unlimited', 'unlimited')
                 ->trueValue(1)
                 ->falseValue(0),

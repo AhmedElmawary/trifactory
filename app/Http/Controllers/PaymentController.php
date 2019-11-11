@@ -319,14 +319,17 @@ class PaymentController extends Controller
 
         if ($promocode->unlimited == 1) {
             return;
+        } elseif ($promocode->limit > 0) {
+            $promocode->limit -= 1;
+            $promocode->save();
+            return;
+        } elseif ($promocode->limit == -1) {
+            $userPromocodeRace = new UserPromocodeOrder();
+            $userPromocodeRace->user_id = $user->id;
+            $userPromocodeRace->order_id = $order->id;
+            $userPromocodeRace->promocode_id = $promocode->id;
+            $userPromocodeRace->save();
         }
-        
-        $userPromocodeRace = new UserPromocodeOrder();
-        $userPromocodeRace->user_id = $user->id;
-        $userPromocodeRace->order_id = $order->id;
-        $userPromocodeRace->promocode_id = $promocode->id;
-
-        $userPromocodeRace->save();
     }
 
     public function postInvoice($order)
@@ -349,9 +352,9 @@ class PaymentController extends Controller
                     }
                 }
             }
-            \Cart::session($user->id);
-            \Cart::clear();
-            \Cart::clearCartConditions();
+            // \Cart::session($user->id);
+            // \Cart::clear();
+            // \Cart::clearCartConditions();
         }
 
         return $this->success($order);
