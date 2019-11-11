@@ -706,6 +706,8 @@ $(document).ready(function() {
         });
         // Added to cart modal
         $("#open_added_to_cart_modal").click(function(e) {
+            // $('#open_added_to_cart_modal').val('Submitting Form...');
+            // document.getElementById('open_added_to_cart_modal').innerHTML = 'Submitting Form...';
             if ($("#add_to_cart")[0].checkValidity()) {
                 $("#add_to_cart").submit(function(e) {
                     
