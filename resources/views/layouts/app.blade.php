@@ -71,6 +71,13 @@
                                 <span>Events</span>
                             </a>
                         </li>
+                        <li
+                            class="nav-item {{ Request::path() == 'leaderboard' ? 'active' : '' }}"
+                        >
+                            <a class="nav-link" href="/leaderboard">
+                                <span>Endurance League</span>
+                            </a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav my-2 my-lg-0 right-nav">
                         <li class="nav-item cart-item">
