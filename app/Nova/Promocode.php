@@ -35,6 +35,7 @@ class Promocode extends Resource
      */
     public static $search = [
         'code',
+        'value'
     ];
 
     /**

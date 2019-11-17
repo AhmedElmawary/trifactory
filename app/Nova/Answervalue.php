@@ -33,7 +33,11 @@ class Answervalue extends Resource
      * @var array
      */
     public static $search = [
-        'value','Question'
+        'value',
+    ];
+
+    public static $searchRelations = [
+        'Question' => ['question_text'],
     ];
 
     /**

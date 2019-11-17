@@ -38,7 +38,12 @@ class QuestionAnswer extends Resource
      * @var array
      */
     public static $search = [
-        'Question',
+        'answer_value',
+    ];
+
+    public static $searchRelations = [
+        'UserRace' => ['order_id', 'participant_ticket_id'],
+        'Question' => ['question_text'],
     ];
 
     /**

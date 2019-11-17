@@ -32,7 +32,7 @@ class Galleryimage extends Resource
      * @var array
      */
     public static $search = [
-        'name',
+        'image',
     ];
 
     /**
