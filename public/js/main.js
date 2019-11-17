@@ -177,22 +177,27 @@ $(document).ready(function() {
 
     // remember the hash in the URL without jumping
     $('a[data-toggle="pill"]').on("shown.bs.tab", function(e) {
-        if (history.pushState) {
-            history.pushState(
-                null,
-                null,
-                "#" +
-                    $(e.target)
-                        .attr("href")
-                        .substr(1)
-            );
-        } else {
-            location.hash =
-                "#" +
+        window.location.href = "?page=0#" +
                 $(e.target)
                     .attr("href")
                     .substr(1);
-        }
+        // URLSearchParams.delete(page)
+        // if (history.pushState) {
+        //     history.pushState(
+        //         null,
+        //         null,
+        //         "#" +
+        //             $(e.target)
+        //                 .attr("href")
+        //                 .substr(1)
+        //     );
+        // } else {
+            // location.hash =
+            //     "#" +
+            //     $(e.target)
+            //         .attr("href")
+            //         .substr(1);
+        // }
     });
 
     /*

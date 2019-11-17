@@ -132,7 +132,7 @@
                                 Showing {{$leaderboardFemale->count()}} from {{$leaderboardFemale->total()}} users
                             </div>
                             <div class="col-sm-4">
-                                <span >{{ $leaderboardFemale->fragment('pills-rankings-male')->links() }}</span>
+                                <span >{{ $leaderboardFemale->fragment('pills-rankings-female')->links() }}</span>
                             </div>
                             <div class="col-sm-4"></div>
                     </div>
@@ -170,7 +170,7 @@
                                 Showing {{$leaderboardClub->count()}} from {{$leaderboardClub->total()}} users
                             </div>
                             <div class="col-sm-4">
-                                <span >{{ $leaderboardClub->fragment('pills-rankings-male')->links() }}</span>
+                                <span >{{ $leaderboardClub->fragment('pills-rankings-club')->links() }}</span>
                             </div>
                             <div class="col-sm-4"></div>
                     </div>
