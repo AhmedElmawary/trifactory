@@ -15,6 +15,9 @@ function show_details(event_id){
 function showlogoutmodal(){
     $("#logout_modal").modal();
 }
+function showEnduranceLeagueModal(){
+    $("#endurance_league_details_modal").modal();
+}
 function openconfirmcancelmodal(event_id){
     $("#confirm_cancel_event_modal_"+event_id).modal();
     $("#confirm_cancel_event_modal_"+event_id).unbind();

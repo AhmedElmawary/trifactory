@@ -3,6 +3,17 @@
 <!-- Start Content -->
 <section class="main-profile-section container no-height no-separator">
     <div class="row">
+            <div class="col-lg-12 profile-content-container text-center">
+                <img width="100%" height="80%" src="/images/endurance_league_banner.jpg" alt="endurance-league-icon">
+                <a
+                class="nav-link "
+                style="display:inline;cursor:pointer;color: red; text-decoration: underline"
+                onclick="showEnduranceLeagueModal()">
+                Click here for more info
+                </a>
+            </div>
+    </div>
+    <div class="row">
         <div class="col-lg-12 profile-content-container">
             <ul class="nav nav-pills profile-nav" id="pills-tab" role="tablist">
                 <li class="nav-item">
@@ -179,6 +190,26 @@
         </div>
     </div>
 </section>
+
+        <div class="modal fade custom-modal" id="endurance_league_details_modal" tabindex="-1" role="dialog"
+            aria-labelledby="phone_verify_modal" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="header">
+                <!-- <h3 class="modal-title">Verification code sent to this number:</h3> -->
+                {{-- <img src="/images/success-icon.svg" class="modal-icon"> --}}
+                {{-- <span class="modal-sub-title">Endurance League Details</span> --}}
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="/images/close-icon.svg" alt="close icon">
+                </button>
+                </div>
+                <div class="content">
+                <img width="100%" src="/images/endurance_league_details.jpg" alt="endurance-league-details">
+                </div>
+                <br>
+            </div>
+            </div>
+        </div>
 
 <!-- End Content -->
 @endsection
