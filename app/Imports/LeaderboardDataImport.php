@@ -42,7 +42,7 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
 
         $race_id = trim($sheetName[count($sheetName) - 1]);
 
-        if (stripos($this->sheetName, 'relay')) {
+        if (stripos($this->sheetName, 'relay') !== false) {
             $names = explode('/', $row['name']);
             $count = count($names);
 
