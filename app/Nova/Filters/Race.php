@@ -35,6 +35,11 @@ class Race extends Filter
      */
     public function options(Request $request)
     {
-        return \App\Race::all()->pluck('id', 'name')->toArray();
+        $races = \App\Race::with('event')->get()->pluck('event.name', 'name')->all();
+        $options = [];
+        foreach ($races as $key => $value) {
+            $options[$value.' - '.$key] = \App\Race::where('name', $key)->first()['id'];
+        }
+        return $options;
     }
 }
