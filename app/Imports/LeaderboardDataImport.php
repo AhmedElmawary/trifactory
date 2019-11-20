@@ -46,7 +46,7 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
             \Log::info($row);
 
             $count = 0;
-            foreach ($row as $key=>$value) {
+            foreach ($row as $key => $value) {
                 if (stripos($key, 'name') !== false) {
                     $count++;
                 }
