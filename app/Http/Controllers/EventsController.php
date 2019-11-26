@@ -124,7 +124,7 @@ class EventsController extends Controller
         }
         if (\Request::is('api*') || \Request::wantsJson()) {
             $swimmer = [];
-            $runner = []; 
+            $runner = [];
             $cyclist = [];
             $others = [];
             foreach ($raceQuestions[0]['question'] as $rq) {
@@ -139,7 +139,7 @@ class EventsController extends Controller
                 }
             }
             $i = 0;
-            foreach($raceQuestions[0]['question'] as $element) {
+            foreach ($raceQuestions[0]['question'] as $element) {
                 unset($raceQuestions[0]['question'][$i]);
                 $i++;
             }
