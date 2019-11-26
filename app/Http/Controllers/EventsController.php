@@ -20,6 +20,12 @@ class EventsController extends Controller
         $events = Event::with('eventimages')->past()->published()->get();
         $upcoming_events = Event::with('eventimages')->upcomming()->published()->get();
         if (\Request::is('api*') || \Request::wantsJson()) {
+            foreach ($events as $event) {
+                $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j').
+                (($event->event_start != $event->event_end) ? ' - '. 
+                \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
+                \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
+            }
             return response()->json(['status' => 200, 'events' => $events, 'upcoming_events' => $upcoming_events]);
         } else {
             return view('events', ['events' => $events, 'upcoming_events' => $upcoming_events]);
@@ -57,6 +63,10 @@ class EventsController extends Controller
             $pastEvent = true;
         }
         if (\Request::is('api*') || \Request::wantsJson()) {
+            $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j').
+            (($event->event_start != $event->event_end) ? ' - '. 
+            \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
+            \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
             return response()->json([
                 'event' => $event,
                 'races' => $event->race()->get(),
