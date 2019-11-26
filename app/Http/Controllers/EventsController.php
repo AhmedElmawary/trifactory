@@ -26,7 +26,7 @@ class EventsController extends Controller
                 \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
                 \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
             }
-            return response()->json(['status' => 200, 'events' => $events, 'upcoming_events' => $upcoming_events]);
+            return response()->json(['status' => 200, 'past_events' => $events, 'upcoming_events' => $upcoming_events]);
         } else {
             return view('events', ['events' => $events, 'upcoming_events' => $upcoming_events]);
         }
