@@ -59,6 +59,7 @@ class EventsController extends Controller
         if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json([
                 'event' => $event,
+                'races' => $event->race()->get(),
                 'pastEvent' => $pastEvent,
                 'user' => $user,
                 'closed' => $closed
