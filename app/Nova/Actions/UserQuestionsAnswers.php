@@ -34,8 +34,10 @@ class UserQuestionsAnswers extends DownloadExcel implements
         }
         $questions = ['id', 'First Name', 'Last Name', 'E-Mail', 'Phone', 'Event', 'Race', 'Price', 'Order ID',
         'Ticket ID', 'Ticket Name', 'Paymob ID', 'Payment Methods', 'Promocode', 'Comments', 'Date Created'];
-        $user_questions = Race::find($this->raceId)->question()->withPivot('race_question')->where('question_id', '!=', 130)->pluck('question_text')->toArray();
-        $user_questions[] = Race::find($this->raceId)->question()->withPivot('race_question')->where('question_id', 130)->pluck('question_text')->first();
+        $user_questions = Race::find($this->raceId)->question()->withPivot('race_question')
+        ->where('question_id', '!=', 130)->pluck('question_text')->toArray();
+        $user_questions[] = Race::find($this->raceId)->question()->withPivot('race_question')
+        ->where('question_id', 130)->pluck('question_text')->first();
         $questions = array_merge($questions, $user_questions);
         
         return $questions;
@@ -74,8 +76,8 @@ class UserQuestionsAnswers extends DownloadExcel implements
         $answers[] = $event->name;
         $answers[] = $race->name;
         try {
-        $answers[] = json_decode($order->meta, true)[$userRace->participant_ticket_id]['Price'];
-        } catch(\Exception $e){
+            $answers[] = json_decode($order->meta, true)[$userRace->participant_ticket_id]['Price'];
+        } catch (\Exception $e) {
             if (!isset($userRace->participant_ticket_id)) {
                 $answers[] = 'N/A';
                 // throw new \Exception('participant_ticket_id not set for UserRace: '.$userRace->id);
@@ -88,7 +90,8 @@ class UserQuestionsAnswers extends DownloadExcel implements
         $answers[] = ((isset(json_decode($order['meta'], true)['credit'])) ?
         'C' : '').((isset(json_decode($order['meta'], true)['voucher'])) ?
         'V' : '').((isset(json_decode($order->meta, true)[$userRace->participant_ticket_id]['code'])) ? 'P' : '').'';
-        $answers[] = (isset(json_decode($order->meta, true)[$userRace->participant_ticket_id]['code'])) ? json_decode($order->meta, true)[$userRace->participant_ticket_id]['code'] : '';
+        $answers[] = (isset(json_decode($order->meta, true)[$userRace->participant_ticket_id]['code'])) ?
+        json_decode($order->meta, true)[$userRace->participant_ticket_id]['code'] : '';
         $answers[] = $userRace->comment;
         $answers[] = $order->created_at;
         $question_answers = $userRace->questionanswer()->get();
