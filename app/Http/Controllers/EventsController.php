@@ -22,7 +22,7 @@ class EventsController extends Controller
         if (\Request::is('api*') || \Request::wantsJson()) {
             foreach ($events as $event) {
                 $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j').
-                (($event->event_start != $event->event_end) ? ' - '. 
+                (($event->event_start != $event->event_end) ? ' - '.
                 \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
                 \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
             }
@@ -64,7 +64,7 @@ class EventsController extends Controller
         }
         if (\Request::is('api*') || \Request::wantsJson()) {
             $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j').
-            (($event->event_start != $event->event_end) ? ' - '. 
+            (($event->event_start != $event->event_end) ? ' - '.
             \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
             \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
             return response()->json([
@@ -122,6 +122,33 @@ class EventsController extends Controller
                 .';Method:'.__METHOD__
             ]);
         }
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            $swimmer = [];
+            $runner = []; 
+            $cyclist = [];
+            $others = [];
+            foreach ($raceQuestions[0]['question'] as $rq) {
+                if (stripos($rq->question_text, 'swimmer') !== false) {
+                    $swimmer[] = $rq;
+                } elseif (stripos($rq->question_text, 'cyclist') !== false) {
+                    $cyclist[] = $rq;
+                } elseif (stripos($rq->question_text, 'runner') !== false) {
+                    $runner[] = $rq;
+                } else {
+                    $others[] = $rq;
+                }
+            }
+            $i = 0;
+            foreach($raceQuestions[0]['question'] as $element) {
+                unset($raceQuestions[0]['question'][$i]);
+                $i++;
+            }
+            $raceQuestions[0]['question']['swimmer'] = $swimmer;
+            $raceQuestions[0]['question']['runner'] = $runner;
+            $raceQuestions[0]['question']['cyclist'] = $cyclist;
+            $raceQuestions[0]['question']['others'] = $others;
+        }
+
         return response()->json($raceQuestions);
     }
 

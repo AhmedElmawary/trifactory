@@ -69,7 +69,7 @@ class HomeController extends Controller
         if (\Request::is('api*') || \Request::wantsJson()) {
             foreach ($data['upcomingEvents'] as $event) {
                 $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j').
-                (($event->event_start != $event->event_end) ? ' - '. 
+                (($event->event_start != $event->event_end) ? ' - '.
                 \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
                 \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
             }
