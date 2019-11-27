@@ -352,9 +352,11 @@ class PaymentController extends Controller
                     }
                 }
             }
-            // \Cart::session($user->id);
-            // \Cart::clear();
-            // \Cart::clearCartConditions();
+            if (isset($order->user_id)) {
+                \Cart::session($order->user_id);
+                \Cart::clear();
+                \Cart::clearCartConditions();
+            }
         }
 
         return $this->success($order);
