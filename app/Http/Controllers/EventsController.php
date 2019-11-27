@@ -122,7 +122,7 @@ class EventsController extends Controller
                 .';Method:'.__METHOD__
             ]);
         }
-        if (\Request::is('api*') || \Request::wantsJson()) {
+        if (\Request::is('api*')) {
             $swimmer = [];
             $runner = [];
             $cyclist = [];
