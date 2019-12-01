@@ -662,12 +662,14 @@
                             </thead>
                             <tbody>
                                 @foreach ($past_events as $event)
+                                @if (isset($event->race->event->name))
                                 <tr>    
                                     <td scope="row">{{ $event->race->event->name }}</td>
                                     <td scope="row">{{ $event->race->name }}</td>
                                     <td>{{ \Carbon\Carbon::parse($event->race->event->event_start)->format('F jS Y')}}</td>
                                     <td>{{ $event->points }}</td>
                                 </tr>
+                                @endif
                                 @endforeach
                             </tbody>
                         </table>
