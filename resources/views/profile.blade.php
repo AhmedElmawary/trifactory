@@ -571,7 +571,7 @@
                                 <!-- <h3 class="modal-title">Verification code sent to this number:</h3> -->
                                 <!-- <img src="/images/success-icon.svg" class="modal-icon"> -->
                                 <div class="modal-sub-title" style="color:#dc3545;font-size: 120%">Are you sure you want to Cancel your ticket?</div>
-                                @if ($general_ticket_ticket_end < $date_now)
+                                @if ($general_ticket_ticket_end < $date_now && ($event->race->event->id != 6 || date("Y-m-d", strtotime("2019-12-09")) < $date_now))
                                 <span style="font-weight:bold">
                                     {{ $event->ticket->name }}<br><br>
                                     An amount of
@@ -620,7 +620,7 @@
                                     @foreach (json_decode($event->order['meta'], true) as $key => $value) 
                                             @if (preg_match("/TFT/i", $key)) 
                                                 @if ($value['_ticket_id'] == $event->ticket->id)
-                                                @if ($general_ticket_ticket_end < $date_now)
+                                                @if ($general_ticket_ticket_end < $date_now && ($event->race->event->id != 6 || date("Y-m-d", strtotime("2019-12-09")) < $date_now))
                                                 {{round($value['Price']*0.2, 0)}}
                                                 @else
                                                 {{$value['Price']}}
