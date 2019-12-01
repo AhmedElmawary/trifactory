@@ -413,7 +413,8 @@ class PaymentController extends Controller
                     if ($value['_ticket_id'] == $request->ticket_id) {
                         //  `&& ($user->id != 1430)` Removed Exception
                         if ($general_ticket_ticket_end < $date_now &&
-                        ($userrace->race()->first()['event_id'] != 6 || date("Y-m-d", strtotime("2019-12-09")) < $date_now)) {
+                        ($userrace->race()->first()['event_id'] != 6 ||
+                        date("Y-m-d", strtotime("2019-12-09")) < $date_now)) {
                             $ticket_cost = round($value['Price']*0.2, 0);
                         } else {
                             $ticket_cost = $value['Price'];
