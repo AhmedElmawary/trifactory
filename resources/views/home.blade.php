@@ -79,6 +79,12 @@
                     class="d-flex justify-content-center align-items-center flex-column event-details"
                 >
                     <h5>{{$event->name}}</h5>
+                    @if (isset($event->event_start) && isset($event->city) && isset($event->country))
+                    <p>
+                        {{ \Carbon\Carbon::parse($event->event_start)->format('F jS Y')
+                        }}, {{$event->city}}, {{$event->country}}
+                    </p>
+                    @endif
                     <p>
                         Coming Soon
                     </p>

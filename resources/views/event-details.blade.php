@@ -33,11 +33,11 @@
       <div class="row mb-3">
         <div class="col-lg-7 event-sub-details">
           <img class="details-icon" src="/images/calendar-icon.svg">
-          <span class="details-text">{{ \Carbon\Carbon::parse($event->event_start)->format('F jS Y')}}{{ ($event->event_start != $event->event_end) ? '-'. \Carbon\Carbon::parse($event->event_end)->format('F jS Y') : ''}}</span>
+          <span class="details-text">@if($coming_soon && (!isset($event->event_start) || !isset($event->event_end))) Coming Soon @else {{ \Carbon\Carbon::parse($event->event_start)->format('F jS Y')}}{{ ($event->event_start != $event->event_end) ? '-'. \Carbon\Carbon::parse($event->event_end)->format('F jS Y') : ''}}@endif</span>
         </div>
         <div class="col-lg-5 event-sub-details">
           <img class="details-icon" src="/images/location-icon.svg">
-          <span class="details-text">{{$event->city}}, {{$event->country}}</span>
+          <span class="details-text">@if($coming_soon && (!isset($event->city) || !isset($event->country))) Coming Soon @else{{$event->city}}, {{$event->country}}@endif</span>
         </div>
         
       </div>
