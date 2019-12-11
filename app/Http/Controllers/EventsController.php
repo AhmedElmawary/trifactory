@@ -45,6 +45,7 @@ class EventsController extends Controller
         $today = Carbon::now();
         $pastEvent = false;
         $closed = true;
+        $coming_soon = $event->coming_soon;
         
         if (!isset($event)) {
             abort(404);
@@ -62,6 +63,7 @@ class EventsController extends Controller
         if ($event->event_start < $today) {
             $pastEvent = true;
         }
+        
         if (\Request::is('api*') || \Request::wantsJson()) {
             $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j').
             (($event->event_start != $event->event_end) ? ' - '.
@@ -72,14 +74,16 @@ class EventsController extends Controller
                 'races' => $event->race()->get(),
                 'pastEvent' => $pastEvent,
                 'user' => $user,
-                'closed' => $closed
+                'closed' => $closed,
+                'coming_soon' => $coming_soon
             ]);
         } else {
             return view('event-details', [
                 'event' => $event,
                 'pastEvent' => $pastEvent,
                 'user' => $user,
-                'closed' => $closed
+                'closed' => $closed,
+                'coming_soon' => $coming_soon
             ]);
         }
     }

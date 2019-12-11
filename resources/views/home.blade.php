@@ -54,15 +54,6 @@
                     <h5>{{$event->name}}</h5>
                     <p>
                         {{ \Carbon\Carbon::parse($event->event_start)->format('F jS Y')
-
-
-
-
-
-
-
-
-
                         }}, {{$event->city}}, {{$event->country}}
                     </p>
                 </div>
@@ -70,16 +61,43 @@
         </div>
         @endforeach
     </div>
-    @endforeach @if($upcomingEvents->count() === 0)
+    @endforeach
+    @foreach($comingSoonEvents->chunk(2) as $events)
+    <div class="row">
+        @foreach($events as $event)
+        <div class="col-lg-6 event-card" style="padding-top: 5%">
+            @if($event->eventimages()->cover()->first())
+            <img
+                src="/storage/{{ $event->eventimages()->cover()->first()->image }}"
+                alt="Event Image"
+            />
+            @else
+            <img src="/images/placeholder.svg" alt="Event Image" />
+            @endif
+            <a onclick="onEventClick()" href="event-details/{{$event->id}}">
+                <div
+                    class="d-flex justify-content-center align-items-center flex-column event-details"
+                >
+                    <h5>{{$event->name}}</h5>
+                    <p>
+                        Coming Soon
+                    </p>
+                </div>
+            </a>
+        </div>
+        @endforeach
+    </div>
+    @endforeach
+    {{-- @if($upcomingEvents->count() === 0)
     <div class="row">
         <div
             class="col-lg-12 d-flex justify-content-center align-items-center flex-column voucher-box"
         >
-            <h4>Stay tuned for our upcoming 2019 events</h4>
+            <h4>Stay tuned for our upcoming 2020 events</h4>
             <a href="/events" class="btn btn-dark">Previous Events</a>
         </div>
     </div>
-    @endif
+    @endif --}}
 </section>
 
 <section class="vouchers-section container no-height">

@@ -47,6 +47,11 @@ class Event extends Model
         return $query->where('published', 'yes');
     }
 
+    public function scopeComingSoon($query)
+    {
+        return $query->where('coming_soon', true);
+    }
+
     public function eventimages()
     {
         return $this->hasMany('App\EventImage', 'event_id');

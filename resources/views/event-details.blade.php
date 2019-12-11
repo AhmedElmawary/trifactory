@@ -76,6 +76,9 @@
         @if(($pastEvent || $closed) && !(isset($user) && ($user->id == 469 || $user->id == 465 || $user->id == 1468)))
         <div class="col-lg-12">Registration Closed</div>
         @else
+        @if($coming_soon)
+        <div class="col-lg-12">Coming Soon</div>
+        @else
         <div class="col-lg-2 tickets-quantity" hidden>
           <div class="custom-number">
             <input name="number_of_tickets" type="number" class="form-control form-number" value="1" min="1" max="10">
@@ -90,6 +93,7 @@
           <button class="btn btn-dark" id="open_login_modal">Fill Tickets Details</button>
           @endguest
         </div>
+        @endif
         @endif
       </div>
       @if(preg_match("/mudder/i", $event->name))

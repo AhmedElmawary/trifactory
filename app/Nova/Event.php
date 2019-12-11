@@ -64,6 +64,9 @@ class Event extends Resource
             Boolean::make('Published', 'published')
                 ->trueValue('yes')
                 ->falseValue('no'),
+            Boolean::make('Coming Soon', 'coming_soon')
+                ->trueValue(1)
+                ->falseValue(0),
 
             Trix::make('Details', 'details')->sortable(),
             HasMany::make('Eventimages'),

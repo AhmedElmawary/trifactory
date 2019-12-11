@@ -34,6 +34,7 @@ class HomeController extends Controller
         }
         $gallery = Gallery::latest('created_at')->with('galleryimage')->first();
         $upcomingEvents = Event::with('eventimages')->upcomming()->published()->get();
+        $comingSoonEvents = Event::with('eventimages')->comingsoon()->get();
 
         $leaderboardMale = \DB::table('leaderboard_data')
             ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
@@ -65,6 +66,7 @@ class HomeController extends Controller
             'leaderboardMale' => $leaderboardMale,
             'leaderboardFemale' => $leaderboardFemale,
             'leaderboardClub' => $leaderboardClub,
+            'comingSoonEvents' => $comingSoonEvents
         ];
         if (\Request::is('api*') || \Request::wantsJson()) {
             foreach ($data['upcomingEvents'] as $event) {
