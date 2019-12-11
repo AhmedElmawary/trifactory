@@ -81,7 +81,7 @@
                     <h5>{{$event->name}}</h5>
                     @if (isset($event->event_start) && isset($event->city) && isset($event->country))
                     <p>
-                        {{ \Carbon\Carbon::parse($event->event_start)->format('F jS Y')
+                        {{ \Carbon\Carbon::parse($event->event_start)->format('F')
                         }}, {{$event->city}}, {{$event->country}}
                     </p>
                     @endif

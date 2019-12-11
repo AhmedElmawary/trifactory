@@ -33,7 +33,7 @@
       <div class="row mb-3">
         <div class="col-lg-7 event-sub-details">
           <img class="details-icon" src="/images/calendar-icon.svg">
-          <span class="details-text">@if($coming_soon && (!isset($event->event_start) || !isset($event->event_end))) Coming Soon @else {{ \Carbon\Carbon::parse($event->event_start)->format('F jS Y')}}{{ ($event->event_start != $event->event_end) ? '-'. \Carbon\Carbon::parse($event->event_end)->format('F jS Y') : ''}}@endif</span>
+          <span class="details-text">@if($coming_soon) @if (isset($event->event_start)) {{ \Carbon\Carbon::parse($event->event_start)->format('F')}} @else Coming Soon @endif @else {{ \Carbon\Carbon::parse($event->event_start)->format('F jS Y')}}{{ ($event->event_start != $event->event_end) ? '-'. \Carbon\Carbon::parse($event->event_end)->format('F jS Y') : ''}}@endif</span>
         </div>
         <div class="col-lg-5 event-sub-details">
           <img class="details-icon" src="/images/location-icon.svg">
@@ -73,11 +73,11 @@
         </div>
       </div>
       <div class="row">
-        @if(($pastEvent || $closed) && !(isset($user) && ($user->id == 469 || $user->id == 465 || $user->id == 1468)))
-        <div class="col-lg-12">Registration Closed</div>
-        @else
         @if($coming_soon)
         <div class="col-lg-12">Coming Soon</div>
+        @else
+        @if(($pastEvent || $closed) && !(isset($user) && ($user->id == 469 || $user->id == 465 || $user->id == 1468)))
+        <div class="col-lg-12">Registration Closed</div>
         @else
         <div class="col-lg-2 tickets-quantity" hidden>
           <div class="custom-number">
