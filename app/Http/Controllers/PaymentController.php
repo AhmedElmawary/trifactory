@@ -210,7 +210,7 @@ class PaymentController extends Controller
      */
     protected function refunded($order)
     {
-        $order->success = "refunded";
+        $order->success = "Accept Refund";
         $order->save();
     }
 
