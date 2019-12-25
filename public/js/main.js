@@ -372,7 +372,7 @@ $(document).ready(function() {
                             str += "<script>var usedNames = {};$(\".clubs > option\").each(function () {if(usedNames[this.text]) {$(this).remove();} else {usedNames[this.text] = this.value;}});</script>";
                             str += "<script>if (!$(\".clubs option:selected\").text().toLowerCase().includes('other') ){$(\".other_club\").hide();}$(\".clubs\").on(\"change\", function() {if ($(\".clubs option:selected\").text().toLowerCase().includes('other')){$(\".other_club\").show();$(\"#other_club\").prop('required',true);$(\"#others\").prop('required',true); document.getElementById(\"others\").style.pointerEvents=null;document.getElementById(\"others\").style.backgroundColor='#f5f5f5';} else {$(\"#others\").val('');$(\"#others\").prop('required',false);$(\".other_club\").hide();$(\"#other_club\").prop('required',false);document.getElementById(\"others\").style.pointerEvents='none';document.getElementById(\"others\").style.backgroundColor='#e9ecef';}});</script>";
                             str +=
-                                '<div class="col-lg-6 mt-3 '+((question.question_text.search(/other/i) > -1 && data[0].event_id != 6) ? 'other_club' : '')+'"><div class="input-group">';
+                                '<div class="col-lg-6 mt-3 '+((question.question_text.search(/other/i) > -1) ? 'other_club' : '')+'"><div class="input-group">';
 
                             var validation = [];
                             var required = false;
@@ -423,7 +423,7 @@ $(document).ready(function() {
                                     str += ' maxlength="' + max + '" ';
                                 }
 
-                                if (question.question_text.search(/other/i) > -1 && data[0].event_id != 6){
+                                if (question.question_text.search(/other/i) > -1){
                                     if ($(".clubs option:selected").text().toLowerCase().includes('other')) { 
                                         str += 'value="'+data[0]['user'].club+'"';
                                     } else {

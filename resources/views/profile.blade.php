@@ -312,6 +312,8 @@
                     role="tabpanel"
                     aria-labelledby="pills-upcoming-events-tab"
                 >
+                {{\Carbon\Carbon::today()->toDateTimeString()}}
+                {{-- {{$upcoming_events[0]->race->event->event_start}} --}}
                     @if(count($upcoming_events) > 0)
                     <div class="col-lg-12 table-responsive-lg">
                         <table class="table table-striped table-bordered">

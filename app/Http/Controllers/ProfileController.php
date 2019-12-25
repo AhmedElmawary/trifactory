@@ -58,7 +58,7 @@ class ProfileController extends Controller
                     $query->where('event_start', '>', \Carbon\Carbon::today()->toDateTimeString());
                 })
                 ->where('user_id', $user->id)
-                ->orWhere('participant_user_id', $user->id)
+                // ->orWhere('participant_user_id', $user->id)
                 ->get();
             foreach ($data['upcoming_events'] as $event) {
                 $event['participant_user'] = \App\User::find($event->participant_user_id);
