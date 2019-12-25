@@ -166,11 +166,13 @@
                                 </thead>
                                 <tbody>
                                     @foreach($leaderboardClub as $club)
+                                    @if (stripos($club->club, 'independent') == false)
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>{{$club->club}}</td>
                                         <td>{{$club->total_points}}</td>
                                     </tr>
+                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>
