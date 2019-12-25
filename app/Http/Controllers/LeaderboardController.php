@@ -8,6 +8,9 @@ class LeaderboardController extends Controller
 {
     public function index()
     {
+        $filter = \App\Http\Controllers\Input::get('filter', null);
+        $term = \App\Http\Controllers\Input::get('term', false);
+        \Log::info($filter);
         if (\Auth::check()) {
             $user = \Auth::user();
             \Cart::session($user->id);

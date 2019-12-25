@@ -26,6 +26,12 @@ class EventsController extends Controller
                 \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
                 \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
             }
+            foreach ($upcoming_events as $upcoming_event) {
+                $upcoming_event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j').
+                (($upcoming_event->event_start != $upcoming_event->event_end) ? ' - '.
+                \Carbon\Carbon::parse($upcoming_event->event_end)->format('j M Y') :
+                \Carbon\Carbon::parse($upcoming_event->event_end)->format(' M Y'));
+            }
             return response()->json(['status' => 200, 'past_events' => $events, 'upcoming_events' => $upcoming_events]);
         } else {
             return view('events', ['events' => $events, 'upcoming_events' => $upcoming_events]);
