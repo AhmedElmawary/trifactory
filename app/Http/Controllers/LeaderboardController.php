@@ -17,8 +17,15 @@ class LeaderboardController extends Controller
             \Cart::session($user->id);
         }
         $leaderboardMale = \DB::table('leaderboard_data')
-            ->select('name', 'points', 'country_code', 'category', 'gender_position', 'club', 
-            \DB::raw('SUM(points) as total_points'))
+            ->select(
+            'name',
+            'points',
+            'country_code',
+            'category',
+            'gender_position',
+            'club',
+            \DB::raw('SUM(points) as total_points')
+            )
             ->where('gender', 'M')
             ->orderByRaw('total_points desc')
             ->groupBy('name')
