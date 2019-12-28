@@ -18,13 +18,13 @@ class LeaderboardController extends Controller
         }
         $leaderboardMale = \DB::table('leaderboard_data')
             ->select(
-            'name',
-            'points',
-            'country_code',
-            'category',
-            'gender_position',
-            'club',
-            \DB::raw('SUM(points) as total_points')
+                'name',
+                'points',
+                'country_code',
+                'category',
+                'gender_position',
+                'club',
+                \DB::raw('SUM(points) as total_points')
             )
             ->where('gender', 'M')
             ->orderByRaw('total_points desc')
