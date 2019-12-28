@@ -73,6 +73,7 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Nationality</th>
                                         <th scope="col">Age Group</th>
+                                        <th scope="col">Gender Position</th>
                                         <th scope="col">Club</th>
                                         <th scope="col">Points</th>
                                     </tr>
@@ -84,6 +85,7 @@
                                         <td>{{$male->name}}</td>
                                         <td>{{$male->country_code}}</td>
                                         <td>{{$male->category}}</td>
+                                        <td>{{$male->gender_position}}</td>
                                         <td>{{$male->club}}</td>
                                         <td>{{$male->total_points}}</td>
                                     </tr>

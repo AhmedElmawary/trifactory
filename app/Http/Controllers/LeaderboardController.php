@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use DB;
 
 class LeaderboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $filter = \App\Http\Controllers\Input::get('filter', null);
-        $term = \App\Http\Controllers\Input::get('term', false);
-        \Log::info($filter);
+        // \Log::info($request);
+        // $filter = $request->input('filter');
+        // \Log::info($filter);
         if (\Auth::check()) {
             $user = \Auth::user();
             \Cart::session($user->id);
         }
         $leaderboardMale = \DB::table('leaderboard_data')
-            ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
+            ->select('name', 'points', 'country_code', 'category', 'gender_position', 'club', \DB::raw('SUM(points) as total_points'))
             ->where('gender', 'M')
             ->orderByRaw('total_points desc')
             ->groupBy('name')
