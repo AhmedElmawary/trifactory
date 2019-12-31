@@ -18,6 +18,39 @@ function showlogoutmodal(){
 function showEnduranceLeagueModal(){
     $("#endurance_league_details_modal").modal();
 }
+function showEnduranceLeagueRecordModal(name){
+    $.ajax({
+        type: "GET",
+        url: "api/leaderboard/details?name="+name,
+        dataType: 'json',
+        success: function(data) {
+            var table = document.getElementById("recordDetailsTable").getElementsByTagName('tbody')[0];
+            $("#recordDetailsTable tbody tr").remove(); 
+            $.each(data.data.recordDetails, function(index, item) {
+                var row = table.insertRow(-1);
+
+                var cell0 = row.insertCell(-1);
+                var cell1 = row.insertCell(-1);
+                var cell2 = row.insertCell(-1);
+                var cell3 = row.insertCell(-1);
+                var cell4 = row.insertCell(-1);
+                var cell5 = row.insertCell(-1);
+                cell0.innerHTML = item.bib;
+                cell1.innerHTML = item.name;
+                cell2.innerHTML = item.race.event.name;
+                cell3.innerHTML = item.race.name;
+                cell4.innerHTML = item.gender_position;
+                cell5.innerHTML = item.points;
+            });
+            $("#endurance_league_record_details_modal").modal();
+                  
+        },
+        error: function(data) {
+            console.log("An error occurred.");
+        }
+    });
+    
+}
 function openconfirmcancelmodal(event_id){
     $("#confirm_cancel_event_modal_"+event_id).modal();
     $("#confirm_cancel_event_modal_"+event_id).unbind();

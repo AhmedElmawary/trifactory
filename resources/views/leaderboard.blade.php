@@ -90,7 +90,12 @@
                                     @foreach($leaderboardMale as $male)
                                     <tr>
                                         <td>{{ ($leaderboardMale ->currentpage()-1) * $leaderboardMale ->perpage() + $loop->index + 1 }}</td>
-                                        <td>{{$male->name}}</td>
+                                        <td><a
+                                            class="nav-link "
+                                            style="display:inline;cursor:pointer; text-decoration: underline"
+                                            onclick="showEnduranceLeagueRecordModal('{{$male->name}}')">
+                                            {{$male->name}}
+                                            </a></td>
                                         <td>{{$male->country_code}}</td>
                                         <td>{{$male->category}}</td>
                                         <td>{{$male->gender_position}}</td>
@@ -219,6 +224,40 @@
                 </div>
                 <div class="content">
                 <img width="100%" src="/images/endurance_league_details.jpg" alt="endurance-league-details">
+                </div>
+                <br>
+            </div>
+            </div>
+        </div>
+        <div class="modal fade custom-modal" id="endurance_league_record_details_modal" tabindex="-1" role="dialog"
+            aria-labelledby="phone_verify_modal" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <img src="/images/close-icon.svg" alt="close icon">
+                </button>
+                <div class="modal-sub-title" style="color:#dc3545;font-size: 120%">Races History</div>
+                </div>
+                <div class="content">
+                    <div class="row">
+                        <div class="col-lg-12 table-responsive-lg">
+                            <table id='recordDetailsTable' class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Bib</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Event</th>
+                                        <th scope="col">Race</th>
+                                        <th scope="col">Gender Position</th>
+                                        <th scope="col">Points</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <br>
             </div>

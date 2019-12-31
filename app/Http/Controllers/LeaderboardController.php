@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\LeaderboardData;
 
 class LeaderboardController extends Controller
 {
     public function index(Request $request)
     {
-        \Log::info($request);
-        $filter = $request->input('filter');
-        \Log::info($filter);
         if (\Auth::check()) {
             $user = \Auth::user();
             \Cart::session($user->id);
@@ -79,6 +77,38 @@ class LeaderboardController extends Controller
             'leaderboardMale' => $leaderboardMale,
             'leaderboardFemale' => $leaderboardFemale,
             'leaderboardClub' => $leaderboardClub,
+        ];
+        if (\Request::is('api*')) {
+            return response()->json(['data' => $data]);
+        } else {
+            return view('leaderboard', $data);
+        }
+    }
+
+    public function details(Request $request)
+    {
+        if (\Auth::check()) {
+            $user = \Auth::user();
+            \Cart::session($user->id);
+        }
+        $recordDetails = LeaderboardData::
+            with('race.event')
+            ->where(function ($query) use ($request) {
+                if ($request->input('name') != "") {
+                    $query->where('name', 'like', '%'.$request->input('name').'%');
+                }
+                if ($request->input('category') != "") {
+                    $query->where('category', 'like', '%'.$request->input('category').'%');
+                }
+                if ($request->input('gender_position') != "") {
+                    $query->where('gender_position', 'like', $request->input('gender_position'));
+                }
+            })
+            ->orderByRaw('id desc')
+            ->get();
+       
+        $data = [
+            'recordDetails' => $recordDetails
         ];
         if (\Request::is('api*')) {
             return response()->json(['data' => $data]);

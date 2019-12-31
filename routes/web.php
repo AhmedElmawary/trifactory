@@ -51,7 +51,9 @@ Route::post('/profile/update', 'ProfileController@update');
 Route::post('/profile/userraceanswers/update', 'ProfileController@updateUserRaceAnswers')->name('questionanswerupdate');
 Route::post('/profile/password', 'ProfileController@password');
 
-Route::get('/leaderboard', 'LeaderboardController@index')->middleware('verified');
+Route::get('/leaderboard', 'LeaderboardController@index');
+Route::get('/leaderboard/details', 'LeaderboardController@details');
+
 
 Auth::routes(['verify' => true]);
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
