@@ -52,6 +52,14 @@
                         >Club</a
                     >
                 </li>
+                <li class="nav-item"></li>
+                <li class="nav-item">
+                    <h5>Filter</h5>
+                    <input type="text" placeholder="Name.." name="name" id="name_filter" autofocus>
+                    <input type="text" placeholder="Age Group.." name="category" id="category_filter">
+                    <input type="text" placeholder="Gender Position.." name="gender_position" id="gender_position_search">
+                    <button id=filter_button type="submit" onclick="filter()" ><i class="fa fa-search"></i></button>
+                </li>
             </ul>
             <div
                 class="tab-content male-rnakings-tab-content"
@@ -119,6 +127,7 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Nationality</th>
                                         <th scope="col">Age Group</th>
+                                        <th scope="col">Gender Position</th>
                                         <th scope="col">Club</th>
                                         <th scope="col">Points</th>
                                     </tr>
@@ -132,6 +141,7 @@
                                         <td>{{$female->name}}</td>
                                         <td>{{$female->country_code}}</td>
                                         <td>{{$female->category}}</td>
+                                        <td>{{$female->gender_position}}</td>
                                         <td>{{$female->club}}</td>
                                         <td>{{$female->total_points}}</td>
                                     </tr>
@@ -214,6 +224,28 @@
             </div>
             </div>
         </div>
-
+<script>
+    var input = document.getElementById("name_filter");
+    input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("filter_button").click();
+        }
+    });
+    var input = document.getElementById("category_filter");
+    input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("filter_button").click();
+        }
+    });
+    var input = document.getElementById("gender_position_search");
+    input.addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("filter_button").click();
+        }
+    });
+</script>
 <!-- End Content -->
 @endsection

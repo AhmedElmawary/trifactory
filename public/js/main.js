@@ -76,6 +76,12 @@ function ticket_details(){
     validatePhone();
     document.getElementById("open_added_to_cart_modal").onclick = validatePhone;
 }
+function filter(){
+    name = document.getElementById("name_filter").value
+    category = document.getElementById("category_filter").value
+    gender_position = document.getElementById("gender_position_search").value
+    document.location.search = "name="+name+"&category="+category+"&gender_position="+gender_position;
+}
 function sortList() {
     var list, i, switching, b, shouldSwitch;
     list = document.getElementsByClassName("clubs");

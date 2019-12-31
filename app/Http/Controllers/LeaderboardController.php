@@ -9,9 +9,9 @@ class LeaderboardController extends Controller
 {
     public function index(Request $request)
     {
-        // \Log::info($request);
-        // $filter = $request->input('filter');
-        // \Log::info($filter);
+        \Log::info($request);
+        $filter = $request->input('filter');
+        \Log::info($filter);
         if (\Auth::check()) {
             $user = \Auth::user();
             \Cart::session($user->id);
@@ -27,13 +27,43 @@ class LeaderboardController extends Controller
                 \DB::raw('SUM(points) as total_points')
             )
             ->where('gender', 'M')
+            ->where(function ($query) use ($request) {
+                if ($request->input('name') != "") {
+                    $query->where('name', 'like', '%'.$request->input('name').'%');
+                }
+                if ($request->input('category') != "") {
+                    $query->where('category', 'like', '%'.$request->input('category').'%');
+                }
+                if ($request->input('gender_position') != "") {
+                    $query->where('gender_position', 'like', $request->input('gender_position'));
+                }
+            })
             ->orderByRaw('total_points desc')
             ->groupBy('name')
             ->paginate(25);
 
         $leaderboardFemale = \DB::table('leaderboard_data')
-            ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
+        ->select(
+            'name',
+            'points',
+            'country_code',
+            'category',
+            'gender_position',
+            'club',
+            \DB::raw('SUM(points) as total_points')
+        )
             ->where('gender', 'F')
+            ->where(function ($query) use ($request) {
+                if ($request->input('name') != "") {
+                    $query->where('name', 'like', '%'.$request->input('name').'%');
+                }
+                if ($request->input('category') != "") {
+                    $query->where('category', 'like', '%'.$request->input('category').'%');
+                }
+                if ($request->input('gender_position') != "") {
+                    $query->where('gender_position', 'like', $request->input('gender_position'));
+                }
+            })
             ->orderByRaw('total_points desc')
             ->groupBy('name')
             ->paginate(25);
