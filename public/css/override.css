@@ -169,3 +169,13 @@ nav .navbar-nav .nav-item .nav-link span {
 .event-details-view section.event-summary .event-sub-details .details-text {
     font-size: 12px;
 }
+
+#content-desktop {display: block;}
+#content-mobile {display: none;}
+
+@media screen and (max-width: 768px) {
+
+#content-desktop {display: none;}
+#content-mobile {display: block;}
+
+}

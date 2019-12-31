@@ -12,7 +12,7 @@
             content="The home of triathlon in Egypt. All the information about upcoming events, trips and training services."
         />
         <!-- CSS -->
-        <link rel="stylesheet" href="/css/main.css?v1.1" />
+        <link rel="stylesheet" href="/css/main.css?v1.2" />
         <link rel="stylesheet" href="/css/override.css" />
         <link rel="stylesheet" href="/css/font-awesome.min.css" />
         <!-- Facebook Pixel Code -->
@@ -249,7 +249,7 @@
         <script src="/js/bootstrap.min.js"></script>
         <script src="/js/slick.min.js"></script>
         <!-- <script src="/js/app.js"></script>-->
-        <script src="/js/main.js?v1.15"></script>
+        <script src="/js/main.js?v1.16"></script>
 
         <!-- End JS -->
     </body>

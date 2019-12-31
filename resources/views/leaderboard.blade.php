@@ -58,7 +58,7 @@
                     <input type="text" placeholder="Name.." name="name" id="name_filter" autofocus>
                     <input type="text" placeholder="Age Group.." name="category" id="category_filter">
                     <input type="text" placeholder="Gender Position.." name="gender_position" id="gender_position_search">
-                    <button id=filter_button type="submit" onclick="filter()" ><i class="fa fa-search"></i></button>
+                    <div id="content-mobile"><button id=filter_button type="submit" onclick="filter()" ><i class="fa fa-search"></i></button></div>
                 </li>
             </ul>
             <div
