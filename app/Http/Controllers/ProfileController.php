@@ -188,13 +188,10 @@ class ProfileController extends Controller
                 $data['leaderboard_category_rank'] = 0;
             }
 
-
-
-
-
             $nationalities = \countries();
             unset($nationalities['il']);
             $data['countries'] = json_encode($nationalities);
+            $data['credit'] = $user->credit->sum('amount');
         }
         if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json(['status' => 200, 'data' => $data]);
