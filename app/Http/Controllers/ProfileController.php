@@ -42,6 +42,60 @@ class ProfileController extends Controller
         }
         if ($user) {
             $data['past_events'] = \App\LeaderboardData::with('race.event')->where('email', $user->email)->get();
+            foreach ($data['past_events'] as $past) {
+                $leaderboard_by_gender = \DB::table('leaderboard_data')
+                ->select(
+                    'name',
+                    'points',
+                    'country_code',
+                    'category',
+                    'gender_position',
+                    'club',
+                    'email',
+                    \DB::raw('SUM(points) as total_points')
+                )
+                ->where('gender', $past['gender'])
+                ->where('race_id', $past['race_id'])
+                ->orderByRaw('total_points desc')
+                ->groupBy('name')
+                ->get();
+                $rank = 0;
+                $found = false;
+                foreach (json_decode($leaderboard_by_gender, true) as $record) {
+                    $rank++;
+                    if ((stripos($record['email'], strtolower($user->email)) !== false)) {
+                        break;
+                    }
+                }
+                $past['gender_rank'] = $rank;
+
+                $leaderboard_by_category = \DB::table('leaderboard_data')
+                ->select(
+                    'name',
+                    'points',
+                    'country_code',
+                    'category',
+                    'gender_position',
+                    'club',
+                    'email',
+                    \DB::raw('SUM(points) as total_points')
+                )
+                ->where('category', $past['category'])
+                ->where('race_id', $past['race_id'])
+                ->orderByRaw('total_points desc')
+                ->groupBy('name')
+                ->get();
+                $rank = 0;
+                $found = false;
+                foreach (json_decode($leaderboard_by_category, true) as $record) {
+                    $rank++;
+                    if ((stripos($record['email'], strtolower($user->email)) !== false)) {
+                        break;
+                    }
+                }
+                $past['category_rank'] = $rank;
+            }
+
             $data['upcoming_events'] = \App\UserRace::
             with(
                 'race.event',
@@ -66,7 +120,6 @@ class ProfileController extends Controller
             foreach ($data['upcoming_events'] as $event) {
                 $event['participant_user'] = \App\User::find($event->participant_user_id);
             }
-            $data['points'] = \App\LeaderboardData::where('email', $user->email)->sum('points');
             $data['user'] = $user;
             $data['profile_image'] = '/images/placeholder.svg';
             $question = Question::where('question_text', 'like', '%club%')->first();
@@ -74,6 +127,71 @@ class ProfileController extends Controller
             if ($user->profile_image) {
                 $data['profile_image'] = '/storage/profile_images/' . $user->profile_image;
             }
+            $leaderboard_data = \App\LeaderboardData::where('email', $user->email)->orderBy('id', 'desc');
+            $data['points'] = $leaderboard_data->sum('points');
+
+            if ($leaderboard_data->exists()) {
+                $leaderboard_by_gender = \DB::table('leaderboard_data')
+                ->select(
+                    'name',
+                    'points',
+                    'country_code',
+                    'category',
+                    'gender_position',
+                    'club',
+                    'email',
+                    \DB::raw('SUM(points) as total_points')
+                )
+                ->where('gender', $leaderboard_data->first()['gender'])
+                ->orderByRaw('total_points desc')
+                ->groupBy('name')
+                ->get();
+                $rank = 0;
+                $found = false;
+                foreach (json_decode($leaderboard_by_gender, true) as $record) {
+                    $rank++;
+                    if ((stripos($record['email'], strtolower($user->email)) !== false)) {
+                        break;
+                    }
+                }
+                $data['leaderboard_gender_rank'] = $rank;
+            } else {
+                $data['leaderboard_gender_rank'] = 0;
+            }
+
+            if ($leaderboard_data->exists()) {
+                $leaderboard_by_category = \DB::table('leaderboard_data')
+                ->select(
+                    'name',
+                    'points',
+                    'country_code',
+                    'category',
+                    'gender_position',
+                    'club',
+                    'email',
+                    \DB::raw('SUM(points) as total_points')
+                )
+                ->where('category', $leaderboard_data->first()['category'])
+                ->orderByRaw('total_points desc')
+                ->groupBy('name')
+                ->get();
+                $rank = 0;
+                $found = false;
+                foreach (json_decode($leaderboard_by_category, true) as $record) {
+                    $rank++;
+                    if ((stripos($record['email'], strtolower($user->email)) !== false)) {
+                        break;
+                    }
+                }
+                $data['leaderboard_category_rank'] = $rank;
+            } else {
+                $data['leaderboard_category_rank'] = 0;
+            }
+
+
+
+
+
             $nationalities = \countries();
             unset($nationalities['il']);
             $data['countries'] = json_encode($nationalities);

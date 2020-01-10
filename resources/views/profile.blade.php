@@ -17,6 +17,12 @@
             <span class="profile-name"
                 ><b>Endurance league points:</b> {{ $points }}</span
             >
+            <span class="profile-name"
+                ><b>Gender Rank:</b> {{ $leaderboard_gender_rank }}</span
+            >
+            <span class="profile-name"
+                ><b>Age Group Rank:</b> {{ $leaderboard_category_rank }}</span
+            >
         </div>
         <div class="col-lg-9 profile-content-container">
             <ul class="nav nav-pills profile-nav" id="pills-tab" role="tablist">
@@ -658,6 +664,8 @@
                                     <th scope="col">Race</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Points</th>
+                                    <th scope="col">Gender Rank</th>
+                                    <th scope="col">Age Group Rank</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -668,6 +676,8 @@
                                     <td scope="row">{{ $event->race->name }}</td>
                                     <td>{{ \Carbon\Carbon::parse($event->race->event->event_start)->format('F jS Y')}}</td>
                                     <td>{{ $event->points }}</td>
+                                    <td>{{ $event->gender_rank }}</td>
+                                    <td>{{ $event->category_rank }}</td>
                                 </tr>
                                 @endif
                                 @endforeach
