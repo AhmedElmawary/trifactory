@@ -155,12 +155,12 @@ class PaymentController extends Controller
                     'status' => 200,
                     'success' => true,
                     'message' => 'payment-link',
-                    'data' => "https://accept.paymobsolutions.com/api/acceptance/iframes/".config('paymob.iframe_id')."?payment_token=$paymentKey->token"
+                    'data' => "https://accept.paymobsolutions.com/api/acceptance/iframes/"
+                    .config('paymob.iframe_id')."?payment_token=$paymentKey->token"
                 ]);
             } else {
                 return view('payment', ['paymentKey' => $paymentKey]);
             }
-            
         } else {
             $pbc = new PayMobCash();
             $paymentKey = $pbc->getCashPaymentKeyPaymob(
