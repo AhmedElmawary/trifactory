@@ -192,10 +192,16 @@ class CartController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()
-                ->action('CartController@payment')
-                ->withErrors($validator)
-                ->withInput();
+            if (\Request::is('api*')) {
+                return response()->json([
+                    'message' => $validator->errors()
+                    ]);
+            } else {
+                return redirect()
+                    ->action('CartController@payment')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
         }
 
         if ($code == null) {
