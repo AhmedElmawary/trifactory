@@ -35,6 +35,9 @@ class LeaderboardController extends Controller
                 if ($request->input('gender_position') != "") {
                     $query->where('gender_position', 'like', $request->input('gender_position'));
                 }
+                if ($request->input('club') != "") {
+                    $query->where('club', 'like', '%'.$request->input('club').'%');
+                }
             })
             ->orderByRaw('total_points desc')
             ->groupBy('name')
@@ -61,6 +64,9 @@ class LeaderboardController extends Controller
                 if ($request->input('gender_position') != "") {
                     $query->where('gender_position', 'like', $request->input('gender_position'));
                 }
+                if ($request->input('club') != "") {
+                    $query->where('club', 'like', '%'.$request->input('club').'%');
+                }
             })
             ->orderByRaw('total_points desc')
             ->groupBy('name')
@@ -69,14 +75,30 @@ class LeaderboardController extends Controller
         $leaderboardClub = \DB::table('leaderboard_data')
             ->select('points', 'club', \DB::raw('SUM(points) as total_points'))
             ->whereNotIn('club', ['NA', 'Independent', 'Other', 'I am an independent athlete.'])
+            ->where(function ($query) use ($request) {
+                if ($request->input('club') != "") {
+                    $query->where('club', 'like', '%'.$request->input('club').'%');
+                }
+            })
             ->orderByRaw('total_points desc')
             ->groupBy('club')
             ->paginate(25);
+        
+        $male_clubs = \DB::table('leaderboard_data')->select('club')->where('gender', 'M')->groupBy('club')->pluck('club');
+        $male_categories = \DB::table('leaderboard_data')->select('category')->where('gender', 'M')->groupBy('category')->pluck('category');
+        $female_clubs = \DB::table('leaderboard_data')->select('club')->where('gender', 'F')->groupBy('club')->pluck('club');
+        $female_categories = \DB::table('leaderboard_data')->select('category')->where('gender', 'F')->groupBy('category')->pluck('category');
+        $clubs = \DB::table('leaderboard_data')->select('club')->groupBy('club')->pluck('club');
 
         $data = [
             'leaderboardMale' => $leaderboardMale,
             'leaderboardFemale' => $leaderboardFemale,
             'leaderboardClub' => $leaderboardClub,
+            'male_clubs' => $male_clubs,
+            'male_categories' => $male_categories,
+            'female_clubs' => $female_clubs,
+            'female_categories' => $female_categories,
+            'clubs' => $clubs
         ];
         if (\Request::is('api*')) {
             return response()->json(['data' => $data]);
