@@ -83,5 +83,14 @@ Route::get('/empty-cart_storage', function() {
 
 Route::get('/payment_success', function() {
     $order = App\Order::find(Illuminate\Support\Facades\Input::get('order'));
-    return view('payment-success', ['order' => $order]);
+    if (\Request::is('api*') || \Request::wantsJson()) {
+        return response()->json([
+            'status' => 200,
+            'success' => true,
+            'message' => 'payment-success',
+            'data' => $order
+        ]);
+    } else {
+        return view('payment-success', ['order' => $order]);
+    }
 })->name('payment_success');
