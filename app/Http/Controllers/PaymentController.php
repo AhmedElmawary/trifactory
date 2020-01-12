@@ -24,8 +24,8 @@ class PaymentController extends Controller
 
     public function __construct()
     {
-        if (\Request::is('api*') || \Request::wantsJson()) {
-            // $this->middleware(['auth:api']);
+        if (\Request::is('api*')) {
+            $this->middleware(['auth:api'], ['except' => ['processedCallback', 'invoice']]);
         } else {
             $this->middleware('auth', ['except' => ['processedCallback', 'invoice']]);
         }

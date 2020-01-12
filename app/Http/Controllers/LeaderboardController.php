@@ -84,11 +84,30 @@ class LeaderboardController extends Controller
             ->groupBy('club')
             ->paginate(25);
         
-        $male_clubs = \DB::table('leaderboard_data')->select('club')->where('gender', 'M')->groupBy('club')->pluck('club');
-        $male_categories = \DB::table('leaderboard_data')->select('category')->where('gender', 'M')->groupBy('category')->pluck('category');
-        $female_clubs = \DB::table('leaderboard_data')->select('club')->where('gender', 'F')->groupBy('club')->pluck('club');
-        $female_categories = \DB::table('leaderboard_data')->select('category')->where('gender', 'F')->groupBy('category')->pluck('category');
-        $clubs = \DB::table('leaderboard_data')->select('club')->groupBy('club')->pluck('club');
+        $male_clubs = \DB::table('leaderboard_data')
+        ->select('club')
+        ->where('gender', 'M')
+        ->groupBy('club')
+        ->pluck('club');
+        $male_categories = \DB::table('leaderboard_data')
+        ->select('category')
+        ->where('gender', 'M')
+        ->groupBy('category')
+        ->pluck('category');
+        $female_clubs = \DB::table('leaderboard_data')
+        ->select('club')
+        ->where('gender', 'F')
+        ->groupBy('club')
+        ->pluck('club');
+        $female_categories = \DB::table('leaderboard_data')
+        ->select('category')
+        ->where('gender', 'F')
+        ->groupBy('category')
+        ->pluck('category');
+        $clubs = \DB::table('leaderboard_data')
+        ->select('club')
+        ->groupBy('club')
+        ->pluck('club');
 
         $data = [
             'leaderboardMale' => $leaderboardMale,
