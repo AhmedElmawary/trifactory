@@ -231,9 +231,15 @@ class ProfileController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/profile')
+            if (\Request::is('api*')) {
+                return response()->json([
+                    'message' => $validator->errors()
+                    ]);
+            } else {
+                return redirect('/profile')
                 ->withErrors($validator)
                 ->withInput();
+            }
         }
 
         $user = Auth::user();
@@ -252,7 +258,7 @@ class ProfileController extends Controller
         $request['years'] = range(1930, date('Y'));
         $validator = Validator::make($request->all(), [
             'firstname' => ['required', 'string', 'max:255'],
-            'lastname' => ['required', 'str ing', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.Auth::user()->id],
             'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users,phone,'.Auth::user()->id],
             'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
@@ -260,9 +266,15 @@ class ProfileController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/profile')
+            if (\Request::is('api*')) {
+                return response()->json([
+                    'message' => $validator->errors()
+                    ]);
+            } else {
+                return redirect('/profile')
                 ->withErrors($validator)
                 ->withInput();
+            }
         }
 
         if ($request->club == 'Other') {
