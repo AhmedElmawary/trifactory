@@ -55,7 +55,7 @@ class Voucher extends Resource
             BelongsTo::make('User', 'user'),
             BelongsTo::make('Sender', 'sender', 'App\Nova\User'),
             Date::make('Used On', 'usedOn')->sortable(),
-            BelongsTo::make('Order'),
+            BelongsTo::make('Order')->nullable(),
 
         ];
     }

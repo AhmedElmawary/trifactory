@@ -108,10 +108,16 @@ class CartController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()
-                ->action('CartController@index')
-                ->withErrors($validator, $item)
-                ->withInput();
+            if (\Request::is('api*')) {
+                return response()->json([
+                    'message' => $validator->errors()
+                    ]);
+            } else {
+                return redirect()
+                    ->action('CartController@index')
+                    ->withErrors($validator, $item)
+                    ->withInput();
+            }
         }
 
         if (array_key_exists($item, $cartItems)) {
