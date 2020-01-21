@@ -31,6 +31,11 @@ class CartController extends Controller
         $cartSubTotal = \Cart::getSubTotal();
         $cartTotal = \Cart::getTotal();
         $cartItems = \Cart::getContent()->toArray();
+        foreach ($cartItems as $cartItem) {
+            foreach ($cartItem['conditions'] as $condition) {
+                $cartItems['promo'] = $condition->getAttributes();
+            }
+        }
 
         if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json([
@@ -76,6 +81,7 @@ class CartController extends Controller
 
         if ($voucher && $voucher->getValue() != 0) {
             $data['voucher'] = $voucher;
+            $data['voucher_attributes'] = $voucher->getAttributes();
         }
         if (\Request::is('api*') || \Request::wantsJson()) {
             return response()->json(['status' => 200, 'data' => $data]);
@@ -235,7 +241,6 @@ class CartController extends Controller
 
                     // not auto-set incase of custom storage storage
                     $condition->parsedRawValue = $voucher->amount * -1;
-
                     \Cart::condition($condition);
                 }
             }
@@ -313,7 +318,6 @@ class CartController extends Controller
         $input = $request->all();
         $number_of_tickets = $input['number_of_tickets'];
         
-        \Log::info($input);
 
         $grouppedInput = [];
 
@@ -323,7 +327,6 @@ class CartController extends Controller
                 $grouppedInput['ticket_' . $i][$key] = $input['ticket_' . $i . '_' . $key];
             }
         }
-        \Log::info($grouppedInput);
         foreach ($grouppedInput as $ticket_number => $ticketValues) {
             try {
                 $ticket = Ticket::find($ticketValues['type']);
@@ -341,7 +344,6 @@ class CartController extends Controller
             }
             $race = $ticket->race()->first();
 
-            \Log::info($ticketValues);
 
             if ($ticketValues['use'] == 'myself') {
                 $user = Auth::user();
