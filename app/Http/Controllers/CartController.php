@@ -198,10 +198,12 @@ class CartController extends Controller
         ]);
 
         if ($validator->fails()) {
-            if (\Request::is('api*') && isset($inputs['code'])) {
-                return response()->json([
-                    'message' => $validator->errors()
-                    ]);
+            if (\Request::is('api*')) {
+                if (isset($inputs['code'])) {
+                    return response()->json([
+                        'message' => $validator->errors()
+                        ]);
+                }
             } else {
                 return redirect()
                     ->action('CartController@payment')
