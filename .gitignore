@@ -29,3 +29,5 @@ supervisord.pid
 
 # Deployer
 deployments/
+
+.idea
