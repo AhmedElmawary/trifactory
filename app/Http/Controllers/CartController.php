@@ -310,6 +310,8 @@ class CartController extends Controller
         \Cart::session($user->id);
         $input = $request->all();
         $number_of_tickets = $input['number_of_tickets'];
+        
+        \Log::info($input);
 
         $grouppedInput = [];
 
@@ -319,6 +321,7 @@ class CartController extends Controller
                 $grouppedInput['ticket_' . $i][$key] = $input['ticket_' . $i . '_' . $key];
             }
         }
+        \Log::info($grouppedInput);
         foreach ($grouppedInput as $ticket_number => $ticketValues) {
             try {
                 $ticket = Ticket::find($ticketValues['type']);
@@ -335,6 +338,8 @@ class CartController extends Controller
                 return redirect()->back();
             }
             $race = $ticket->race()->first();
+
+            \Log::info($ticketValues);
 
             if ($ticketValues['use'] == 'myself') {
                 $user = Auth::user();
