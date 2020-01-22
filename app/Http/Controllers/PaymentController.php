@@ -55,11 +55,11 @@ class PaymentController extends Controller
             $meta['voucher'] = $voucher->getAttributes();
             $voucher = Voucher::where('code', $meta['voucher']['code'])->first();
             $voucher_credit = $voucher->amount - ($credit ? $credit->parsedRawValue : 0) - $cartSubTotal;
-            $usercredit = new Usercredit();
-            $usercredit->user_id = $user->id;
-            $usercredit->amount = $voucher_credit;
-            $usercredit->action = 'Voucher Remaining';
-            $usercredit->save();
+//            $usercredit = new Usercredit();
+//            $usercredit->user_id = $user->id;
+//            $usercredit->amount = $voucher_credit;
+//            $usercredit->action = 'Voucher Remaining';
+//            $usercredit->save();
         }
 
         foreach ($cartItems as $item) {
