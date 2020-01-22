@@ -31,13 +31,14 @@ class CartController extends Controller
         $cartSubTotal = \Cart::getSubTotal();
         $cartTotal = \Cart::getTotal();
         $cartItems = \Cart::getContent()->toArray();
-        // foreach ($cartItems as $cartItem) {
-        //     foreach ($cartItem['conditions'] as $condition) {
-        //         $cartItems['promo'] = $condition->getAttributes();
-        //     }
-        // }
+        
 
         if (\Request::is('api*') || \Request::wantsJson()) {
+            foreach ($cartItems as $cartItem) {
+                foreach ($cartItem['conditions'] as $condition) {
+                    $cartItems['promo'] = $condition->getAttributes();
+                }
+            }
             return response()->json([
                 'cartItems' => $cartItems,
                 'cartSubTotal' => $cartSubTotal,
@@ -81,9 +82,11 @@ class CartController extends Controller
 
         if ($voucher && $voucher->getValue() != 0) {
             $data['voucher'] = $voucher;
-            // $data['voucher_attributes'] = $voucher->getAttributes();
         }
         if (\Request::is('api*') || \Request::wantsJson()) {
+            if (isset($data['voucher'])) {
+                $data['voucher_attributes'] = $voucher->getAttributes();
+            }
             return response()->json(['status' => 200, 'data' => $data]);
         } else {
             return view('cart-payment', $data);
