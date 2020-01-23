@@ -346,7 +346,8 @@
                                     <td>
                                         <a
                                             class="event-details-trigger" style="cursor: pointer" onclick="show_details({{$event->id}})"
-                                            >Details @if (!(isset($event->participant_user) && $event->participant_user->id != $user->id)) & Cancellation @endif</a
+                                            {{-->Details @if (!(isset($event->participant_user) && $event->participant_user->id != $user->id)) & Cancellation @endif</a--}}
+                                            >Details & Cancellation </a
                                         >
                                     </td>
                                 </tr>
@@ -528,7 +529,8 @@
                             <div class="col-lg-12 mb-5">
                                     <hr class="line-separator" />
                                 </div>
-                            @if (!(isset($event->participant_user) && $event->participant_user->id != $user->id))
+{{--                            @if (!(isset($event->participant_user) && $event->participant_user->id != $user->id))--}}
+                            @if (isset($event->participant_user) )
                             <div style="margin: auto" class="col-lg-6 mt-4">
                                 <form id="form_{{$event->id}}" action="{{ route('refund-ticket', ['userrace_id'=>$event->id, 'order_id'=>$event->order_id, 'race_id'=>$event->race_id, 'ticket_id'=>$event->ticket_id, 'user_id'=>$event->user_id, 'participant_user_id'=>$event->participant_user_id, 'participant_ticket_id'=>$event->participant_ticket_id]) }}" method="post">
                                     @csrf
@@ -559,6 +561,7 @@
                                 @endif
                             </div>
                             @endif
+
                         </div>
                     </div>
                     @endforeach
