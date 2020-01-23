@@ -406,7 +406,10 @@ class PaymentController extends Controller
         $user = Auth::user();
 
 //        if (!isset($request->participant_user_id) || $request->participant_user_id == $user->id) {
-        if (!isset($request->participant_user_id) || $request->participant_user_id == $user->id || $request->user_id == $user->id) {
+        if (!isset($request->participant_user_id) ||
+                   $request->participant_user_id == $user->id ||
+                   $request->user_id == $user->id
+        ) {
             $userrace = UserRace::find($request->userrace_id);
             $order = Order::where('id', $request->order_id)->first();
             $userrace->questionanswer()->delete();
