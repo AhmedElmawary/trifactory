@@ -182,6 +182,7 @@ return [
         App\Providers\NovaServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Chumper\Zipper\ZipperServiceProvider::class,
     ],
 
     /*
@@ -234,6 +235,7 @@ return [
         'PayMob' => BaklySystems\PayMob\Facades\PayMob::class,
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Zipper' => 'Chumper\Zipper\Zipper',
 
     ],
 
