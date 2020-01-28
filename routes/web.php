@@ -98,6 +98,8 @@ Route::get('/payment_success', function() {
 Route::get('/download_id_images_zip', function() {
     ini_set('memory_limit', '-1');
     ini_set('max_execution_time', 3000);
+    ini_set('max_input_time', 3000);
+    
     $user = \Illuminate\Support\Facades\Auth::user();
     // Download the folder that contains the ID Images of participants
     if (\Illuminate\Support\Facades\Auth::user() && ($user->id == 465 || $user->id == 469)) {
