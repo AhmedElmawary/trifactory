@@ -99,11 +99,11 @@ Route::get('/download_id_images_zip', function() {
     $user = \Illuminate\Support\Facades\Auth::user();
     // Download the folder that contains the ID Images of participants
     if (\Illuminate\Support\Facades\Auth::user() && ($user->id == 465 || $user->id == 469)) {
-        $public_dir = storage_path('app\public\tickets_images');
-        \Zipper::make(storage_path('app\tickets_images_backup\id_images.zip'))->add($public_dir)->close();
+        $public_dir = storage_path('app/public/tickets_images');
+        \Zipper::make(storage_path('app/tickets_images_backup/id_images.zip'))->add($public_dir)->close();
         if (\Illuminate\Support\Facades\Auth::user()){
             return response()
-            ->download(storage_path('app\tickets_images_backup\id_images.zip'), 'id_images.zip');
+            ->download(storage_path('app/tickets_images_backup/id_images.zip'), 'id_images.zip');
         }
     } else {
         abort(404);
