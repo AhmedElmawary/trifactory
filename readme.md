@@ -52,4 +52,3 @@ storage linking is essential for images saved to appear in localhost
 
 ### Documentation for Custom Excel Importing
 https://docs.laravel-excel.com/3.1/imports/
-.
