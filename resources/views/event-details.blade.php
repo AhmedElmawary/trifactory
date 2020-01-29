@@ -44,14 +44,36 @@
       <div class="row mb-5">
         <div class="col-lg-12">
 
-          <div class="custom-dropdown">
-            <span class="dropdown-trigger" data-toggle="collapse" data-target="#general_info">
-              General info
-            </span>
-            <div class="dropdown-content collapse" id="general_info" style="overflow-wrap: break-word;">
-              {!! $event->details !!}
+          {{--<div class="custom-dropdown">--}}
+            {{--<span class="dropdown-trigger" data-toggle="collapse" data-target="#general_info">--}}
+              {{--General info--}}
+            {{--</span>--}}
+            {{--<div class="dropdown-content collapse" id="general_info" style="overflow-wrap: break-word;">--}}
+              {{--{!! $event->details !!}--}}
+            {{--</div>--}}
+          {{--</div>--}}
+
+          @if($eventDetails != null)
+            @foreach($eventDetails as $eventDetail)
+              <div class="custom-dropdown">
+                  <span class="dropdown-trigger" data-toggle="collapse" data-target="#event_{{$eventDetail->id}}">
+                    {{$eventDetail->title}}
+                  </span>
+                <div class="dropdown-content collapse" id="event_{{$eventDetail->id}}" style="overflow-wrap: break-word;">
+                  {!! $eventDetail->details !!}
+                </div>
+              </div>
+            @endforeach
+          @else
+            <div class="custom-dropdown">
+              <span class="dropdown-trigger" data-toggle="collapse" data-target="#general_info">
+                General info
+              </span>
+              <div class="dropdown-content collapse" id="general_info" style="overflow-wrap: break-word;">
+                {!! $event->details !!}
+              </div>
             </div>
-          </div>
+          @endif
 
           <div class="custom-dropdown">
             <span class="dropdown-trigger" data-toggle="collapse" data-target="#available_races">

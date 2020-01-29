@@ -61,4 +61,9 @@ class Event extends Model
     {
         return $this->hasMany('App\Race', 'event_id');
     }
+
+    public function eventDetails()
+    {
+        return $this->hasMany('App\EventDetails', 'event_id');
+    }
 }

@@ -69,6 +69,7 @@ class EventsController extends Controller
         if ($event->event_start < $today) {
             $pastEvent = true;
         }
+        $eventDetails = $event->eventDetails;
         
         if (\Request::is('api*') || \Request::wantsJson()) {
             $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j').
@@ -81,7 +82,8 @@ class EventsController extends Controller
                 'pastEvent' => $pastEvent,
                 'user' => $user,
                 'closed' => $closed,
-                'coming_soon' => $coming_soon
+                'coming_soon' => $coming_soon,
+                'eventDetails' => (count($eventDetails) > 0 ? $eventDetails : null)
             ]);
         } else {
             return view('event-details', [
@@ -89,7 +91,8 @@ class EventsController extends Controller
                 'pastEvent' => $pastEvent,
                 'user' => $user,
                 'closed' => $closed,
-                'coming_soon' => $coming_soon
+                'coming_soon' => $coming_soon,
+                'eventDetails' => (count($eventDetails) > 0 ? $eventDetails : null)
             ]);
         }
     }

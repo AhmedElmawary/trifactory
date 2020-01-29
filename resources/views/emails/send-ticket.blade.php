@@ -117,6 +117,17 @@
                             </b>
                         </span>
                     </li>
+
+                     <li style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                        <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;">
+                            <b>QR Code: </b>
+                            <br/>
+                        </span>
+                        <span @if (isset($ticket->Event) && preg_match("/mudder/i", $ticket->Event)) style="font-family: AvenirNext-Medium;font-size: 12px;color: #474747;" @else style="font-family: AvenirNext-Medium;font-size: 12px;color: #D31D00;" @endif>
+                           <img src="https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl={{$ticketId}}}"/>
+                        </span>
+                    </li>
+
                 </ol>
             </span>
         </td>
