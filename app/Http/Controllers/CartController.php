@@ -36,7 +36,7 @@ class CartController extends Controller
         if (\Request::is('api*') || \Request::wantsJson()) {
             foreach ($cartItems as $cartItem) {
                 foreach ($cartItem['conditions'] as $condition) {
-                    $cartItems['promo'] = $condition->getAttributes();
+                    $cartItems[$cartItem['id']]['promo'] = $condition->getAttributes();
                 }
             }
             return response()->json([
