@@ -96,7 +96,7 @@
       </div>
       <div class="row">
         @if($coming_soon)
-        <div class="col-lg-12"><img src="/images/coming_soon.png" alt="Coming-soon"></div>
+        <div class="col-lg-12"><img src="/images/coming_soon.png" alt="Coming-soon" style="width:50%"></div>
         @else
         @if(($pastEvent || $closed) && !(isset($user) && ($user->id == 469 || $user->id == 465 || $user->id == 1468)))
         <div class="col-lg-12">Registration Closed</div>
