@@ -202,7 +202,7 @@
                             <div class="col-lg-6 mb-5">
                                 <label class="input-label clubs">Club</label>
     
-                                <select style="margin-top:20px;" class="custom-select clubs" name="club" @if ($user->club != '') disabled @endif required>
+                                <select style="margin-top:20px;" class="custom-select clubs" name="club" required>
                                         @if ($user->club == '')
                                             <option value="" disabled selected>What club do you represent (if any)?</option>
                                         @else
