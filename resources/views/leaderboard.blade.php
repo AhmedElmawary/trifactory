@@ -57,7 +57,7 @@
                     <h5>Filter</h5>
                     <input type="text" placeholder="Name.." name="name" id="name_filter" autofocus>
                     <input type="text" placeholder="Age Group.." name="category" id="category_filter">
-                    <input type="text" placeholder="Gender Position.." name="gender_position" id="gender_position_search">
+                    <input type="text" placeholder="Club.." name="club" id="club_search">
                     <div id="content-mobile"><button id=filter_button type="submit" onclick="filter()" ><i class="fa fa-search"></i></button></div>
                 </li>
             </ul>
@@ -278,7 +278,7 @@
         document.getElementById("filter_button").click();
         }
     });
-    var input = document.getElementById("gender_position_search");
+    var input = document.getElementById("club_search");
     input.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
         event.preventDefault();
