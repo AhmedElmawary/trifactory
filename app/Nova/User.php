@@ -82,7 +82,7 @@ class User extends Resource
 
             HasMany::make('Usercredit'),
             HasMany::make('Voucher'),
-            HasMany::make('UserRace', 'participantuserrace'),
+            HasMany::make('UserRace'),
             HasMany::make('Order'),
 
 
