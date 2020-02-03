@@ -141,8 +141,8 @@ class LeaderboardController extends Controller
                 if ($request->input('category') != "") {
                     $query->where('category', 'like', '%'.$request->input('category').'%');
                 }
-                if ($request->input('gender_position') != "") {
-                    $query->where('gender_position', 'like', $request->input('gender_position'));
+                if ($request->input('club') != "") {
+                    $query->where('club', 'like', $request->input('club'));
                 }
             })
             ->orderByRaw('id desc')

@@ -110,11 +110,27 @@ function ticket_details(){
     document.getElementById("open_added_to_cart_modal").onclick = validatePhone;
 }
 function filter(){
-    name = document.getElementById("name_filter").value
-    category = document.getElementById("category_filter").value
-    gender_position = document.getElementById("gender_position_search").value
-    document.location.search = "name="+name+"&category="+category+"&gender_position="+gender_position;
+    const name = trim(document.getElementById("name_filter").value);
+    const category = trim(document.getElementById("category_filter").value);
+    const club = trim(document.getElementById("club_search").value);
+
+    if(!name && !category && !club)
+        return;
+    var queryStr = "";
+    if(name)
+        queryStr += "name="+name;
+    if(category)
+        queryStr += ((category) ? "&category=" : "category=" )+category;
+    if(club)
+        queryStr += ((category) ? "&club=" : "club=" )+club;
+    document.location.search = queryStr;
 }
+
+// trim space at the begin and end of string
+function trim(str) {
+    return str.replace(/^\s+|\s+$/g,'');
+}
+
 function sortList() {
     var list, i, switching, b, shouldSwitch;
     list = document.getElementsByClassName("clubs");
