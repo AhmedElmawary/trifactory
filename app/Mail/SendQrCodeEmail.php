@@ -11,22 +11,28 @@ class SendQrCodeEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $ticketId;
+    public $participantTicketId;
     public $user;
-    public $race;
-    public $event;
+    public $ticket;
+    public $self;
+    public $other;
+    public $fromUser;
+    public $newAccount;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($ticketId, $user, $race, $event)
+    public function __construct($participantTicketId, $user, $ticket, $self, $other, $fromUser, $newAccount)
     {
+        $this->participantTicketId = $participantTicketId;
         $this->user = $user;
-        $this->ticketId = $ticketId;
-        $this->race = $race;
-        $this->event = $event;
+        $this->ticket = $ticket;
+        $this->self = $self;
+        $this->other = $other;
+        $this->fromUser = $fromUser;
+        $this->newAccount = $newAccount;
     }
 
     /**
@@ -37,12 +43,16 @@ class SendQrCodeEmail extends Mailable
     public function build()
     {
         return $this
-            ->subject('The TriFactory - Ticket information')
-            ->view('emails.send-qr-code', [
-                'ticketId' => $this->ticketId,
+            ->subject((preg_match("/mudder/i", $this->ticket->Event)) ?
+                "Tough Mudder - Ticket information" : 'The TriFactory - Ticket information')
+            ->view('emails.send-ticket', [
+                'ticketId' => $this->participantTicketId,
                 'user' => $this->user,
-                'race' => $this->race,
-                'event' => $this->event
+                'ticket' => $this->ticket,
+                'self' => $this->self,
+                'other' => $this->other,
+                'fromUser' => $this->fromUser,
+                'newAccount' => $this->newAccount,
             ]);
     }
 }

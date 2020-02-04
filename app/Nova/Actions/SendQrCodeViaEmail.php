@@ -4,6 +4,9 @@ namespace App\Nova\Actions;
 
 use App\Event;
 use App\Events\RaceTicketQrCode;
+use App\Listeners\EmailTicket;
+use App\Mail\SendTicketEmail;
+use App\Order;
 use App\User;
 use App\Race;
 use Illuminate\Bus\Queueable;
@@ -29,12 +32,32 @@ class SendQrCodeViaEmail extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            $participantTicketId = $model->participant_ticket_id;
-            $user = User::find($model->participant_user_id);
-            $race = Race::find($model->race_id);
-            $event = Event::find($race->event_id);
 
-            event(new RaceTicketQrCode($participantTicketId, $user, $race, $event));
+            $participantTicketId = $model->participant_ticket_id;
+            $participantUserId = $model->participant_user_id;
+            $registeredUserId = $model->user_id;
+            $orderId = $model->order_id;
+            $order = Order::find($orderId);
+            $meta = $order->meta;
+            $userTicket = null;
+            $fromUser = null;
+            $metaParsed = json_decode($meta);
+            foreach ($metaParsed as $ticketId => $ticket) {
+                if ($ticketId !== 'credit' && $ticketId !== 'voucher' &&  $ticketId == $participantTicketId) {
+                    $userTicket = $ticket;
+                    break;
+                }
+            }
+            $self = false;
+            $other = false;
+            if($participantUserId === $registeredUserId)
+                $self = true;
+            else {
+                $other = true;
+                $fromUser = User::find($registeredUserId);
+            }
+            $participantUser = User::find($model->participant_user_id);
+            event(new RaceTicketQrCode($participantTicketId, $participantUser, $userTicket, $self, $other, $fromUser, false));
         }
     }
 

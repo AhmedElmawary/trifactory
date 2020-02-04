@@ -16,20 +16,26 @@ class RaceTicketQrCode
 
     public $participantTicketId;
     public $user;
-    public $race;
-    public $event;
+    public $ticket;
+    public $self;
+    public $other;
+    public $fromUser;
+    public $newAccount;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($participantTicketId, $user, $race, $event)
+    public function __construct($participantTicketId, $user, $ticket, $self, $other, $fromUser, $newAccount)
     {
         $this->participantTicketId = $participantTicketId;
         $this->user = $user;
-        $this->race = $race;
-        $this->event = $event;
+        $this->ticket = $ticket;
+        $this->self = $self;
+        $this->other = $other;
+        $this->fromUser = $fromUser;
+        $this->newAccount = $newAccount;
     }
 
     /**

@@ -39,6 +39,7 @@ class EmailTicket
 
         $email = 'E-mail';
 
+        // If user register for himself
         if ($user->email === $ticket->$email) {
             $self = true;
             try {
@@ -55,6 +56,7 @@ class EmailTicket
                 ]);
             }
         } else {
+            // if user register for someone else create new user with data
             try {
                 Mail::to($user->email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, null, null));
             } catch (\Exception $e) {
