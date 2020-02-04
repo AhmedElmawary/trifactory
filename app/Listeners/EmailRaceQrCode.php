@@ -38,15 +38,15 @@ class EmailRaceQrCode
             try {
                 \Mail::to(['address' => $user->email])->send(
                     new SendQrCodeEmail(
-                            $participantTicketId,
-                            $user,
-                            $ticket,
-                            $self,
-                            $other,
-                            $fromUser,
-                            $newAccount
-                        )
-                    );
+                        $participantTicketId,
+                        $user,
+                        $ticket,
+                        $self,
+                        $other,
+                        $fromUser,
+                        $newAccount
+                    )
+                );
             } catch (\Exception $e) {
                 \App\Exception::create([
                     'message' => $e->getMessage(),
