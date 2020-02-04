@@ -31,7 +31,7 @@ class SendQrCodeViaEmail extends Action
      */
     public function handle(ActionFields $fields, Collection $models)
     {
-        foreach ($models as $model) {
+        foreach($models as $model) {
             $participantTicketId = $model->participant_ticket_id;
             $participantUserId = $model->participant_user_id;
             $registeredUserId = $model->user_id;
@@ -49,7 +49,7 @@ class SendQrCodeViaEmail extends Action
             }
             $self = false;
             $other = false;
-            if($participantUserId === $registeredUserId) {
+            if($participantUserId === $registeredUserId){
                 $self = true;
             }
             else {
@@ -58,12 +58,13 @@ class SendQrCodeViaEmail extends Action
             }
             $participantUser = User::find($model->participant_user_id);
             event(new RaceTicketQrCode( $participantTicketId,
-                                        $participantUser,
-                                        $userTicket,
-                                        $self,
-                                        $other,
-                                        $fromUser,
-                                        false));
+                $participantUser,
+                $userTicket,
+                $self,
+                $other,
+                $fromUser,
+                false)
+            );
         }
     }
 

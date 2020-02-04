@@ -37,7 +37,14 @@ class EmailRaceQrCode
         if ($participantTicketId != null) {
             try {
                 \Mail::to(['address' => $user->email])
-                        ->send(new SendQrCodeEmail($participantTicketId, $user, $ticket, $self, $other, $fromUser, $newAccount));
+                        ->send(new SendQrCodeEmail($participantTicketId,
+                        $user,
+                        $ticket,
+                        $self,
+                       $other,
+                        $fromUser,
+                        $newAccount)
+                    );
             } catch (\Exception $e) {
                 \App\Exception::create([
                     'message' => $e->getMessage(),
