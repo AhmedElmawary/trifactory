@@ -57,7 +57,8 @@ class SendQrCodeViaEmail extends Action
                 $fromUser = User::find($registeredUserId);
             }
             $participantUser = User::find($model->participant_user_id);
-            event(new RaceTicketQrCode($participantTicketId, $participantUser, $userTicket, $self, $other, $fromUser, false));
+            event(new RaceTicketQrCode($participantTicketId, $participantUser,
+                                        $userTicket, $self, $other, $fromUser, false));
         }
     }
 
