@@ -411,14 +411,16 @@
                                         <br />
                                         - Ticket Type: {{$event->ticket->name}}
                                         <br />
-                                        - Total Cost: EGP 
-                                        @foreach (json_decode($event->order['meta'], true) as $key => $value) 
-                                            @if (preg_match("/TFT/i", $key)) 
-                                                @if ($value['_ticket_id'] == $event->ticket->id)
-                                                    {{$value['Price']}}
-                                                @endif
-                                            @endif
-                                        @endforeach
+                                        - Total Cost: EGP -
+                                        {{--@if(is_array(json_decode($event->order['meta'], true)) || is_object(json_decode($event->order['meta'], true)))--}}
+                                            {{--@foreach (json_decode($event->order['meta'], true) as $key => $value)--}}
+                                                {{--@if (preg_match("/TFT/i", $key))--}}
+                                                    {{--@if ($value['_ticket_id'] == $event->ticket->id)--}}
+                                                        {{--{{$value['Price']}}--}}
+                                                    {{--@endif--}}
+                                                {{--@endif--}}
+                                            {{--@endforeach--}}
+                                        {{--@endif--}}
                                     </span>
                                 </div>
                             </div>
