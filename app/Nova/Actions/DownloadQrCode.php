@@ -26,8 +26,10 @@ class DownloadQrCode extends Action
     {
         //
         $ticketId = trim($fields->ticketid);
-        if(!empty($ticketId))
-            return Action::download('https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' . $ticketId ,  "Ticket_" . $ticketId .'.png');
+        if(!empty($ticketId)) {
+            $url = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' . $ticketId;
+            return Action::download($url, "Ticket_" . $ticketId .'.png');
+        }
     }
 
     /**
