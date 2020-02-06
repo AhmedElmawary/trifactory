@@ -26,7 +26,7 @@ class DownloadQrCode extends Action
     {
         //
         $ticketId = trim($fields->ticketid);
-        if(!empty($ticketId)) {
+        if (!empty($ticketId)) {
             $url = 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' . $ticketId;
             return Action::download($url, "Ticket_" . $ticketId .'.png');
         }
