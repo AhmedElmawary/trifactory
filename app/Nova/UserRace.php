@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\DownloadQrCode;
 use App\Nova\Actions\SendQrCodeViaEmail;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
@@ -126,6 +127,7 @@ class UserRace extends Resource
             (new DownloadExcel)->withHeadings()->askForFilename(),
             new RemoveUserRaceDuplicates,
             new SendQrCodeViaEmail(),
+            new DownloadQrCode()
         ];
     }
 }
