@@ -75,7 +75,8 @@ class PayMobCredit extends PayMob
                 'apartment' => 'null'
             ],
             'currency' => 'EGP',
-            'card_integration_id' => config('paymob.integration_id')
+            'card_integration_id' => config('paymob.integration_id'),
+            'lock_order_when_paid' => 'true'
         ];
 
         // Send curl
