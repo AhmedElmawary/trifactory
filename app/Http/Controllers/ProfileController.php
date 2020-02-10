@@ -225,9 +225,9 @@ class ProfileController extends Controller
             return 'true';
         }
 
-        foreach($items as $row) {
-            if(($row->attributes["E-mail"] != trim($currentEmail))
-                && ($row->attributes->Phone == trim($currentPhone))){
+        foreach ($items as $row) {
+            if (($row->attributes["E-mail"] != trim($currentEmail))
+                && ($row->attributes->Phone == trim($currentPhone))) {
                 return 'true';
             }
         }
