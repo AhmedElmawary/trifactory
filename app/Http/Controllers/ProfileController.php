@@ -208,6 +208,11 @@ class ProfileController extends Controller
 
     public function validatePhone()
     {
+        $currentPhone = $_GET['phone'];
+        $currentEmail = $_GET['email'];
+        // view the cart items
+        $userId = Auth::user()->id;
+        $items = \Cart::session($userId)->getContent();
         $email_exist = User::where('email', isset($_GET['email']) ? $_GET['email'] : '')->first();
         if ($email_exist) {
             return 'false';
@@ -218,9 +223,16 @@ class ProfileController extends Controller
         $phone_exist = User::where('phone', $_GET['phone'])->first();
         if ($phone_exist) {
             return 'true';
-        } else {
-            return 'false';
         }
+
+        foreach($items as $row) {
+            if(($row->attributes["E-mail"] != trim($currentEmail))
+                && ($row->attributes->Phone == trim($currentPhone))){
+                return 'true';
+            }
+        }
+
+        return 'false';
     }
 
     public function password(Request $request)
