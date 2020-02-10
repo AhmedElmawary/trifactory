@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\RaceTicketQrCode;
+use App\Events\TicketPurchasedEmail;
 use App\Listeners\EmailRaceQrCode;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
@@ -34,15 +35,17 @@ class EventServiceProvider extends ServiceProvider
             EmailNewUser::class,
         ],
         TicketPurchased::class => [
-            EmailTicket::class,
             CreateUserRace::class,
+        ],
+        TicketPurchasedEmail::class => [
+            EmailTicket::class,
         ],
         VoucherPurchased::class => [
             CreateVouchers::class,
             EmailVoucherBuyer::class,
         ],
         RaceTicketQrCode::class => [
-          EmailRaceQrCode::class
+            EmailRaceQrCode::class
         ],
     ];
 

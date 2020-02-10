@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\TicketPurchasedEmail;
 use Illuminate\Http\Request;
 use PayMob;
 use App\PayMob\PayMobCash;
@@ -361,11 +362,19 @@ class PaymentController extends Controller
                         event(new TicketPurchased($order, $ticketId, $ticket, $user));
                     }
                 }
-            }
-            if (isset($order->user_id)) {
-                \Cart::session($order->user_id);
-                \Cart::clear();
-                \Cart::clearCartConditions();
+                if (isset($order->user_id)) {
+                    \Cart::session($order->user_id);
+                    \Cart::clear();
+                    \Cart::clearCartConditions();
+                }
+                foreach ($meta as $ticketId => $ticket) {
+                    if ($ticketId !== 'credit' && $ticketId !== 'voucher') {
+                        if (property_exists($ticket, 'code')) {
+                            $this->consumePromocode($order, $ticket->code);
+                        }
+                        event(new TicketPurchasedEmail($order, $ticketId, $ticket, $user));
+                    }
+                }
             }
         }
 
