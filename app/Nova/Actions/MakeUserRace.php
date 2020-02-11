@@ -40,14 +40,32 @@ class MakeUserRace extends Action
             if ($order['success'] == 'true' || strpos($order['success'], 'refund')) {
                 if (preg_match("/TFT/i", $order['id']) || preg_match("/TFO/i", $order['id'])) {
                     foreach (json_decode($order['meta'], true) as $key => $value) {
-                        if (preg_match("/TFT/i", $key) && isset($value['E-mail'])
-                        && !strpos($order['success'], $key) &&
-                        !isset(UserRace::where('participant_ticket_id', $key)->first()['id'])) {
+                        if ((isset(UserRace::where('participant_ticket_id', $key)->first()['id']) &&
+                            !isset(UserRace::where('participant_ticket_id', $key)->first()['participant_user_id'])) ||
+                            (preg_match("/TFT/i", $key) && isset($value['E-mail']) &&
+                            !strpos($order['success'], $key) &&
+                            !isset(UserRace::where('participant_ticket_id', $key)->first()['id']))) {
                             $userrace = new UserRace();
                             $userrace->order_id = $order['id'];
                             $userrace->participant_ticket_id = $key;
-                            $userrace->participant_user_id = User::select('id')->where("email", $value['E-mail'])
-                            ->first()['id'];
+                            $userId = User::select('id')
+                                ->where("email", $value['E-mail'])
+                                ->first()['id'];
+                            if($userId) {
+                                $userrace->participant_user_id = $userId;
+                            } else {
+                                $user = new User();
+                                $names = explode(' ', $value['For']);
+                                $user->name = $value['For'];
+                                $user->firstname = isset($names[0]) ? $names[0] : '';
+                                $user->lastname = isset($names[1]) ? $names[1] : '';
+                                $user->email = $value['E-mail'];
+                                $user->save();
+
+                                $userrace->participant_user_id = User::select('id')
+                                    ->where("email", $value['E-mail'])
+                                    ->first()['id'];
+                            }
                             $userrace->race_id = $value['_race_id'];
                             $userrace->ticket_id = $value['_ticket_id'];
                             $userrace->user_id = $order['user_id'];
