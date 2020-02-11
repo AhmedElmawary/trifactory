@@ -51,7 +51,7 @@ class MakeUserRace extends Action
                             $userId = User::select('id')
                                 ->where("email", $value['E-mail'])
                                 ->first()['id'];
-                            if($userId) {
+                            if ($userId) {
                                 $userrace->participant_user_id = $userId;
                             } else {
                                 $user = new User();
