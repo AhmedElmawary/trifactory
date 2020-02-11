@@ -10,6 +10,7 @@ use App\UserRace;
 use App\Question;
 use App\QuestionAnswer;
 use App\Order;
+use Hash;
 
 class CreateUserRace
 {
@@ -36,6 +37,7 @@ class CreateUserRace
         $user = $event->user;
         $order = $event->order;
         $meta = json_decode($event->order->meta);
+        $email = 'E-mail';
 
         $duplicate_count = UserRace::where('participant_ticket_id', $ticketId)->count();
         if ($duplicate_count >= 1) {
@@ -44,6 +46,53 @@ class CreateUserRace
         $participant_meta = json_decode(Order::find($order->id)['meta'], true)[$ticketId];
         $participant_email = $participant_meta['E-mail'];
         $participant_user = User::where('email', $participant_email)->first();
+        if(is_null($participant_user))
+        {
+            $name = explode(" ", $ticket->For);
+            if (!$name[1]) {
+                $name[1] = '';
+            }
+
+            $nationality = null;
+            $year_of_birth = 0;
+            $club = '';
+
+            foreach ($ticket as $key => $value) {
+                if (preg_match("/nationality/i", $key)) {
+                    $nationalities = \countries();
+                    unset($nationalities['il']);
+                    $nationality = $value;
+                    foreach ($nationalities as $key => $n) {
+                        if ($n['name'] == $value) {
+                            $nationality = $n['iso_3166_1_alpha2'];
+                        }
+                    }
+                }
+                if (preg_match("/year of birth/i", $key)) {
+                    $year_of_birth = $value;
+                }
+                if (preg_match("/club/i", $key)) {
+                    $club = $value;
+                }
+                if (preg_match("/others/i", $key)) {
+                    if ($value) {
+                        $club = $value;
+                    }
+                }
+            }
+
+            $participant_user = User::create([
+                'name' => $ticket->For,
+                'firstname' => $name[0],
+                'lastname' => $name[1],
+                'email' => $ticket->$email,
+                'nationality' => $nationality,
+                'year_of_birth' => $year_of_birth,
+                'club' => $club,
+                'phone' => $ticket->Phone,
+                'password' => Hash::make(uniqid('TFP')),
+            ]);
+        }
 
         $userRace = new UserRace;
         $userRace->order_id = $order->id;
