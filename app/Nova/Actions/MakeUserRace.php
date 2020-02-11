@@ -54,14 +54,25 @@ class MakeUserRace extends Action
                             if ($userId) {
                                 $userrace->participant_user_id = $userId;
                             } else {
-                                $user = new User();
-                                $names = explode(' ', $value['For']);
-                                $user->name = $value['For'];
-                                $user->firstname = isset($names[0]) ? $names[0] : '';
-                                $user->lastname = isset($names[1]) ? $names[1] : '';
-                                $user->email = $value['E-mail'];
-                                $user->save();
-
+                                try {
+                                    $user = new User();
+                                    $names = explode(' ', $value['For']);
+                                    $user->name = $value['For'];
+                                    $user->firstname = isset($names[0]) ? $names[0] : '';
+                                    $user->lastname = isset($names[1]) ? $names[1] : '';
+                                    $user->email = $value['E-mail'];
+                                    $user->phone = isset($value['Phone'])? $value['Phone'] : null;
+                                    $user->nationality = isset($value['Nationality'])? $value['Nationality']: '';
+                                    $user->save();
+                                } catch (\Exception $e) {
+                                    $user = new User();
+                                    $names = explode(' ', $value['For']);
+                                    $user->name = $value['For'];
+                                    $user->firstname = isset($names[0]) ? $names[0] : '';
+                                    $user->lastname = isset($names[1]) ? $names[1] : '';
+                                    $user->email = $value['E-mail'];
+                                    $user->save();
+                                }
                                 $userrace->participant_user_id = User::select('id')
                                     ->where("email", $value['E-mail'])
                                     ->first()['id'];
