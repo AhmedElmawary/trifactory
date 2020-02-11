@@ -46,8 +46,7 @@ class CreateUserRace
         $participant_meta = json_decode(Order::find($order->id)['meta'], true)[$ticketId];
         $participant_email = $participant_meta['E-mail'];
         $participant_user = User::where('email', $participant_email)->first();
-        if(is_null($participant_user))
-        {
+        if (is_null($participant_user)) {
             $name = explode(" ", $ticket->For);
             if (!$name[1]) {
                 $name[1] = '';
