@@ -2,9 +2,7 @@
 
 namespace App\Listeners;
 
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Voucher;
+use App\Jobs\SendEmailsJob;
 use App\Mail\SendTicketEmail;
 use Mail;
 use Hash;
@@ -42,34 +40,12 @@ class EmailTicket
         // If user register for himself
         if ($user->email === $ticket->$email) {
             $self = true;
-            try {
-                Mail::to($user->email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, null, null));
-            } catch (\Exception $e) {
-                \App\Exception::create([
-                    'message' => $e->getMessage(),
-                    'data' => json_encode($event),
-                    'location' =>
-                    'Line:'.__LINE__
-                    .';File:'.__FILE__
-                    .';Class:'.__CLASS__
-                    .';Method:'.__METHOD__
-                ]);
-            }
+            $sendTicketEmail = new SendTicketEmail($ticketId, $user, $ticket, $self, $other, null, null);
+            SendEmailsJob::dispatch($user->email, $sendTicketEmail);
         } else {
             // if user register for someone else create new user with data
-            try {
-                Mail::to($user->email)->send(new SendTicketEmail($ticketId, $user, $ticket, $self, $other, null, null));
-            } catch (\Exception $e) {
-                \App\Exception::create([
-                    'message' => $e->getMessage(),
-                    'data' => json_encode($event),
-                    'location' =>
-                    'Line:'.__LINE__
-                    .';File:'.__FILE__
-                    .';Class:'.__CLASS__
-                    .';Method:'.__METHOD__
-                ]);
-            }
+            $sendTicketEmail = new SendTicketEmail($ticketId, $user, $ticket, $self, $other, null, null);
+            SendEmailsJob::dispatch($user->email, $sendTicketEmail);
             $fromUser = $user;
             $user = User::where('email', $ticket->$email)->first();
             if (!$user) {
@@ -124,28 +100,8 @@ class EmailTicket
             }
             
             $other = true;
-            
-            try {
-                Mail::to($ticket->$email)->send(new SendTicketEmail(
-                    $ticketId,
-                    $user,
-                    $ticket,
-                    $self,
-                    $other,
-                    $fromUser,
-                    $newAccount
-                ));
-            } catch (\Exception $e) {
-                \App\Exception::create([
-                    'message' => $e->getMessage(),
-                    'data' => json_encode($event),
-                    'location' =>
-                    'Line:'.__LINE__
-                    .';File:'.__FILE__
-                    .';Class:'.__CLASS__
-                    .';Method:'.__METHOD__
-                ]);
-            }
+            $sendTicketEmail = new SendTicketEmail($ticketId, $user, $ticket, $self, $other, $fromUser, $newAccount);
+            SendEmailsJob::dispatch($user->email, $sendTicketEmail);
         }
     }
 }
