@@ -346,8 +346,8 @@
                                     <td>
                                         <a
                                             class="event-details-trigger" style="cursor: pointer" onclick="show_details({{$event->id}})"
-                                            {{-->Details @if (!(isset($event->participant_user) && $event->participant_user->id != $user->id)) & Cancellation @endif</a--}}
-                                            >Details & Cancellation </a
+                                            >Details @if ($event->race->event['cancel_availablility']) & Cancellation @endif</a
+                                            {{-- >Details & Cancellation </a --}}
                                         >
                                     </td>
                                 </tr>

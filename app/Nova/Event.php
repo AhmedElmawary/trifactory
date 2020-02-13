@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\SwitchEventCancelState;
 use Laravel\Nova\Fields\ID;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -120,6 +121,7 @@ class Event extends Resource
     {
         return [
             (new DownloadExcel)->withHeadings()->askForFilename(),
+            (new SwitchEventCancelState),
         ];
     }
 }
