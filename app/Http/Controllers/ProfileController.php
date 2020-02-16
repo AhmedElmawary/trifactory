@@ -7,10 +7,13 @@ use Auth;
 use Validator;
 use App\Question;
 use App\Answervalue;
+use App\Order;
 use App\Ticket;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\QuestionAnswer;
+use App\UserRace;
+use App\Events\RaceTicketQrCode;
 
 class ProfileController extends Controller
 {
@@ -44,21 +47,21 @@ class ProfileController extends Controller
             $data['past_events'] = \App\LeaderboardData::with('race.event')->where('email', $user->email)->get();
             foreach ($data['past_events'] as $past) {
                 $leaderboard_by_gender = \DB::table('leaderboard_data')
-                ->select(
-                    'name',
-                    'points',
-                    'country_code',
-                    'category',
-                    'gender_position',
-                    'club',
-                    'email',
-                    \DB::raw('SUM(points) as total_points')
-                )
-                ->where('gender', $past['gender'])
-                ->where('race_id', $past['race_id'])
-                ->orderByRaw('total_points desc')
-                ->groupBy('name')
-                ->get();
+                    ->select(
+                        'name',
+                        'points',
+                        'country_code',
+                        'category',
+                        'gender_position',
+                        'club',
+                        'email',
+                        \DB::raw('SUM(points) as total_points')
+                    )
+                    ->where('gender', $past['gender'])
+                    ->where('race_id', $past['race_id'])
+                    ->orderByRaw('total_points desc')
+                    ->groupBy('name')
+                    ->get();
                 $rank = 0;
                 $found = false;
                 foreach (json_decode($leaderboard_by_gender, true) as $record) {
@@ -70,21 +73,21 @@ class ProfileController extends Controller
                 $past['gender_rank'] = $rank;
 
                 $leaderboard_by_category = \DB::table('leaderboard_data')
-                ->select(
-                    'name',
-                    'points',
-                    'country_code',
-                    'category',
-                    'gender_position',
-                    'club',
-                    'email',
-                    \DB::raw('SUM(points) as total_points')
-                )
-                ->where('category', $past['category'])
-                ->where('race_id', $past['race_id'])
-                ->orderByRaw('total_points desc')
-                ->groupBy('name')
-                ->get();
+                    ->select(
+                        'name',
+                        'points',
+                        'country_code',
+                        'category',
+                        'gender_position',
+                        'club',
+                        'email',
+                        \DB::raw('SUM(points) as total_points')
+                    )
+                    ->where('category', $past['category'])
+                    ->where('race_id', $past['race_id'])
+                    ->orderByRaw('total_points desc')
+                    ->groupBy('name')
+                    ->get();
                 $rank = 0;
                 $found = false;
                 foreach (json_decode($leaderboard_by_category, true) as $record) {
@@ -96,8 +99,7 @@ class ProfileController extends Controller
                 $past['category_rank'] = $rank;
             }
 
-            $data['upcoming_events'] = \App\UserRace::
-            with(
+            $data['upcoming_events'] = \App\UserRace::with(
                 'race.event',
                 'ticket',
                 'questionanswer',
@@ -113,9 +115,9 @@ class ProfileController extends Controller
                 })
                 ->where(function ($query) use ($user) {
                     $query->where('user_id', $user->id)
-                    ->orWhere('participant_user_id', $user->id);
+                        ->orWhere('participant_user_id', $user->id);
                 })
-                
+
                 ->get();
             foreach ($data['upcoming_events'] as $event) {
                 $event['participant_user'] = \App\User::find($event->participant_user_id);
@@ -132,20 +134,20 @@ class ProfileController extends Controller
 
             if ($leaderboard_data->exists()) {
                 $leaderboard_by_gender = \DB::table('leaderboard_data')
-                ->select(
-                    'name',
-                    'points',
-                    'country_code',
-                    'category',
-                    'gender_position',
-                    'club',
-                    'email',
-                    \DB::raw('SUM(points) as total_points')
-                )
-                ->where('gender', $leaderboard_data->first()['gender'])
-                ->orderByRaw('total_points desc')
-                ->groupBy('name')
-                ->get();
+                    ->select(
+                        'name',
+                        'points',
+                        'country_code',
+                        'category',
+                        'gender_position',
+                        'club',
+                        'email',
+                        \DB::raw('SUM(points) as total_points')
+                    )
+                    ->where('gender', $leaderboard_data->first()['gender'])
+                    ->orderByRaw('total_points desc')
+                    ->groupBy('name')
+                    ->get();
                 $rank = 0;
                 $found = false;
                 foreach (json_decode($leaderboard_by_gender, true) as $record) {
@@ -161,20 +163,20 @@ class ProfileController extends Controller
 
             if ($leaderboard_data->exists()) {
                 $leaderboard_by_category = \DB::table('leaderboard_data')
-                ->select(
-                    'name',
-                    'points',
-                    'country_code',
-                    'category',
-                    'gender_position',
-                    'club',
-                    'email',
-                    \DB::raw('SUM(points) as total_points')
-                )
-                ->where('category', $leaderboard_data->first()['category'])
-                ->orderByRaw('total_points desc')
-                ->groupBy('name')
-                ->get();
+                    ->select(
+                        'name',
+                        'points',
+                        'country_code',
+                        'category',
+                        'gender_position',
+                        'club',
+                        'email',
+                        \DB::raw('SUM(points) as total_points')
+                    )
+                    ->where('category', $leaderboard_data->first()['category'])
+                    ->orderByRaw('total_points desc')
+                    ->groupBy('name')
+                    ->get();
                 $rank = 0;
                 $found = false;
                 foreach (json_decode($leaderboard_by_category, true) as $record) {
@@ -227,12 +229,53 @@ class ProfileController extends Controller
 
         foreach ($items as $row) {
             if (($row->attributes["E-mail"] != trim($currentEmail))
-                && ($row->attributes->Phone == trim($currentPhone))) {
+                && ($row->attributes->Phone == trim($currentPhone))
+            ) {
                 return 'true';
             }
         }
 
         return 'false';
+    }
+
+    public function resendqrcode($event)
+    {
+        $userRace = UserRace::find($event);
+        $participantTicketId = $userRace->participant_ticket_id;
+        $participantUserId = $userRace->participant_user_id;
+        $registeredUserId = $userRace->user_id;
+        $participantUser = User::find($userRace->participant_user_id);
+        $userTicket = null;
+        $fromUser = null;
+        $order = Order::find($userRace->order_id);
+        $meta = json_decode($order->meta);
+        foreach ($meta as $ticketId => $ticket) {
+            if ($ticketId !== 'credit' && $ticketId !== 'voucher' && $ticketId == $participantTicketId) {
+                $userTicket = $ticket;
+                break;
+            }
+        }
+
+        $self = false;
+        $other = false;
+        if ($participantUserId === $registeredUserId) {
+            $self = true;
+        } else {
+            $other = true;
+            $fromUser = User::find($registeredUserId);
+        }
+        event(
+            new RaceTicketQrCode(
+                $participantTicketId,
+                $participantUser,
+                $userTicket,
+                $self,
+                $other,
+                $fromUser,
+                false
+            )
+        );
+        return redirect()->back();
     }
 
     public function password(Request $request)
@@ -246,11 +289,11 @@ class ProfileController extends Controller
             if (\Request::is('api*')) {
                 return response()->json([
                     'message' => $validator->errors()
-                    ]);
+                ]);
             } else {
                 return redirect('/profile')
-                ->withErrors($validator)
-                ->withInput();
+                    ->withErrors($validator)
+                    ->withInput();
             }
         }
 
@@ -271,21 +314,23 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.Auth::user()->id],
-            'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users,phone,'.Auth::user()->id],
-            'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
-            'max:'.(date('Y')-5), 'in_array:years.*'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . Auth::user()->id],
+            'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users,phone,' . Auth::user()->id],
+            'year_of_birth' => [
+                'required', 'digits:4', 'integer', 'min:1930',
+                'max:' . (date('Y') - 5), 'in_array:years.*'
+            ],
         ]);
 
         if ($validator->fails()) {
             if (\Request::is('api*')) {
                 return response()->json([
                     'message' => $validator->errors()
-                    ]);
+                ]);
             } else {
                 return redirect('/profile')
-                ->withErrors($validator)
-                ->withInput();
+                    ->withErrors($validator)
+                    ->withInput();
             }
         }
 

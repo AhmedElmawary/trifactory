@@ -524,6 +524,10 @@
                                 </div>
                                 @endforeach
                                 </div>
+                                <div class="row">
+                                    <span >Didn't receive tickets information on email? &nbsp;</span> 
+                                    <a href="{{URL::to('sendmailqrcode',['event' => $event])}}" >Resend</a>
+                                </div>
                                 <input style="float:right" type="submit" class="btn btn-danger btn-block col-lg-6 mb-4" value="Submit Changes">
                             </form>
                             <div class="col-lg-12 mb-5">
