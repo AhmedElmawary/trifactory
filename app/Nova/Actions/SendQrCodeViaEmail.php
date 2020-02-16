@@ -71,7 +71,11 @@ class SendQrCodeViaEmail extends Action
             } catch (\Exception $e) {
                 \App\Exception::create([
                     'message' => $e->getMessage(),
-                    'data' => 'Ticket Id: ' . $participantTicketId . ' Order ID: ' . $orderId . ' User ID: ' . $registeredUserId,
+                    'data' =>
+                    'Ticket Id: '
+                        . $participantTicketId . ' Order ID: '
+                        . $orderId . ' User ID: '
+                        . $registeredUserId,
                     'location' =>
                     'Line:' . __LINE__
                         . ';File:' . __FILE__
