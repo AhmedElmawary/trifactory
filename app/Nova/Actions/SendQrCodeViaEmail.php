@@ -37,36 +37,48 @@ class SendQrCodeViaEmail extends Action
             $registeredUserId = $model->user_id;
             $orderId = $model->order_id;
             $order = Order::find($orderId);
-            $meta = $order->meta;
-            $userTicket = null;
-            $fromUser = null;
-            $metaParsed = json_decode($meta);
-            foreach ($metaParsed as $ticketId => $ticket) {
-                if ($ticketId !== 'credit' && $ticketId !== 'voucher' &&  $ticketId == $participantTicketId) {
-                    $userTicket = $ticket;
-                    break;
+            try {
+                $meta = $order->meta;
+                $userTicket = null;
+                $fromUser = null;
+                $metaParsed = json_decode($meta);
+                foreach ($metaParsed as $ticketId => $ticket) {
+                    if ($ticketId !== 'credit' && $ticketId !== 'voucher' &&  $ticketId == $participantTicketId) {
+                        $userTicket = $ticket;
+                        break;
+                    }
                 }
+                $self = false;
+                $other = false;
+                if ($participantUserId === $registeredUserId) {
+                    $self = true;
+                } else {
+                    $other = true;
+                    $fromUser = User::find($registeredUserId);
+                }
+                $participantUser = User::find($model->participant_user_id);
+                event(
+                    new RaceTicketQrCode(
+                        $participantTicketId,
+                        $participantUser,
+                        $userTicket,
+                        $self,
+                        $other,
+                        $fromUser,
+                        false
+                    )
+                );
+            } catch (\Exception $e) {
+                \App\Exception::create([
+                    'message' => $e->getMessage(),
+                    'data' => 'Ticket Id: ' . $participantTicketId . ' Order ID: ' . $orderId . ' User ID: ' . $registeredUserId,
+                    'location' =>
+                    'Line:' . __LINE__
+                        . ';File:' . __FILE__
+                        . ';Class:' . __CLASS__
+                        . ';Method:' . __METHOD__
+                ]);
             }
-            $self = false;
-            $other = false;
-            if ($participantUserId === $registeredUserId) {
-                $self = true;
-            } else {
-                $other = true;
-                $fromUser = User::find($registeredUserId);
-            }
-            $participantUser = User::find($model->participant_user_id);
-            event(
-                new RaceTicketQrCode(
-                    $participantTicketId,
-                    $participantUser,
-                    $userTicket,
-                    $self,
-                    $other,
-                    $fromUser,
-                    false
-                )
-            );
         }
     }
 
