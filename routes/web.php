@@ -52,7 +52,8 @@ Route::post('/profile/update', 'ProfileController@update');
 Route::post('/profile/userraceanswers/update', 'ProfileController@updateUserRaceAnswers')->name('questionanswerupdate');
 Route::post('/profile/password', 'ProfileController@password');
 
-Route::get('/leaderboard', 'LeaderboardController@index');
+Route::get('/leaderboard/', 'LeaderboardController@index');
+Route::get('/leaderboard/{year}', 'LeaderboardController@indexWithYear');
 Route::get('/leaderboard/details', 'LeaderboardController@details');
 
 

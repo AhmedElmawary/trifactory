@@ -35,10 +35,21 @@ class HomeController extends Controller
         $gallery = Gallery::latest('created_at')->with('galleryimage')->first();
         $upcomingEvents = Event::with('eventimages')->upcomming()->published()->get();
         $comingSoonEvents = Event::with('eventimages')->comingsoon()->get();
+        $allEvents = \DB::select("SELECT DISTINCT YEAR(created_at) AS year FROM events ORDER BY YEAR(created_at) DESC");
+        $years = [];
+        foreach ($allEvents as $event) {
+            $years[] = $event->year;
+        }
+        if (!session()->get("year")) {
+            session()->put("year", $years[0]);
+        }
+
+        $year = session()->get("year", $years[0]);
 
         $leaderboardMale = \DB::table('leaderboard_data')
             ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
             ->where('gender', 'M')
+            ->where('created_at', 'like', '%' . $year . '%')
             ->orderByRaw('total_points desc')
             ->groupBy('name')
             ->limit(5)
@@ -47,6 +58,7 @@ class HomeController extends Controller
         $leaderboardFemale = \DB::table('leaderboard_data')
             ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
             ->where('gender', 'F')
+            ->where('created_at', 'like', '%' . $year . '%')
             ->orderByRaw('total_points desc')
             ->groupBy('name')
             ->limit(5)
@@ -55,6 +67,7 @@ class HomeController extends Controller
         $leaderboardClub = \DB::table('leaderboard_data')
             ->select('points', 'club', \DB::raw('SUM(points) as total_points'))
             ->whereNotIn('club', ['NA', 'Independent', 'Other', 'I am an independent athlete.'])
+            ->where('created_at', 'like', '%' . $year . '%')
             ->orderByRaw('total_points desc')
             ->groupBy('club')
             ->limit(5)
@@ -66,14 +79,15 @@ class HomeController extends Controller
             'leaderboardMale' => $leaderboardMale,
             'leaderboardFemale' => $leaderboardFemale,
             'leaderboardClub' => $leaderboardClub,
-            'comingSoonEvents' => $comingSoonEvents
+            'comingSoonEvents' => $comingSoonEvents,
+            'years' => $years
         ];
         if (\Request::is('api*') || \Request::wantsJson()) {
             foreach ($data['upcomingEvents'] as $event) {
-                $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j').
-                (($event->event_start != $event->event_end) ? ' - '.
-                \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
-                \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
+                $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j') .
+                    (($event->event_start != $event->event_end) ? ' - ' .
+                        \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
+                        \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
             }
             return response()->json(['status' => 200, 'data' => $data]);
         } else {
