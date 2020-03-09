@@ -136,6 +136,7 @@ class="hero-section d-flex justify-content-center no-padding"
             class="icon"
         />Leaderboard
     </h3>
+    {{var_dump($years)}}
     <div class="row">
         <select class="leaderboard_year custom-select">
             @foreach($years as $year) 
@@ -176,7 +177,7 @@ class="hero-section d-flex justify-content-center no-padding"
                     @endforeach
                 </tbody>
                 @else 
-                <tr align='center'><td>No Data found for Year: {{session()->get("year")}}</td></tr>
+                <tr align='center'><td>No Data found for Year: {{(session()->get("year")?$years[0]:"")}}</td></tr>
                 @endif
             </table>
         </div>
