@@ -38,12 +38,10 @@ class HomeController extends Controller
         $allEvents = \DB::select(
             "SELECT DISTINCT YEAR(created_at) AS year FROM leaderboard_data ORDER BY YEAR(created_at) DESC"
         );
-        // var_dump($allEvents);
         $years = [];
         foreach ($allEvents as $event) {
             $years[] = $event->year;
         }
-        // var_dump($years);
         if (!session()->get("year")) {
             session()->put("year", $years[0]);
         }
