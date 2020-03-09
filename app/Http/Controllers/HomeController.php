@@ -35,7 +35,9 @@ class HomeController extends Controller
         $gallery = Gallery::latest('created_at')->with('galleryimage')->first();
         $upcomingEvents = Event::with('eventimages')->upcomming()->published()->get();
         $comingSoonEvents = Event::with('eventimages')->comingsoon()->get();
-        $allEvents = \DB::select("SELECT DISTINCT YEAR(created_at) AS year FROM leaderboard_data ORDER BY YEAR(created_at) DESC");
+        $allEvents = \DB::select(
+            "SELECT DISTINCT YEAR(created_at) AS year FROM leaderboard_data ORDER BY YEAR(created_at) DESC"
+        );
         // var_dump($allEvents);
         $years = [];
         foreach ($allEvents as $event) {
