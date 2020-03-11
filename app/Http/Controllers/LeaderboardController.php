@@ -14,8 +14,20 @@ class LeaderboardController extends Controller
             $user = \Auth::user();
             \Cart::session($user->id);
         }
-        $year = session()->get("year");
-       
+
+        $allEvents = \DB::select(
+            "SELECT DISTINCT YEAR(created_at) AS year FROM leaderboard_data ORDER BY YEAR(created_at) DESC"
+        );
+        $years = [];
+        foreach ($allEvents as $event) {
+            $years[] = $event->year;
+        }
+        if (!session()->get("year")) {
+            session()->put("year", $years[0]);
+        }
+
+        $year = session()->get("year", $years[0]);
+
         $leaderboardMale = \DB::table('leaderboard_data')
             ->select(
                 'name',
@@ -27,6 +39,7 @@ class LeaderboardController extends Controller
                 \DB::raw('SUM(points) as total_points')
             )
             ->where('gender', 'M')
+            ->where('created_at', 'like', '%' . $year . '%')
             ->where(function ($query) use ($request) {
                 if ($request->input('name') != "") {
                     $query->where('name', 'like', '%' . $request->input('name') . '%');
@@ -56,6 +69,7 @@ class LeaderboardController extends Controller
                 \DB::raw('SUM(points) as total_points')
             )
             ->where('gender', 'F')
+            ->where('created_at', 'like', '%' . $year . '%')
             ->where(function ($query) use ($request) {
                 if ($request->input('name') != "") {
                     $query->where('name', 'like', '%' . $request->input('name') . '%');
@@ -76,7 +90,8 @@ class LeaderboardController extends Controller
 
         $leaderboardClub = \DB::table('leaderboard_data')
             ->select('points', 'club', \DB::raw('SUM(points) as total_points'))
-            ->whereNotIn('club', ['NA', 'Independent', 'Other', 'I am an independent athlete.'])
+            ->whereNotIn('club', ['NA', 'Independent', 'Other', 'I am an independent athlete.', ' '])
+            ->where('created_at', 'like', '%' . $year . '%')
             ->where(function ($query) use ($request) {
                 if ($request->input('club') != "") {
                     $query->where('club', 'like', '%' . $request->input('club') . '%');
@@ -119,7 +134,8 @@ class LeaderboardController extends Controller
             'male_categories' => $male_categories,
             'female_clubs' => $female_clubs,
             'female_categories' => $female_categories,
-            'clubs' => $clubs
+            'clubs' => $clubs,
+            'years' => $years
         ];
         if (\Request::is('api*')) {
             return response()->json(['data' => $data]);

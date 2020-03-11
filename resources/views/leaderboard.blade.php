@@ -14,6 +14,15 @@
             </div>
     </div>
     <div class="row">
+        <select class="leaderboard2_year custom-select">
+            @foreach($years as $year) 
+                {{-- <option value="{{$year}}" {{(session()->get("year",$years[0])==$year)? 'selected' : ''}}>{{$year}}</option> --}}
+                <option value="{{$year}}">{{$year}}</option>
+            @endforeach 
+        </select>
+    </div>
+    <br>
+    <div class="row">
         <div class="col-lg-12 profile-content-container">
             <ul class="nav nav-pills profile-nav" id="pills-tab" role="tablist">
                 <li class="nav-item">
@@ -74,7 +83,7 @@
                 >
                     <div class="row">
                         <div class="col-lg-12 table-responsive-lg">
-                            <table class="table table-striped table-bordered">
+                            <table id="maleBodyLeaderboard" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th scope="col">Rank</th>
@@ -125,7 +134,7 @@
                 >
                     <div class="row">
                         <div class="col-lg-12">
-                            <table class="table table-striped table-bordered">
+                            <table id="femaleBodyLeaderboard" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th scope="col">Rank</th>
@@ -173,7 +182,7 @@
                 >
                     <div class="row">
                         <div class="col-lg-12">
-                            <table class="table table-striped table-bordered">
+                            <table id="clubBodyLeaderboard" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th scope="col">Rank</th>

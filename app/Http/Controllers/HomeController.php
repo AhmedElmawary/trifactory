@@ -68,7 +68,7 @@ class HomeController extends Controller
 
         $leaderboardClub = \DB::table('leaderboard_data')
             ->select('points', 'club', \DB::raw('SUM(points) as total_points'))
-            ->whereNotIn('club', ['NA', 'Independent', 'Other', 'I am an independent athlete.'])
+            ->whereNotIn('club', ['NA', 'Independent', 'Other', 'I am an independent athlete.', ' '])
             ->where('created_at', 'like', '%' . $year . '%')
             ->orderByRaw('total_points desc')
             ->groupBy('club')

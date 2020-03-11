@@ -255,6 +255,112 @@ $(document).ready(function() {
     $("#open_login_modal").click(function() {
         $("#login_modal").modal();
     });
+    // on year change event on Endurance League
+    $(".leaderboard2_year").on("change", function() {
+        const year = $(".leaderboard2_year").val();
+
+        $.ajax({
+            url: "api/leaderboard/" + year,
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                const clubData = data.data.leaderboardClub.data;
+                const maleData = data.data.leaderboardMale.data;
+                const femaleData = data.data.leaderboardFemale.data;
+
+                let clubContent =
+                    "<thead><tr><th scope='col'>Rank</th><th scope='col'>Club</th><th scope='col'>Points</th></tr></thead>";
+                let maleContent =
+                    "<thead><tr><th scope='col'>Rank</th><th scope='col'>Name</th><th scope='col'>Nationality</th>" +
+                    "<th scope='col'>Age Group</th><th scope='col'>Club</th><th scope='col'>Gender Position</th><th scope='col'>Points</th></tr></thead>";
+                let femaleContent =
+                    "<thead><tr><th scope='col'>Rank</th><th scope='col'>Name</th><th scope='col'>Nationality</th>" +
+                    "<th scope='col'>Age Group</th><th scope='col'>Club</th><th scope='col'>Gender Position</th><th scope='col'>Points</th></tr></thead>";
+
+                for (let i = 0, len = clubData.length; i < len; i++) {
+                    clubContent +=
+                        "<tr><td>" +
+                        (i + 1) +
+                        "</td><td>" +
+                        clubData[i].club +
+                        "</td><td>" +
+                        clubData[i].total_points +
+                        "</td></tr>";
+                }
+
+                $("#clubBodyLeaderboard").empty();
+                if (clubData.length) {
+                    $("#clubBodyLeaderboard").append(clubContent);
+                } else {
+                    $("#clubBodyLeaderboard").append(
+                        "<h4 align='center'>No Data found for Year: " +
+                            year +
+                            "</h4>"
+                    );
+                }
+
+                for (let i = 0, len = maleData.length; i < len; i++) {
+                    maleContent +=
+                        "<tr><td>" +
+                        (i + 1) +
+                        "</td><td>" +
+                        maleData[i].name +
+                        "</td><td>" +
+                        maleData[i].category +
+                        "</td><td>" +
+                        maleData[i].country_code +
+                        "</td><td>" +
+                        maleData[i].club +
+                        "</td><td>" +
+                        maleData[i].gender_position +
+                        "</td><td>" +
+                        maleData[i].total_points +
+                        "</td></tr>";
+                }
+
+                $("#maleBodyLeaderboard").empty();
+                if (maleData.length) {
+                    $("#maleBodyLeaderboard").append(maleContent);
+                } else {
+                    $("#maleBodyLeaderboard").append(
+                        "<h4 align='center'>No Data found for Year: " +
+                            year +
+                            "</h4>"
+                    );
+                }
+
+                for (let i = 0, len = femaleData.length; i < len; i++) {
+                    femaleContent +=
+                        "<tr><td>" +
+                        (i + 1) +
+                        "</td><td>" +
+                        femaleData[i].name +
+                        "</td><td>" +
+                        femaleData[i].category +
+                        "</td><td>" +
+                        femaleData[i].country_code +
+                        "</td><td>" +
+                        femaleData[i].club +
+                        "</td><td>" +
+                        femaleData[i].gender_position +
+                        "</td><td>" +
+                        femaleData[i].total_points +
+                        "</td></tr>";
+                }
+
+                $("#femaleBodyLeaderboard").empty();
+                if (femaleData.length) {
+                    $("#femaleBodyLeaderboard").append(femaleContent);
+                } else {
+                    $("#femaleBodyLeaderboard").append(
+                        "<h4 align='center'>No Data found for Year: " +
+                            year +
+                            "</h4>"
+                    );
+                }
+            }
+        });
+    });
 
     // show active tab on reload
     if (location.hash !== "") $('a[href="' + location.hash + '"]').tab("show");
@@ -337,7 +443,6 @@ $(document).ready(function() {
                         );
                         $("#rankClubUrl").text("View More");
                     } else {
-                        console.log("afasfbody");
                         $("#clubBody").append(
                             "<h4 align='center'>No Data found for Year: " +
                                 year +
@@ -427,14 +532,15 @@ $(document).ready(function() {
                         //     "/leaderboard#pills-rankings-female"
                         // );
                     }
-
-                    console.log(maleContent);
-                    console.log(femaleContent);
-                    console.log(clubContent);
                 }
             });
         });
     }
+
+    /*
+     * Leaderboard year changes
+     */
+    function onSelectLeaderboardYearChange() {}
 
     /*
      * Event Details Page
