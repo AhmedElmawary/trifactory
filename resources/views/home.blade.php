@@ -186,7 +186,7 @@ class="hero-section d-flex justify-content-center no-padding"
         <div id="viewMoreMale" class="col-lg-12 results-head">
             <a
                 id="rankMalesUrl"
-            href="/leaderboard/{{session()->get("year",$years[0])}}#pills-rankings-male"
+            href="/leaderboard"
                 class="bbtn dark btn-clear float-right mt-2"
                 >@if (count($leaderboardMale)) View More @endif</a
             >
@@ -234,7 +234,7 @@ class="hero-section d-flex justify-content-center no-padding"
         <div id="viewMoreFemale" class="col-lg-12 results-head">
             <a
                 id="rankFemalesUrl"
-                href="/leaderboard/{{session()->get("year",$years[0])}}#pills-rankings-female"
+                href="/leaderboard"
                 class="bbtn dark btn-clear float-right mt-2"
         > @if (count($leaderboardFemale)) View More @endif</a
             >
@@ -274,7 +274,7 @@ class="hero-section d-flex justify-content-center no-padding"
     <div class="row" >
         <div id="viewMoreClub" class="col-lg-12 results-head">
             <a  id="rankClubUrl"
-                href="/leaderboard/{{session()->get("year",$years[0])}}#pills-rankings-club"
+                href="/leaderboard"
                 class="bbtn dark btn-clear float-right mt-2"
                 >@if (count($leaderboardClub)) View More @endif</a
             >
