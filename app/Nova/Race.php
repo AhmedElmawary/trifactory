@@ -32,7 +32,7 @@ class Race extends Resource
 
     public function title()
     {
-        return $this->event->name . ' - ' . $this->name;
+        return ($this->event['name'] . ' - ' . $this->name);
     }
 
     /**

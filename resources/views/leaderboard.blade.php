@@ -90,7 +90,7 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Nationality</th>
                                         <th scope="col">Age Group</th>
-                                        <th scope="col">Gender Position</th>
+                                        <th scope="col">Age Group Rank</th>
                                         <th scope="col">Club</th>
                                         <th scope="col">Points</th>
                                     </tr>
@@ -141,7 +141,7 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Nationality</th>
                                         <th scope="col">Age Group</th>
-                                        <th scope="col">Gender Position</th>
+                                        <th scope="col">Age Group Rank</th>
                                         <th scope="col">Club</th>
                                         <th scope="col">Points</th>
                                     </tr>
@@ -258,7 +258,7 @@
                                         <th scope="col">Name</th>
                                         <th scope="col">Event</th>
                                         <th scope="col">Race</th>
-                                        <th scope="col">Gender Position</th>
+                                        <th scope="col">Age Group Rank</th>
                                         <th scope="col">Points</th>
                                     </tr>
                                 </thead>
