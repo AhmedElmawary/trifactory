@@ -140,8 +140,8 @@ class="hero-section d-flex justify-content-center no-padding"
     <div class="row">
         <select class="leaderboard_year custom-select">
             @foreach($years as $year) 
-                {{-- <option value="{{$year}}" {{(session()->get("year",$years[0])==$year)? 'selected' : ''}}>{{$year}}</option> --}}
-                <option value="{{$year}}">{{$year}}</option>
+                <option value="{{$year}}" {{(session()->get("year",$years[0])==$year)? 'selected' : ''}}>{{$year}}</option>
+                {{-- <option value="{{$year}}">{{$year}}</option> --}}
             @endforeach 
         </select>
     </div>
