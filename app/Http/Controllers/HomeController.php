@@ -54,7 +54,7 @@ class HomeController extends Controller
             ->where('created_at', 'like', '%' . $year . '%')
             ->orderByRaw('total_points desc')
             ->groupBy('name')
-            ->limit(5)
+            ->limit(10)
             ->get();
 
         $leaderboardFemale = \DB::table('leaderboard_data')
@@ -63,7 +63,7 @@ class HomeController extends Controller
             ->where('created_at', 'like', '%' . $year . '%')
             ->orderByRaw('total_points desc')
             ->groupBy('name')
-            ->limit(5)
+            ->limit(10)
             ->get();
 
         $leaderboardClub = \DB::table('leaderboard_data')
@@ -72,7 +72,7 @@ class HomeController extends Controller
             ->where('created_at', 'like', '%' . $year . '%')
             ->orderByRaw('total_points desc')
             ->groupBy('club')
-            ->limit(5)
+            ->limit(10)
             ->get();
 
         $data = [

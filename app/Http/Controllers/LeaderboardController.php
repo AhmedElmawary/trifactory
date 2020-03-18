@@ -146,6 +146,9 @@ class LeaderboardController extends Controller
 
     public function indexWithYear(Request $request, $year)
     {
+        $paginationCount = 25;
+        if ($request['home'])
+            $paginationCount = 10;
         session()->put("year", $year);
         if (\Auth::check()) {
             $user = \Auth::user();
@@ -179,7 +182,7 @@ class LeaderboardController extends Controller
             })
             ->orderByRaw('total_points desc')
             ->groupBy('name')
-            ->paginate(25);
+            ->paginate($paginationCount);
 
         $leaderboardFemale = \DB::table('leaderboard_data')
             ->select(
@@ -209,7 +212,7 @@ class LeaderboardController extends Controller
             })
             ->orderByRaw('total_points desc')
             ->groupBy('name')
-            ->paginate(25);
+            ->paginate($paginationCount);
 
         $leaderboardClub = \DB::table('leaderboard_data')
             ->select('points', 'club', \DB::raw('SUM(points) as total_points'))
@@ -222,7 +225,7 @@ class LeaderboardController extends Controller
             })
             ->orderByRaw('total_points desc')
             ->groupBy('club')
-            ->paginate(25);
+            ->paginate($paginationCount);
 
         $male_clubs = \DB::table('leaderboard_data')
             ->select('club')

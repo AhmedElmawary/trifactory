@@ -408,6 +408,7 @@ $(document).ready(function() {
                 url: "api/leaderboard/" + year,
                 type: "GET",
                 dataType: "json",
+                data: { home: true },
                 success: function(data) {
                     const clubData = data.data.leaderboardClub.data;
                     const maleData = data.data.leaderboardMale.data;
