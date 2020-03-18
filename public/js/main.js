@@ -260,7 +260,7 @@ $(document).ready(function() {
         const year = $(".leaderboard2_year").val();
 
         $.ajax({
-            url: "api/leaderboard/" + year,
+            url: "../api/leaderboard/" + year,
             type: "GET",
             dataType: "json",
             success: function(data) {
