@@ -150,6 +150,13 @@ class LeaderboardController extends Controller
         if ($request['home']) {
             $paginationCount = 10;
         }
+        $allEvents = \DB::select(
+            "SELECT DISTINCT YEAR(created_at) AS year FROM leaderboard_data ORDER BY YEAR(created_at) DESC"
+        );
+        $years = [];
+        foreach ($allEvents as $event) {
+            $years[] = $event->year;
+        }
         session()->put("year", $year);
         if (\Auth::check()) {
             $user = \Auth::user();
@@ -261,7 +268,8 @@ class LeaderboardController extends Controller
             'male_categories' => $male_categories,
             'female_clubs' => $female_clubs,
             'female_categories' => $female_categories,
-            'clubs' => $clubs
+            'clubs' => $clubs,
+            'years' => $years
         ];
         if (\Request::is('api*')) {
             return response()->json(['data' => $data]);
