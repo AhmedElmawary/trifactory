@@ -147,8 +147,9 @@ class LeaderboardController extends Controller
     public function indexWithYear(Request $request, $year)
     {
         $paginationCount = 25;
-        if ($request['home'])
+        if ($request['home']) {
             $paginationCount = 10;
+        }
         session()->put("year", $year);
         if (\Auth::check()) {
             $user = \Auth::user();
