@@ -4,6 +4,7 @@
 <script>
     function onUseCredit() {
         fbq('track', 'AddPaymentInfo');
+        alert("Make sure to click on \"Confirm Order\"");
     }
     function onOnlinePayment() {
         fbq('track', 'AddPaymentInfo');
