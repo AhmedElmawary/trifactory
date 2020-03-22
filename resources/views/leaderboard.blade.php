@@ -194,7 +194,8 @@
                                     @foreach($leaderboardClub as $club)
                                     @if (stripos($club->club, 'independent') == false)
                                     <tr>
-                                        <td>{{$loop->iteration}}</td>
+                                        {{-- <td>{{$loop->iteration}}</td> --}}
+                                        <td>{{(($leaderboardClub->currentPage() -1) * 25) + $loop->iteration}}</td>
                                         <td>{{$club->club}}</td>
                                         <td>{{$club->total_points}}</td>
                                     </tr>
