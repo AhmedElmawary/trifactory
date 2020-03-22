@@ -306,9 +306,9 @@ $(document).ready(function() {
                         "</td><td>" +
                         maleData[i].name +
                         "</td><td>" +
-                        maleData[i].category +
-                        "</td><td>" +
                         maleData[i].country_code +
+                        "</td><td>" +
+                        maleData[i].category +
                         "</td><td>" +
                         maleData[i].category_position +
                         "</td><td>" +
@@ -336,9 +336,9 @@ $(document).ready(function() {
                         "</td><td>" +
                         femaleData[i].name +
                         "</td><td>" +
-                        femaleData[i].category +
-                        "</td><td>" +
                         femaleData[i].country_code +
+                        "</td><td>" +
+                        femaleData[i].category +
                         "</td><td>" +
                         femaleData[i].category_position +
                         "</td><td>" +
@@ -463,9 +463,9 @@ $(document).ready(function() {
                             "</td><td>" +
                             maleData[i].name +
                             "</td><td>" +
-                            maleData[i].category +
-                            "</td><td>" +
                             maleData[i].country_code +
+                            "</td><td>" +
+                            maleData[i].category +
                             "</td><td>" +
                             maleData[i].club +
                             "</td><td>" +
@@ -502,9 +502,9 @@ $(document).ready(function() {
                             "</td><td>" +
                             femaleData[i].name +
                             "</td><td>" +
-                            femaleData[i].category +
-                            "</td><td>" +
                             femaleData[i].country_code +
+                            "</td><td>" +
+                            femaleData[i].category +
                             "</td><td>" +
                             femaleData[i].club +
                             "</td><td>" +
