@@ -35,6 +35,7 @@ class LeaderboardController extends Controller
                 'country_code',
                 'category',
                 'gender_position',
+                'category_position',
                 'club',
                 \DB::raw('SUM(points) as total_points')
             )
@@ -65,6 +66,7 @@ class LeaderboardController extends Controller
                 'country_code',
                 'category',
                 'gender_position',
+                'category_position',
                 'club',
                 \DB::raw('SUM(points) as total_points')
             )
@@ -169,6 +171,7 @@ class LeaderboardController extends Controller
                 'country_code',
                 'category',
                 'gender_position',
+                'category_position',
                 'club',
                 \DB::raw('SUM(points) as total_points')
             )
@@ -199,6 +202,7 @@ class LeaderboardController extends Controller
                 'country_code',
                 'category',
                 'gender_position',
+                'category_position',
                 'club',
                 \DB::raw('SUM(points) as total_points')
             )

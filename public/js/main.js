@@ -272,10 +272,10 @@ $(document).ready(function() {
                     "<thead><tr><th scope='col'>Rank</th><th scope='col'>Club</th><th scope='col'>Points</th></tr></thead>";
                 let maleContent =
                     "<thead><tr><th scope='col'>Rank</th><th scope='col'>Name</th><th scope='col'>Nationality</th>" +
-                    "<th scope='col'>Age Group</th><th scope='col'>Club</th><th scope='col'>Gender Position</th><th scope='col'>Points</th></tr></thead>";
+                    "<th scope='col'>Age Group</th><th scope='col'>Age Group Rank</th><th scope='col'>Club</th><th scope='col'>Points</th></tr></thead>";
                 let femaleContent =
                     "<thead><tr><th scope='col'>Rank</th><th scope='col'>Name</th><th scope='col'>Nationality</th>" +
-                    "<th scope='col'>Age Group</th><th scope='col'>Club</th><th scope='col'>Gender Position</th><th scope='col'>Points</th></tr></thead>";
+                    "<th scope='col'>Age Group</th><th scope='col'>Age Group Rank</th><th scope='col'>Club</th><th scope='col'>Points</th></tr></thead>";
 
                 for (let i = 0, len = clubData.length; i < len; i++) {
                     clubContent +=
@@ -310,9 +310,9 @@ $(document).ready(function() {
                         "</td><td>" +
                         maleData[i].country_code +
                         "</td><td>" +
-                        maleData[i].club +
+                        maleData[i].category_position +
                         "</td><td>" +
-                        maleData[i].gender_position +
+                        maleData[i].club +
                         "</td><td>" +
                         maleData[i].total_points +
                         "</td></tr>";
@@ -340,9 +340,9 @@ $(document).ready(function() {
                         "</td><td>" +
                         femaleData[i].country_code +
                         "</td><td>" +
-                        femaleData[i].club +
+                        femaleData[i].category_position +
                         "</td><td>" +
-                        femaleData[i].gender_position +
+                        femaleData[i].club +
                         "</td><td>" +
                         femaleData[i].total_points +
                         "</td></tr>";

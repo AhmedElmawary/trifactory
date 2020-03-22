@@ -107,7 +107,7 @@
                                             </a></td>
                                         <td>{{$male->country_code}}</td>
                                         <td>{{$male->category}}</td>
-                                        <td>{{$male->gender_position}}</td>
+                                        <td>{{$male->category_position}}</td>
                                         <td>{{$male->club}}</td>
                                         <td>{{$male->total_points}}</td>
                                     </tr>
@@ -155,7 +155,7 @@
                                         <td>{{$female->name}}</td>
                                         <td>{{$female->country_code}}</td>
                                         <td>{{$female->category}}</td>
-                                        <td>{{$female->gender_position}}</td>
+                                        <td>{{$female->category_position}}</td>
                                         <td>{{$female->club}}</td>
                                         <td>{{$female->total_points}}</td>
                                     </tr>
