@@ -344,6 +344,7 @@ class ProfileController extends Controller
         $user = Auth::user();
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
+        $user->name = $request->firstname . ' ' . $request->lastname;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->year_of_birth = $request->year_of_birth;
