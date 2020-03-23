@@ -33,6 +33,10 @@ class UserPromocodeOrder extends Resource
         'order_id',
     ];
 
+    public static $searchRelations = [
+        'Promocode' => ['code'],
+    ];
+
     /**
      * Get the fields displayed by the resource.
      *
