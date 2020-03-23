@@ -50,6 +50,10 @@ class LoginController extends Controller
             $data['message'] = 'Please verify your email by clicking the link in the verification email.';
         }
 
+        if (!session()->has('url.intended')) {
+            session(['url.intended' => url()->previous()]);
+        }
+        
         return view('auth.login', $data);
     }
 
