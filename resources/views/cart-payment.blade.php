@@ -43,7 +43,8 @@
             <a id="undo-credit" href="#">Undo</a>
         </span>
     </div>
-    <div class="cart-title">
+
+    {{-- <div class="cart-title">
         <h3>Add Gift Voucher Code</h3>
     </div>
     <div class="cart-voucher-container col-lg-12">
@@ -80,7 +81,8 @@
             </span>
         </div>
       </form>
-    </div>
+    </div> --}}
+ 
     <div class="cart-title">
         <h3>Order Details</h3>
     </div>
