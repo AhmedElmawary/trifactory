@@ -15,6 +15,7 @@ class LeaderboardController extends Controller
             \Cart::session($user->id);
         }
 
+        $years = [];
         if ($request->input('year') != "") {
             $year = $request->input('year');
         } else {
