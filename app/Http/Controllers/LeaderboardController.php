@@ -15,18 +15,22 @@ class LeaderboardController extends Controller
             \Cart::session($user->id);
         }
 
-        $allEvents = \DB::select(
-            "SELECT DISTINCT YEAR(created_at) AS year FROM leaderboard_data ORDER BY YEAR(created_at) DESC"
-        );
-        $years = [];
-        foreach ($allEvents as $event) {
-            $years[] = $event->year;
-        }
-        if (!session()->get("year")) {
-            session()->put("year", $years[0]);
-        }
+        if ($request->input('year') != "") {
+            $year = $request->input('year');
+        } else {
+            $allEvents = \DB::select(
+                "SELECT DISTINCT YEAR(created_at) AS year FROM leaderboard_data ORDER BY YEAR(created_at) DESC"
+            );
+            $years = [];
+            foreach ($allEvents as $event) {
+                $years[] = $event->year;
+            }
+            if (!session()->get("year")) {
+                session()->put("year", $years[0]);
+            }
 
-        $year = session()->get("year", $years[0]);
+            $year = session()->get("year", $years[0]);
+        }
 
         $leaderboardMale = \DB::table('leaderboard_data')
             ->select(
