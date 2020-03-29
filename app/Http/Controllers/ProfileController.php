@@ -216,8 +216,11 @@ class ProfileController extends Controller
         $currentPhone = $_GET['phone'];
         $currentEmail = $_GET['email'];
         // view the cart items
-        $userId = Auth::user()->id;
-        $items = \Cart::session($userId)->getContent();
+        $items = [];
+        if (!(\Request::is('api*'))) {
+            $userId = Auth::user()->id;
+            $items = \Cart::session($userId)->getContent();
+        }
         $email_exist = User::where('email', isset($_GET['email']) ? $_GET['email'] : '')->first();
         if ($email_exist) {
             return 'false';
