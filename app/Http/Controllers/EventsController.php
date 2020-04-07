@@ -19,20 +19,46 @@ class EventsController extends Controller
         }
         $events = Event::with('eventimages')->past()->published()->get();
         $upcoming_events = Event::with('eventimages')->upcomming()->published()->get();
+        $coming_soon_events = Event::with('eventimages')->comingSoon()->published()->get();
+
         if (\Request::is('api*') || \Request::wantsJson()) {
             foreach ($events as $event) {
-                $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j').
-                (($event->event_start != $event->event_end) ? ' - '.
-                \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
-                \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
+                if (empty($event->event_start)) {
+                    $event['formatted_date'] = "";
+                } else {
+                    $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j') .
+                        (($event->event_start != $event->event_end) ? ' - ' .
+                            \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
+                            \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
+                }
             }
             foreach ($upcoming_events as $upcoming_event) {
-                $upcoming_event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j').
-                (($upcoming_event->event_start != $upcoming_event->event_end) ? ' - '.
-                \Carbon\Carbon::parse($upcoming_event->event_end)->format('j M Y') :
-                \Carbon\Carbon::parse($upcoming_event->event_end)->format(' M Y'));
+                if (empty($upcoming_event->event_start)) {
+                    $upcoming_event['formatted_date'] = "";
+                } else {
+                    $upcoming_event['formatted_date'] = \Carbon\Carbon::parse($upcoming_event->event_start)->format('j') .
+                        (($upcoming_event->event_start != $upcoming_event->event_end) ? ' - ' .
+                            \Carbon\Carbon::parse($upcoming_event->event_end)->format('j M Y') :
+                            \Carbon\Carbon::parse($upcoming_event->event_end)->format(' M Y'));
+                }
             }
-            return response()->json(['status' => 200, 'past_events' => $events, 'upcoming_events' => $upcoming_events]);
+            foreach ($coming_soon_events as $coming_soon_event) {
+                if (empty($coming_soon_event->event_start)) {
+                    $coming_soon_event['formatted_date'] = "";
+                } else {
+                    $coming_soon_event['formatted_date'] = \Carbon\Carbon::parse($coming_soon_event->event_start)->format('j') .
+                        (($coming_soon_event->event_start != $coming_soon_event->event_end) ? ' - ' .
+                            \Carbon\Carbon::parse($coming_soon_event->event_end)->format('j M Y') :
+                            \Carbon\Carbon::parse($coming_soon_event->event_end)->format(' M Y'));
+                }
+            }
+
+            return response()->json([
+                'status' => 200,
+                'past_events' => $events,
+                'upcoming_events' => $upcoming_events,
+                'coming_soon_events' => $coming_soon_events
+            ]);
         } else {
             return view('events', ['events' => $events, 'upcoming_events' => $upcoming_events]);
         }
@@ -52,7 +78,7 @@ class EventsController extends Controller
         $pastEvent = false;
         $closed = true;
         $coming_soon = $event->coming_soon;
-        
+
         if (!isset($event)) {
             abort(404);
         }
@@ -70,12 +96,12 @@ class EventsController extends Controller
             $pastEvent = true;
         }
         $eventDetails = $event->eventDetails;
-        
+
         if (\Request::is('api*') || \Request::wantsJson()) {
-            $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j').
-            (($event->event_start != $event->event_end) ? ' - '.
-            \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
-            \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
+            $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j') .
+                (($event->event_start != $event->event_end) ? ' - ' .
+                    \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
+                    \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
             return response()->json([
                 'event' => $event,
                 'races' => $event->race()->get(),
@@ -129,10 +155,10 @@ class EventsController extends Controller
                 'message' => $e->getMessage(),
                 'data' => json_encode($id),
                 'location' =>
-                'Line:'.__LINE__
-                .';File:'.__FILE__
-                .';Class:'.__CLASS__
-                .';Method:'.__METHOD__
+                'Line:' . __LINE__
+                    . ';File:' . __FILE__
+                    . ';Class:' . __CLASS__
+                    . ';Method:' . __METHOD__
             ]);
         }
         if (\Request::is('api*')) {
