@@ -311,33 +311,33 @@ class CartController extends Controller
 
         // $user = Auth::user();
         // \Cart::session($user->id);
-        $cartSubTotal = \Cart::getSubTotal();
-        $cartTotal = \Cart::getTotal();
-        $cartItems = \Cart::getContent()->toArray();
+        // $cartSubTotal = \Cart::getSubTotal();
+        // $cartTotal = \Cart::getTotal();
+        // $cartItems = \Cart::getContent()->toArray();
 
 
-        if (\Request::is('api*') || \Request::wantsJson()) {
-            foreach ($cartItems as $cartItem) {
-                foreach ($cartItem['conditions'] as $condition) {
-                    $cartItems[$cartItem['id']]['promo'] = $condition->getAttributes();
-                }
-            }
-            return response()->json([
-                'cartItems' => $cartItems,
-                'cartSubTotal' => $cartSubTotal,
-                'cartTotal' => $cartTotal,
-            ]);
-        } else {
-            return view('cart', [
-                'cartItems' => $cartItems,
-                'cartSubTotal' => $cartSubTotal,
-                'cartTotal' => $cartTotal,
-            ]);
-        }
+        // if (\Request::is('api*') || \Request::wantsJson()) {
+        //     foreach ($cartItems as $cartItem) {
+        //         foreach ($cartItem['conditions'] as $condition) {
+        //             $cartItems[$cartItem['id']]['promo'] = $condition->getAttributes();
+        //         }
+        //     }
+        //     return response()->json([
+        //         'cartItems' => $cartItems,
+        //         'cartSubTotal' => $cartSubTotal,
+        //         'cartTotal' => $cartTotal,
+        //     ]);
+        // } else {
+        //     return view('cart', [
+        //         'cartItems' => $cartItems,
+        //         'cartSubTotal' => $cartSubTotal,
+        //         'cartTotal' => $cartTotal,
+        //     ]);
+        // }
 
-        // return redirect()->action(
-        //     'CartController@index'
-        // )->withInput();
+        return redirect()->action(
+            'CartController@index'
+        )->withInput();
     }
 
     public function addToCart(Request $request)
@@ -473,32 +473,32 @@ class CartController extends Controller
 
         // $user = Auth::user();
         // \Cart::session($user->id);
-        $cartSubTotal = \Cart::getSubTotal();
-        $cartTotal = \Cart::getTotal();
-        $cartItems = \Cart::getContent()->toArray();
+        // $cartSubTotal = \Cart::getSubTotal();
+        // $cartTotal = \Cart::getTotal();
+        // $cartItems = \Cart::getContent()->toArray();
 
 
-        if (\Request::is('api*') || \Request::wantsJson()) {
-            foreach ($cartItems as $cartItem) {
-                foreach ($cartItem['conditions'] as $condition) {
-                    $cartItems[$cartItem['id']]['promo'] = $condition->getAttributes();
-                }
-            }
-            return response()->json([
-                'cartItems' => $cartItems,
-                'cartSubTotal' => $cartSubTotal,
-                'cartTotal' => $cartTotal,
-            ]);
-        } else {
-            return view('cart', [
-                'cartItems' => $cartItems,
-                'cartSubTotal' => $cartSubTotal,
-                'cartTotal' => $cartTotal,
-            ]);
-        }
+        // if (\Request::is('api*') || \Request::wantsJson()) {
+        //     foreach ($cartItems as $cartItem) {
+        //         foreach ($cartItem['conditions'] as $condition) {
+        //             $cartItems[$cartItem['id']]['promo'] = $condition->getAttributes();
+        //         }
+        //     }
+        //     return response()->json([
+        //         'cartItems' => $cartItems,
+        //         'cartSubTotal' => $cartSubTotal,
+        //         'cartTotal' => $cartTotal,
+        //     ]);
+        // } else {
+        //     return view('cart', [
+        //         'cartItems' => $cartItems,
+        //         'cartSubTotal' => $cartSubTotal,
+        //         'cartTotal' => $cartTotal,
+        //     ]);
+        // }
 
-        // return redirect()->action(
-        //     'CartController@index'
-        // );
+        return redirect()->action(
+            'CartController@index'
+        );
     }
 }

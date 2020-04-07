@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Config;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
@@ -19,9 +18,8 @@ class RedirectTrailingSlash
     public function handle($request, Closure $next)
     {
         if (!preg_match('/.+\/$/', $request->getRequestUri())) {
-            $newval = $request->getPathInfo() . '/';
-            header("HTTP/1.1 301 Moved Permanently");
-            header("Location: $newval");
+            $base_url = \Config::get('app.url');
+            return Redirect::to($base_url . $request->getRequestUri() . '/');
         }
 
         return $next($request);
