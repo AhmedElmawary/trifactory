@@ -10,7 +10,7 @@
     <section class="register-section no-height no-separator">
         <div class="row">
             <div class="col-lg-6 offset-lg-3 text-center">
-                <h3>Signup Now</h3>
+                <h3>Sign Up Now</h3>
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
                     <div class="input-group">
