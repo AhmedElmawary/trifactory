@@ -36,20 +36,22 @@ class EventsController extends Controller
                 if (empty($upcoming_event->event_start)) {
                     $upcoming_event['formatted_date'] = "";
                 } else {
-                    $upcoming_event['formatted_date'] = \Carbon\Carbon::parse($upcoming_event->event_start)->format('j') .
-                        (($upcoming_event->event_start != $upcoming_event->event_end) ? ' - ' .
-                            \Carbon\Carbon::parse($upcoming_event->event_end)->format('j M Y') :
-                            \Carbon\Carbon::parse($upcoming_event->event_end)->format(' M Y'));
+                    $upcoming_event['formatted_date'] = 
+                        \Carbon\Carbon::parse($upcoming_event->event_start)->format('j') .
+                            (($upcoming_event->event_start != $upcoming_event->event_end) ? ' - ' .
+                                \Carbon\Carbon::parse($upcoming_event->event_end)->format('j M Y') :
+                                \Carbon\Carbon::parse($upcoming_event->event_end)->format(' M Y'));
                 }
             }
             foreach ($coming_soon_events as $coming_soon_event) {
                 if (empty($coming_soon_event->event_start)) {
                     $coming_soon_event['formatted_date'] = "";
                 } else {
-                    $coming_soon_event['formatted_date'] = \Carbon\Carbon::parse($coming_soon_event->event_start)->format('j') .
-                        (($coming_soon_event->event_start != $coming_soon_event->event_end) ? ' - ' .
-                            \Carbon\Carbon::parse($coming_soon_event->event_end)->format('j M Y') :
-                            \Carbon\Carbon::parse($coming_soon_event->event_end)->format(' M Y'));
+                    $coming_soon_event['formatted_date'] = 
+                        \Carbon\Carbon::parse($coming_soon_event->event_start)->format('j') .
+                            (($coming_soon_event->event_start != $coming_soon_event->event_end) ? ' - ' .
+                                \Carbon\Carbon::parse($coming_soon_event->event_end)->format('j M Y') :
+                                \Carbon\Carbon::parse($coming_soon_event->event_end)->format(' M Y'));
                 }
             }
 
