@@ -46,7 +46,7 @@ Route::post('/refund-ticket', 'PaymentController@refundTicket')->name('refund-ti
 Route::get('/payment/processedCallback', 'PaymentController@processedCallback');
 Route::get('/payment/invoice', 'PaymentController@invoice');
 
-Route::get('/cart', 'CartController@index')->middleware('slash');
+Route::get('/cart', 'CartController@index');
 Route::get('/cart/empty', 'CartController@emptyCart');
 Route::post('/cart', 'CartController@addToCart');
 Route::post('/cart/remove', 'CartController@removeFromCart');
