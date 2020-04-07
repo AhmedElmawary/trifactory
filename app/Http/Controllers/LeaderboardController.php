@@ -111,25 +111,30 @@ class LeaderboardController extends Controller
         $male_clubs = \DB::table('leaderboard_data')
             ->select('club')
             ->where('gender', 'M')
+            ->where('club', 'regexp', '^(?!\s*$).+')
             ->groupBy('club')
             ->pluck('club');
         $male_categories = \DB::table('leaderboard_data')
             ->select('category')
             ->where('gender', 'M')
+            ->where('category', 'regexp', '[Mm][Uu]?[0-9]+(-[0-9]+)?')
             ->groupBy('category')
             ->pluck('category');
         $female_clubs = \DB::table('leaderboard_data')
             ->select('club')
             ->where('gender', 'F')
+            ->where('club', 'regexp', '^(?!\s*$).+')
             ->groupBy('club')
             ->pluck('club');
         $female_categories = \DB::table('leaderboard_data')
             ->select('category')
             ->where('gender', 'F')
+            ->where('category', 'regexp', '[Ff][Uu]?[0-9]+(-[0-9]+)?')
             ->groupBy('category')
             ->pluck('category');
         $clubs = \DB::table('leaderboard_data')
             ->select('club')
+            ->where('club', 'regexp', '^(?!\s*$).+')
             ->groupBy('club')
             ->pluck('club');
 
