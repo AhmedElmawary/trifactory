@@ -111,7 +111,7 @@ class LeaderboardController extends Controller
         $male_clubs = \DB::table('leaderboard_data')
             ->select('club')
             ->where('gender', 'M')
-            ->where('club', 'regexp', '^(?!\s*$).+')
+            ->WhereNotNull('club')
             ->groupBy('club')
             ->pluck('club');
         $male_categories = \DB::table('leaderboard_data')
@@ -123,7 +123,7 @@ class LeaderboardController extends Controller
         $female_clubs = \DB::table('leaderboard_data')
             ->select('club')
             ->where('gender', 'F')
-            ->where('club', 'regexp', '^(?!\s*$).+')
+            ->WhereNotNull('club')
             ->groupBy('club')
             ->pluck('club');
         $female_categories = \DB::table('leaderboard_data')
@@ -134,7 +134,7 @@ class LeaderboardController extends Controller
             ->pluck('category');
         $clubs = \DB::table('leaderboard_data')
             ->select('club')
-            ->where('club', 'regexp', '^(?!\s*$).+')
+            ->WhereNotNull('club')
             ->groupBy('club')
             ->pluck('club');
 
