@@ -438,14 +438,16 @@ class CartController extends Controller
                     if (preg_match("/upload/i", $question->question_text)) {
                         if ($request->hasFile($ticket_number . '_meta_' . $meta)) {
                             // Get filename with extension
-                            $filenameWithExt = $request->file($ticket_number . '_meta_' . $meta)->getClientOriginalName();
+                            $filenameWithExt =
+                                $request->file($ticket_number . '_meta_' . $meta)->getClientOriginalName();
                             // Get just filename
                             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
                             // Get just ext
-                            $extension = $request->file($ticket_number . '_meta_' . $meta)->getClientOriginalExtension();
+                            $extension =
+                                $request->file($ticket_number . '_meta_' . $meta)->getClientOriginalExtension();
                             //Filename to store
-                            $fileNameToStore = $race->id . '_' . str_replace(' ', '', $user->name) . '_' . $user->id . '_'
-                                . $uniqueid . '.' . $extension;
+                            $fileNameToStore = $race->id . '_' . str_replace(' ', '', $user->name) . '_'
+                                 . $user->id . '_' . $uniqueid . '.' . $extension;
                             // Upload Image
                             $path = $request->file($ticket_number . '_meta_' . $meta)
                                 ->storeAs('public/tickets_images', $fileNameToStore);
