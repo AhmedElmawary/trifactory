@@ -216,7 +216,7 @@
       **Photographs of valid national identification cards or passports are necessary to ensure your safety & security, and to make sure that only participants are granted access to the event venue.
     </div><br>
     @endif
-    @if ($event->id == 12)
+    @if ($event->id == 11)
     <br>
     <div class="container no-height no-separator" style="font-size: 18px;font-weight: 400; text-align: center;">
       <i class="fas fa-info-circle"></i>   You will receive an invitation email to “My Virtual Mission” within the next 24 hours.<br><i class="fas fa-info-circle"></i>   Please make sure to download “My Virtual Mission” application on your phone from your Apple/Play Store.
