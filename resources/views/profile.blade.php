@@ -148,6 +148,7 @@
                                     class="form-control "
                                     placeholder="Phone Number"
                                     value="{{$user->phone}}"
+                                    @if ($user->phone != '') disabled @endif
                                 />
                                 @if ($errors->has('phone'))
                                 <span class="invalid-feedback" role="alert">
@@ -159,7 +160,7 @@
                         <div class="col-lg-6 mb-5">
                             <label class="input-label">Email</label>
 
-                            <div class="input-group">
+                            <div class="input-group" >
                                 <input
                                     name="email"
                                     required
@@ -167,6 +168,7 @@
                                     class="form-control"
                                     placeholder="E-Mail"
                                     value="{{$user->email}}"
+                                    @if ($user->email != '') disabled @endif
                                 />
                                 @if ($errors->has('email'))
                                 <span class="invalid-feedback" role="alert">
@@ -202,7 +204,7 @@
                             <div class="col-lg-6 mb-5">
                                 <label class="input-label clubs">Club</label>
     
-                                <select style="margin-top:20px;" class="custom-select clubs" name="club" @if ($user->club != '') disabled @endif required>
+                                <select style="margin-top:20px;" class="custom-select clubs" name="club" id="profileClub" required>
                                         @if ($user->club == '')
                                             <option value="" disabled selected>What club do you represent (if any)?</option>
                                         @else
@@ -215,7 +217,7 @@
                                         @endforeach
                                 </select>
                                 @if ($user->club != '')
-                                <input type="hidden" name="club" value="{{$user->club}}" />
+                                <input type="hidden" name="club" id="inputClub" value="{{$user->club}}" />
                                 @endif
                                     @if ($errors->has('club'))
                                     <span class="invalid-feedback" role="alert">

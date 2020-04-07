@@ -320,8 +320,8 @@ class ProfileController extends Controller
         $validator = Validator::make($request->all(), [
             'firstname' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . Auth::user()->id],
-            'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users,phone,' . Auth::user()->id],
+            'email' => ['string', 'email', 'max:255', 'unique:users,email,' . Auth::user()->id],
+            'phone' => ['string', 'min:11', 'max:11', 'unique:users,phone,' . Auth::user()->id],
             'year_of_birth' => [
                 'required', 'digits:4', 'integer', 'min:1930',
                 'max:' . (date('Y') - 5), 'in_array:years.*'
@@ -345,13 +345,13 @@ class ProfileController extends Controller
         }
 
         $user = Auth::user();
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->name = $request->firstname . ' ' . $request->lastname;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
+        $user->firstname = $request->firstname ?? $user->firstname;
+        $user->lastname = $request->lastname ?? $user->firstname;
+        $user->name = $user->firstname . ' ' . $user->lastname;
+        $user->email = $request->email ?? $user->email;
+        $user->phone = $request->phone ?? $user->phone;
         $user->year_of_birth = $request->year_of_birth;
-        $user->club = $request->club;
+        $user->club = $request->club ?? $user->club;
         $user->save();
 
         if (\Request::is('api*') || \Request::wantsJson()) {

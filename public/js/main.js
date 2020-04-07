@@ -22,12 +22,12 @@ function showEnduranceLeagueRecordModal(name) {
         type: "GET",
         url: "api/leaderboard/details?name=" + name,
         dataType: "json",
-        success: function(data) {
+        success: function (data) {
             var table = document
                 .getElementById("recordDetailsTable")
                 .getElementsByTagName("tbody")[0];
             $("#recordDetailsTable tbody tr").remove();
-            $.each(data.data.recordDetails, function(index, item) {
+            $.each(data.data.recordDetails, function (index, item) {
                 var row = table.insertRow(-1);
 
                 var cell0 = row.insertCell(-1);
@@ -45,9 +45,9 @@ function showEnduranceLeagueRecordModal(name) {
             });
             $("#endurance_league_record_details_modal").modal();
         },
-        error: function(data) {
+        error: function (data) {
             console.log("An error occurred.");
-        }
+        },
     });
 }
 function openconfirmcancelmodal(event_id) {
@@ -59,16 +59,16 @@ function opencancelmodal(event_id) {
         type: $("#form_" + event_id).attr("method"),
         url: $("#form_" + event_id).attr("action"),
         data: $("#form_" + event_id).serialize(),
-        success: function(data) {
+        success: function (data) {
             $("#form_" + event_id)
                 .get(0)
                 .reset();
             $("#confirm_cancel_event_modal_" + event_id).modal("hide");
             $("#cancel_event_modal_" + event_id).modal();
         },
-        error: function(data) {
+        error: function (data) {
             console.log("An error occurred.");
-        }
+        },
     });
     $("#cancel_event_modal_" + event_id).unbind();
 }
@@ -79,10 +79,10 @@ function validatePhone() {
         type: "GET",
         data: {
             phone: document.getElementsByName("ticket_1_phone")[0].value,
-            email: document.getElementsByName("ticket_1_email")[0].value
+            email: document.getElementsByName("ticket_1_email")[0].value,
         },
         dataType: "json",
-        success: function(result) {
+        success: function (result) {
             if (result) {
                 document
                     .getElementsByName("ticket_1_phone")[0]
@@ -94,7 +94,7 @@ function validatePhone() {
                     .getElementsByName("ticket_1_phone")[0]
                     .setCustomValidity("");
             }
-        }
+        },
     });
 }
 
@@ -248,22 +248,22 @@ function sortList() {
         }
     }
 }
-$(document).ready(function() {
-    $("#tickets_info").on("shown.bs.collapse", function() {
+$(document).ready(function () {
+    $("#tickets_info").on("shown.bs.collapse", function () {
         window.location = "#tickets_info";
     });
-    $("#open_login_modal").click(function() {
+    $("#open_login_modal").click(function () {
         $("#login_modal").modal();
     });
     // on year change event on Endurance League
-    $(".leaderboard2_year").on("change", function() {
+    $(".leaderboard2_year").on("change", function () {
         const year = $(".leaderboard2_year").val();
 
         $.ajax({
             url: "../api/leaderboard/" + year,
             type: "GET",
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
                 const clubData = data.data.leaderboardClub.data;
                 const maleData = data.data.leaderboardMale.data;
                 const femaleData = data.data.leaderboardFemale.data;
@@ -358,7 +358,7 @@ $(document).ready(function() {
                             "</h4>"
                     );
                 }
-            }
+            },
         });
     });
 
@@ -366,12 +366,8 @@ $(document).ready(function() {
     if (location.hash !== "") $('a[href="' + location.hash + '"]').tab("show");
 
     // remember the hash in the URL without jumping
-    $('a[data-toggle="pill"]').on("shown.bs.tab", function(e) {
-        window.location.href =
-            "?page=0#" +
-            $(e.target)
-                .attr("href")
-                .substr(1);
+    $('a[data-toggle="pill"]').on("shown.bs.tab", function (e) {
+        window.location.href = "?page=0#" + $(e.target).attr("href").substr(1);
         // URLSearchParams.delete(page)
         // if (history.pushState) {
         //     history.pushState(
@@ -399,9 +395,9 @@ $(document).ready(function() {
             dots: true,
             slidesToShow: 1,
             centerMode: true,
-            variableWidth: true
+            variableWidth: true,
         });
-        $(".leaderboard_year").on("change", function() {
+        $(".leaderboard_year").on("change", function () {
             const year = $(".leaderboard_year").val();
 
             $.ajax({
@@ -409,7 +405,7 @@ $(document).ready(function() {
                 type: "GET",
                 dataType: "json",
                 data: { home: true },
-                success: function(data) {
+                success: function (data) {
                     const clubData = data.data.leaderboardClub.data;
                     const maleData = data.data.leaderboardMale.data;
                     const femaleData = data.data.leaderboardFemale.data;
@@ -533,7 +529,7 @@ $(document).ready(function() {
                         //     "/leaderboard#pills-rankings-female"
                         // );
                     }
-                }
+                },
             });
         });
     }
@@ -553,8 +549,8 @@ $(document).ready(function() {
             type: "GET",
             dataType: "json",
 
-            success: function(data) {
-                $.each(data, function(key, item) {
+            success: function (data) {
+                $.each(data, function (key, item) {
                     // item.iso_3166_1_alpha2
                     countries +=
                         '<option value="' +
@@ -563,15 +559,15 @@ $(document).ready(function() {
                         item.name +
                         "</option>";
                 });
-            }
+            },
         });
-        $("#ticket_1_use_myself").on("change", function() {
+        $("#ticket_1_use_myself").on("change", function () {
             if ($("#year_of_birth").length) {
                 $.ajax({
                     url: "/getUser",
                     type: "GET",
                     dataType: "json",
-                    success: function(user) {
+                    success: function (user) {
                         if (user["year_of_birth"] != 0) {
                             var val = $(
                                 "#year_of_birth option:contains(" +
@@ -634,12 +630,12 @@ $(document).ready(function() {
                                 ).style.backgroundColor = "#e9ecef";
                             }
                         }
-                    }
+                    },
                 });
             }
         });
 
-        $("#ticket_1_use_someone").on("change", function() {
+        $("#ticket_1_use_someone").on("change", function () {
             if ($(".year_of_birth").length) {
                 // $("#year_of_birth").prop("disabled", false);
                 var elems = document.getElementsByClassName("year_of_birth");
@@ -666,7 +662,7 @@ $(document).ready(function() {
                 $("#open_added_to_cart_modal").prop("disabled", false);
             }
         });
-        $(".ticket_race").on("change", function() {
+        $(".ticket_race").on("change", function () {
             var raceId = $(this).val();
 
             var name = $(this).attr("name");
@@ -680,13 +676,13 @@ $(document).ready(function() {
                 type: "GET",
                 dataType: "json",
 
-                success: function(data) {
+                success: function (data) {
                     $('select[name="' + drop_name + '"]').empty();
                     $('select[name="' + drop_name + '"]').append(
                         '<option value="" disabled selected>Ticket Type</option>'
                     );
 
-                    $.each(data, function(item, itemData) {
+                    $.each(data, function (item, itemData) {
                         var d1 = new Date();
                         var d2 = new Date(itemData.ticket_end);
 
@@ -711,7 +707,7 @@ $(document).ready(function() {
                             );
                         }
                     });
-                }
+                },
             });
 
             $.ajax({
@@ -719,11 +715,11 @@ $(document).ready(function() {
                 type: "GET",
                 dataType: "json",
 
-                success: function(data) {
+                success: function (data) {
                     $(meta_name).empty();
                     if (data.length) {
                         var questions = data[0].question;
-                        $.each(questions, function(key, question) {
+                        $.each(questions, function (key, question) {
                             str = "";
                             str +=
                                 '<script>var usedNames = {};$(".clubs > option").each(function () {if(usedNames[this.text]) {$(this).remove();} else {usedNames[this.text] = this.value;}});</script>';
@@ -918,7 +914,7 @@ $(document).ready(function() {
                                 ) {
                                     //change
                                     var found = false;
-                                    $.each(question.answervalue, function(
+                                    $.each(question.answervalue, function (
                                         key,
                                         answervalue
                                     ) {
@@ -963,7 +959,7 @@ $(document).ready(function() {
                                     data[0]["user"].club !== ""
                                 ) {
                                     var flag = false;
-                                    $.each(question.answervalue, function(
+                                    $.each(question.answervalue, function (
                                         key,
                                         answervalue
                                     ) {
@@ -981,7 +977,7 @@ $(document).ready(function() {
                                         }
                                     });
                                     if (!flag) {
-                                        $.each(question.answervalue, function(
+                                        $.each(question.answervalue, function (
                                             key,
                                             answervalue
                                         ) {
@@ -1000,7 +996,7 @@ $(document).ready(function() {
                                         });
                                     }
                                 }
-                                $.each(question.answervalue, function(
+                                $.each(question.answervalue, function (
                                     key,
                                     answervalue
                                 ) {
@@ -1037,7 +1033,7 @@ $(document).ready(function() {
                             sortList();
                         });
                     }
-                }
+                },
             });
         });
 
@@ -1045,7 +1041,7 @@ $(document).ready(function() {
             slidesToShow: 1,
             slidesToScroll: 1,
             arrows: false,
-            asNavFor: ".event-slider-nav"
+            asNavFor: ".event-slider-nav",
         });
         $(".event-slider-nav").slick({
             slidesToScroll: 1,
@@ -1054,11 +1050,11 @@ $(document).ready(function() {
             dots: false,
             arrows: false,
             centerMode: true,
-            focusOnSelect: true
+            focusOnSelect: true,
         });
         var data = null;
         // Handle Ticket Usage Radio Buttons
-        $('input[type="radio"]').change(function() {
+        $('input[type="radio"]').change(function () {
             if ($(this).val() == "myself") {
                 $(this)
                     .parents(".ticket-info-section")
@@ -1093,7 +1089,7 @@ $(document).ready(function() {
                 for (i = 0; i < 4; i++) inputs[i].value = "";
             }
         });
-        $('input[type="radio"]').each(function() {
+        $('input[type="radio"]').each(function () {
             if ($(this).prop("checked", true) && $(this).val() == "myself") {
                 $(this)
                     .parents(".ticket-info-section")
@@ -1109,7 +1105,7 @@ $(document).ready(function() {
         });
         // Add Tickets Form
         var ticketSection = $(".ticket-info-section").clone(true, true);
-        $('.tickets-quantity input[type="number"]').change(function() {
+        $('.tickets-quantity input[type="number"]').change(function () {
             var ticketsQuantity = parseInt($(this).val());
             var currentTicketsQuantity = $(".ticket-info-section").length;
             if (currentTicketsQuantity < ticketsQuantity) {
@@ -1118,15 +1114,11 @@ $(document).ready(function() {
                 // Replace Section ID
                 newTicketSection.attr("id", "ticket_info_" + ticketsQuantity);
                 // Replace Ticket No
-                newTicketSection.find(".ticket-no").each(function() {
-                    $(this).text(
-                        $(this)
-                            .text()
-                            .replace("1", ticketsQuantity)
-                    );
+                newTicketSection.find(".ticket-no").each(function () {
+                    $(this).text($(this).text().replace("1", ticketsQuantity));
                 });
                 // Replace IDs
-                newTicketSection.find('[id*="ticket_1"]').each(function() {
+                newTicketSection.find('[id*="ticket_1"]').each(function () {
                     $(this).attr(
                         "id",
                         $(this)
@@ -1135,7 +1127,7 @@ $(document).ready(function() {
                     );
                 });
                 // Replace Names
-                newTicketSection.find('[name*="ticket_1"]').each(function() {
+                newTicketSection.find('[name*="ticket_1"]').each(function () {
                     $(this).attr(
                         "name",
                         $(this)
@@ -1144,7 +1136,7 @@ $(document).ready(function() {
                     );
                 });
                 // Replace Fors
-                newTicketSection.find('[for*="ticket_1"]').each(function() {
+                newTicketSection.find('[for*="ticket_1"]').each(function () {
                     $(this).attr(
                         "for",
                         $(this)
@@ -1153,7 +1145,7 @@ $(document).ready(function() {
                     );
                 });
                 // Replace Tickets Total No
-                $("#open_added_to_cart_modal").each(function() {
+                $("#open_added_to_cart_modal").each(function () {
                     $(this).text(
                         $(this)
                             .text()
@@ -1163,11 +1155,9 @@ $(document).ready(function() {
                 newTicketSection.insertAfter($(".ticket-info-section").last());
             } else if (currentTicketsQuantity > ticketsQuantity) {
                 // Remove Ticket
-                $(".ticket-info-section")
-                    .last()
-                    .remove();
+                $(".ticket-info-section").last().remove();
                 // Replace Tickets Total No
-                $("#open_added_to_cart_modal").each(function() {
+                $("#open_added_to_cart_modal").each(function () {
                     $(this).text(
                         $(this)
                             .text()
@@ -1177,17 +1167,17 @@ $(document).ready(function() {
             }
         });
         // Added to cart modal
-        $("#open_added_to_cart_modal").click(function(e) {
+        $("#open_added_to_cart_modal").click(function (e) {
             // $('#open_added_to_cart_modal').val('Submitting Form...');
             // document.getElementById('open_added_to_cart_modal').innerHTML = 'Submitting Form...';
             if ($("#add_to_cart")[0].checkValidity()) {
-                $("#add_to_cart").submit(function(e) {
+                $("#add_to_cart").submit(function (e) {
                     $.ajaxSetup({
                         headers: {
                             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
                                 "content"
-                            )
-                        }
+                            ),
+                        },
                     });
                     $.ajax({
                         async: false,
@@ -1198,16 +1188,14 @@ $(document).ready(function() {
                         cache: false,
                         url: $("#add_to_cart").attr("action"),
                         data: new FormData($("#add_to_cart")[0]),
-                        success: function(data) {
-                            $("#add_to_cart")
-                                .get(0)
-                                .reset();
+                        success: function (data) {
+                            $("#add_to_cart").get(0).reset();
                             $("#added_to_cart_modal").modal();
                             fbq("track", "AddToCart");
                         },
-                        error: function(data) {
+                        error: function (data) {
                             console.log("An error occurred.");
-                        }
+                        },
                     });
                     return false;
                 });
@@ -1221,13 +1209,9 @@ $(document).ready(function() {
      * Cart Page
      */
     function initCart() {
-        $(".undo-code").click(function(event) {
-            $(this)
-                .closest("#code")
-                .val(null);
-            $(this)
-                .closest(".code-form")
-                .submit();
+        $(".undo-code").click(function (event) {
+            $(this).closest("#code").val(null);
+            $(this).closest(".code-form").submit();
             event.preventDefault();
         });
     }
@@ -1236,13 +1220,13 @@ $(document).ready(function() {
      * Cart Payment Page
      */
     function initCartPayment() {
-        $("#undo-credit").click(function(event) {
+        $("#undo-credit").click(function (event) {
             $("#credit").val(0);
             $("#credit-form").submit();
             event.preventDefault();
         });
 
-        $("#undo-voucher").click(function(event) {
+        $("#undo-voucher").click(function (event) {
             $("#code").val(null);
             $("#voucher-form").submit();
             event.preventDefault();
@@ -1254,7 +1238,7 @@ $(document).ready(function() {
      */
     function initProfile() {
         // Upcoming Event Details Trigger
-        $("#pills-upcoming-events .event-details-trigger").click(function() {
+        $("#pills-upcoming-events .event-details-trigger").click(function () {
             if ($("#pills-upcoming-events").hasClass("event-shown")) {
                 // Hide Details
                 $("#pills-upcoming-events").removeClass("event-shown");
@@ -1264,7 +1248,7 @@ $(document).ready(function() {
             }
         });
         // Previous Event Details Trigger
-        $("#pills-previous-events .event-details-trigger").click(function() {
+        $("#pills-previous-events .event-details-trigger").click(function () {
             if ($("#pills-previous-events").hasClass("event-shown")) {
                 // Hide Details
                 $("#pills-previous-events").removeClass("event-shown");
@@ -1275,12 +1259,19 @@ $(document).ready(function() {
         });
 
         // upload image
-        $("#profile-image").click(function() {
+        $("#profile-image").click(function () {
             $("input[id='profile_image']").click();
         });
 
-        $("#profile_image").change(function() {
+        $("#profile_image").change(function () {
             $("#profile-image-form").submit();
+        });
+
+        // Update club value when changed
+        $("#profileClub").on("change", function () {
+            newVal = $("#profileClub").val();
+            $("#inputClub").val(newVal);
+            // $("#profileClub").val($("#profileClub").val()).change();
         });
     }
 
@@ -1288,11 +1279,11 @@ $(document).ready(function() {
      * Sign In / Sign Up Page
      */
     function initSignIn() {
-        $("#login_form").submit(function(e) {
+        $("#login_form").submit(function (e) {
             console.log("do login");
             e.preventDefault();
         });
-        $("#register_form").submit(function(e) {
+        $("#register_form").submit(function (e) {
             $("#phone_verify_modal").modal();
             e.preventDefault();
         });
@@ -1303,13 +1294,13 @@ $(document).ready(function() {
      */
     // Clickable Dropdown menu
     if ($(window).width() > 769) {
-        $(".navbar .dropdown > a").click(function() {
+        $(".navbar .dropdown > a").click(function () {
             location.href = this.href;
         });
     }
 
     // Handles number inputs
-    $(".form-control.form-number").each(function() {
+    $(".form-control.form-number").each(function () {
         var self = $(this),
             min = self.attr("min"),
             max = self.attr("max");
@@ -1321,14 +1312,14 @@ $(document).ready(function() {
         ).insertAfter($(this));
         $(this)
             .next(".quantity-mince")
-            .click(function() {
+            .click(function () {
                 if (self.val() != min) {
                     var value = parseInt(self.val()) - 1;
                     self.val(value);
                     self.change();
                 }
             });
-        $($(this).nextAll(".quantity-add")[0]).click(function() {
+        $($(this).nextAll(".quantity-add")[0]).click(function () {
             if (self.val() != max) {
                 var value = parseInt(self.val()) + 1;
                 self.val(value);
@@ -1369,13 +1360,8 @@ $(document).ready(function() {
         default:
     }
     $(".other_club").hide();
-    $(".clubs").on("change", function() {
-        if (
-            $(this)
-                .val()
-                .toLowerCase()
-                .includes("other")
-        ) {
+    $(".clubs").on("change", function () {
+        if ($(this).val().toLowerCase().includes("other")) {
             $(".other_club").show();
             $("#other_club").prop("required", true);
         } else {
