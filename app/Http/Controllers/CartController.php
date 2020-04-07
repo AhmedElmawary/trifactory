@@ -31,7 +31,7 @@ class CartController extends Controller
         $cartSubTotal = \Cart::getSubTotal();
         $cartTotal = \Cart::getTotal();
         $cartItems = \Cart::getContent()->toArray();
-        
+
 
         if (\Request::is('api*') || \Request::wantsJson()) {
             foreach ($cartItems as $cartItem) {
@@ -43,7 +43,7 @@ class CartController extends Controller
                 'cartItems' => $cartItems,
                 'cartSubTotal' => $cartSubTotal,
                 'cartTotal' => $cartTotal,
-                ]);
+            ]);
         } else {
             return view('cart', [
                 'cartItems' => $cartItems,
@@ -120,7 +120,7 @@ class CartController extends Controller
             if (\Request::is('api*') && isset($inputs['code'])) {
                 return response()->json([
                     'message' => $validator->errors()
-                    ]);
+                ]);
             } else {
                 return redirect()
                     ->action('CartController@index')
@@ -211,7 +211,7 @@ class CartController extends Controller
                 if (isset($inputs['code'])) {
                     return response()->json([
                         'message' => $validator->errors()
-                        ]);
+                    ]);
                 }
             } else {
                 return redirect()
@@ -309,9 +309,35 @@ class CartController extends Controller
 
         \Cart::remove($itemKey);
 
-        return redirect()->action(
-            'CartController@index'
-        );
+        // $user = Auth::user();
+        // \Cart::session($user->id);
+        $cartSubTotal = \Cart::getSubTotal();
+        $cartTotal = \Cart::getTotal();
+        $cartItems = \Cart::getContent()->toArray();
+
+
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            foreach ($cartItems as $cartItem) {
+                foreach ($cartItem['conditions'] as $condition) {
+                    $cartItems[$cartItem['id']]['promo'] = $condition->getAttributes();
+                }
+            }
+            return response()->json([
+                'cartItems' => $cartItems,
+                'cartSubTotal' => $cartSubTotal,
+                'cartTotal' => $cartTotal,
+            ]);
+        } else {
+            return view('cart', [
+                'cartItems' => $cartItems,
+                'cartSubTotal' => $cartSubTotal,
+                'cartTotal' => $cartTotal,
+            ]);
+        }
+
+        // return redirect()->action(
+        //     'CartController@index'
+        // )->withInput();
     }
 
     public function addToCart(Request $request)
@@ -320,7 +346,7 @@ class CartController extends Controller
         \Cart::session($user->id);
         $input = $request->all();
         $number_of_tickets = $input['number_of_tickets'];
-        
+
 
         $grouppedInput = [];
 
@@ -338,10 +364,10 @@ class CartController extends Controller
                     'message' => $e->getMessage(),
                     'data' => json_encode($input),
                     'location' =>
-                    'Line:'.__LINE__
-                    .';File:'.__FILE__
-                    .';Class:'.__CLASS__
-                    .';Method:'.__METHOD__
+                    'Line:' . __LINE__
+                        . ';File:' . __FILE__
+                        . ';Class:' . __CLASS__
+                        . ';Method:' . __METHOD__
                 ]);
                 return redirect()->back();
             }
@@ -392,9 +418,9 @@ class CartController extends Controller
                 if (count($answervalues)) {
                     $answer = $answervalues->firstWhere('id', $ticketValues['meta_' . $meta]);
                     $attributes[$question->question_text] = (isset($answer->value)) ?
-                    $answer->value : $ticketValues['meta_' . $meta];
+                        $answer->value : $ticketValues['meta_' . $meta];
                     $attributes['_qid' . $question->id] = (isset($answer->id)) ?
-                    $answer->id : $ticketValues['meta_' . $meta];
+                        $answer->id : $ticketValues['meta_' . $meta];
                     if ($user->year_of_birth == 0 && preg_match("/year of birth/i", $question->question_text)) {
                         $user->year_of_birth = $answer->value;
                         $user->save();
@@ -410,19 +436,19 @@ class CartController extends Controller
                         $user->save();
                     }
                     if (preg_match("/upload/i", $question->question_text)) {
-                        if ($request->hasFile($ticket_number.'_meta_'.$meta)) {
+                        if ($request->hasFile($ticket_number . '_meta_' . $meta)) {
                             // Get filename with extension
-                            $filenameWithExt = $request->file($ticket_number.'_meta_'.$meta)->getClientOriginalName();
+                            $filenameWithExt = $request->file($ticket_number . '_meta_' . $meta)->getClientOriginalName();
                             // Get just filename
                             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
                             // Get just ext
-                            $extension = $request->file($ticket_number.'_meta_'.$meta)->getClientOriginalExtension();
+                            $extension = $request->file($ticket_number . '_meta_' . $meta)->getClientOriginalExtension();
                             //Filename to store
-                            $fileNameToStore = $race->id.'_'.str_replace(' ', '', $user->name).'_'.$user->id.'_'
-                            .$uniqueid.'.'.$extension;
+                            $fileNameToStore = $race->id . '_' . str_replace(' ', '', $user->name) . '_' . $user->id . '_'
+                                . $uniqueid . '.' . $extension;
                             // Upload Image
-                            $path = $request->file($ticket_number.'_meta_'.$meta)
-                            ->storeAs('public/tickets_images', $fileNameToStore);
+                            $path = $request->file($ticket_number . '_meta_' . $meta)
+                                ->storeAs('public/tickets_images', $fileNameToStore);
 
                             $attributes[$question->question_text] = $fileNameToStore;
                             $attributes['_qid' . $question->id] = $fileNameToStore;
@@ -443,8 +469,34 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->action(
-            'CartController@index'
-        );
+        // $user = Auth::user();
+        // \Cart::session($user->id);
+        $cartSubTotal = \Cart::getSubTotal();
+        $cartTotal = \Cart::getTotal();
+        $cartItems = \Cart::getContent()->toArray();
+
+
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            foreach ($cartItems as $cartItem) {
+                foreach ($cartItem['conditions'] as $condition) {
+                    $cartItems[$cartItem['id']]['promo'] = $condition->getAttributes();
+                }
+            }
+            return response()->json([
+                'cartItems' => $cartItems,
+                'cartSubTotal' => $cartSubTotal,
+                'cartTotal' => $cartTotal,
+            ]);
+        } else {
+            return view('cart', [
+                'cartItems' => $cartItems,
+                'cartSubTotal' => $cartSubTotal,
+                'cartTotal' => $cartTotal,
+            ]);
+        }
+
+        // return redirect()->action(
+        //     'CartController@index'
+        // );
     }
 }
