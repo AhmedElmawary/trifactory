@@ -112,6 +112,7 @@ class LeaderboardController extends Controller
             ->select('club')
             ->where('gender', 'M')
             ->WhereNotNull('club')
+            ->Where(\DB::raw('TRIM(club)'), '!=', '')
             ->groupBy('club')
             ->pluck('club');
         $male_categories = \DB::table('leaderboard_data')
@@ -124,6 +125,7 @@ class LeaderboardController extends Controller
             ->select('club')
             ->where('gender', 'F')
             ->WhereNotNull('club')
+            ->Where(\DB::raw('TRIM(club)'), '!=', '')
             ->groupBy('club')
             ->pluck('club');
         $female_categories = \DB::table('leaderboard_data')
@@ -135,6 +137,7 @@ class LeaderboardController extends Controller
         $clubs = \DB::table('leaderboard_data')
             ->select('club')
             ->WhereNotNull('club')
+            ->Where(\DB::raw('TRIM(club)'), '!=', '')
             ->groupBy('club')
             ->pluck('club');
 
