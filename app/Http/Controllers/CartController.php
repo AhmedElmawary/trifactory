@@ -183,6 +183,10 @@ class CartController extends Controller
             }
         }
 
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            return $this->index($request);
+        }
+
         return redirect()->action(
             'CartController@index'
         );
@@ -248,6 +252,9 @@ class CartController extends Controller
                 }
             }
         }
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            return $this->payment($request);
+        }
 
         return redirect()->action(
             'CartController@payment'
@@ -285,6 +292,9 @@ class CartController extends Controller
             $condition->parsedRawValue = $credit;  // not auto-set incase of custom storage storage
 
             \Cart::condition($condition);
+        }
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            return $this->payment($request);
         }
 
         return redirect()->action(
@@ -335,14 +345,13 @@ class CartController extends Controller
         //     ]);
         // }
 
-        // if (\Request::is('api*') || \Request::wantsJson()) {
-        //     return redirect('/api/cart/');
-        // }
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            return $this->index($request);
+        }
 
-        // return redirect()->action(
-        //     'CartController@index'
-        // );
-        return $this->index($request);
+        return redirect()->action(
+            'CartController@index'
+        );
     }
 
     public function addToCart(Request $request)
@@ -501,13 +510,12 @@ class CartController extends Controller
         //         'cartTotal' => $cartTotal,
         //     ]);
         // }
-        // if (\Request::is('api*') || \Request::wantsJson()) {
-        //     return redirect('/api/cart/');
-        // }
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            return $this->index($request);
+        }
 
-        // return redirect()->action(
-        //     'CartController@index'
-        // );
-        return $this->index($request);
+        return redirect()->action(
+            'CartController@index'
+        );
     }
 }
