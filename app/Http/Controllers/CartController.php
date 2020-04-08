@@ -335,9 +335,13 @@ class CartController extends Controller
         //     ]);
         // }
 
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            return redirect('/api/cart/');
+        }
+
         return redirect()->action(
             'CartController@index'
-        )->withInput();
+        );
     }
 
     public function addToCart(Request $request)
@@ -447,7 +451,7 @@ class CartController extends Controller
                                 $request->file($ticket_number . '_meta_' . $meta)->getClientOriginalExtension();
                             //Filename to store
                             $fileNameToStore = $race->id . '_' . str_replace(' ', '', $user->name) . '_'
-                                 . $user->id . '_' . $uniqueid . '.' . $extension;
+                                . $user->id . '_' . $uniqueid . '.' . $extension;
                             // Upload Image
                             $path = $request->file($ticket_number . '_meta_' . $meta)
                                 ->storeAs('public/tickets_images', $fileNameToStore);
@@ -496,6 +500,9 @@ class CartController extends Controller
         //         'cartTotal' => $cartTotal,
         //     ]);
         // }
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            return redirect('/api/cart/');
+        }
 
         return redirect()->action(
             'CartController@index'
