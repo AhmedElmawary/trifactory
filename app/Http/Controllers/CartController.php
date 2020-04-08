@@ -335,13 +335,14 @@ class CartController extends Controller
         //     ]);
         // }
 
-        if (\Request::is('api*') || \Request::wantsJson()) {
-            return redirect('/api/cart/');
-        }
+        // if (\Request::is('api*') || \Request::wantsJson()) {
+        //     return redirect('/api/cart/');
+        // }
 
-        return redirect()->action(
-            'CartController@index'
-        );
+        // return redirect()->action(
+        //     'CartController@index'
+        // );
+        return $this->index($request);
     }
 
     public function addToCart(Request $request)
@@ -500,12 +501,13 @@ class CartController extends Controller
         //         'cartTotal' => $cartTotal,
         //     ]);
         // }
-        if (\Request::is('api*') || \Request::wantsJson()) {
-            return redirect('/api/cart/');
-        }
+        // if (\Request::is('api*') || \Request::wantsJson()) {
+        //     return redirect('/api/cart/');
+        // }
 
-        return redirect()->action(
-            'CartController@index'
-        );
+        // return redirect()->action(
+        //     'CartController@index'
+        // );
+        return $this->index($request);
     }
 }
