@@ -18,6 +18,8 @@ class CartController extends Controller
      */
     public function __construct()
     {
+
+        
         if (\Request::is('api*') || \Request::wantsJson()) {
             $this->middleware(['auth:api', 'verified']);
         } else {
