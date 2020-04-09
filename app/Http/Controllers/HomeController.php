@@ -28,6 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $apiRequest = \Request::is('api*') || \Request::wantsJson();
         if (\Auth::check()) {
             $user = \Auth::user();
             \Cart::session($user->id);
@@ -42,11 +43,13 @@ class HomeController extends Controller
         foreach ($allEvents as $event) {
             $years[] = $event->year;
         }
-        if (!session()->get("year")) {
+        if (!$apiRequest && !session()->get("year")) {
             session()->put("year", $years[0]);
         }
-
-        $year = session()->get("year", $years[0]);
+        $year = $years[0];
+        if (!$apiRequest) {
+            $year = session()->get("year", $years[0]);
+        }
 
         $leaderboardMale = \DB::table('leaderboard_data')
             ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
