@@ -8,7 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 
 class SendEmailsJob implements ShouldQueue
 {
@@ -42,10 +42,10 @@ class SendEmailsJob implements ShouldQueue
                 'message' => $e->getMessage(),
                 'data' => $this->ticketMail,
                 'location' =>
-                    'Line:'.__LINE__
-                    .';File:'.__FILE__
-                    .';Class:'.__CLASS__
-                    .';Method:'.__METHOD__
+                'Line:' . __LINE__
+                    . ';File:' . __FILE__
+                    . ';Class:' . __CLASS__
+                    . ';Method:' . __METHOD__
             ]);
         }
     }
