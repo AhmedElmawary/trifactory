@@ -425,7 +425,7 @@ class CartController extends Controller
             $uniqueid = uniqid('TFT-' . $ticket->id);
             // CreateUserRace Listener will not create UserRace
             // When Ticket id Dublicated in UserRace Table
-            // Prevent Duplication of Ticket Id 
+            // Prevent Duplication of Ticket Id
             $duplicate_count = UserRace::where('participant_ticket_id', $uniqueid)->count();
             while ($duplicate_count >= 1) {
                 $uniqueid = uniqid('TFT-' . $ticket->id);
