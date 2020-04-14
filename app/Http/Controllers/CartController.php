@@ -8,7 +8,7 @@ use App\Question;
 use App\UserRace;
 use App\Voucher;
 use Illuminate\Support\Facades\Auth;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -120,7 +120,7 @@ class CartController extends Controller
         ]);
 
         if ($validator->fails()) {
-            if (\Request::is('api*') && isset($inputs['code'])) {
+            if (\Request::is('api*') || \Request::wantsJson()) {
                 return response()->json([
                     'message' => $validator->errors()
                 ]);
@@ -496,6 +496,8 @@ class CartController extends Controller
             ]);
         }
 
+        \Log::info('CART DATA');
+        \Log::info(\Cart::getContent()->toArray());
         // $user = Auth::user();
         // \Cart::session($user->id);
         // $cartSubTotal = \Cart::getSubTotal();
