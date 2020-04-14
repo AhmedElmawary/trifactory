@@ -121,9 +121,10 @@ class CartController extends Controller
 
         if ($validator->fails()) {
             if (\Request::is('api*') || \Request::wantsJson()) {
-                return response()->json([
-                    'message' => $validator->errors()
-                ]);
+                // return response()->json([
+                //     'message' => $validator->errors()
+                // ]);
+                return $this->index($request);
             } else {
                 return redirect()
                     ->action('CartController@index')
