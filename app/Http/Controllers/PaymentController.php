@@ -433,9 +433,8 @@ class PaymentController extends Controller
             $date_now = date("Y-m-d");
 
             foreach (json_decode($order['meta'], true) as $key => $value) {
-                if (
-                    preg_match("/TFT/i", $key) &&
-                    (!isset($request->participant_ticket_id) || $request->participant_ticket_id == $key)
+                if (preg_match("/TFT/i", $key) &&
+                        (!isset($request->participant_ticket_id) || $request->participant_ticket_id == $key)
                 ) {
                     if ($value['_ticket_id'] == $request->ticket_id) {
                         //  `&& ($user->id != 1430)` Removed Exception
@@ -464,7 +463,12 @@ class PaymentController extends Controller
             $usercredit->save();
         }
         if (\Request::is('api*') || \Request::wantsJson()) {
-            return response()->json(['status' => 200, 'total_refund' => $totalRefunded, 'message' => 'refund-success', 'data' => $usercredit]);
+            return response()->json([
+                'status' => 200,
+                'total_refund' => $totalRefunded,
+                'message' => 'refund-success',
+                'data' => $usercredit
+            ]);
         } else {
             return back();
         }
