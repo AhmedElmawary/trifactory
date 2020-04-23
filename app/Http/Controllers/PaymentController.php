@@ -56,11 +56,11 @@ class PaymentController extends Controller
             $meta['voucher'] = $voucher->getAttributes();
             $voucher = Voucher::where('code', $meta['voucher']['code'])->first();
             $voucher_credit = $voucher->amount - ($credit ? $credit->parsedRawValue : 0) - $cartSubTotal;
-//            $usercredit = new Usercredit();
-//            $usercredit->user_id = $user->id;
-//            $usercredit->amount = $voucher_credit;
-//            $usercredit->action = 'Voucher Remaining';
-//            $usercredit->save();
+            //            $usercredit = new Usercredit();
+            //            $usercredit->user_id = $user->id;
+            //            $usercredit->amount = $voucher_credit;
+            //            $usercredit->action = 'Voucher Remaining';
+            //            $usercredit->save();
         }
 
         foreach ($cartItems as $item) {
@@ -80,7 +80,7 @@ class PaymentController extends Controller
         $order = new Order();
         $order->id = uniqid('TFO-');
         $order->totalCost = $cartTotal + ($credit ? $credit->parsedRawValue : 0)
-        + ($voucher ? $voucher->amount - $voucher_credit : 0);
+            + ($voucher ? $voucher->amount - $voucher_credit : 0);
         $order->user_id = $user->id;
         $order->meta = json_encode($meta);
 
@@ -157,7 +157,7 @@ class PaymentController extends Controller
                     'success' => true,
                     'message' => 'payment-link',
                     'data' => "https://accept.paymobsolutions.com/api/acceptance/iframes/"
-                    .config('paymob.iframe_id')."?payment_token=$paymentKey->token"
+                        . config('paymob.iframe_id') . "?payment_token=$paymentKey->token"
                 ]);
             } else {
                 return view('payment', ['paymentKey' => $paymentKey]);
@@ -247,13 +247,13 @@ class PaymentController extends Controller
     public function processedCallback(Request $request)
     {
         \App\Exception::create([
-            'message' =>'Processed Callback',
+            'message' => 'Processed Callback',
             'data' => json_encode($request['obj']),
             'location' =>
-            'Line:'.__LINE__
-            .';File:'.__FILE__
-            .';Class:'.__CLASS__
-            .';Method:'.__METHOD__
+            'Line:' . __LINE__
+                . ';File:' . __FILE__
+                . ';Class:' . __CLASS__
+                . ';Method:' . __METHOD__
         ]);
         $orderId = $request['obj']['order']['id'];
         $order = Order::wherePaymobOrderId($orderId)->first();
@@ -283,13 +283,13 @@ class PaymentController extends Controller
     public function invoice(Request $request)
     {
         \App\Exception::create([
-            'message' =>'Response Callback',
+            'message' => 'Response Callback',
             'data' => json_encode($request),
             'location' =>
-            'Line:'.__LINE__
-            .';File:'.__FILE__
-            .';Class:'.__CLASS__
-            .';Method:'.__METHOD__
+            'Line:' . __LINE__
+                . ';File:' . __FILE__
+                . ';Class:' . __CLASS__
+                . ';Method:' . __METHOD__
         ]);
         $orderId = $request->order;
         $order = Order::wherePaymobOrderId($orderId)->first();
@@ -409,15 +409,17 @@ class PaymentController extends Controller
             return view('cash-success', ['order' => $order]);
         }
     }
-    
+
     public function refundTicket(Request $request)
     {
         $user = Auth::user();
+        $totalRefunded = true;
 
-//        if (!isset($request->participant_user_id) || $request->participant_user_id == $user->id) {
-        if (!isset($request->participant_user_id) ||
-                   $request->participant_user_id == $user->id ||
-                   $request->user_id == $user->id
+        //        if (!isset($request->participant_user_id) || $request->participant_user_id == $user->id) {
+        if (
+            !isset($request->participant_user_id) ||
+            $request->participant_user_id == $user->id ||
+            $request->user_id == $user->id
         ) {
             $userrace = UserRace::find($request->userrace_id);
             $order = Order::where('id', $request->order_id)->first();
@@ -431,14 +433,18 @@ class PaymentController extends Controller
             $date_now = date("Y-m-d");
 
             foreach (json_decode($order['meta'], true) as $key => $value) {
-                if (preg_match("/TFT/i", $key) &&
-                    (!isset($request->participant_ticket_id) || $request->participant_ticket_id == $key)) {
+                if (
+                    preg_match("/TFT/i", $key) &&
+                    (!isset($request->participant_ticket_id) || $request->participant_ticket_id == $key)
+                ) {
                     if ($value['_ticket_id'] == $request->ticket_id) {
                         //  `&& ($user->id != 1430)` Removed Exception
                         if ($general_ticket_ticket_end < $date_now) {
                             $ticket_cost = round($value['Price'] * 0.2, 0);
+                            $totalRefunded = false;
                         } else {
                             $ticket_cost = $value['Price'];
+                            $totalRefunded = true;
                         }
                         if ($order->success == 'true') {
                             $order->success = 'refunded: ' . $key;
@@ -451,14 +457,14 @@ class PaymentController extends Controller
             }
 
             $usercredit = new Usercredit();
-//            $usercredit->user_id = $user->id;
+            //            $usercredit->user_id = $user->id;
             $usercredit->user_id = $request->user_id;
             $usercredit->amount = $ticket_cost;
             $usercredit->action = 'Refund: ' . $ticket->race_id . ' - ' . $ticket->name;
             $usercredit->save();
         }
         if (\Request::is('api*') || \Request::wantsJson()) {
-            return response()->json(['status' => 200, 'message' => 'refund-success', 'data' => $usercredit]);
+            return response()->json(['status' => 200, 'total_refund' => $totalRefunded, 'message' => 'refund-success', 'data' => $usercredit]);
         } else {
             return back();
         }
