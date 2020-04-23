@@ -124,6 +124,7 @@ class ProfileController extends Controller
                 ->get();
             foreach ($data['upcoming_events'] as $event) {
                 $event['participant_user'] = \App\User::find($event->participant_user_id);
+                $event->race->event['total_refund'] = ($event->race->event->event_end >= date('Y-m-d'));
             }
             $data['user'] = $user;
             $data['profile_image'] = '/images/placeholder.svg';

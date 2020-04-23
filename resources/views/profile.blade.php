@@ -597,7 +597,7 @@
                                                 @endif
                                             @endif
                                         @endforeach
-                                        will be refuned to your credit<br>and your race will be cancelled</span><br><br>
+                                        will be refunded to your credit<br>and your race will be cancelled</span><br><br>
                                     **After the General registration deadline, 20% of the amount paid will be refunded
                                 @else
                                 <span style="font-weight:bold">
@@ -610,7 +610,7 @@
                                                 @endif
                                             @endif
                                         @endforeach
-                                        will be refuned to your credit<br>and your race will be cancelled</span>
+                                        will be refunded to your credit<br>and your race will be cancelled</span>
                                 @endif
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <img src="/images/close-icon.svg" alt="close icon" onclick="closeModal()">
