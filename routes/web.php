@@ -25,6 +25,10 @@ Route::get('/purchase-voucher', function () {
     return view('purchase-voucher');
 });
 
+Route::get('/privacy-policy', function () {
+    return view('/privacy-policy');
+});
+
 Route::post('/buy-vouchers', 'PaymentController@buyVouchers')->middleware('verified');
 Route::post('/buy-tickets', 'PaymentController@buyTickets')->middleware('verified');
 Route::post('/refund-ticket', 'PaymentController@refundTicket')->name('refund-ticket')->middleware('verified');
