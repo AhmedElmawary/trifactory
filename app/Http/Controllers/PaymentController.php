@@ -255,24 +255,19 @@ class PaymentController extends Controller
                 . ';Class:' . __CLASS__
                 . ';Method:' . __METHOD__
         ]);
+
+        $orderId = $request['obj']['order']['id'];
+        $order = Order::wherePaymobOrderId($orderId)->first();
+
         // Statuses.
         $isSuccess = $request['obj']['success'];
         $isVoided = $request['obj']['is_voided'];
         $isRefunded = $request['obj']['is_refunded'];
         if ($isSuccess && !$isVoided && !$isRefunded) { // transcation succeeded.
-            $orderId = $request['obj']['order']['id'];
-            $order = Order::wherePaymobOrderId($orderId)->first();
-
             $this->succeeded($order);
         } elseif ($isSuccess && $isVoided) { // transaction voided.
-            $orderId = $request['obj']['order']['id'];
-            $order = Order::wherePaymobOrderId($orderId)->first();
-
             $this->voided($order);
         } elseif ($isSuccess && $isRefunded) { // transaction refunded.
-            $orderId = $request['obj']['order']['id'];
-            $order = Order::wherePaymobOrderId($orderId)->first();
-
             $this->refunded($order);
         } elseif (!$isSuccess) { // transaction failed.
             $this->failed($order);
