@@ -255,17 +255,24 @@ class PaymentController extends Controller
                 . ';Class:' . __CLASS__
                 . ';Method:' . __METHOD__
         ]);
-        $orderId = $request['obj']['order']['id'];
-        $order = Order::wherePaymobOrderId($orderId)->first();
         // Statuses.
         $isSuccess = $request['obj']['success'];
         $isVoided = $request['obj']['is_voided'];
         $isRefunded = $request['obj']['is_refunded'];
         if ($isSuccess && !$isVoided && !$isRefunded) { // transcation succeeded.
+            $orderId = $request['obj']['order']['id'];
+            $order = Order::wherePaymobOrderId($orderId)->first();
+
             $this->succeeded($order);
         } elseif ($isSuccess && $isVoided) { // transaction voided.
+            $orderId = $request['obj']['order']['id'];
+            $order = Order::wherePaymobOrderId($orderId)->first();
+
             $this->voided($order);
         } elseif ($isSuccess && $isRefunded) { // transaction refunded.
+            $orderId = $request['obj']['order']['id'];
+            $order = Order::wherePaymobOrderId($orderId)->first();
+
             $this->refunded($order);
         } elseif (!$isSuccess) { // transaction failed.
             $this->failed($order);
@@ -416,7 +423,8 @@ class PaymentController extends Controller
         $totalRefunded = true;
 
         //        if (!isset($request->participant_user_id) || $request->participant_user_id == $user->id) {
-        if (!isset($request->participant_user_id) ||
+        if (
+            !isset($request->participant_user_id) ||
             $request->participant_user_id == $user->id ||
             $request->user_id == $user->id
         ) {
@@ -432,7 +440,8 @@ class PaymentController extends Controller
             $date_now = date("Y-m-d");
 
             foreach (json_decode($order['meta'], true) as $key => $value) {
-                if (preg_match("/TFT/i", $key) &&
+                if (
+                    preg_match("/TFT/i", $key) &&
                     (!isset($request->participant_ticket_id) || $request->participant_ticket_id == $key)
                 ) {
                     if ($value['_ticket_id'] == $request->ticket_id) {
