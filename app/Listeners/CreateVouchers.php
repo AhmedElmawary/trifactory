@@ -8,7 +8,7 @@ use App\Voucher;
 use App\User;
 use App\Mail\SendVoucher;
 use Auth;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use Hash;
 
 class CreateVouchers
