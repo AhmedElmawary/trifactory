@@ -197,7 +197,106 @@
                 </span>
             </td>
         </tr>
+
+    @elseif($ticket->_race_id == 53 || $ticket->_race_id == 54)
+        
+    @php
+        $url = "#";
+        $title = "-";
+        
+        @if($ticket->_ticket_id == 117) {
+            $url = "https://www.myvirtualmission.com/missions/47858/stay-safe-marathon-50km-individual";
+            $title = "50 KM Individual Ticket";    
+        }
+        @elseif($ticket->_ticket_id == 118) {
+            $url = "https://www.myvirtualmission.com/missions/47860/stay-safe-marathon-100km-individual";
+            $title = "100 KM Individual Ticket";
+        }
+        @elseif($ticket->_ticket_id == 119) {
+            $title = "200 KM Team Ticket";
+            $url = "https://www.myvirtualmission.com/missions/47864/stay-safe-marathon-200km-team-challenge";
+        }
+        @elseif($ticket->_ticket_id == 120) {
+            $url = "https://www.myvirtualmission.com/missions/47868/stay-safe-marathon-400km-team-challenge";
+            $title = "400 KM Team Ticket";
+        }
+        @endif
+    @endphp
+
+        <tr>
+            <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 28px;color: #b30000;">
+                    {{$title}}
+                </span><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 22x;color: #000000;">
+                    How to Start Your Stay Safe Marathon | Ramadan Edition 
+                </span><br>
+            </td>
+        </tr>
+        <tr style="height:10px;"></tr>
+        <tr>
+            <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
+                    1. DOWNLOAD APP
+                </span><br>
+                <span style="font-family: AvenirNext-Medium;font-size: 18px;color: #000000;line-height: 22px;">
+                    After you complete the registration download My Virtual Mission app from Apple Store or Google Play and wait for your invitation to join the <b> Stay Safe Marathon | Ramadan Edition</b>.
+                </span>
+            </td>
+        </tr>
+        <tr style="height:10px;"></tr>
+        <tr>
+            <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
+                    2. JOIN THE MISSION
+                </span><br>
+                <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #000000;line-height: 22px;">
+                    To Join the mission, Click on the link below <br>
+                    {{$url}}<br> 
+                    Make sure to Click on <b>"Join Mission"</b> when you receive the invitation email.
+                    After clicking on <b>"Join Mission"</b>, wait for your invitation to be accepted  on the app within 24 hours.
+                </span>
+            </td>
+        </tr>
+        <tr style="height:10px;"></tr>
+        <tr>
+            <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
+                    3. CONNECT APP
+                </span><br>
+                <span style="font-family: AvenirNext-Medium;font-size: 18px;color: #000000;line-height: 22px;">
+                    Final step is to connect the My Virtual Mission App to your preferred fitness app through <b>'My Connections'</b> in the menu of your app to record your distance.
+
+                    You can also choose to add the distance you run/walk manually to your profile instead.
+                    Please note that your progress on the My Virtual Mission app gets updated every <u>6 HOURS,</u> so please be patient.
+                </span>
+            </td>
+        </tr>
+        <tr style="height:10px;"></tr>
+        <tr>
+            <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
+                    4. RUN
+                </span><br>
+                <span style="font-family: AvenirNext-Medium;font-size: 18px;color: #000000;line-height: 22px;">
+                    Finally all you have to do now is to start running or walking indoors or outdoors. Try to share your runs and progress using #ItsWorthATri and tagging <a target="_blank" href="https://www.instagram.com/thetrifactory/" >@thetrifactory</a>!
+                </span>
+            </td>
+        </tr>
+        <tr style="height:10px;"></tr>
+        <tr>
+            <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;">
+                    STAY SAFE STAY ACTIVE! 
+                </span>
+            </td>
+        </tr>
     @endif
+
 
     @if($ticket->paymentMethod === 'cash')
     <tr style="height:10px;"></tr>
