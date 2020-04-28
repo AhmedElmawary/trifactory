@@ -198,7 +198,7 @@
             </td>
         </tr>
 
-    @elseif($ticket->_race_id == 53 || $ticket->_race_id == 54)
+    {{-- @elseif($ticket->_race_id == 53 || $ticket->_race_id == 54)
         
     @php
         $url = "#";
@@ -294,7 +294,7 @@
                     STAY SAFE STAY ACTIVE! 
                 </span>
             </td>
-        </tr>
+        </tr> --}}
     @endif
 
 
