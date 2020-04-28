@@ -198,29 +198,28 @@
             </td>
         </tr>
 
-    {{-- @elseif($ticket->_race_id == 53 || $ticket->_race_id == 54)
+    @elseif($ticket->_race_id == 53 || $ticket->_race_id == 54)
         
     @php
         $url = "#";
         $title = "-";
         
-        @if($ticket->_ticket_id == 117) {
+        if($ticket->_ticket_id == 117) {
             $url = "https://www.myvirtualmission.com/missions/47858/stay-safe-marathon-50km-individual";
             $title = "50 KM Individual Ticket";    
         }
-        @elseif($ticket->_ticket_id == 118) {
+        elseif($ticket->_ticket_id == 118) {
             $url = "https://www.myvirtualmission.com/missions/47860/stay-safe-marathon-100km-individual";
             $title = "100 KM Individual Ticket";
         }
-        @elseif($ticket->_ticket_id == 119) {
+        elseif($ticket->_ticket_id == 119) {
             $title = "200 KM Team Ticket";
             $url = "https://www.myvirtualmission.com/missions/47864/stay-safe-marathon-200km-team-challenge";
         }
-        @elseif($ticket->_ticket_id == 120) {
+        elseif($ticket->_ticket_id == 120) {
             $url = "https://www.myvirtualmission.com/missions/47868/stay-safe-marathon-400km-team-challenge";
             $title = "400 KM Team Ticket";
         }
-        @endif
     @endphp
 
         <tr>
@@ -232,11 +231,12 @@
         </tr>
         <tr>
             <td>
-                <span style="font-family: AvenirNext-Bold;font-size: 22x;color: #000000;">
+                <span style="font-family: AvenirNext-Bold;font-size: 26x;color: #000000;">
                     How to Start Your Stay Safe Marathon | Ramadan Edition 
                 </span><br>
             </td>
         </tr>
+        <tr style="height:10px;"></tr>
         <tr style="height:10px;"></tr>
         <tr>
             <td>
@@ -249,12 +249,13 @@
             </td>
         </tr>
         <tr style="height:10px;"></tr>
+        <tr style="height:10px;"></tr>
         <tr>
             <td>
                 <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
                     2. JOIN THE MISSION
                 </span><br>
-                <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #000000;line-height: 22px;">
+                <span style="font-family: AvenirNext-Medium;font-size: 14px;color: #000000;line-height: 22px;">
                     To Join the mission, Click on the link below <br>
                     {{$url}}<br> 
                     Make sure to Click on <b>"Join Mission"</b> when you receive the invitation email.
@@ -262,6 +263,7 @@
                 </span>
             </td>
         </tr>
+        <tr style="height:10px;"></tr>
         <tr style="height:10px;"></tr>
         <tr>
             <td>
@@ -277,6 +279,7 @@
             </td>
         </tr>
         <tr style="height:10px;"></tr>
+        <tr style="height:10px;"></tr>
         <tr>
             <td>
                 <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
@@ -288,13 +291,14 @@
             </td>
         </tr>
         <tr style="height:10px;"></tr>
+        <tr style="height:10px;"></tr>
         <tr>
             <td>
                 <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;">
                     STAY SAFE STAY ACTIVE! 
                 </span>
             </td>
-        </tr> --}}
+        </tr> 
     @endif
 
 
