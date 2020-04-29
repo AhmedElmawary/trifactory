@@ -219,7 +219,7 @@ class ProfileController extends Controller
         // view the cart items
         $items = [];
         if (!(\Request::is('api*'))) {
-            $userId = \Auth::user()->id;
+                $userId = \Auth::user()->id;
             $items = \Cart::session($userId)->getContent();
         }
         $email_exist = User::where('email', isset($_GET['email']) ? $_GET['email'] : '')->first();

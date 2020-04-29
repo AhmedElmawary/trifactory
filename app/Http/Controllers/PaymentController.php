@@ -256,23 +256,23 @@ class PaymentController extends Controller
                 . ';Method:' . __METHOD__
         ]);
 
-            $orderId = $request['obj']['order']['id'];
-            $order = Order::wherePaymobOrderId($orderId)->first();
+        $orderId = $request['obj']['order']['id'];
+        $order = Order::wherePaymobOrderId($orderId)->first();
 
-            // Statuses.
-            $isSuccess = $request['obj']['success'];
-            $isVoided = $request['obj']['is_voided'];
-            $isRefunded = $request['obj']['is_refunded'];
-            if ($isSuccess && !$isVoided && !$isRefunded) { // transcation succeeded.
-                $this->succeeded($order);
-            } elseif ($isSuccess && $isVoided) { // transaction voided.
-                $this->voided($order);
-            } elseif ($isSuccess && $isRefunded) { // transaction refunded.
-                $this->refunded($order);
-            } elseif (!$isSuccess) { // transaction failed.
-                $this->failed($order);
-            }
-       
+        // Statuses.
+        $isSuccess = $request['obj']['success'];
+        $isVoided = $request['obj']['is_voided'];
+        $isRefunded = $request['obj']['is_refunded'];
+        if ($isSuccess && !$isVoided && !$isRefunded) { // transcation succeeded.
+            $this->succeeded($order);
+        } elseif ($isSuccess && $isVoided) { // transaction voided.
+            $this->voided($order);
+        } elseif ($isSuccess && $isRefunded) { // transaction refunded.
+            $this->refunded($order);
+        } elseif (!$isSuccess) { // transaction failed.
+            $this->failed($order);
+        }
+    
         return response()->json(['success' => true], 200);
     }
 
