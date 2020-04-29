@@ -256,7 +256,6 @@ class PaymentController extends Controller
                 . ';Method:' . __METHOD__
         ]);
 
-        try {
             $orderId = $request['obj']['order']['id'];
             $order = Order::wherePaymobOrderId($orderId)->first();
 
@@ -273,19 +272,7 @@ class PaymentController extends Controller
             } elseif (!$isSuccess) { // transaction failed.
                 $this->failed($order);
             }
-        } catch (\Exception $e) {
-            \Log::info('Process Callback');
-            \Log::info($e->getMessage());
-            \App\Exception::create([
-                'message' => 'Processed Callback',
-                'data' => json_encode($request),
-                'location' =>
-                'Line:' . __LINE__
-                    . ';File:' . __FILE__
-                    . ';Class:' . __CLASS__
-                    . ';Method:' . __METHOD__
-            ]);
-        }
+       
         return response()->json(['success' => true], 200);
     }
 
