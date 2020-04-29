@@ -2,7 +2,7 @@
 
 namespace App\Rules;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Validation\Rule;
 
 class Promocode implements Rule

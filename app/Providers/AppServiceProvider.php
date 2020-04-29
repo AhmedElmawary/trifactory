@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\user;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;

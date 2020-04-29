@@ -17,7 +17,7 @@ use App\Events\TicketPurchased;
 use App\Events\TicketRefund;
 use App\UserRace;
 use App\Ticket;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class PaymentController extends Controller
@@ -137,7 +137,7 @@ class PaymentController extends Controller
 
         $order->update(['paymob_order_id' => $paymobOrder->id]);
 
-        $user = Auth::user();
+        $user = \Auth::user();
 
         if ($paymentMethod === 'card') {
             $pbc = new PayMobCredit();
