@@ -2,7 +2,7 @@
 
 namespace App\PayMob;
 
-use PayMob;
+use BaklySystems\PayMob\Facades\PayMob;
 
 class PayMobCash extends PayMob
 {
