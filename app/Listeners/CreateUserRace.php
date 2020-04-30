@@ -109,9 +109,9 @@ class CreateUserRace
 
         foreach ($metas as $meta) {
             $question = Question::where("id", $meta)
-                            ->with('answertype', 'answervalue')
-                            ->first();
-                
+                ->with('answertype', 'answervalue')
+                ->first();
+
             $answervalues = $question->answervalue()->get();
 
             $questionAnswer = new QuestionAnswer;
@@ -119,12 +119,11 @@ class CreateUserRace
             $questionAnswer->question_id = $meta;
             // for lists
             if (count($answervalues)) {
-                $answer = $answervalues->firstWhere('id', $metaArray['_qid'.$meta]);
-                $questionAnswer->answer_value = $answer->value;
+                $answer = $answervalues->firstWhere('id', $metaArray['_qid' . $meta]);
+                $questionAnswer->answer_value = isset($answer->value) ? $answer->value : null;
             } else {
-                $questionAnswer->answer_value = $metaArray['_qid'.$meta];
+                $questionAnswer->answer_value = $metaArray['_qid' . $meta];
             }
-            
             $questionAnswer->save();
         }
     }
