@@ -43,7 +43,7 @@ class LeaderboardDataImport implements
     {
         $row = $row->toArray(null, true, true);
 
-        if(!stripos($this->sheetName, '-')) {
+        if (!stripos($this->sheetName, '-')) {
             return;
         }
 
@@ -51,11 +51,10 @@ class LeaderboardDataImport implements
 
         $race_id = trim($sheetName[count($sheetName) - 1]);
 
-        if(stripos($this->sheetName, 'relay') !== false) {
-
+        if (stripos($this->sheetName, 'relay') !== false) {
             $count = 0;
             foreach ($row as $key => $value) {
-                if(stripos($key, 'name') !== false) {
+                if (stripos($key, 'name') !== false) {
                     $count++;
                 }
             }
@@ -89,7 +88,7 @@ class LeaderboardDataImport implements
             ];
             LeaderboardData::firstOrCreate($data);
 
-            if($count === 3) {
+            if ($count === 3) {
                 $data = [
                     'race_id' => $race_id,
                     'bib' => $row['bib'],
@@ -117,11 +116,11 @@ class LeaderboardDataImport implements
                 'points' => $row['points'],
             ];
 
-            if(isset($row['genderposition'])) {
+            if (isset($row['genderposition'])) {
                 $data['gender_position'] = $row['genderposition'];
             }
 
-            if(isset($row['categoryposition'])) {
+            if (isset($row['categoryposition'])) {
                 $data['category_position'] = $row['categoryposition'];
             }
 
