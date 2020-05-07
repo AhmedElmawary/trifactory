@@ -3,17 +3,18 @@
 namespace App\Imports;
 
 use App\LeaderboardData;
-
+use Illuminate\Contracts\Queue\ShouldQueue;
 // use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Events\BeforeSheet;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Row;
 use Maatwebsite\Excel\Concerns\OnEachRow;
 
-class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, WithCalculatedFormulas
+class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, WithCalculatedFormulas, WithChunkReading, ShouldQueue
 {
     use Importable;
 
@@ -22,6 +23,8 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
 
     public function __construct()
     {
+        // ini_set('memory_limit', '-1');
+        // ini_set('max_execution_time', 3000);
         $this->sheetName = null;
     }
 
@@ -43,7 +46,6 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
         $race_id = trim($sheetName[count($sheetName) - 1]);
 
         if (stripos($this->sheetName, 'relay') !== false) {
-            \Log::info($row);
 
             $count = 0;
             foreach ($row as $key => $value) {
@@ -51,7 +53,7 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
                     $count++;
                 }
             }
-            $count = ($count == 0)? $count = 1: $count = $count;
+            $count = ($count == 0) ? $count = 1 : $count = $count;
 
             $data = [
                 'race_id' => $race_id,
@@ -128,5 +130,10 @@ class LeaderboardDataImport implements OnEachRow, WithEvents, WithHeadingRow, Wi
                 $this->sheetName = $event->getSheet()->getTitle();
             }
         ];
+    }
+
+    public function chunkSize(): int
+    {
+        return 50;
     }
 }
