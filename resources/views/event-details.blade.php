@@ -7,9 +7,9 @@
       fbq('track', 'InitiateCheckout');
   }
 
-  let id  =   <?= $event->id ?>
-  let event_name = <?= $event->name ?>
-  if ( (id == 16) || (event_name == "Gouna Virtual Cycling Challenge") ){
+  let id  =   <?= $event->id ?>;
+
+  if ( id == 16) {
 
    if (sessionStorage.getItem("password") == null ){
     let user_pass = prompt("Please, enter the given password below:")
