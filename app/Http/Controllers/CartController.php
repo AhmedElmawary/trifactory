@@ -29,6 +29,7 @@ class CartController extends Controller
     }
     public function index(Request $request)
     {
+        $this->removeTicketFromCart();
         $user = Auth::user();
         \Cart::session($user->id);
         $cartSubTotal = \Cart::getSubTotal();
@@ -500,8 +501,6 @@ class CartController extends Controller
             ]);
         }
 
-        \Log::info('CART DATA');
-        \Log::info(\Cart::getContent()->toArray());
         // $user = Auth::user();
         // \Cart::session($user->id);
         // $cartSubTotal = \Cart::getSubTotal();
@@ -534,5 +533,22 @@ class CartController extends Controller
         return redirect()->action(
             'CartController@index'
         );
+    }
+
+    /**
+     * Remove ticket from Cart if registeration of ticket end
+     */
+    public function removeTicketFromCart()
+    {
+        $user = Auth::user();
+        \Cart::session($user->id);
+        $cartItems = \Cart::getContent()->toArray();
+
+        foreach ($cartItems as $key => $cartItem) {
+            $ticket = Ticket::where("id", $cartItem['attributes']['_ticket_id'])->first();
+            if ($ticket->ticket_end <= date('Y-m-d H:i:s') && $ticket->published == 'yes') {
+                \Cart::remove($key);
+            }
+        }
     }
 }
