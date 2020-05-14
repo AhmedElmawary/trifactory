@@ -241,7 +241,7 @@ class LeaderboardController extends Controller
 
         $leaderboardClub = \DB::table('leaderboard_data')
             ->select('points', 'club', \DB::raw('SUM(points) as total_points'))
-            ->whereNotIn('club', ['NA', 'Independent', 'Other', 'I am an independent athlete.', ' ', "I am an Independent Athlete", 'i am an Independent Athlete'])
+            ->whereNotIn('club', ['NA', 'Independent', 'Other', 'I am an independent athlete.', ' '])
             ->where('club', 'not like', '%Independent%')
             ->where('created_at', 'like', '%' . $year . '%')
             ->where(function ($query) use ($request) {
