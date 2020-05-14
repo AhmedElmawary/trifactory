@@ -13,7 +13,7 @@
 
    if (sessionStorage.getItem("password") == null ){
     let user_pass = prompt("Please, enter the given password below:")
-    if (user_pass == "!Bit68!"){
+    if (user_pass == "GOUNAXTF"){
       sessionStorage.setItem("password",user_pass)
     }else  window.location.replace(document.referrer)
   } 
