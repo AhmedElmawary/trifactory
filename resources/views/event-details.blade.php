@@ -1,11 +1,26 @@
 @extends('layouts.app', ['body_class' => 'event-details-view'])
 @section('title', $event->name)
 @section('content')
+
 <script>
   function onProceedtoCheckout() {
       fbq('track', 'InitiateCheckout');
   }
+
+  let id  =   <?= $event->id ?>
+  let event_name = <?= $event->name ?>
+  if ( (id == 16) || (event_name == "Gouna Virtual Cycling Challenge") ){
+
+   if (sessionStorage.getItem("password") == null ){
+    let user_pass = prompt("Please, enter the given password below:")
+    if (user_pass == "!Bit68!"){
+      sessionStorage.setItem("password",user_pass)
+    }else  window.location.replace(document.referrer)
+  } 
+
+  }
 </script>
+
 <!-- Start Content -->
 <form enctype="multipart/form-data" id="add_to_cart" method="POST" action="{{ url('/cart') }}">
 @csrf
