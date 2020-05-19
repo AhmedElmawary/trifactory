@@ -10,12 +10,14 @@
   let id  =   <?= $event->id ?>;
 
   if ( id == 16) {
-
    if (sessionStorage.getItem("password") == null ){
     let user_pass = prompt("Please, enter the given password below:")
     if (user_pass == "GOUNAXTF"){
       sessionStorage.setItem("password",user_pass)
-    }else  window.location.replace(document.referrer)
+    }else {
+        alert("sorry you have entered a wrong password!")
+       window.location.replace(document.referrer)
+    } 
   } 
 
   }
