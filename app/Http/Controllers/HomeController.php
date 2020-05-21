@@ -52,19 +52,19 @@ class HomeController extends Controller
         }
 
         $leaderboardMale = \DB::table('leaderboard_data')
-            ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
+            ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw("SUM(points) as total_points"))
             ->where('gender', 'M')
             ->where('created_at', 'like', '%' . $year . '%')
-            ->orderByRaw('total_points desc')
+            ->orderByRaw("total_points desc")
             ->groupBy('name')
             ->limit(10)
             ->get();
 
         $leaderboardFemale = \DB::table('leaderboard_data')
-            ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw('SUM(points) as total_points'))
+            ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw("SUM(points) as total_points") )
             ->where('gender', 'F')
             ->where('created_at', 'like', '%' . $year . '%')
-            ->orderByRaw('total_points desc')
+            ->orderByRaw("total_points desc")
             ->groupBy('name')
             ->limit(10)
             ->get();
