@@ -161,7 +161,6 @@ class="hero-section d-flex justify-content-center no-padding"
                         <th scope="col">Nationality</th>
                         <th scope="col">Age Group</th>
                         <th scope="col">Club</th>
-                        
                         <th scope="col">Points</th>
                     </tr>
                 </thead>
@@ -211,7 +210,6 @@ class="hero-section d-flex justify-content-center no-padding"
                         <th scope="col">Nationality</th>
                         <th scope="col">Age Group</th>
                         <th scope="col">Club</th>
-
                         <th scope="col">Points</th>
                     </tr>
                 </thead>

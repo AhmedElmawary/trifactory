@@ -58,6 +58,7 @@ class HomeController extends Controller
             ->orderByRaw("total_points desc")
             ->groupBy('name')
             ->limit(10)
+            
             ->get();
 
         $leaderboardFemale = \DB::table('leaderboard_data')
