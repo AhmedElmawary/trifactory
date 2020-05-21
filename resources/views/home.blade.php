@@ -172,7 +172,6 @@ class="hero-section d-flex justify-content-center no-padding"
                         <td>{{$male->country_code}}</td>
                         <td>{{$male->category}}</td>
                         <td>{{$male->club}}</td>
-
                         <td>{{$male->total_points}}</td>
                     </tr>
                     @endforeach
@@ -221,7 +220,6 @@ class="hero-section d-flex justify-content-center no-padding"
                         <td>{{$female->country_code}}</td>
                         <td>{{$female->category}}</td>
                         <td>{{$female->club}}</td>
-
                         <td>{{$female->total_points}}</td>
                     </tr>
                     @endforeach
