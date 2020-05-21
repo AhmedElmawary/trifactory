@@ -58,7 +58,7 @@ class HomeController extends Controller
             ->orderByRaw("total_points desc")
             ->groupBy('name')
             ->limit(10)
-             ->get();
+            ->get();
 
         $leaderboardFemale = \DB::table('leaderboard_data')
             ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw("SUM(points) as total_points") )
