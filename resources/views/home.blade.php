@@ -123,7 +123,7 @@
         <div class="col-lg-12 results-head">
             <h5>Male</h5>
         </div>
-        # Male
+
         <div class="col-lg-12 table-responsive-lg">
             <table id="maleBody" class="table table-striped table-bordered">
                 @if(count($leaderboardMale))
@@ -163,7 +163,7 @@
 
         </div>
     </div>
-    # Female
+
     <div class="row">
         <div class="col-lg-12 results-head">
             <h5>Female</h5>
@@ -264,4 +264,4 @@
 </section>
 
 <!-- End Content -->
-@endsection
+@endsection 

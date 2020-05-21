@@ -12,8 +12,8 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
+   
         if (\Request::is('api*') || \Request::wantsJson()) {
             // $this->middleware(['auth:api', 'verified']);
         } else {
@@ -26,8 +26,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
+    public function index() {
+    
         $apiRequest = \Request::is('api*') || \Request::wantsJson();
         if (\Auth::check()) {
             $user = \Auth::user();
@@ -101,8 +101,7 @@ class HomeController extends Controller
         }
     }
 
-    public function test()
-    {
+    public function test() {
         $user = \Auth::user();
 
         $upcoming = \App\UserRace::with('race.event')
