@@ -50,16 +50,21 @@ class RegisterController extends Controller
         $question = Question::where('question_text', 'like', '%club%')->first();
         $clubs = Answervalue::where('question_id', $question->id)->get();
         $nationalities = \countries();
+        $gender =  [
+            [ "label"=>'Male', "value"=>'male'], 
+            [ "label"=>'Female', "value"=>'female'],
+        ];
         unset($nationalities['il']);
         if (Request::is('api*') || Request::wantsJson()) {
             return response()->json([
                 'nationalities' => $nationalities,
-                'clubs' => $clubs
+                'clubs' => $clubs,
             ]);
-        } else {
+        } else {    
             return view('auth.register', [
                 'nationalities' => $nationalities,
-                'clubs' => $clubs
+                'clubs' => $clubs,
+                "gender"=> $gender
             ]);
         }
     }
@@ -79,6 +84,7 @@ class RegisterController extends Controller
                 'lastname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
+                'gender' => ['required', 'string'],
                 'nationality' => ['required', 'string'],
                 'password' => ['required', 'string', 'min:6', 'confirmed'],
                 'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
@@ -91,6 +97,7 @@ class RegisterController extends Controller
                 'lastname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
+                'gender' => ['required', 'string'],
                 'nationality' => ['required', 'string'],
                 'password' => ['required', 'string', 'min:6', 'confirmed'],
                 'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
@@ -118,6 +125,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'nationality' => $data['nationality'],
+            'gender' => $data['gender'],
             'password' => Hash::make($data['password']),
             'year_of_birth' => (int) $data['year_of_birth'],
             'club' => $data['club']

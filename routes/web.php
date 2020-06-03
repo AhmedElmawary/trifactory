@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::post('/gender/{user}', 'HomeController@gender')->name("gender");
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
 Route::get('/events', 'EventsController@index');

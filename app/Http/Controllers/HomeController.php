@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\User;
 use App\Gallery;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -33,6 +35,15 @@ class HomeController extends Controller
             $user = \Auth::user();
             \Cart::session($user->id);
         }
+         $gender = [
+            ["label"=>"Male", "value"=>"male",],
+            ["label"=>"Female","value"=>"female"]
+        ];
+
+        if ( Auth::check()  && Auth::user()->gender == null   ){
+                return view("gender",['user'=>Auth::user()] , ['gender'=> $gender]);
+            }
+
         $gallery = Gallery::latest('created_at')->with('galleryimage')->first();
         $upcomingEvents = Event::with('eventimages')->upcomming()->published()->get();
         $comingSoonEvents = Event::with('eventimages')->comingsoon()->get();
@@ -113,4 +124,24 @@ class HomeController extends Controller
 
         dd($upcoming);
     }
+
+    public final function gender(User $user){
+         $query = \DB::table("users")->where('id',$user->id )->update(["gender"=>request()->gender]);
+
+         if ( ! empty ($query)){
+            return redirect("/home");
+         }else {
+
+            $gender = [
+                ["label"=>"Male", "value"=>"male",],
+                ["label"=>"Female","value"=>"female"]
+            ];
+    
+                    return view("gender",['user'=>Auth::user()] , ['gender'=> $gender]);
+    
+         }
+
+        }
+
+
 }

@@ -1,22 +1,28 @@
 function closeModal() {
     $(".custom-modal").modal("hide");
 }
+
 function refresh() {
     location.reload();
 }
+
 function hideevents() {
     $(".event-show").hide();
 }
+
 function show_details(event_id) {
     $(".event-show").hide();
     $("#" + event_id).show();
 }
+
 function showlogoutmodal() {
     $("#logout_modal").modal();
 }
+
 function showEnduranceLeagueModal() {
     $("#endurance_league_details_modal").modal();
 }
+
 function showEnduranceLeagueRecordModal(name) {
     $.ajax({
         type: "GET",
@@ -50,10 +56,12 @@ function showEnduranceLeagueRecordModal(name) {
         },
     });
 }
+
 function openconfirmcancelmodal(event_id) {
     $("#confirm_cancel_event_modal_" + event_id).modal();
     $("#confirm_cancel_event_modal_" + event_id).unbind();
 }
+
 function opencancelmodal(event_id) {
     $.ajax({
         type: $("#form_" + event_id).attr("method"),
@@ -72,6 +80,7 @@ function opencancelmodal(event_id) {
     });
     $("#cancel_event_modal_" + event_id).unbind();
 }
+
 function validatePhone() {
     $.ajax({
         async: false,
@@ -106,7 +115,7 @@ function onFileChange() {
             document.getElementById("national_id_image") != null &&
             document.getElementById("national_id_image").files[0] &&
             document.getElementById("national_id_image").files[0].size >
-                26214400
+            26214400
         ) {
             // 15728640
             document
@@ -125,6 +134,7 @@ function ticket_details() {
     validatePhone();
     document.getElementById("open_added_to_cart_modal").onclick = validatePhone;
 }
+
 function filter() {
     const name = trim(document.getElementById("name_filter").value);
     const category = trim(document.getElementById("category_filter").value);
@@ -294,8 +304,8 @@ $(document).ready(function () {
                 } else {
                     $("#clubBodyLeaderboard").append(
                         "<h4 align='center'>No Data found for Year: " +
-                            year +
-                            "</h4>"
+                        year +
+                        "</h4>"
                     );
                 }
 
@@ -324,8 +334,8 @@ $(document).ready(function () {
                 } else {
                     $("#maleBodyLeaderboard").append(
                         "<h4 align='center'>No Data found for Year: " +
-                            year +
-                            "</h4>"
+                        year +
+                        "</h4>"
                     );
                 }
 
@@ -354,8 +364,8 @@ $(document).ready(function () {
                 } else {
                     $("#femaleBodyLeaderboard").append(
                         "<h4 align='center'>No Data found for Year: " +
-                            year +
-                            "</h4>"
+                        year +
+                        "</h4>"
                     );
                 }
             },
@@ -404,7 +414,9 @@ $(document).ready(function () {
                 url: "api/leaderboard/" + year,
                 type: "GET",
                 dataType: "json",
-                data: { home: true },
+                data: {
+                    home: true
+                },
                 success: function (data) {
                     const clubData = data.data.leaderboardClub.data;
                     const maleData = data.data.leaderboardMale.data;
@@ -442,8 +454,8 @@ $(document).ready(function () {
                     } else {
                         $("#clubBody").append(
                             "<h4 align='center'>No Data found for Year: " +
-                                year +
-                                "</h4>"
+                            year +
+                            "</h4>"
                         );
                         $("#viewMoreClub").hide();
                         // $("#rankClubUrl").attr(
@@ -481,8 +493,8 @@ $(document).ready(function () {
                     } else {
                         $("#maleBody").append(
                             "<h4 align='center'>No Data found for Year: " +
-                                year +
-                                "</h4>"
+                            year +
+                            "</h4>"
                         );
                         $("#viewMoreMale").hide();
                         // $("#rankMaleUrl").attr(
@@ -520,8 +532,8 @@ $(document).ready(function () {
                     } else {
                         $("#femaleBody").append(
                             "<h4 align='center'>No Data found for Year: " +
-                                year +
-                                "</h4>"
+                            year +
+                            "</h4>"
                         );
                         $("#viewMoreFemale").hide();
                         // $("#rankFemaleUrl").attr(
@@ -544,6 +556,8 @@ $(document).ready(function () {
      */
     function initEventDetails() {
         var countries = "";
+        let countires_ar = [];
+
         $.ajax({
             url: "/event-details/helper/countries",
             type: "GET",
@@ -554,10 +568,14 @@ $(document).ready(function () {
                     // item.iso_3166_1_alpha2
                     countries +=
                         '<option value="' +
-                        item.name +
+                        // item.name +
+                        item.iso_3166_1_alpha2 +
                         '">' +
                         item.name +
                         "</option>";
+                });
+                $.each(data, function (key, item) {
+                    countires_ar[item.iso_3166_1_alpha2] = item.name;
                 });
             },
         });
@@ -571,8 +589,8 @@ $(document).ready(function () {
                         if (user["year_of_birth"] != 0) {
                             var val = $(
                                 "#year_of_birth option:contains(" +
-                                    user["year_of_birth"] +
-                                    ")"
+                                user["year_of_birth"] +
+                                ")"
                             ).val();
                             $("#year_of_birth").val(val);
                             $("#year_of_birth").prop("selected", true);
@@ -664,7 +682,7 @@ $(document).ready(function () {
         });
         $(".ticket_race").on("change", function () {
             var raceId = $(this).val();
-
+            let genders = [];
             var name = $(this).attr("name");
             name = name.split("_");
             var drop_name = "ticket_" + name[1] + "_type";
@@ -695,15 +713,15 @@ $(document).ready(function () {
                         if (!(itemData == false || itemData == true)) {
                             $('select[name="' + drop_name + '"]').append(
                                 "<option " +
-                                    (itemData.name.includes("General") &&
-                                    data["exception_user"] == true
-                                        ? ""
-                                        : disabled) +
-                                    ' value="' +
-                                    itemData.id +
-                                    '">' +
-                                    itemData.name +
-                                    "</option>"
+                                (itemData.name.includes("General") &&
+                                    data["exception_user"] == true ?
+                                    "" :
+                                    disabled) +
+                                ' value="' +
+                                itemData.id +
+                                '">' +
+                                itemData.name +
+                                "</option>"
                             );
                         }
                     });
@@ -720,6 +738,9 @@ $(document).ready(function () {
                     if (data.length) {
                         var questions = data[0].question;
                         $.each(questions, function (key, question) {
+                            if (question.question_text.match(/gender/gi)) {
+                                genders.push(question.question_text)
+                            }
                             str = "";
                             str +=
                                 '<script>var usedNames = {};$(".clubs > option").each(function () {if(usedNames[this.text]) {$(this).remove();} else {usedNames[this.text] = this.value;}});</script>';
@@ -727,9 +748,9 @@ $(document).ready(function () {
                                 '<script>if (!$(".clubs option:selected").text().toLowerCase().includes(\'other\') ){$(".other_club").hide();}$(".clubs").on("change", function() {if ($(".clubs option:selected").text().toLowerCase().includes(\'other\')){$(".other_club").show();$("#other_club").prop(\'required\',true);$("#others").prop(\'required\',true); document.getElementById("others").style.pointerEvents=null;document.getElementById("others").style.backgroundColor=\'#f5f5f5\';} else {$("#others").val(\'\');$("#others").prop(\'required\',false);$(".other_club").hide();$("#other_club").prop(\'required\',false);document.getElementById("others").style.pointerEvents=\'none\';document.getElementById("others").style.backgroundColor=\'#e9ecef\';}});</script>';
                             str +=
                                 '<div class="col-lg-6 mt-3 ' +
-                                (question.question_text.search(/other/i) > -1
-                                    ? "other_club"
-                                    : "") +
+                                (question.question_text.search(/other/i) > -1 ?
+                                    "other_club" :
+                                    "") +
                                 '"><div class="input-group">';
 
                             var validation = [];
@@ -786,9 +807,9 @@ $(document).ready(function () {
                                 ) {
                                     if (
                                         $(".clubs option:selected")
-                                            .text()
-                                            .toLowerCase()
-                                            .includes("other")
+                                        .text()
+                                        .toLowerCase()
+                                        .includes("other")
                                     ) {
                                         str +=
                                             'value="' +
@@ -810,15 +831,14 @@ $(document).ready(function () {
                                     question.id +
                                     '" ' +
                                     (question.question_text.search(
-                                        /year of birth/i
-                                    ) > -1 && data[0]["user"].year_of_birth != 0
-                                        ? 'value="Year of birth: ' +
-                                          data[0]["user"].year_of_birth +
-                                          '" style="pointer-events: none; background-color: #e9ecef" '
-                                        : "") +
+                                            /year of birth/i
+                                        ) > -1 && data[0]["user"].year_of_birth != 0 ?
+                                        'value="Year of birth: ' +
+                                        data[0]["user"].year_of_birth +
+                                        '" style="pointer-events: none; background-color: #e9ecef" ' :
+                                        "") +
                                     "/>";
                             }
-                                    
                             if (question.answertype.type === "file") {
                                 str +=
                                     '<label style="cursor: pointer;" class="form-control" for="national_id_image">';
@@ -840,63 +860,64 @@ $(document).ready(function () {
                                     ' style="opacity: 0;width: 1%;float: left;"';
                                 str += " />";
                                 str +=
-                                    ' <span class="fas fa-upload"></span> &nbsp;&nbsp;' + question.question_text +'<span style="float:right;color:green; display:none;" class="far fa-check-circle"></span><span style="float:right;color:red;" class="far fa-times-circle"></span></label>';
+                                    ' <span class="fas fa-upload"></span> &nbsp;&nbsp;' + question.question_text + '<span style="float:right;color:green; display:none;" class="far fa-check-circle"></span><span style="float:right;color:red;" class="far fa-times-circle"></span></label>';
                             }
-
                             if (question.answertype.type === "dropdown") {
                                 str += "<select ";
                                 if (required) str += "required";
                                 str +=
                                     ' class="custom-select ' +
-                                    (question.question_text.search(/club/i) > -1
-                                        ? "clubs"
-                                        : "") +
-                                    " " +
+                                    (question.question_text.search(/club/i) > -1 ?
+                                        "clubs" :
+                                        "") +
+                                    (question.question_text.search(/nationality/i) > -1 ?
+                                        " nationality " :
+                                        "") + " " +
                                     (question.question_text.search(
-                                        /year of birth/i
-                                    ) > -1
-                                        ? "year_of_birth"
-                                        : "") +
-                                    " " +
-                                    (question.question_text.search(/team/i) > -1
-                                        ? "teams"
-                                        : "") +
+                                            /year of birth/i
+                                        ) > -1 ?
+                                        "year_of_birth" :
+                                        "") + " " +
+                                    (question.question_text.search(/team/i) > -1 ?
+                                        "teams" :
+                                        "") +
                                     '" name="' +
                                     meta_field_name +
                                     "_" +
                                     question.id +
                                     '" ' +
                                     (question.question_text.search(
-                                        /year of birth/i
-                                    ) > -1 && data[0]["user"].year_of_birth != 0
-                                        ? ' id="year_of_birth" '
-                                        : "") +
+                                            /year of birth/i
+                                        ) > -1 && data[0]["user"].year_of_birth != 0 ?
+                                        ' id="year_of_birth" ' :
+                                        "") +
                                     (question.question_text.search(
-                                        /year of birth/i
-                                    ) > -1 &&
-                                    $("#ticket_1_use_myself").is(":checked") &&
-                                    data[0]["user"].year_of_birth != 0 &&
-                                    $(".ticket_race option:selected")
+                                            /year of birth/i
+                                        ) > -1 &&
+                                        $("#ticket_1_use_myself").is(":checked") &&
+                                        data[0]["user"].year_of_birth != 0 &&
+                                        $(".ticket_race option:selected")
                                         .text()
                                         .toLowerCase()
                                         .indexOf("relay") == -1 &&
-                                    $(".ticket_race option:selected")
+                                        $(".ticket_race option:selected")
                                         .text()
                                         .toLowerCase()
-                                        .indexOf("tribal") == -1
-                                        ? 'style="pointer-events: none; background-color: #e9ecef"'
-                                        : "") + //change
+                                        .indexOf("tribal") == -1 ?
+                                        'style="pointer-events: none; background-color: #e9ecef"' :
+                                        "") + //change
                                     (question.question_text.search(/club/i) >
-                                        -1 && data[0]["user"].club != ""
-                                        ? ' id="club" '
-                                        : "") +
+                                        -1 && data[0]["user"].club != "" ?
+                                        ' id="club" ' :
+                                        "") +
                                     (question.question_text.search(/club/i) >
                                         -1 &&
-                                    $("#ticket_1_use_myself").is(":checked") &&
-                                    data[0]["user"].club != ""
-                                        ? 'style="pointer-events: none; background-color: #e9ecef"'
-                                        : "") +
+                                        $("#ticket_1_use_myself").is(":checked") &&
+                                        data[0]["user"].club != "" ?
+                                        'style="pointer-events: none; background-color: #e9ecef"' :
+                                        "") +
                                     ">";
+
                                 if (
                                     question.question_text.search(
                                         /year of birth/i
@@ -904,13 +925,13 @@ $(document).ready(function () {
                                     $("#ticket_1_use_myself").is(":checked") &&
                                     data[0]["user"].year_of_birth !== 0 &&
                                     $(".ticket_race option:selected")
-                                        .text()
-                                        .toLowerCase()
-                                        .indexOf("relay") == -1 &&
+                                    .text()
+                                    .toLowerCase()
+                                    .indexOf("relay") == -1 &&
                                     $(".ticket_race option:selected")
-                                        .text()
-                                        .toLowerCase()
-                                        .indexOf("tribal") == -1
+                                    .text()
+                                    .toLowerCase()
+                                    .indexOf("tribal") == -1
                                 ) {
                                     //change
                                     var found = false;
@@ -954,7 +975,7 @@ $(document).ready(function () {
                                 }
                                 if (
                                     question.question_text.search(/club/i) >
-                                        -1 &&
+                                    -1 &&
                                     $("#ticket_1_use_myself").is(":checked") &&
                                     data[0]["user"].club !== ""
                                 ) {
@@ -983,8 +1004,8 @@ $(document).ready(function () {
                                         ) {
                                             if (
                                                 answervalue.value
-                                                    .toLowerCase()
-                                                    .includes("other")
+                                                .toLowerCase()
+                                                .includes("other")
                                             ) {
                                                 str +=
                                                     '<option value="' +
@@ -1009,7 +1030,6 @@ $(document).ready(function () {
                                 });
                                 str += "</select>";
                             }
-
                             if (question.answertype.type === "countries") {
                                 str += "<select ";
                                 if (required) str += "required";
@@ -1031,7 +1051,39 @@ $(document).ready(function () {
 
                             $(meta_name).append(str);
                             sortList();
+
                         });
+                        let select = document.getElementsByName("ticket_1_meta_31")[0];
+
+                        if (genders.length == 1) {
+                            $.each(questions, function (key, question) {
+                                if (question.question_text.match(/gender/gi)) {
+                                    if (question.question_text.search(/gender/i) >
+                                        -1 && data[0]["user"].gender != "" && data[0]["user"].gender != null && select != undefined) {
+                                        select.setAttribute("id", "gender");
+                                    }
+                                    if (question.question_text.search(/gender/i) > -1 && data[0]["user"].gender != null && $("#ticket_1_use_myself").is(":checked") && data[0]["user"].gender != "") {
+                                        select.setAttribute("style", "pointer-events: none; background-color: #e9ecef");
+                                    }
+                                    $.each(question.answervalue, function (key, value) {
+                                        if (value.value.match(data[0].user.gender)) {
+                                            select.innerHTML = "<option value='" + value.id + "' selected>" + value.value + "</option>";
+                                        }
+                                    });
+                                }
+                                $.each(question.answertype, function (key, object) {
+                                    if (object == "countries" && data[0].user.nationality != "" && data[0].user.nationality != null) {
+                                        let nationality_ = document.getElementsByName("ticket_1_meta_4")[0];
+                                        for (let key_ in countires_ar) {
+                                            if (key_ == data[0].user.nationality) {
+                                                nationality_.setAttribute("style", "pointer-events: none; background-color: #e9ecef");
+                                                nationality_.innerHTML = "<option value='" + key + "' selected disabled>" + countires_ar[key_] + "</option>";
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        }
                     }
                 },
             });
@@ -1122,8 +1174,8 @@ $(document).ready(function () {
                     $(this).attr(
                         "id",
                         $(this)
-                            .attr("id")
-                            .replace("ticket_1", "ticket_" + ticketsQuantity)
+                        .attr("id")
+                        .replace("ticket_1", "ticket_" + ticketsQuantity)
                     );
                 });
                 // Replace Names
@@ -1131,8 +1183,8 @@ $(document).ready(function () {
                     $(this).attr(
                         "name",
                         $(this)
-                            .attr("name")
-                            .replace("ticket_1", "ticket_" + ticketsQuantity)
+                        .attr("name")
+                        .replace("ticket_1", "ticket_" + ticketsQuantity)
                     );
                 });
                 // Replace Fors
@@ -1140,16 +1192,16 @@ $(document).ready(function () {
                     $(this).attr(
                         "for",
                         $(this)
-                            .attr("for")
-                            .replace("ticket_1", "ticket_" + ticketsQuantity)
+                        .attr("for")
+                        .replace("ticket_1", "ticket_" + ticketsQuantity)
                     );
                 });
                 // Replace Tickets Total No
                 $("#open_added_to_cart_modal").each(function () {
                     $(this).text(
                         $(this)
-                            .text()
-                            .replace(currentTicketsQuantity, ticketsQuantity)
+                        .text()
+                        .replace(currentTicketsQuantity, ticketsQuantity)
                     );
                 });
                 newTicketSection.insertAfter($(".ticket-info-section").last());
@@ -1160,8 +1212,8 @@ $(document).ready(function () {
                 $("#open_added_to_cart_modal").each(function () {
                     $(this).text(
                         $(this)
-                            .text()
-                            .replace(currentTicketsQuantity, ticketsQuantity)
+                        .text()
+                        .replace(currentTicketsQuantity, ticketsQuantity)
                     );
                 });
             }
@@ -1280,7 +1332,7 @@ $(document).ready(function () {
      */
     function initSignIn() {
         $("#login_form").submit(function (e) {
-            console.log("do login");
+            // console.log("do login");
             e.preventDefault();
         });
         $("#register_form").submit(function (e) {

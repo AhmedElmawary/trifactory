@@ -14,7 +14,7 @@ class Race extends Model
     protected $primaryKey='id';
 
     protected $fillable = [
-        'event_id','name','published','details','created_at','updated_at'
+        'event_id','name','published','individual','details','created_at','updated_at'
     ];
     public function event()
     {

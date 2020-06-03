@@ -93,6 +93,23 @@
                     </div>
 
                     <div class="input-group">
+                        <select style="margin-top:20px;" class="custom-select" name="gender" required>
+                            <option disabled value="" selected>Gender</option>
+
+                            @foreach($gender as $type)
+                            <option value="{{$type['value']}}">{{$type['label']}}</option>
+                            @endforeach
+
+                        </select>
+
+                        @if ($errors->has('gender'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $errors->first('gender') }}</strong>
+                        </span>
+                        @endif
+                    </div>
+                    
+                    <div class="input-group">
                         <select style="margin-top:20px;" class="custom-select" name="nationality" required>
                             <option disabled value="" selected>Nationality</option>
 
@@ -108,6 +125,7 @@
                         </span>
                         @endif
                     </div>
+
                     <div class="input-group">
                             <select style="margin-top:20px;" class="custom-select" name="year_of_birth" required>
                                     <option disabled value="" selected>Year of birth</option>

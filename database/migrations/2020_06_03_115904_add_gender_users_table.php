@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPasswordEvents extends Migration
+class AddGenderUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class AddPasswordEvents extends Migration
      */
     public function up()
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->string("password")->nullable()->after("event_end");
-        });   
-     }
+        Schema::table('users', function (Blueprint $table) {
+            $table->string("gender",7)->nullable()->after("lastname");
+        });          
+    }
 
     /**
      * Reverse the migrations.
