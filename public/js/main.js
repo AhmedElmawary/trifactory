@@ -114,8 +114,7 @@ function onFileChange() {
         if (
             document.getElementById("national_id_image") != null &&
             document.getElementById("national_id_image").files[0] &&
-            document.getElementById("national_id_image").files[0].size >
-            26214400
+            document.getElementById("national_id_image").files[0].size > 26214400
         ) {
             // 15728640
             document
