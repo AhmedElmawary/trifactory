@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\User;
@@ -48,24 +47,18 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $question = Question::where('question_text', 'like', '%club%')->first();
-        $clubs = Answervalue::where('question_id', $question->id)->get();
+        $clubs = Answervalue::where('question_id', $question->id)
+            ->get();
         $nationalities = \countries();
-        $gender =  [
-            [ "label"=>'Male', "value"=>'male'], 
-            [ "label"=>'Female', "value"=>'female'],
-        ];
+        $gender = [["label" => 'Male', "value" => 'male'], ["label" => 'Female', "value" => 'female']];
         unset($nationalities['il']);
-        if (Request::is('api*') || Request::wantsJson()) {
-            return response()->json([
-                'nationalities' => $nationalities,
-                'clubs' => $clubs,
-            ]);
-        } else {    
-            return view('auth.register', [
-                'nationalities' => $nationalities,
-                'clubs' => $clubs,
-                "gender"=> $gender
-            ]);
+        if (Request::is('api*') || Request::wantsJson())
+        {
+            return response()->json(['nationalities' => $nationalities, 'clubs' => $clubs, ]);
+        }
+        else
+        {
+            return view('auth.register', ['nationalities' => $nationalities, 'clubs' => $clubs, "gender" => $gender]);
         }
     }
 
@@ -78,32 +71,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $data['years'] = range(1930, date('Y'));
-        if (isset($data['club']) && preg_match("/other/i", $data['club'])) {
-            return Validator::make($data, [
-                'firstname' => ['required', 'string', 'max:255'],
-                'lastname' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
-                'gender' => ['required', 'string'],
-                'nationality' => ['required', 'string'],
-                'password' => ['required', 'string', 'min:6', 'confirmed'],
-                'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
-                'max:'.(date('Y')-5), 'in_array:years.*'],
-                'other_club' => ['required', 'string', 'max:255']
-            ]);
-        } else {
-            return Validator::make($data, [
-                'firstname' => ['required', 'string', 'max:255'],
-                'lastname' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
-                'gender' => ['required', 'string'],
-                'nationality' => ['required', 'string'],
-                'password' => ['required', 'string', 'min:6', 'confirmed'],
-                'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
-                'max:'.(date('Y')-12), 'in_array:years.*'],
-                'club' => ['required', 'string', 'max:255']
-            ]);
+        if (isset($data['club']) && preg_match("/other/i", $data['club']))
+        {
+            return Validator::make($data, ['firstname' => ['required', 'string', 'max:255'], 'lastname' => ['required', 'string', 'max:255'], 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'], 'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'], 'gender' => ['required', 'string'], 'nationality' => ['required', 'string'], 'password' => ['required', 'string', 'min:6', 'confirmed'], 'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930', 'max:' . (date('Y') - 5) , 'in_array:years.*'], 'other_club' => ['required', 'string', 'max:255']]);
+        }
+        else
+        {
+            return Validator::make($data, ['firstname' => ['required', 'string', 'max:255'], 'lastname' => ['required', 'string', 'max:255'], 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'], 'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'], 'gender' => ['required', 'string'], 'nationality' => ['required', 'string'], 'password' => ['required', 'string', 'min:6', 'confirmed'], 'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930', 'max:' . (date('Y') - 12) , 'in_array:years.*'], 'club' => ['required', 'string', 'max:255']]);
         }
     }
 
@@ -115,21 +89,11 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if (preg_match("/other/i", $data['club'])) {
+        if (preg_match("/other/i", $data['club']))
+        {
             $data['club'] = $data['other_club'];
         }
-        $user = User::create([
-            'name' => $data['firstname'] . ' ' . $data['lastname'],
-            'firstname' => $data['firstname'],
-            'lastname' => $data['lastname'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'nationality' => $data['nationality'],
-            'gender' => $data['gender'],
-            'password' => Hash::make($data['password']),
-            'year_of_birth' => (int) $data['year_of_birth'],
-            'club' => $data['club']
-        ]);
+        $user = User::create(['name' => $data['firstname'] . ' ' . $data['lastname'], 'firstname' => $data['firstname'], 'lastname' => $data['lastname'], 'email' => $data['email'], 'phone' => $data['phone'], 'nationality' => $data['nationality'], 'gender' => $data['gender'], 'password' => Hash::make($data['password']) , 'year_of_birth' => (int)$data['year_of_birth'], 'club' => $data['club']]);
 
         $event = new UserRegistered($user);
         event($event);
@@ -145,16 +109,17 @@ class RegisterController extends Controller
      */
     public function register(\Illuminate\Http\Request $request)
     {
-        $this->validator($request->all())->validate();
+        $this->validator($request->all())
+            ->validate();
 
         event(new Registered($user = $this->create($request->all())));
 
-        $this->guard()->login($user);
+        $this->guard()
+            ->login($user);
 
-        return $this->registered($request, $user)
-                        ?: redirect($this->redirectPath());
+        return $this->registered($request, $user) ? : redirect($this->redirectPath());
     }
-    
+
     /**
      * The user has been registered.
      *
@@ -164,9 +129,12 @@ class RegisterController extends Controller
      */
     protected function registered(\Illuminate\Http\Request $request, $user)
     {
-        if (Request::is('api*') || Request::wantsJson()) {
+        if (Request::is('api*') || Request::wantsJson())
+        {
             $user->generateToken();
-            return response()->json(['data' => $user->toArray()], 201);
+            return response()
+                ->json(['data' => $user->toArray() ], 201);
         }
     }
 }
+
