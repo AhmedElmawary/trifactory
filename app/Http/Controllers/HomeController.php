@@ -128,7 +128,7 @@ class HomeController extends Controller
     }
     
     
-    public final function gender(User $user)
+    public  function gender(User $user)
     {
         $query = \DB::table("users")->where('id', $user->id)
             ->update(["gender" => request()->gender]);
