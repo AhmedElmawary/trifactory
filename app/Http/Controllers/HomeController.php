@@ -14,8 +14,9 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct() {
-   
+    public function __construct()
+    {
+
         if (\Request::is('api*') || \Request::wantsJson()) {
             // $this->middleware(['auth:api', 'verified']);
         } else {
@@ -28,21 +29,22 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index() {
-    
+    public function index()
+    {
+
         $apiRequest = \Request::is('api*') || \Request::wantsJson();
         if (\Auth::check()) {
             $user = \Auth::user();
             \Cart::session($user->id);
         }
-         $gender = [
-            ["label"=>"Male", "value"=>"male",],
-            ["label"=>"Female","value"=>"female"]
+        $gender = [
+            ["label" => "Male", "value" => "male",],
+            ["label" => "Female", "value" => "female"]
         ];
 
-        if ( Auth::check()  && Auth::user()->gender == null   ){
-                return view("gender",['user'=>Auth::user()] , ['gender'=> $gender]);
-            }
+        if (Auth::check()  && Auth::user()->gender == null) {
+            return view("gender", ['user' => Auth::user()], ['gender' => $gender]);
+        }
 
         $gallery = Gallery::latest('created_at')->with('galleryimage')->first();
         $upcomingEvents = Event::with('eventimages')->upcomming()->published()->get();
@@ -72,7 +74,7 @@ class HomeController extends Controller
             ->get();
 
         $leaderboardFemale = \DB::table('leaderboard_data')
-            ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw("SUM(points) as total_points") )
+            ->select('name', 'points', 'country_code', 'category', 'club', \DB::raw("SUM(points) as total_points"))
             ->where('gender', 'F')
             ->where('created_at', 'like', '%' . $year . '%')
             ->orderByRaw("total_points desc")
@@ -112,7 +114,8 @@ class HomeController extends Controller
         }
     }
 
-    public function test() {
+    public function test()
+    {
         $user = \Auth::user();
 
         $upcoming = \App\UserRace::with('race.event')
@@ -125,23 +128,20 @@ class HomeController extends Controller
         dd($upcoming);
     }
 
-    public final function gender(User $user){
-         $query = \DB::table("users")->where('id',$user->id )->update(["gender"=>request()->gender]);
+    public final function gender(User $user)
+    {
+        $query = \DB::table("users")->where('id', $user->id)->update(["gender" => request()->gender]);
 
-         if ( ! empty ($query)){
+        if (!empty($query)) {
             return redirect("/home");
-         }else {
+        } else {
 
             $gender = [
-                ["label"=>"Male", "value"=>"male",],
-                ["label"=>"Female","value"=>"female"]
+                ["label" => "Male", "value" => "male",],
+                ["label" => "Female", "value" => "female"]
             ];
-    
-                    return view("gender",['user'=>Auth::user()] , ['gender'=> $gender]);
-    
-         }
 
+            return view("gender", ['user' => Auth::user()], ['gender' => $gender]);
         }
-
-
+    }
 }
