@@ -52,12 +52,9 @@ class RegisterController extends Controller
         $nationalities = \countries();
         $gender = [["label" => 'Male', "value" => 'male'], ["label" => 'Female', "value" => 'female']];
         unset($nationalities['il']);
-        if (Request::is('api*') || Request::wantsJson())
-        {
-            return response()->json(['nationalities' => $nationalities, 'clubs' => $clubs, ]);
-        }
-        else
-        {
+        if (Request::is('api*') || Request::wantsJson()){   
+            return response()->json(['nationalities' => $nationalities, 'clubs' => $clubs, ]); 
+        } else  {  
             return view('auth.register', ['nationalities' => $nationalities, 'clubs' => $clubs, "gender" => $gender]);
         }
     }
@@ -71,15 +68,34 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         $data['years'] = range(1930, date('Y'));
-        if (isset($data['club']) && preg_match("/other/i", $data['club']))
-        {
-            return Validator::make($data, ['firstname' => ['required', 'string', 'max:255'], 'lastname' => ['required', 'string', 'max:255'], 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'], 'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'], 'gender' => ['required', 'string'], 'nationality' => ['required', 'string'], 'password' => ['required', 'string', 'min:6', 'confirmed'], 'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930', 'max:' . (date('Y') - 5) , 'in_array:years.*'], 'other_club' => ['required', 'string', 'max:255']]);
-        }
-        else
-        {
-            return Validator::make($data, ['firstname' => ['required', 'string', 'max:255'], 'lastname' => ['required', 'string', 'max:255'], 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'], 'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'], 'gender' => ['required', 'string'], 'nationality' => ['required', 'string'], 'password' => ['required', 'string', 'min:6', 'confirmed'], 'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930', 'max:' . (date('Y') - 12) , 'in_array:years.*'], 'club' => ['required', 'string', 'max:255']]);
-        }
-    }
+        if (isset($data['club']) && preg_match("/other/i", $data['club']))  {
+
+            return Validator::make($data,
+             [ 'firstname' => ['required', 'string', 'max:255'], 
+             'lastname' => ['required', 'string', 'max:255'], 
+             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'], 
+             'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'], 
+             'gender' => ['required', 'string'], 
+             'nationality' => ['required', 'string'], 
+             'password' => ['required', 'string', 'min:6', 'confirmed'], 
+             'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930', 
+             'max:' . (date('Y') - 5) , 
+             'in_array:years.*'], 
+             'other_club' => ['required', 'string', 'max:255']]);
+        }    else   {
+            return Validator::make($data, 
+            ['firstname' => ['required', 'string', 'max:255'], 
+            'lastname' => ['required', 'string', 'max:255'], 
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'], 
+            'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'], 
+            'gender' => ['required', 'string'], 
+            'nationality' => ['required', 'string'], 
+            'password' => ['required', 'string', 'min:6', 'confirmed'], 
+            'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930', 
+            'max:' . (date('Y') - 12) , 'in_array:years.*'], 
+            'club' => ['required', 'string', 'max:255']]); 
+         } 
+      }  
 
     /**
      * Create a new user instance after a valid registration.
@@ -137,4 +153,3 @@ class RegisterController extends Controller
         }
     }
 }
-
