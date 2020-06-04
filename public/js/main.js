@@ -1076,7 +1076,7 @@ $(document).ready(function () {
                                         for (let key_ in countires_ar) {
                                             if (key_ == data[0].user.nationality) {
                                                 nationality_.setAttribute("style", "pointer-events: none; background-color: #e9ecef");
-                                                nationality_.innerHTML = "<option value='" + key + "' selected disabled>" + countires_ar[key_] + "</option>";
+                                                nationality_.innerHTML = "<option value='" + key_ + "' selected disabled>" + countires_ar[key_] + "</option>";
                                             }
                                         }
                                     }
