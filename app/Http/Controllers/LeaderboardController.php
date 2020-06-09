@@ -396,37 +396,30 @@ class LeaderboardController extends Controller
         }
     }
 
-    public function sortLeaderboardData($data) {
+    public function sortLeaderboardData($data) 
+    {
         $i=1;
 
-        if(request()->club == null && request()->name == null && request()->category == null ) {
+        if (request()->club == null && request()->name == null && request()->category == null) {
                 return;
-        } else if (request()->category !== null) {
+        } elseif (request()->category !== null) {
             foreach ($data as $key => $value) {
-                if ($key < count($data) -1  ) {
-                if ($value->total_points != $data[$key+1]->total_points   &&  ! empty (request()->category)  ) {
-                    
-                    $row = App\LeaderboardData::find($value->id);
-                    $row_1 = App\LeaderboardData::find($data[$key+1]->id);
-                    $row->category_position = $i++;
-                    $row_1->category_position = $i;
-
-                    
-                    $row_1->save();
-                    $row->save();
-
-                }
-                if ($value->total_points == $data[$key+1]->total_points &&  ! empty (request()->category) ) {
-
-                    $row = App\LeaderboardData::find($value->id);
-                    $row_1 = App\LeaderboardData::find($data[$key+1]->id);
-                    $row->category_position = $i;
-                    $row_1->category_position = $i;
-                    
-
-                    $row->save();
-                    $row_1->save();
-
+                if ($key < count($data) -1) {
+                    if ($value->total_points != $data[$key+1]->total_points   &&  ! empty(request()->category)) {
+                        $row = App\LeaderboardData::find($value->id);
+                        $row_1 = App\LeaderboardData::find($data[$key+1]->id);
+                        $row->category_position = $i++;
+                        $row_1->category_position = $i;
+                        $row_1->save();
+                        $row->save();
+                    }
+                    if ($value->total_points == $data[$key+1]->total_points &&  ! empty(request()->category)) {
+                        $row = App\LeaderboardData::find($value->id);
+                        $row_1 = App\LeaderboardData::find($data[$key+1]->id);
+                        $row->category_position = $i;
+                        $row_1->category_position = $i;
+                        $row->save();
+                        $row_1->save();
                     }
                 }
             }
