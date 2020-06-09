@@ -396,7 +396,7 @@ class LeaderboardController extends Controller
         }
     }
 
-    public function sortLeaderboardData($data) 
+    public function sortLeaderboardData($data)
     {
         $i=1;
 
