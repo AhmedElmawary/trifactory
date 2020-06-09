@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\LeaderboardData;
+use App;
 
 class LeaderboardController extends Controller
 {
@@ -208,7 +209,40 @@ class LeaderboardController extends Controller
             ->groupBy('name')
             ->paginate($paginationCount);
 
-        $leaderboardFemale = \DB::table('leaderboard_data')
+            $leaderboardMaleFull = \DB::table('leaderboard_data')
+            ->select(
+                'id',
+                'name',
+                'points',
+                'country_code',
+                'category',
+                'gender_position',
+                'category_position',
+                'club',
+                \DB::raw('SUM(points) as total_points')
+            )
+            ->where('gender', 'M')
+            ->where('created_at', 'like', '%' . $year . '%')
+            ->where(function ($query) use ($request) {
+                if ($request->input('name') != "") {
+                    $query->where('name', 'like', '%' . $request->input('name') . '%');
+                }
+                if ($request->input('category') != "") {
+                    $query->where('category', 'like', '%' . $request->input('category') . '%');
+                }
+                if ($request->input('gender_position') != "") {
+                    $query->where('gender_position', 'like', $request->input('gender_position'));
+                }
+                if ($request->input('club') != "") {
+                    $query->where('club', 'like', '%' . $request->input('club') . '%');
+                }
+            })
+            ->orderByRaw('total_points desc')
+            ->groupBy('name');
+            
+            $this->sortLeaderboardData($leaderboardMaleFull->get());
+
+            $leaderboardFemale = \DB::table('leaderboard_data')
             ->select(
                 'name',
                 'points',
@@ -238,6 +272,40 @@ class LeaderboardController extends Controller
             ->orderByRaw('total_points desc')
             ->groupBy('name')
             ->paginate($paginationCount);
+
+            $leaderboardFemaleFull = \DB::table('leaderboard_data')
+            ->select(
+                'id',
+                'name',
+                'points',
+                'country_code',
+                'category',
+                'gender_position',
+                'category_position',
+                'club',
+                \DB::raw('SUM(points) as total_points')
+            )
+            ->where('gender', 'F')
+            ->where('created_at', 'like', '%' . $year . '%')
+            ->where(function ($query) use ($request) {
+                if ($request->input('name') != "") {
+                    $query->where('name', 'like', '%' . $request->input('name') . '%');
+                }
+                if ($request->input('category') != "") {
+                    $query->where('category', 'like', '%' . $request->input('category') . '%');
+                }
+                if ($request->input('gender_position') != "") {
+                    $query->where('gender_position', 'like', $request->input('gender_position'));
+                }
+                if ($request->input('club') != "") {
+                    $query->where('club', 'like', '%' . $request->input('club') . '%');
+                }
+            })
+            ->orderByRaw('total_points desc')
+            ->groupBy('name');
+
+            
+            $this->sortLeaderboardData($leaderboardFemaleFull->get());
 
         $leaderboardClub = \DB::table('leaderboard_data')
             ->select('points', 'club', \DB::raw('SUM(points) as total_points'))
@@ -325,6 +393,43 @@ class LeaderboardController extends Controller
             return response()->json(['data' => $data]);
         } else {
             return view('leaderboard', $data);
+        }
+    }
+
+    public function sortLeaderboardData($data) {
+        $i=1;
+
+        if(request()->club == null && request()->name == null && request()->category == null ) {
+                return;
+        } else if (request()->category !== null) {
+            foreach ($data as $key => $value) {
+                if ($key < count($data) -1  ) {
+                if ($value->total_points != $data[$key+1]->total_points   &&  ! empty (request()->category)  ) {
+                    
+                    $row = App\LeaderboardData::find($value->id);
+                    $row_1 = App\LeaderboardData::find($data[$key+1]->id);
+                    $row->category_position = $i++;
+                    $row_1->category_position = $i;
+
+                    
+                    $row_1->save();
+                    $row->save();
+
+                }
+                if ($value->total_points == $data[$key+1]->total_points &&  ! empty (request()->category) ) {
+
+                    $row = App\LeaderboardData::find($value->id);
+                    $row_1 = App\LeaderboardData::find($data[$key+1]->id);
+                    $row->category_position = $i;
+                    $row_1->category_position = $i;
+                    
+
+                    $row->save();
+                    $row_1->save();
+
+                    }
+                }
+            }
         }
     }
 }
