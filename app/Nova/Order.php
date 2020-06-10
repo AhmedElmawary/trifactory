@@ -14,6 +14,7 @@ use App\Nova\Actions\UserTicketDetails;
 use App\Nova\Actions\UserTicketDetailsAll;
 use App\Nova\Actions\FixOrderData;
 use App\Nova\Actions\MakeUserRace;
+use App\Nova\Filters\OrderRace;
 
 class Order extends Resource
 {
@@ -82,7 +83,7 @@ class Order extends Resource
      */
     public function filters(Request $request)
     {
-        return [];
+        return [new OrderRace];
     }
 
     /**
