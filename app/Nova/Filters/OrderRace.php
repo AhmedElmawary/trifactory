@@ -34,13 +34,13 @@ class OrderRace extends Filter
                         ->join('orders', 'orders.id', '=', 'user_races.order_id')
                         ->join('users', 'users.id', '=', 'user_races.user_id')
                         ->select(
-                            "orders.id"
-                            , "paymob_order_id"
-                            , "totalCost"
-                            , "success"
-                            , "orders.user_id"
-                            , "orders.created_at"
-                            , "orders.updated_at"
+                             "orders.id",
+                             "paymob_order_id",
+                             "totalCost",
+                             "success",
+                             "orders.user_id",
+                             "orders.created_at",
+                             "orders.updated_at"
                         )
                         ->where("race_id", $value);
     }
