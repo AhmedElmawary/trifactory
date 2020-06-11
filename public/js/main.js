@@ -376,9 +376,16 @@ $(document).ready(function () {
 
     // remember the hash in the URL without jumping
     $('a[data-toggle="pill"]').on("shown.bs.tab", function (e) {
+        // old
         // window.location.href = "?page=0#" + $(e.target).attr("href").substr(1);
-        window.location.href = "#"+$(e.target).attr("href").substr(1);
-        
+       
+    // new - fixed glitches for a second when moving from information to upcoming events
+        if(window.location.href.includes("profile"))    
+               window.location.href = "#"+$(e.target).attr("href").substr(1);
+        else
+               window.location.href = "?page=0#" + $(e.target).attr("href").substr(1);
+
+               
         // URLSearchParams.delete(page)
         // if (history.pushState) {
         //     history.pushState(
