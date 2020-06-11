@@ -376,7 +376,9 @@ $(document).ready(function () {
 
     // remember the hash in the URL without jumping
     $('a[data-toggle="pill"]').on("shown.bs.tab", function (e) {
-        window.location.href = "?page=0#" + $(e.target).attr("href").substr(1);
+        // window.location.href = "?page=0#" + $(e.target).attr("href").substr(1);
+        window.location.href = "#"+$(e.target).attr("href").substr(1);
+        
         // URLSearchParams.delete(page)
         // if (history.pushState) {
         //     history.pushState(
