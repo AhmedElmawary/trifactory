@@ -690,7 +690,7 @@ $(document).ready(function () {
         });
         $(".ticket_race").on("change", function () {
             var raceId = $(this).val();
-            let genders = [];
+            // let genders = [];
             var name = $(this).attr("name");
             name = name.split("_");
             var drop_name = "ticket_" + name[1] + "_type";
@@ -746,9 +746,9 @@ $(document).ready(function () {
                     if (data.length) {
                         var questions = data[0].question;
                         $.each(questions, function (key, question) {
-                            if (question.question_text.match(/gender/gi)) {
-                                genders.push(question.question_text)
-                            }
+                            // if (question.question_text.match(/gender/gi)) {
+                            //     genders.push(question.question_text)
+                            // }
                             str = "";
                             str +=
                                 '<script>var usedNames = {};$(".clubs > option").each(function () {if(usedNames[this.text]) {$(this).remove();} else {usedNames[this.text] = this.value;}});</script>';
@@ -1063,36 +1063,36 @@ $(document).ready(function () {
                         });
                         let select = document.getElementsByName("ticket_1_meta_31")[0];
 
-                        if (genders.length == 1) {
-                            $.each(questions, function (key, question) {
-                                if (question.question_text.match(/gender/gi)) {
-                                    if (question.question_text.search(/gender/i) >
-                                        -1 && data[0]["user"].gender != "" && data[0]["user"].gender != null && select != undefined) {
-                                        select.setAttribute("id", "gender");
-                                    }
-                                    if (question.question_text.search(/gender/i) > -1 && data[0]["user"].gender != null && $("#ticket_1_use_myself").is(":checked") && data[0]["user"].gender != "") {
-                                        select.setAttribute("style", "pointer-events: none; background-color: #e9ecef");
-                                    }
-                                    $.each(question.answervalue, function (key, value) {
-                                        if (value.value.match(data[0].user.gender)) {
-                                            select.innerHTML = "<option value='" + value.id + "' selected>" + value.value + "</option>";
-                                        }
-                                    });
-                                }
-                                $.each(question.answertype, function (key, object) {
-                                    if (object == "countries" && data[0].user.nationality != "" && data[0].user.nationality != null) {
-                                        let nationality_ = document.getElementsByName("ticket_1_meta_4")[0];
-                                        for (let key_ in countires_ar) {
-                                            if (key_ == data[0].user.nationality) {
-                                                nationality_.setAttribute("style", "pointer-events: none; background-color: #e9ecef");
+                        // if (genders.length == 1) {
+                        //     $.each(questions, function (key, question) {
+                        //         if (question.question_text.match(/gender/gi)) {
+                        //             if (question.question_text.search(/gender/i) >
+                        //                 -1 && data[0]["user"].gender != "" && data[0]["user"].gender != null && select != undefined) {
+                        //                 select.setAttribute("id", "gender");
+                        //             }
+                        //             if (question.question_text.search(/gender/i) > -1 && data[0]["user"].gender != null && $("#ticket_1_use_myself").is(":checked") && data[0]["user"].gender != "") {
+                        //                 select.setAttribute("style", "pointer-events: none; background-color: #e9ecef");
+                        //             }
+                        //             $.each(question.answervalue, function (key, value) {
+                        //                 if (value.value.match(data[0].user.gender)) {
+                        //                     select.innerHTML = "<option value='" + value.id + "' selected>" + value.value + "</option>";
+                        //                 }
+                        //             });
+                        //         }
+                        //         $.each(question.answertype, function (key, object) {
+                        //             if (object == "countries" && data[0].user.nationality != "" && data[0].user.nationality != null) {
+                        //                 let nationality_ = document.getElementsByName("ticket_1_meta_4")[0];
+                        //                 for (let key_ in countires_ar) {
+                        //                     if (key_ == data[0].user.nationality) {
+                        //                         nationality_.setAttribute("style", "pointer-events: none; background-color: #e9ecef");
                                              
-                                                nationality_.innerHTML = "<option value='" + key_ + "' selected disabled>" + countires_ar[key_] + "</option>";
-                                            }
-                                        }
-                                    }
-                                });
-                            });
-                        }
+                        //                         nationality_.innerHTML = "<option value='" + key_ + "' selected disabled>" + countires_ar[key_] + "</option>";
+                        //                     }
+                        //                 }
+                        //             }
+                        //         });
+                        //     });
+                        // }
                     }
                 },
             });
