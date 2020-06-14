@@ -126,6 +126,11 @@ class ProfileController extends Controller
                 $event['participant_user'] = \App\User::find($event->participant_user_id);
                 $event->race->event['total_refund'] = ($event->race->event->event_end >= date('Y-m-d'));
             }
+            if(isset($user->gender)) {
+                $user->gender = ucwords(trim($user->gender));
+                $user->save();
+            }
+            $user->gender = ucwords(trim($user->gender));
             $data['user'] = $user;
             $data['profile_image'] = '/images/placeholder.svg';
             $question = Question::where('question_text', 'like', '%club%')->first();
