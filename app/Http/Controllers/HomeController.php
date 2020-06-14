@@ -41,9 +41,9 @@ class HomeController extends Controller
                      ["label" => "Female", "value" => "female"]
                   ];
 
-        if (Auth::check() && Auth::user()->gender == null) {
-            return view("gender", ['user' => Auth::user() ], ['gender' => $gender]);
-        }
+        // if (Auth::check() && Auth::user()->gender == null) {
+        //     return view("gender", ['user' => Auth::user() ], ['gender' => $gender]);
+        // }
 
         $gallery = Gallery::latest('created_at')->with('galleryimage')->first();
         $upcomingEvents = Event::with('eventimages')->upcomming()->published()->get();
@@ -124,7 +124,6 @@ class HomeController extends Controller
             ->where('user_id', $user->id)
             ->get();
 
-        dd($upcoming);
     }
     
     
