@@ -36,11 +36,6 @@ class HomeController extends Controller
             \Cart::session($user->id);
         }
 
-        if (isset($user->gender)) {
-            $user->gender = ucfirst(trim($user->gender));
-            $user->save();
-        }
-        
         $gender = [
                      ["label" => "Male", "value" => "Male", ],
                      ["label" => "Female", "value" => "Female"]
@@ -121,13 +116,17 @@ class HomeController extends Controller
     public function test()
     {
         $user = \Auth::user();
-
-        $upcoming = \App\UserRace::with('race.event')
-            ->whereHas('race.event', function ($query) {
-                $query->where('event_start', '>', \Carbon\Carbon::today()->toDateTimeString());
-            })
-            ->where('user_id', $user->id)
-            ->get();
+         $users = \DB::table("users")->select('*')->get();
+          foreach ($users as $user) {
+            $user->gender = ucwords(trim($user->gender));
+                    \DB::table("users")->where("id", $user->id)->update(["gender" => $user->gender]);     
+                }
+         // $upcoming = \App\UserRace::with('race.event')
+        //     ->whereHas('race.event', function ($query) {
+        //         $query->where('event_start', '>', \Carbon\Carbon::today()->toDateTimeString());
+        //     })
+        //     ->where('user_id', $user->id)
+        //     ->get();
     }
     
     
@@ -140,8 +139,8 @@ class HomeController extends Controller
             return redirect("/home");
         } else {
             $gender = [
-                          ["label" => "Male", "value" => "male", ],
-                          ["label" => "Female", "value" => "female"]
+                          ["label" => "Male", "value" => "Male", ],
+                          ["label" => "Female", "value" => "Female"]
                      ];
        
             return view("gender", ['user' => Auth::user() ], ['gender' => $gender]);
