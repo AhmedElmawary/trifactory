@@ -116,11 +116,11 @@ class HomeController extends Controller
     public function test()
     {
         $user = \Auth::user();
-         $users = \DB::table("users")->select('*')->get();
-          foreach ($users as $user) {
+        $users = \DB::table("users")->select('*')->get();
+        foreach ($users as $user) {
             $user->gender = ucwords(trim($user->gender));
-                    \DB::table("users")->where("id", $user->id)->update(["gender" => $user->gender]);     
-                }
+                    \DB::table("users")->where("id", $user->id)->update(["gender" => $user->gender]);
+        }
          // $upcoming = \App\UserRace::with('race.event')
         //     ->whereHas('race.event', function ($query) {
         //         $query->where('event_start', '>', \Carbon\Carbon::today()->toDateTimeString());
