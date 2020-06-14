@@ -36,9 +36,14 @@ class HomeController extends Controller
             \Cart::session($user->id);
         }
 
+        if (isset($user->gender)) {
+            $user->gender = ucfirst(trim($user->gender));
+            $user->save();
+        }
+        
         $gender = [
-                     ["label" => "Male", "value" => "male", ],
-                     ["label" => "Female", "value" => "female"]
+                     ["label" => "Male", "value" => "Male", ],
+                     ["label" => "Female", "value" => "Female"]
                   ];
 
         // if (Auth::check() && Auth::user()->gender == null) {
