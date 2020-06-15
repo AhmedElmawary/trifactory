@@ -128,7 +128,7 @@ class ProfileController extends Controller
             }
             if (isset($user->gender)) {
                 $user->gender = ucwords(trim($user->gender));
-                $user->save();
+                \DB::table("users")->where("id", $user->id)->update(["gender" => $user->gender]);
             }
             $user->gender = ucwords(trim($user->gender));
             $data['user'] = $user;
