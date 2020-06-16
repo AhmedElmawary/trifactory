@@ -205,7 +205,7 @@
                 </span>
             </td>
         </tr>
-        @elseif($ticket->_race_id == 56 || $ticket->_race_id == 59 )
+        @elseif($ticket->_ticket_id == 125)
         <tr>
             <td>
                 <span style="font-family: AvenirNext-Bold;font-size: 28px;color: #000000;">
