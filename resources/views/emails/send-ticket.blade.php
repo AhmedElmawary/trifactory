@@ -136,6 +136,78 @@
     @if($ticket->_race_id == 52)
         <tr>
             <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 32px;color: #000000; text-decoration: underline;">
+                Stay Safe Marathon - 50K Ticket 
+                </span><br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 28px;color: #000000;">
+                How to Start Your Stay Safe Series | Stay Safe Marathon - 50K 
+                </span><br>
+            </td>
+        </tr>
+        <tr style="height:10px;"></tr>
+        <tr>
+            <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
+                    1. DOWNLOAD APP
+                </span><br>
+                <span style="font-family: AvenirNext-Medium;font-size: 18px;color: #000000;line-height: 22px;">
+                After you complete the registration download My Virtual Mission app from Apple Store or Google Play and wait for your invitation to join the Stay Safe Marathon - 50K. 
+                </span>
+            </td>
+        </tr>
+        <tr style="height:10px;"></tr>
+        <tr>
+            <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
+                    2. JOIN THE MISSION
+                </span><br>
+                <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #000000;line-height: 22px;">
+                    To Join the mission, Click on the link below <br>
+                    https://www.myvirtualmission.com/missions/52718/50km-stay-safe-marathon <br>
+                    Make sure to Click on "Join Mission" when you receive the invitation email.
+                    After clicking on "Join Mission", wait for your invitation to be accepted on the app within 24 hours. 
+                </span>
+            </td>
+        </tr>
+        <tr style="height:10px;"></tr>
+        <tr>
+            <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
+                    3. CONNECT APP
+                </span><br>
+                <span style="font-family: AvenirNext-Medium;font-size: 18px;color: #000000;line-height: 22px;">
+                    Final step is to connect the My Virtual Mission App to your preferred fitness app through 'My Connections' in the menu of your app to record your distance.
+                    You can also choose to add the distance you run/walk manually to your profile instead.
+                    Please note that your progress on the My Virtual Mission app gets updated every <u>6 HOURS,</u> so please be patient.
+                </span>
+            </td>
+        </tr>
+        <tr style="height:10px;"></tr>
+        <tr>
+            <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
+                    4. RUN
+                </span><br>
+                <span style="font-family: AvenirNext-Medium;font-size: 18px;color: #000000;line-height: 22px;">
+                    Finally all you have to do now is to start running or walking indoors or outdoors. Try to share your runs and progress using #ItsWorthATri and tagging <a target="_blank" href="https://thetrifactory.us14.list-manage.com/track/click?u=fa613f6bbc04ad2c6dfccc12b&id=4032e36b48&e=f7d672b0a8" rel="noopner noreferer" >@thetrifactory</a>!
+                </span>
+            </td>
+        </tr>
+        <tr style="height:10px;"></tr>
+        <tr>
+            <td>
+                <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;">
+                    STAY SAFE STAY ACTIVE! 
+                </span>
+            </td>
+        </tr>
+        @elseif($ticket->_race_id == 56 || $ticket->_race_id == 59 )
+        <tr>
+            <td>
                 <span style="font-family: AvenirNext-Bold;font-size: 28px;color: #000000;">
                     How to Start Your Stay Safe Marathon 
                 </span><br>
@@ -197,6 +269,7 @@
                 </span>
             </td>
         </tr>
+
 
     @elseif($ticket->_race_id == 53 || $ticket->_race_id == 54)
         
