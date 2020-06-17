@@ -28,7 +28,9 @@
   window.addEventListener("load", function(){
       let phone = document.getElementById("get_phone");
       let select = document.getElementById("get_select");
+      @auth
       phone.value= '<?php echo "$user->phone"?>';
+      @endauth
     select.addEventListener("change", ()=>{
           let selected_option = select.options[select.selectedIndex];
           if (selected_option.value == 59 ){
