@@ -76,34 +76,40 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
-    {
+    {   
+        $phone_rule =  ['required', 'string', 'min:11', 'max:11', 'unique:users'];
+        if (isset($data["nationality"]) && $data["nationality"]!="EG") $phone_rule = ['required', 'string', 'min:3',  'unique:users'];
         $data['years'] = range(1930, date('Y'));
         if (isset($data['club']) && preg_match("/other/i", $data['club'])) {
-            return Validator::make($data, [
+            $rules = [
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
                 'gender' => ['required', 'string'],
+                'phone' => $phone_rule,
                 'nationality' => ['required', 'string'],
                 'password' => ['required', 'string', 'min:6', 'confirmed'],
                 'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
                 'max:'.(date('Y')-5), 'in_array:years.*'],
                 'other_club' => ['required', 'string', 'max:255']
-            ]);
+            ];
+            return Validator::make($data, $rules);
         } else {
-            return Validator::make($data, [
+            if (isset($data["nationality"]) && $data["nationality"]!="EG") $rules["phone"] = ['required', 'string', 'min:3',  'unique:users'];
+            $rules = [
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'phone' => ['required', 'string', 'min:11', 'max:11', 'unique:users'],
                 'gender' => ['required', 'string'],
                 'nationality' => ['required', 'string'],
+                'phone' => $phone_rule,
                 'password' => ['required', 'string', 'min:6', 'confirmed'],
                 'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
                 'max:'.(date('Y')-12), 'in_array:years.*'],
                 'club' => ['required', 'string', 'max:255']
-            ]);
+            ];
+
+            return Validator::make($data, $rules);
         }
     }
 
