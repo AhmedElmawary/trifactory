@@ -200,14 +200,14 @@
         @elseif($ticket->_race_id == 56 || $ticket->_race_id == 59)
         <tr>
             <td>
-                <span style="font-family: AvenirNext-Bold;font-size: 32px;color: #000000;">
+                <span style="font-family: AvenirNext-Bold;font-size: 30px;color: red; text-decoration: underline; font-weight:600">
                     <?php $ticket_type = "Ticket Type" ?> 
                        {{$ticket->$ticket_type}} 
                 </span><br>
             </td>
         <tr>
             <td>
-                <span style="font-family: AvenirNext-Bold;font-size: 28px;color: #000000;">
+                <span style="font-family: AvenirNext-Bold;font-size: 19px;color: #000000;">
                 How to Start Your Stay Safe Series | {{$ticket->$ticket_type}} 
                 </span><br>
             </td>
@@ -232,8 +232,24 @@
                 </span><br>
                 <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #000000;line-height: 25px;">
                     To Join the mission, Click on the link below  <br>
-                    <?php  $to_be_replaced = strtolower(trim(explode('-' ,$ticket->$ticket_type)[1]));
-                           $link =str_replace("50k", $to_be_replaced,"https://www.myvirtualmission.com/missions/52718/50km-stay-safe-marathon") ?>
+                   <?php  
+                        if ($ticket->Id == 125 || $ticket->Id == 131) 
+                                        $link = "https://www.myvirtualmission.com/missions/52718/50km-stay-safe-marathon";  
+                        if ($ticket->Id == 126 || $ticket->Id == 132) 
+                                        $link = "https://www.myvirtualmission.com/missions/52719/100km-stay-safe-marathon";  
+                            
+                        if ($ticket->Id == 133 || $ticket->Id == 137) 
+                                        $link = "https://www.myvirtualmission.com/missions/52721/100km-stay-safe-cycling-challenge";  
+                            
+                        if ($ticket->Id == 134 || $ticket->Id == 138) 
+                                        $link = "https://www.myvirtualmission.com/missions/52722/200km-stay-safe-cycling-challenge";  
+              
+                        if ($ticket->Id == 135 || $ticket->Id == 139) 
+                                        $link = "https://www.myvirtualmission.com/missions/52723/150km-stay-safe-endurance-challenge";  
+              
+                        if ($ticket->Id == 136 || $ticket->Id == 140) 
+                                         $link = "https://www.myvirtualmission.com/missions/52724/250km-stay-safe-endurance-challenge";  
+                            ?>
                     {{$link}}<br>
                     Make sure to Click on "Join Mission" when you receive the invitation email.<br>
                     After clicking on "Join Mission", wait for your invitation to be accepted on the app within 24 hours.<br>
