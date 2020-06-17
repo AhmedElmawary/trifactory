@@ -200,7 +200,7 @@
         @elseif($ticket->_race_id == 56 || $ticket->_race_id == 59)
         <tr>
             <td>
-                <span style="font-family: AvenirNext-Bold;font-size: 30px;color: red; text-decoration: underline; font-weight:600">
+                <span style="font-family: AvenirNext-Bold;font-size: 25px;color: red; text-decoration: underline; font-weight:600">
                     <?php $ticket_type = "Ticket Type" ?> 
                        {{$ticket->$ticket_type}} 
                 </span><br>
@@ -218,7 +218,7 @@
                 <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
                     1. DOWNLOAD APP
                 </span><br>
-                <span style="font-family: AvenirNext-Medium;font-size: 18px;color: #000000;line-height: 22px;">
+                <span style="font-family: AvenirNext-Medium;font-size: 16.6px;color: #000000;line-height: 22px;">
                 After you complete the registration download My Virtual Mission app from Apple Store or Google Play and wait for your
                 invitation to join the {{$ticket->$ticket_type}} .
                 </span>
@@ -230,7 +230,7 @@
                 <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
                     2. JOIN THE MISSION
                 </span><br>
-                <span style="font-family: AvenirNext-Medium;font-size: 20px;color: #000000;line-height: 25px;">
+                <span style="font-family: AvenirNext-Medium;font-size: 16.6px;color: #000000;line-height: 25px;">
                     To Join the mission, Click on the link below  <br>
                    <?php  
                         if ($ticket->_ticket_id == 125 || $ticket->_ticket_id == 131) 
@@ -244,7 +244,7 @@
                         if ($ticket->_ticket_id == 135 || $ticket->_ticket_id == 139) 
                                         $link = "https://www.myvirtualmission.com/missions/52723/150km-stay-safe-endurance-challenge";  
                         if ($ticket->_ticket_id == 136 || $ticket->_ticket_id == 140) 
-                                         $link = "https://www.myvirtualmission.com/missions/52724/250km-stay-safe-endurance-challenge";  
+                                        $link = "https://www.myvirtualmission.com/missions/52724/250km-stay-safe-endurance-challenge";  
 
                             ?>
                         {{$link}}<br>
@@ -259,7 +259,7 @@
                 <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
                     3. CONNECT APP
                 </span><br>
-                <span style="font-family: AvenirNext-Medium;font-size: 18px;color: #000000;line-height: 22px;">
+                <span style="font-family: AvenirNext-Medium;font-size: 16.6px;color: #000000;line-height: 22px;">
                 Final step is to connect the My Virtual Mission App to your preferred fitness app through 'My Connections' in the menu of your app to record your distance.
                 You can also choose to add the distance you run/walk manually to your profile instead.
                 Please note that your progress on the My Virtual Mission app gets updated every <u> 6 HOURS </u>, so please be patient.
@@ -272,7 +272,7 @@
                 <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
                     4. RUN
                 </span><br>
-                <span style="font-family: AvenirNext-Medium;font-size: 18px;color: #000000;line-height: 22px;">
+                <span style="font-family: AvenirNext-Medium;font-size: 16.6px;color: #000000;line-height: 22px;">
                     Finally all you have to do now is to start running or walking indoors or outdoors. Try to share your runs and progress using #ItsWorthATri and tagging <a target="_blank" href="https://thetrifactory.us14.list-manage.com/track/click?u=fa613f6bbc04ad2c6dfccc12b&id=4032e36b48&e=f7d672b0a8" >@thetrifactory</a>!
                 </span>
             </td>
