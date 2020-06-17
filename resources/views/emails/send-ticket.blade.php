@@ -230,7 +230,7 @@
                 <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
                     2. JOIN THE MISSION
                 </span><br>
-                <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #000000;line-height: 25px;">
+                <span style="font-family: AvenirNext-Medium;font-size: 20px;color: #000000;line-height: 25px;">
                     To Join the mission, Click on the link below  <br>
                    <?php  
                         if ($ticket->_ticket_id == 125 || $ticket->_ticket_id == 131) 
