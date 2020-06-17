@@ -208,7 +208,7 @@
         <tr>
             <td>
                 <span style="font-family: AvenirNext-Bold;font-size: 28px;color: #000000;">
-                How to Start Your Stay Safe Series | Stay Safe Marathon - 50K
+                How to Start Your Stay Safe Series | {{$ticket->$ticket_type}} 
                 </span><br>
             </td>
         </tr>
@@ -219,7 +219,8 @@
                     1. DOWNLOAD APP
                 </span><br>
                 <span style="font-family: AvenirNext-Medium;font-size: 18px;color: #000000;line-height: 22px;">
-                After you complete the registration download My Virtual Mission app from Apple Store or Google Play and wait for your invitation to join the Stay Safe Marathon - 50K.
+                After you complete the registration download My Virtual Mission app from Apple Store or Google Play and wait for your
+                invitation to join the {{$ticket->$ticket_type}} .
                 </span>
             </td>
         </tr>
@@ -229,7 +230,7 @@
                 <span style="font-family: AvenirNext-Bold;font-size: 20px;color: #000000;line-height: 22px;">
                     2. JOIN THE MISSION
                 </span><br>
-                <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #000000;line-height: 22px;">
+                <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #000000;line-height: 25px;">
                     To Join the mission, Click on the link below  <br>
                     https://www.myvirtualmission.com/missions/52718/50km-stay-safe-marathon<br>
                     Make sure to Click on "Join Mission" when you receive the invitation email.<br>
