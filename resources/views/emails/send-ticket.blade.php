@@ -201,7 +201,7 @@
         <tr>
             <td>
                 <span style="font-family: AvenirNext-Bold;font-size: 32px;color: #000000;">
-                    <?php $ticket_type = "Ticket Type"?> 
+                    <?php $ticket_type = "Ticket Type" ?> 
                        {{$ticket->$ticket_type}} 
                 </span><br>
             </td>
@@ -232,7 +232,9 @@
                 </span><br>
                 <span style="font-family: AvenirNext-Medium;font-size: 12px;color: #000000;line-height: 25px;">
                     To Join the mission, Click on the link below  <br>
-                    https://www.myvirtualmission.com/missions/52718/50km-stay-safe-marathon<br>
+                    <?php  $to_be_replaced = strtolower(trim(explode('-' ,$ticket->$ticket_type)[1]));
+                           $link =str_replace("50k", $to_be_replaced,"https://www.myvirtualmission.com/missions/52718/50km-stay-safe-marathon") ?>
+                    {{$link}}<br>
                     Make sure to Click on "Join Mission" when you receive the invitation email.<br>
                     After clicking on "Join Mission", wait for your invitation to be accepted on the app within 24 hours.<br>
                </span>
