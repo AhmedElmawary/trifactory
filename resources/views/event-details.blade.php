@@ -6,10 +6,9 @@
   function onProceedtoCheckout() {
       fbq('track', 'InitiateCheckout');
   }
-
-  let id  =   <?= $event->id ?>;
-
-  if ( id == 16) {
+  let event  =   <?= $event ?>;
+  
+  if ( event.id == 16) {
    if (sessionStorage.getItem("password") == null ){
     let user_pass = prompt("Please, enter the given password below:")
     if (user_pass == "GOUNAXTF"){
@@ -20,9 +19,32 @@
     } 
   } 
 
+  
   }
 </script>
-
+{{-- make phone filed changeable --}} 
+@if ($event->id == 18)
+<script>
+  window.addEventListener("load", function(){
+      let phone = document.getElementById("get_phone");
+      let select = document.getElementById("get_select");
+      phone.value= '<?php echo "$user->phone"?>';
+    select.addEventListener("change", ()=>{
+          let selected_option = select.options[select.selectedIndex];
+          if (selected_option.value == 59 ){
+              phone.removeAttribute("disabled");
+              phone.style.pointerEvents= "auto";
+              phone.value= "Please Enter an International Phone Number";
+              phone.style.color = "#747474";
+          }else{
+              phone.setAttribute("disabled","disabled");
+              phone.style.pointerEvents= "none";
+              phone.value= '<?php echo "$user->phone"?>';
+          }
+        });
+  });
+</script>
+@endif
 <!-- Start Content -->
 <form enctype="multipart/form-data" id="add_to_cart" method="POST" action="{{ url('/cart') }}">
 @csrf
@@ -193,7 +215,17 @@
       </div>
       <div class="col-lg-6 mt-3" own-ticket-hide>
         <div class="input-group">
-          <input type="text" minlength="11" maxlength="11" required class="form-control " placeholder="Phone" name="ticket_1_phone" value="@auth{{ $user->phone }}@endauth" />
+          <input type="text" 
+          {{-- minlength="11" --}} 
+          {{-- maxlength="11" --}} 
+          <?php if ($event->id == 18)  echo "id='get_phone'" ?>
+          required 
+          class="form-control "
+          placeholder="Phone"
+          name="ticket_1_phone" 
+          <?php if ($event->id != 18)  echo "value='@auth{{ $user->phone }}@endauth'" ?>
+          
+             />
         </div>
       </div>
       <div class="col-lg-6 mt-3" own-ticket-hide>
@@ -205,7 +237,10 @@
       
       <div class="col-lg-6 mt-3">
         <div class="input-group">
-          <select class="custom-select ticket_race" name="ticket_1_race" required>
+          <select class="custom-select ticket_race"
+             name="ticket_1_race"
+             <?php if ($event->id == 18)  echo "id='get_select'" ?>
+               required>
             <option disabled value="" selected>Race</option>
 
             @foreach($event->race()->get() as $race)

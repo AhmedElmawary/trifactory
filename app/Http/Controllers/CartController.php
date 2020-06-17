@@ -394,7 +394,10 @@ class CartController extends Controller
                 return redirect()->back();
             }
             $race = $ticket->race()->first();
+            $event_id = $race->event()->first()->id;
+            $phone = $user->phone;
 
+            if ($event_id == 18) $phone = $ticketValues["phone"] ?? $user->phone; 
 
             if ($ticketValues['use'] == 'myself') {
                 $user = Auth::user();
@@ -402,7 +405,7 @@ class CartController extends Controller
                     $attributes = [
                         'For' => $user->name,
                         'E-mail' => $user->email,
-                        'Phone' => $user->phone,
+                        'Phone' => $phone,
                     ];
                 }
             } else {
@@ -414,6 +417,7 @@ class CartController extends Controller
             }
 
             $attributes['Event'] = $race->event()->first()->name;
+            $attributes['Event_id'] = $event_id;
             $attributes['Race'] = $race->name;
             $attributes['Ticket Type'] = $ticket->name;
             $attributes['Price'] = $ticket->price;

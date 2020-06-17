@@ -95,7 +95,6 @@ class RegisterController extends Controller
             ];
             return Validator::make($data, $rules);
         } else {
-            if (isset($data["nationality"]) && $data["nationality"]!="EG") $rules["phone"] = ['required', 'string', 'min:3',  'unique:users'];
             $rules = [
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
