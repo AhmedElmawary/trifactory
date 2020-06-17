@@ -76,9 +76,10 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
-    {   
+    {
         $phone_rule =  ['required', 'string', 'min:11', 'max:11', 'unique:users'];
-        if (isset($data["nationality"]) && $data["nationality"]!="EG") $phone_rule = ['required', 'string', 'min:3',  'unique:users'];
+        if (isset($data["nationality"]) && $data["nationality"]!="EG")
+            $phone_rule = ['required', 'string', 'min:3',  'unique:users'];
         $data['years'] = range(1930, date('Y'));
         if (isset($data['club']) && preg_match("/other/i", $data['club'])) {
             $rules = [
