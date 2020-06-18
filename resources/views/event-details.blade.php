@@ -24,7 +24,9 @@
 </script>
 {{-- make phone filed changeable --}} 
 <?php $phone ="" ?>
+
 @php
+if (Auth::check())
   $phone= Auth::user()->phone
 @endphp
 @if (isset($event)  && $event->id == 18)
