@@ -23,14 +23,16 @@
   }
 </script>
 {{-- make phone filed changeable --}} 
-@if ($event->id == 18)
+<?php $phone ="" ?>
+@auth{{  $phone = $user->phone }}@endauth
+
+@if (isset($event)  && $event->id == 18)
 <script>
   window.addEventListener("load", function(){
       let phone = document.getElementById("get_phone");
       let select = document.getElementById("get_select");
-      <?php @auth ?>
-      phone.value= '<?php echo "$user->phone"?>';
-      <?php @endauth ?>
+        
+      phone.value= '<?php echo "$phone" ?? '' ?>';
     select.addEventListener("change", ()=>{
           let selected_option = select.options[select.selectedIndex];
           if (selected_option.value == 59 ){
@@ -41,9 +43,7 @@
           }else{
               phone.setAttribute("disabled","disabled");
               phone.style.pointerEvents= "none";
-              <?php @auth ?>
-              phone.value= '<?php echo "$user->phone"?>';
-              <?php @endauth ?>
+              phone.value= '<?php echo "$phone" ?? '' ?>';
           }
         });
   });
