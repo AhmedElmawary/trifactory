@@ -24,8 +24,9 @@
 </script>
 {{-- make phone filed changeable --}} 
 <?php $phone ="" ?>
-@auth{{  $phone = $user->phone }}@endauth
-
+@php
+  $phone= Auth::user()->phone
+@endphp
 @if (isset($event)  && $event->id == 18)
 <script>
   window.addEventListener("load", function(){
