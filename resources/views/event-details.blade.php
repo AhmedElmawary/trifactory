@@ -41,7 +41,9 @@
           }else{
               phone.setAttribute("disabled","disabled");
               phone.style.pointerEvents= "none";
+              <?php @auth ?>
               phone.value= '<?php echo "$user->phone"?>';
+              <?php @endauth ?>
           }
         });
   });
