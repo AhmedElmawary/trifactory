@@ -29,27 +29,38 @@
 if (Auth::check())
   $phone= Auth::user()->phone
 @endphp
+
 @if (isset($event)  && $event->id == 18)
 <script>
   window.addEventListener("load", function(){
-      let phone = document.getElementById("get_phone");
-      let select = document.getElementById("get_select");
-        
+    let for_me_checked  =document.getElementById("ticket_1_use_myself");
+    let for_someone_checked  =document.getElementById("ticket_1_use_someone");
+    let phone = document.getElementById("get_phone");
+    let select = document.getElementById("get_select");
+          
       phone.value= '<?php echo "$phone" ?? '' ?>';
-    select.addEventListener("change", ()=>{
+  
+    
+      for_me_checked.addEventListener("change",()=>{
+        if (for_me_checked.checked) {
+          select.addEventListener("change", ()=>{
           let selected_option = select.options[select.selectedIndex];
-          if (selected_option.value == 59 ){
+          if (selected_option.value == 59){
               phone.removeAttribute("disabled");
               phone.style.pointerEvents= "auto";
               phone.value= "Please Enter an International Phone Number";
               phone.style.color = "#747474";
-          }else{
+          }else if (selected_option.value == 56 && for_me_checked.checked == true){
               phone.setAttribute("disabled","disabled");
               phone.style.pointerEvents= "none";
               phone.value= '<?php echo "$phone" ?? '' ?>';
           }
         });
-  });
+   
+        }
+      });
+    });
+    
 </script>
 @endif
 <!-- Start Content -->
