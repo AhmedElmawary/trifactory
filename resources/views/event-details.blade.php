@@ -33,34 +33,51 @@ if (Auth::check())
 @if (isset($event)  && $event->id == 18)
 <script>
   window.addEventListener("load", function(){
-    let for_me_checked  =document.getElementById("ticket_1_use_myself");
-    let for_someone_checked  =document.getElementById("ticket_1_use_someone");
+    
+    let first_name  = document.getElementsByName("ticket_1_firstname")[0];
+    let for_me_checked  = document.getElementById("ticket_1_use_myself");
+    let for_someone_checked  = document.getElementById("ticket_1_use_someone");
     let phone = document.getElementById("get_phone");
     let select = document.getElementById("get_select");
           
       phone.value= '<?php echo "$phone" ?? '' ?>';
-  
-    
-      for_me_checked.addEventListener("change",()=>{
-        if (for_me_checked.checked) {
-          select.addEventListener("change", ()=>{
-          let selected_option = select.options[select.selectedIndex];
-          if (selected_option.value == 59){
+
+        select.addEventListener("change", ()=>{
+             if (for_someone_checked.checked != true) {
+              let selected_option = select.options[select.selectedIndex];
+              if (selected_option.value == 59 && for_someone_checked.checked != true ){
               phone.removeAttribute("disabled");
               phone.style.pointerEvents= "auto";
               phone.value= "Please Enter an International Phone Number";
               phone.style.color = "#747474";
-          }else if (selected_option.value == 56 && for_me_checked.checked == true){
+              }else if (selected_option.value == 56 ){
               phone.setAttribute("disabled","disabled");
               phone.style.pointerEvents= "none";
               phone.value= '<?php echo "$phone" ?? '' ?>';
           }
-        });
-   
-        }
-      });
-    });
-    
+             }
+          });
+
+          for_me_checked.addEventListener("change", ()=>{
+            let selected_option = select.options[select.selectedIndex];
+              if (selected_option.value == 59 && for_someone_checked.checked != true ){
+                phone.removeAttribute("disabled");
+              phone.style.pointerEvents= "auto";
+              phone.value= "Please Enter an International Phone Number";
+              phone.style.color = "#747474";              }
+          });
+         
+         /*
+          for_me_checked.addEventListener("mouseover", ()=>{
+            console.log(select.options[select.selectedIndex].value)
+            if (select.options[select.selectedIndex].value == 59) {
+              phone.style.pointerEvents= "auto";
+              phone.value= "Please Enter an International Phone Number";
+              phone.style.color = "#747474";
+            }
+          });*/
+
+  });
 </script>
 @endif
 <!-- Start Content -->
