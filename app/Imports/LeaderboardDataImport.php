@@ -72,7 +72,11 @@ class LeaderboardDataImport implements
                 'gender' => $row['swimmer_gender'],
                 'country_code' => $row['swimmer_countrycode'],
             ];
-            LeaderboardData::firstOrCreate($data);
+            $user = LeaderboardData::firstOrCreate($data);
+            if (isset($user)) {
+                $user->points += $row['points'];
+                $user->save();
+            }
 
             $data = [
                 'race_id' => $race_id,
@@ -86,7 +90,11 @@ class LeaderboardDataImport implements
                 'gender' => $row['runner_gender'],
                 'country_code' => $row['runner_countrycode'],
             ];
-            LeaderboardData::firstOrCreate($data);
+            $user = LeaderboardData::firstOrCreate($data);
+            if (isset($user)) {
+                $user->points += $row['points'];
+                $user->save();
+            }
 
             if ($count === 3) {
                 $data = [
@@ -101,7 +109,11 @@ class LeaderboardDataImport implements
                     'gender' => $row['cyclist_gender'],
                     'country_code' => $row['cyclist_countrycode'],
                 ];
-                LeaderboardData::firstOrCreate($data);
+                $user = LeaderboardData::firstOrCreate($data);
+                if (isset($user)) {
+                    $user->points += $row['points'];
+                    $user->save();
+                }
             }
         } else {
             $data = [
@@ -124,7 +136,11 @@ class LeaderboardDataImport implements
                 $data['category_position'] = $row['categoryposition'];
             }
 
-            LeaderboardData::firstOrCreate($data);
+            $user = LeaderboardData::firstOrCreate($data);
+            if (isset($user)) {
+                $user->points += $row['points'];
+                $user->save();
+            }
         }
     }
 
