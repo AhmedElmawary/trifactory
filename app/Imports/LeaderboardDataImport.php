@@ -65,36 +65,36 @@ class LeaderboardDataImport implements
                 'bib' => $row['bib'],
                 'category' => $row['category'],
                 'category_position' => $row['categoryposition'],
-                'points' => $row['points'] / $count,
+
                 'name' => $row['swimmer_name'],
                 'email' => $row['swimmer_email'],
                 'club' => $row['swimmer_club'],
                 'gender' => $row['swimmer_gender'],
                 'country_code' => $row['swimmer_countrycode'],
             ];
+
+            $points = $row['points'] / $count ;
             $user = LeaderboardData::firstOrCreate($data);
-            if (isset($user)) {
-                $user->points += $row['points'];
-                $user->save();
-            }
+            $user->points += $points;
+            $user->save();
 
             $data = [
                 'race_id' => $race_id,
                 'bib' => $row['bib'],
                 'category' => $row['category'],
                 'category_position' => $row['categoryposition'],
-                'points' => $row['points'] / $count,
+
                 'name' => $row['runner_name'],
                 'email' => $row['runner_email'],
                 'club' => $row['runner_club'],
                 'gender' => $row['runner_gender'],
                 'country_code' => $row['runner_countrycode'],
             ];
+
+            $points = $row['points'] / $count ;
             $user = LeaderboardData::firstOrCreate($data);
-            if (isset($user)) {
-                $user->points += $row['points'];
-                $user->save();
-            }
+            $user->points += $points;
+            $user->save();
 
             if ($count === 3) {
                 $data = [
@@ -102,18 +102,18 @@ class LeaderboardDataImport implements
                     'bib' => $row['bib'],
                     'category' => $row['category'],
                     'category_position' => $row['categoryposition'],
-                    'points' => $row['points'] / $count,
+
                     'name' => $row['cyclist_name'],
                     'email' => $row['cyclist_email'],
                     'club' => $row['cyclist_club'],
                     'gender' => $row['cyclist_gender'],
                     'country_code' => $row['cyclist_countrycode'],
                 ];
+
+                $points = $row['points'] / $count ;
                 $user = LeaderboardData::firstOrCreate($data);
-                if (isset($user)) {
-                    $user->points += $row['points'];
-                    $user->save();
-                }
+                $user->points += $points;
+                $user->save();
             }
         } else {
             $data = [
@@ -125,7 +125,6 @@ class LeaderboardDataImport implements
                 'gender' => $row['gender'],
                 'category' => $row['category'],
                 'country_code' => $row['countrycode'],
-                'points' => $row['points'],
             ];
 
             if (isset($row['genderposition'])) {
@@ -136,11 +135,10 @@ class LeaderboardDataImport implements
                 $data['category_position'] = $row['categoryposition'];
             }
 
+            $points = $row['points'] ;
             $user = LeaderboardData::firstOrCreate($data);
-            if (isset($user)) {
-                $user->points += $row['points'];
-                $user->save();
-            }
+            $user->points += $points;
+            $user->save();
         }
     }
 
