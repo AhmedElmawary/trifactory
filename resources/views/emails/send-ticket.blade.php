@@ -233,6 +233,7 @@
                 <span style="font-family: AvenirNext-Medium;font-size: 16.6px;color: #000000;line-height: 25px;">
                     To Join the mission, Click on the link below  <br>
                    <?php  
+                   
                         if ($ticket->_ticket_id == 125 || $ticket->_ticket_id == 131) 
                                         $link = "https://www.myvirtualmission.com/missions/52718/50km-stay-safe-marathon";  
                         if ($ticket->_ticket_id == 126 || $ticket->_ticket_id == 132) 
@@ -245,6 +246,8 @@
                                         $link = "https://www.myvirtualmission.com/missions/52723/150km-stay-safe-endurance-challenge";  
                         if ($ticket->_ticket_id == 136 || $ticket->_ticket_id == 140) 
                                         $link = "https://www.myvirtualmission.com/missions/52724/250km-stay-safe-endurance-challenge";  
+                        if ($ticket->_ticket_id == 141 ) 
+                                        $link = "https://www.myvirtualmission.com/missions/53505/25km-stay-safe-marathon";  
 
                             ?>
                         {{$link}}<br>
