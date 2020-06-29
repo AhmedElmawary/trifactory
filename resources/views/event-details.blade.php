@@ -22,7 +22,6 @@
   
   }
 </script>
-{{-- make phone filed changeable --}} 
 <?php $phone ="" ?>
 
 @php
@@ -66,28 +65,13 @@ if (Auth::check())
               phone.value= "Please Enter an International Phone Number";
               phone.style.color = "#747474";              }
           });
-         
-         /*
-          for_me_checked.addEventListener("mouseover", ()=>{
-            console.log(select.options[select.selectedIndex].value)
-            if (select.options[select.selectedIndex].value == 59) {
-              phone.style.pointerEvents= "auto";
-              phone.value= "Please Enter an International Phone Number";
-              phone.style.color = "#747474";
-            }
-          });*/
-
   });
 </script>
 @endif
 <!-- Start Content -->
 <form enctype="multipart/form-data" id="add_to_cart" method="POST" action="{{ url('/cart') }}">
 @csrf
-<style>
-  html, body {
-    scroll-behavior: smooth;
-  }
-</style>
+
 <section class="event-summary container">
   <div class="row">
     <div class="col-lg-6 order-lg-1">
