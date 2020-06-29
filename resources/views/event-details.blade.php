@@ -2,6 +2,8 @@
 @section('title', $event->name)
 @section('content')
 
+<?php $phone ="" ?>
+
 <script>
   function onProceedtoCheckout() {
       fbq('track', 'InitiateCheckout');
@@ -22,7 +24,6 @@
   
   }
 </script>
-<?php $phone ="" ?>
 
 @php
 if (Auth::check())
@@ -242,7 +243,12 @@ if (Auth::check())
           class="form-control "
           placeholder="Phone"
           name="ticket_1_phone" 
-          <?php if ($event->id != 18)  echo "value='@auth{{ $user->phone }}@endauth'" ?>
+          <?php
+            if ($event->id != 18 && isset($user))  
+                echo "value='@auth{{ $user->phone }}@endauth'";
+            else
+                echo "value=''";
+            ?>
           
              />
         </div>
