@@ -1053,8 +1053,8 @@ $(document).ready(function () {
                                 ) {
                                     if ($("#ticket_1_use_myself").prop("checked") == true) {
                                         if (answervalue.value.toLowerCase().trim() == data[0].user.gender.toLowerCase().trim()) {
-                                            if (data[0].user.gender !="")
-                                            str = str.replace("<select required ", "<select disabled required ")
+                                            if (data[0].user.gender != "")
+                                                str = str.replace("<select required ", "<select disabled required ")
                                             str +=
                                                 '<option selected value="' +
                                                 answervalue.id +
@@ -1073,12 +1073,12 @@ $(document).ready(function () {
                                     }
                                     if ($("#ticket_1_use_someone").prop("checked") == true) {
                                         if (answervalue.question_id == 31) {
-                                        str +=
-                                        '<option value="' +
-                                        answervalue.id +
-                                        '">' +
-                                        answervalue.value +
-                                        "</option>";
+                                            str +=
+                                                '<option value="' +
+                                                answervalue.id +
+                                                '">' +
+                                                answervalue.value +
+                                                "</option>";
                                         }
                                     }
                                     if (answervalue.question_id != 31) {
@@ -1137,12 +1137,11 @@ $(document).ready(function () {
                         });
 
                         document.getElementById("ticket_1_use_someone").addEventListener("change", () => {
-                            if(user_gender.disabled == true){
+                            if (user_gender.disabled == true) {
                                 user_gender.removeAttribute("disabled");
                                 user_gender.style.pointerEvents = "auto";
                             }
-                        }
-                        );
+                        });
 
                     }
                 },

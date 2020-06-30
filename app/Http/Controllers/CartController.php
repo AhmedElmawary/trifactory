@@ -460,7 +460,7 @@ class CartController extends Controller
                     if ($user->club == '' && preg_match("/club/i", $question->question_text)) {
                         $user->club = $answer->value;
                         $user->save();
-                    }  
+                    }
                     if ($user->gender == '' &&  trim(strtolower($question->question_text)) === "gender") {
                         $user->gender = $answer->value;
                         $user->save();
