@@ -9,7 +9,7 @@
       fbq('track', 'InitiateCheckout');
   }
   let event  =   <?= $event ?>;
-  
+
   if ( event.id == 16) {
    if (sessionStorage.getItem("password") == null ){
     let user_pass = prompt("Please, enter the given password below:")
@@ -30,9 +30,12 @@ if (Auth::check())
   $phone= Auth::user()->phone
 @endphp
 
+
 @if (isset($event)  && $event->id == 18)
 <script>
-  window.addEventListener("load", function(){
+// let user = <?php echo $user ??  'undefined' ?>;
+
+window.addEventListener("load", function(){
     
     let first_name  = document.getElementsByName("ticket_1_firstname")[0];
     let for_me_checked  = document.getElementById("ticket_1_use_myself");
@@ -42,7 +45,7 @@ if (Auth::check())
           
       phone.value= '<?php echo "$phone" ?? '' ?>';
 
-        select.addEventListener("change", ()=>{
+        select.addEventListener("change", () => {
              if (for_someone_checked.checked != true) {
               let selected_option = select.options[select.selectedIndex];
               if (selected_option.value == 59 && for_someone_checked.checked != true ){
@@ -50,7 +53,7 @@ if (Auth::check())
               phone.style.pointerEvents= "auto";
               phone.value= "Please Enter an International Phone Number";
               phone.style.color = "#747474";
-              }else if (selected_option.value == 56 ){
+              } else if (selected_option.value == 56 ) {
               phone.setAttribute("disabled","disabled");
               phone.style.pointerEvents= "none";
               phone.value= '<?php echo "$phone" ?? '' ?>';
@@ -62,18 +65,23 @@ if (Auth::check())
             let selected_option = select.options[select.selectedIndex];
               if (selected_option.value == 59 && for_someone_checked.checked != true ){
                 phone.removeAttribute("disabled");
-              phone.style.pointerEvents= "auto";
-              phone.value= "Please Enter an International Phone Number";
-              phone.style.color = "#747474";              }
+                phone.style.pointerEvents= "auto";
+                phone.value= "Phone";
+                phone.style.color = "#747474";              }
           });
   });
+
+
+     
 </script>
 @endif
+
 <!-- Start Content -->
 <form enctype="multipart/form-data" id="add_to_cart" method="POST" action="{{ url('/cart') }}">
 @csrf
 
 <section class="event-summary container">
+  
   <div class="row">
     <div class="col-lg-6 order-lg-1">
       <div class="event-slider">
