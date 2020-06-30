@@ -378,14 +378,14 @@ $(document).ready(function () {
     $('a[data-toggle="pill"]').on("shown.bs.tab", function (e) {
         // old
         // window.location.href = "?page=0#" + $(e.target).attr("href").substr(1);
-       
-    // new - fixed glitches for a second when moving from information to upcoming events
-        if(window.location.href.includes("profile"))    
-               window.location.href = "#"+$(e.target).attr("href").substr(1);
-        else
-               window.location.href = "?page=0#" + $(e.target).attr("href").substr(1);
 
-               
+        // new - fixed glitches for a second when moving from information to upcoming events
+        if (window.location.href.includes("profile"))
+            window.location.href = "#" + $(e.target).attr("href").substr(1);
+        else
+            window.location.href = "?page=0#" + $(e.target).attr("href").substr(1);
+
+
         // URLSearchParams.delete(page)
         // if (history.pushState) {
         //     history.pushState(
@@ -566,6 +566,8 @@ $(document).ready(function () {
         var countries = "";
         let countires_ar = [];
 
+
+
         $.ajax({
             url: "/event-details/helper/countries",
             type: "GET",
@@ -587,6 +589,8 @@ $(document).ready(function () {
                 });
             },
         });
+
+
         $("#ticket_1_use_myself").on("change", function () {
             if ($("#year_of_birth").length) {
                 $.ajax({
@@ -612,6 +616,7 @@ $(document).ready(function () {
                             var elems = document.getElementsByClassName(
                                 "year_of_birth"
                             );
+
                             // document.getElementsByClassName("year_of_birth").style.backgroundColor='#f5f5f5';
                             if (elems.length > 1)
                                 for (var i = 0; i < elems.length; i++) {
@@ -619,6 +624,7 @@ $(document).ready(function () {
                                     elems[i].style.backgroundColor = "#f5f5f5";
                                 }
                         }
+
                         if (user["club"] != "") {
                             var val = $(
                                 "#club option:contains(" + user["club"] + ")"
@@ -662,6 +668,13 @@ $(document).ready(function () {
         });
 
         $("#ticket_1_use_someone").on("change", function () {
+            let user_gender = document.getElementById("gender");
+            if (user_gender) {
+                user_gender.removeAttribute("disabled")
+                user_gender.options[0].selected = true;
+                user_gender.style.pointerEvents = "auto";
+                user_gender.style.backgroundColor = "#F5F5F5";
+            }
             if ($(".year_of_birth").length) {
                 // $("#year_of_birth").prop("disabled", false);
                 var elems = document.getElementsByClassName("year_of_birth");
@@ -690,7 +703,6 @@ $(document).ready(function () {
         });
         $(".ticket_race").on("change", function () {
             var raceId = $(this).val();
-            // let genders = [];
             var name = $(this).attr("name");
             name = name.split("_");
             var drop_name = "ticket_" + name[1] + "_type";
@@ -742,13 +754,13 @@ $(document).ready(function () {
                 dataType: "json",
 
                 success: function (data) {
+                    let num;
+
                     $(meta_name).empty();
                     if (data.length) {
                         var questions = data[0].question;
                         $.each(questions, function (key, question) {
-                            // if (question.question_text.match(/gender/gi)) {
-                            //     genders.push(question.question_text)
-                            // }
+
                             str = "";
                             str +=
                                 '<script>var usedNames = {};$(".clubs > option").each(function () {if(usedNames[this.text]) {$(this).remove();} else {usedNames[this.text] = this.value;}});</script>';
@@ -773,17 +785,14 @@ $(document).ready(function () {
                                     if (validation[i] === "required") {
                                         required = true;
                                     }
-
                                     if (validation[i].match("min")) {
                                         min = validation[i].split(":");
                                         min = min[1];
                                     }
-
                                     if (validation[i].match("max")) {
                                         max = validation[i].split(":");
                                         max = max[1];
                                     }
-
                                     if (validation[i].match("type")) {
                                         type = validation[i].split(":");
                                         type = type[1];
@@ -872,12 +881,15 @@ $(document).ready(function () {
                             }
                             if (question.answertype.type === "dropdown") {
                                 str += "<select ";
-                                if (required) str += "required";
+                                if (required) str += "required ";
                                 str +=
                                     ' class="custom-select ' +
                                     (question.question_text.search(/club/i) > -1 ?
                                         "clubs" :
                                         "") +
+                                    (question.question_text.search(/Gender/i) > -1 ?
+                                        "gender" :
+                                        "") + " " +
                                     (question.question_text.search(/nationality/i) > -1 ?
                                         " nationality " :
                                         "") + " " +
@@ -924,7 +936,14 @@ $(document).ready(function () {
                                         data[0]["user"].club != "" ?
                                         'style="pointer-events: none; background-color: #e9ecef"' :
                                         "") +
-                                    ">";
+                                    (question.question_text.search(/gender/i) >
+                                        -1 && data[0]["user"].gender != "" ?
+                                        ' id="gender" ' :
+                                        "")
+
+                                    +
+                                    " >";
+                                // found = true;
 
                                 if (
                                     question.question_text.search(
@@ -941,7 +960,7 @@ $(document).ready(function () {
                                     .toLowerCase()
                                     .indexOf("tribal") == -1
                                 ) {
-                                    //change
+                                    ///TODO::change
                                     var found = false;
                                     $.each(question.answervalue, function (
                                         key,
@@ -970,12 +989,15 @@ $(document).ready(function () {
                                             '<option value="" selected disabled>' +
                                             "Your age is not qualified for this race" +
                                             "</option>";
+
                                         $("#open_added_to_cart_modal").prop(
                                             "disabled",
                                             true
                                         );
                                     }
+
                                 } else {
+                                    // gender title
                                     str +=
                                         '<option value="" disabled selected>' +
                                         question.question_text +
@@ -1029,12 +1051,45 @@ $(document).ready(function () {
                                     key,
                                     answervalue
                                 ) {
-                                    str +=
+                                    if ($("#ticket_1_use_myself").prop("checked") == true) {
+                                        if (answervalue.value.toLowerCase().trim() == data[0].user.gender.toLowerCase().trim()) {
+                                            if (data[0].user.gender !="")
+                                            str = str.replace("<select required ", "<select disabled required ")
+                                            str +=
+                                                '<option selected value="' +
+                                                answervalue.id +
+                                                '">' +
+                                                answervalue.value +
+                                                "</option>";
+                                        } else {
+                                            str +=
+                                                '<option value="' +
+                                                answervalue.id +
+                                                '">' +
+                                                answervalue.value +
+                                                "</option>";
+                                        }
+
+                                    }
+                                    if ($("#ticket_1_use_someone").prop("checked") == true) {
+                                        if (answervalue.question_id == 31) {
+                                        str +=
                                         '<option value="' +
                                         answervalue.id +
                                         '">' +
                                         answervalue.value +
                                         "</option>";
+                                        }
+                                    }
+                                    if (answervalue.question_id != 31) {
+                                        str +=
+                                            '<option value="' +
+                                            answervalue.id +
+                                            '">' +
+                                            answervalue.value +
+                                            "</option>";
+                                    }
+
                                 });
                                 str += "</select>";
                             }
@@ -1061,41 +1116,39 @@ $(document).ready(function () {
                             sortList();
 
                         });
-                        let select = document.getElementsByName("ticket_1_meta_31")[0];
+                        let user_gender = document.getElementsByName("ticket_1_meta_31")[0];
 
-                        // if (genders.length == 1) {
-                        //     $.each(questions, function (key, question) {
-                        //         if (question.question_text.match(/gender/gi)) {
-                        //             if (question.question_text.search(/gender/i) >
-                        //                 -1 && data[0]["user"].gender != "" && data[0]["user"].gender != null && select != undefined) {
-                        //                 select.setAttribute("id", "gender");
-                        //             }
-                        //             if (question.question_text.search(/gender/i) > -1 && data[0]["user"].gender != null && $("#ticket_1_use_myself").is(":checked") && data[0]["user"].gender != "") {
-                        //                 select.setAttribute("style", "pointer-events: none; background-color: #e9ecef");
-                        //             }
-                        //             $.each(question.answervalue, function (key, value) {
-                        //                 if (value.value.match(data[0].user.gender)) {
-                        //                     select.innerHTML = "<option value='" + value.id + "' selected>" + value.value + "</option>";
-                        //                 }
-                        //             });
-                        //         }
-                        //         $.each(question.answertype, function (key, object) {
-                        //             if (object == "countries" && data[0].user.nationality != "" && data[0].user.nationality != null) {
-                        //                 let nationality_ = document.getElementsByName("ticket_1_meta_4")[0];
-                        //                 for (let key_ in countires_ar) {
-                        //                     if (key_ == data[0].user.nationality) {
-                        //                         nationality_.setAttribute("style", "pointer-events: none; background-color: #e9ecef");
-                                             
-                        //                         nationality_.innerHTML = "<option value='" + key_ + "' selected disabled>" + countires_ar[key_] + "</option>";
-                        //                     }
-                        //                 }
-                        //             }
-                        //         });
-                        //     });
-                        // }
+                        document.getElementById("ticket_1_use_myself").addEventListener("change", () => {
+                            for (let i = 0; i < user_gender.length; i++) {
+                                if (user_gender.options[i].label.toLowerCase().trim() == "gender") {
+                                    user_gender.options[i].removeAttribute("selected");
+                                }
+                                if (user_gender.options[i].label.toLowerCase().trim() ===
+                                    data[0].user.gender.toLowerCase().trim()) {
+                                    user_gender.options[i].selected = true;
+                                    user_gender.style.pointerEvents = "none";
+                                    user_gender.style.backgroundColor = "#e9ecef";
+                                    ////
+
+                                }
+
+                            }
+
+                        });
+
+                        document.getElementById("ticket_1_use_someone").addEventListener("change", () => {
+                            if(user_gender.disabled == true){
+                                user_gender.removeAttribute("disabled");
+                                user_gender.style.pointerEvents = "auto";
+                            }
+                        }
+                        );
+
                     }
                 },
+
             });
+
         });
 
         $(".event-slider").slick({
