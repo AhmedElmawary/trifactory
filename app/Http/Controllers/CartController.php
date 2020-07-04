@@ -398,6 +398,11 @@ class CartController extends Controller
 
             $phone = $ticketValues["phone"] ?? $user->phone;
 
+            if (isset($ticketValues["meta_4"])) {
+                $user->nationality = $ticketValues["meta_4"];
+                $user->save();
+            }
+            
             if ($ticketValues['use'] == 'myself') {
                 if ($user) {
                     $attributes = [

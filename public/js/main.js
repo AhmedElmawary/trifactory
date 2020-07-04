@@ -669,11 +669,23 @@ $(document).ready(function () {
 
         $("#ticket_1_use_someone").on("change", function () {
             let user_gender = document.getElementById("gender");
+            let user_nationality = document.getElementById("nationality_4");
             if (user_gender) {
                 user_gender.removeAttribute("disabled")
                 user_gender.options[0].selected = true;
                 user_gender.style.pointerEvents = "auto";
                 user_gender.style.backgroundColor = "#F5F5F5";
+                user_gender.style.color = "#747474";
+            }
+            if (user_nationality) {
+                if (user_nationality.style.pointerEvents == "none") {
+                    user_nationality.removeAttribute("disabled")
+                    user_nationality.options[0].selected = true;
+                    user_nationality.style.pointerEvents = "auto";
+                    user_nationality.style.backgroundColor = "#F5F5F5";
+                    user_nationality.style.color = "#747474";
+
+                }
             }
             if ($(".year_of_birth").length) {
                 // $("#year_of_birth").prop("disabled", false);
@@ -939,12 +951,9 @@ $(document).ready(function () {
                                     (question.question_text.search(/gender/i) >
                                         -1 && data[0]["user"].gender != "" ?
                                         ' id="gender" ' :
-                                        "")
+                                        "") +
 
-                                    +
                                     " >";
-                                // found = true;
-
                                 if (
                                     question.question_text.search(
                                         /year of birth/i
@@ -1054,9 +1063,10 @@ $(document).ready(function () {
                                     if ($("#ticket_1_use_myself").prop("checked") == true) {
                                         if (answervalue.value.toLowerCase().trim() == data[0].user.gender.toLowerCase().trim()) {
                                             if (data[0].user.gender != "")
-                                                str = str.replace("<select required ", "<select disabled required ")
+                                                str = str.replace("<select required ", "<select disabled required style='color:#000; font:550'")
+
                                             str +=
-                                                '<option selected value="' +
+                                                '<option  selected value="' +
                                                 answervalue.id +
                                                 '">' +
                                                 answervalue.value +
@@ -1093,9 +1103,11 @@ $(document).ready(function () {
                                 });
                                 str += "</select>";
                             }
+
                             if (question.answertype.type === "countries") {
                                 str += "<select ";
                                 if (required) str += "required";
+                                str += " id =" + question.question_text.trim().toLowerCase().split(" ")[0] + '_' + question.id
                                 str +=
                                     ' class="custom-select " name="' +
                                     meta_field_name +
@@ -1117,6 +1129,7 @@ $(document).ready(function () {
 
                         });
                         let user_gender = document.getElementsByName("ticket_1_meta_31")[0];
+                        let user_nationality = document.getElementById("nationality_4") ;
 
                         document.getElementById("ticket_1_use_myself").addEventListener("change", () => {
                             for (let i = 0; i < user_gender.length; i++) {
@@ -1128,25 +1141,50 @@ $(document).ready(function () {
                                     user_gender.options[i].selected = true;
                                     user_gender.style.pointerEvents = "none";
                                     user_gender.style.backgroundColor = "#e9ecef";
-                                    ////
-
+                                    user_gender.style.color = "#000";
+                                    return;
                                 }
-
-                            }
-
-                        });
-
-                        document.getElementById("ticket_1_use_someone").addEventListener("change", () => {
-                            if (user_gender.disabled == true) {
-                                user_gender.removeAttribute("disabled");
-                                user_gender.style.pointerEvents = "auto";
                             }
                         });
-
+                        let user_country = (data[0].user.nationality == null ) ? "": data[0].user.nationality.toLowerCase().trim() ;
+                        
+                        let for_my_self = document.getElementById("ticket_1_use_myself");
+                        if (for_my_self.checked == true) {
+                            if (user_country != "") {
+                                let countries = user_nationality.options;
+                                for (let i = 0; i < countries.length; i++) {
+                                    if (countries[i].value.toLowerCase().trim() === user_country) {
+                                        countries[0].removeAttribute("selected");
+                                        countries[i].selected = true;
+                                        user_nationality.style.pointerEvents = "none";
+                                        user_nationality.style.backgroundColor = "#e9ecef";
+                                        user_nationality.style.color = "#000";
+                                    }
+                                }
+                            }
+                        }
+                        for_my_self.addEventListener("change", () => {
+                            if (for_my_self.checked == true) {
+                                if (user_country != "") {
+                                    let countries = user_nationality.options;
+                                    for (let i = 0; i < countries.length; i++) {
+                                        if (countries[i].value.toLowerCase().trim() === user_country) {
+                                            countries[0].removeAttribute("selected");
+                                            countries[i].selected = true;
+                                            user_nationality.style.pointerEvents = "none";
+                                            user_nationality.style.backgroundColor = "#e9ecef";
+                                            user_nationality.style.color = "#000";
+                                        }   
+                                    }
+                                }
+                            }
+                        });
                     }
                 },
 
+
             });
+
 
         });
 
