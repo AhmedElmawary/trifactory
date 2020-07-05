@@ -253,7 +253,7 @@ window.addEventListener("load", function(){
           name="ticket_1_phone" 
           <?php
             if ($event->id != 18 && isset($user))  
-                echo "value='@auth{{ $user->phone }}@endauth'";
+              echo "value=".Auth::user()->phone;
             else
                 echo "value=''";
             ?>
