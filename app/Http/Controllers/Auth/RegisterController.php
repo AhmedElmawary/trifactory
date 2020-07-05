@@ -95,9 +95,13 @@ class RegisterController extends Controller
                 'max:'.(date('Y')-5), 'in_array:years.*'],
                 'other_club' => ['required', 'string', 'max:255']
             ];
+            if (Request::is('api*') || Request::wantsJson()) {
+                unset($rules["gender"]);
+                return Validator::make($data, $rules);
+            }
             return Validator::make($data, $rules);
         } else {
-            // blade
+            //blade
             $rules = [
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
@@ -110,11 +114,13 @@ class RegisterController extends Controller
                 'max:'.(date('Y')-12), 'in_array:years.*'],
                 'club' => ['required', 'string', 'max:255']
             ];
-
+            if (Request::is('api*') || Request::wantsJson()) {
+                unset($rules["gender"]);
+                return Validator::make($data, $rules);
+            }
             return Validator::make($data, $rules);
         }
     }
-
     /**
      * Create a new user instance after a valid registration.
      *
