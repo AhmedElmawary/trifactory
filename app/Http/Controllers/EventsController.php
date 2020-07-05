@@ -93,8 +93,7 @@ class EventsController extends Controller
                 }
             }
         }
-
-        if ($event->event_start < $today) {
+        if ($event->event_end < $today) {
             $pastEvent = true;
         }
         $eventDetails = $event->eventDetails;
