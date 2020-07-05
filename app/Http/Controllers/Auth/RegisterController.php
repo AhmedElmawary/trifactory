@@ -51,8 +51,8 @@ class RegisterController extends Controller
         $clubs = Answervalue::where('question_id', $question->id)->get();
         $nationalities = \countries();
         $gender = [
-            ["label" => 'Male', "value" => 'male'],
-            ["label" => 'Female', "value" => 'female']
+            ["label" => 'Male', "value" => 'Male'],
+            ["label" => 'Female', "value" => 'Female']
             ];
         unset($nationalities['il']);
         if (Request::is('api*') || Request::wantsJson()) {
