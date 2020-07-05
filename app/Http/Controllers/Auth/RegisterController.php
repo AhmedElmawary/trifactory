@@ -59,6 +59,7 @@ class RegisterController extends Controller
             return response()->json([
                 'nationalities' => $nationalities,
                 'clubs' => $clubs,
+                "gender" => $gender
             ]);
         } else {
             return view('auth.register', [
@@ -87,8 +88,8 @@ class RegisterController extends Controller
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'gender' => ['required', 'string'],
                 'phone' => $phone_rule,
+                'gender' => ['required', 'string'],
                 'nationality' => ['required', 'string'],
                 'password' => ['required', 'string', 'min:6', 'confirmed'],
                 'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
@@ -97,6 +98,7 @@ class RegisterController extends Controller
             ];
             return Validator::make($data, $rules);
         } else {
+            // blade
             $rules = [
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
@@ -132,7 +134,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'nationality' => $data['nationality'],
-            'gender' => $data['gender'],
+            'gender' => $data['gender'] ?? "",
             'password' => Hash::make($data['password']),
             'year_of_birth' => (int) $data['year_of_birth'],
             'club' => $data['club']
