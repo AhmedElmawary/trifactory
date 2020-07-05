@@ -95,11 +95,9 @@
                     <div class="input-group">
                         <select style="margin-top:20px;" class="custom-select" name="gender" required>
                             <option disabled value="" selected>Gender</option>
-
-                            @foreach($gender as $type)
-                            <option value="{{$type['value']}}">{{$type['label']}}</option>
+                            @foreach ($gender as $gen)
+                                        <option value="{{$gen->value}}">{{$gen->value}}</option>
                             @endforeach
-
                         </select>
 
                         @if ($errors->has('gender'))

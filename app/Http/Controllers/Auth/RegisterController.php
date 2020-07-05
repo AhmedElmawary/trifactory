@@ -50,10 +50,9 @@ class RegisterController extends Controller
         $question = Question::where('question_text', 'like', '%club%')->first();
         $clubs = Answervalue::where('question_id', $question->id)->get();
         $nationalities = \countries();
-        $gender = [
-            ["label" => 'Male', "value" => 'Male'],
-            ["label" => 'Female', "value" => 'Female']
-            ];
+        $gender =  Question::where('question_text', '=', 'Gender')->first()->id;
+        $gender = Answervalue::where('question_id', $gender)->get();
+        
         unset($nationalities['il']);
         if (Request::is('api*') || Request::wantsJson()) {
             return response()->json([
@@ -88,8 +87,8 @@ class RegisterController extends Controller
                 'firstname' => ['required', 'string', 'max:255'],
                 'lastname' => ['required', 'string', 'max:255'],
                 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'phone' => $phone_rule,
                 'gender' => ['required', 'string'],
+                'phone' => $phone_rule,
                 'nationality' => ['required', 'string'],
                 'password' => ['required', 'string', 'min:6', 'confirmed'],
                 'year_of_birth' => ['required', 'digits:4', 'integer', 'min:1930',
