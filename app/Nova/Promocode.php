@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
-use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 use App\Nova\Actions\RemovePromocodeDuplicates;
+use \OptimistDigital\MultiselectField\Multiselect;
+use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Promocode extends Resource
 {
@@ -56,7 +58,8 @@ class Promocode extends Resource
             Boolean::make('Unlimited', 'unlimited')
                 ->trueValue(1)
                 ->falseValue(0),
-            BelongsToMany::make('Races', 'races')
+            BelongsToMany::make('Races', 'races'),
+            BelongsTo::make('Event', 'events'),
         ];
     }
 
