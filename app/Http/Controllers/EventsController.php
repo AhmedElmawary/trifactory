@@ -20,7 +20,7 @@ class EventsController extends Controller
         $events = Event::with('eventimages')->past()->published()->get();
         $upcoming_events
             = Event::with('eventimages')->upcomming()->published()->get();
-        $coming_soon_events 
+        $coming_soon_events
             = Event::with('eventimages')->comingSoon()->published()->get();
 
         if (\Request::is('api*') || \Request::wantsJson()) {
@@ -66,7 +66,7 @@ class EventsController extends Controller
                 ]
             );
         } else {
-            return view('events', ['events' => $events, 
+            return view('events', ['events' => $events,
                 'upcoming_events' => $upcoming_events
                 ]
             );
@@ -132,8 +132,7 @@ class EventsController extends Controller
                 'closed' => $closed,
                 'coming_soon' => $coming_soon,
                 'eventDetails' => $eventDetails
-                ]
-            );
+                ]);
         }
     }
 
