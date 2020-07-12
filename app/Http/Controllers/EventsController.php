@@ -62,8 +62,8 @@ class EventsController extends Controller
                 'status' => 200,
                 'past_events' => $events,
                 'upcoming_events' => $upcoming_events,
-                'coming_soon_events' => $coming_soon_events
-                 ]);
+                'coming_soon_events' => $coming_soon_events ]
+            );
         } else {
             return view('events', ['events' => $events,
                 'upcoming_events' => $upcoming_events
