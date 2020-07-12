@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventDetails extends Model
 {
-    protected $fillable = [
+    protected $fillable 
+        = [
         'title',
         'details',
         'event_id',
