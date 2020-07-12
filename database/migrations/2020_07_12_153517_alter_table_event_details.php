@@ -13,9 +13,12 @@ class AlterTableEventDetails extends Migration
      */
     public function up()
     {
-        Schema::table('event_details', function (Blueprint $table) {
-            $table->integer("order", false, true)->default(1)->after("details");
-        });    }
+        Schema::table(
+            'event_details', function (Blueprint $table) {
+                $table->integer("order", false, true)->default(1)->after("details");
+            }
+        );  
+    }
 
     /**
      * Reverse the migrations.
