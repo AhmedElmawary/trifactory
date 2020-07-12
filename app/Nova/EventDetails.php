@@ -47,8 +47,8 @@ class EventDetails extends Resource
             ID::make()->sortable(),
             BelongsTo::make('Event'),
             Text::make('Title', 'title')->sortable(),
-            Trix::make('Details', 'details')->sortable(),
-            Number::make('Order','order')->min(1)->max(15),
+            Trix::make('Details', 'details')->sortable(), 
+            Number::make('Order', 'order')->min(1)->max(15),
             
         ];
     }
