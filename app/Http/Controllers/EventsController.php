@@ -66,8 +66,7 @@ class EventsController extends Controller
             );
         } else {
             return view('events', ['events' => $events,
-                'upcoming_events' => $upcoming_events
-                ]
+                'upcoming_events' => $upcoming_events]
             );
         }
     }
