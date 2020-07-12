@@ -18,8 +18,10 @@ class EventsController extends Controller
             \Cart::session($user->id);
         }
         $events = Event::with('eventimages')->past()->published()->get();
-        $upcoming_events = Event::with('eventimages')->upcomming()->published()->get();
-        $coming_soon_events = Event::with('eventimages')->comingSoon()->published()->get();
+        $upcoming_events
+            = Event::with('eventimages')->upcomming()->published()->get();
+        $coming_soon_events 
+            = Event::with('eventimages')->comingSoon()->published()->get();
 
         if (\Request::is('api*') || \Request::wantsJson()) {
             foreach ($events as $event) {
@@ -55,14 +57,19 @@ class EventsController extends Controller
                 }
             }
 
-            return response()->json([
+            return response()->json(
+                [
                 'status' => 200,
                 'past_events' => $events,
                 'upcoming_events' => $upcoming_events,
                 'coming_soon_events' => $coming_soon_events
-            ]);
+                ]
+            );
         } else {
-            return view('events', ['events' => $events, 'upcoming_events' => $upcoming_events]);
+            return view('events', ['events' => $events, 
+                'upcoming_events' => $upcoming_events
+                ]
+            );
         }
     }
 
@@ -105,7 +112,8 @@ class EventsController extends Controller
                 (($event->event_start != $event->event_end) ? ' - ' .
                     \Carbon\Carbon::parse($event->event_end)->format('j M Y') :
                     \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
-            return response()->json([
+            return response()->json(
+                [
                 'event' => $event,
                 'races' => $event_races,
                 'pastEvent' => $pastEvent,
@@ -113,7 +121,8 @@ class EventsController extends Controller
                 'closed' => $closed,
                 'coming_soon' => $coming_soon,
                 'eventDetails' => $eventDetails
-            ]);
+                 ]
+            );
         } else {
             return view('event-details', [
                 'event' => $event,
@@ -123,7 +132,8 @@ class EventsController extends Controller
                 'closed' => $closed,
                 'coming_soon' => $coming_soon,
                 'eventDetails' => $eventDetails
-            ]);
+                ]
+            );
         }
     }
 
@@ -155,7 +165,8 @@ class EventsController extends Controller
         try {
             $raceQuestions[0]['user'] = Auth::user();
         } catch (\Exception $e) {
-            \App\Exception::create([
+            \App\Exception::create(
+                [
                 'message' => $e->getMessage(),
                 'data' => json_encode($id),
                 'location' =>
@@ -163,7 +174,8 @@ class EventsController extends Controller
                     . ';File:' . __FILE__
                     . ';Class:' . __CLASS__
                     . ';Method:' . __METHOD__
-            ]);
+                 ]
+            );
         }
         if (\Request::is('api*')) {
             $swimmer = [];

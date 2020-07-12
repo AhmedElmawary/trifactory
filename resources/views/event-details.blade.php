@@ -120,6 +120,7 @@ window.addEventListener("load", function(){
             {{--</div>--}}
           {{--</div>--}}
 
+
           @if($eventDetails != null)
             @foreach($eventDetails as $eventDetail)
               <div class="custom-dropdown">
