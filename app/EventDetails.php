@@ -10,6 +10,7 @@ class EventDetails extends Model
         'title',
         'details',
         'event_id',
+        'order'
     ];
 
     protected $table = 'event_details';

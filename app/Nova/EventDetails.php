@@ -6,6 +6,7 @@ use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Number;
 use Illuminate\Http\Request;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -47,6 +48,7 @@ class EventDetails extends Resource
             BelongsTo::make('Event'),
             Text::make('Title', 'title')->sortable(),
             Trix::make('Details', 'details')->sortable(),
+            Number::make('Order','order')->min(1)->max(15),
         ];
     }
 

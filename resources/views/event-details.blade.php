@@ -152,7 +152,12 @@ window.addEventListener("load", function(){
             </span>
             <div class="dropdown-content collapse" id="available_races">
               <ul class="mb-0">
-                @foreach($event->race()->get() as $race)
+              @if($event_races != null)
+              @php $event_races = $event_races; @endphp
+              @else 
+              @php  $event_races = $event->race()->get(); @endphp
+              @endif
+                @foreach($event_races as $race)
                   <li>{{$race->name}}</li>
                 @endforeach
               </ul>
@@ -277,7 +282,7 @@ window.addEventListener("load", function(){
                required>
             <option disabled value="" selected>Race</option>
 
-            @foreach($event->race()->get() as $race)
+            @foreach($event_races as $race)
               <option value="{{$race->id}}">{{$race->name}}</option>
             @endforeach
 

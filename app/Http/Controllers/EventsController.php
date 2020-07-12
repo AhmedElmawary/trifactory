@@ -85,7 +85,8 @@ class EventsController extends Controller
             abort(404);
         }
 
-        foreach ($event->race()->get() as $race) {
+        $event_races = $event->race()->get();
+        foreach ($event_races as $race) {
             $race_tickets = $race->ticket()->get();
             foreach ($race_tickets as $race_ticket) {
                 if ($race_ticket->ticket_end > date('Y-m-d H:i:s') && $race_ticket->published == 'yes') {
@@ -96,7 +97,8 @@ class EventsController extends Controller
         if ($event->event_end < $today) {
             $pastEvent = true;
         }
-        $eventDetails = $event->eventDetails;
+        // $eventDetails = $event->eventDetails;
+        $eventDetails = $event->eventDetails()->orderBy("order")->get()->all() ?? null;
 
         if (\Request::is('api*') || \Request::wantsJson()) {
             $event['formatted_date'] = \Carbon\Carbon::parse($event->event_start)->format('j') .
@@ -105,21 +107,22 @@ class EventsController extends Controller
                     \Carbon\Carbon::parse($event->event_end)->format(' M Y'));
             return response()->json([
                 'event' => $event,
-                'races' => $event->race()->get(),
+                'races' => $event_races,
                 'pastEvent' => $pastEvent,
                 'user' => $user,
                 'closed' => $closed,
                 'coming_soon' => $coming_soon,
-                'eventDetails' => (count($eventDetails) > 0 ? $eventDetails : null)
+                'eventDetails' => $eventDetails
             ]);
         } else {
             return view('event-details', [
                 'event' => $event,
+                'event_races' => $event_races,
                 'pastEvent' => $pastEvent,
                 'user' => $user,
                 'closed' => $closed,
                 'coming_soon' => $coming_soon,
-                'eventDetails' => (count($eventDetails) > 0 ? $eventDetails : null)
+                'eventDetails' => $eventDetails
             ]);
         }
     }
