@@ -12,7 +12,7 @@ class EventDetails extends Model
         'details',
         'event_id',
         'order'
-    ];
+     ];
 
     protected $table = 'event_details';
 
