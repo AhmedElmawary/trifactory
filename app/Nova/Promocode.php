@@ -28,6 +28,7 @@ class Promocode extends Resource
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
+     *
      * @var string
      */
     public static $title = 'code';

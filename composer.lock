@@ -2431,7 +2431,7 @@
                 }
             ],
             "description": "A multiple select field for Laravel Nova.",
-            "keywords": [
+            "keywords":  [
                 "laravel",
                 "multiselect",
                 "nova",

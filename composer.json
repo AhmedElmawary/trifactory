@@ -78,7 +78,7 @@
             "@php artisan key:generate --ansi"
         ]
     },
-    "repositories": [
+    "repositories":  [
         {
             "type": "path",
             "url": "./nova"

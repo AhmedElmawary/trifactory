@@ -52,7 +52,8 @@ class CartController extends Controller
             );
         } else {
             return view(
-                'cart', [
+                'cart',
+                [
                 'cartItems' => $cartItems,
                 'cartSubTotal' => $cartSubTotal,
                 'cartTotal' => $cartTotal,
@@ -225,7 +226,8 @@ class CartController extends Controller
         $user = Auth::user();
 
         $validator = Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'code' => [
                 new \App\Rules\Voucher($user),
             ]

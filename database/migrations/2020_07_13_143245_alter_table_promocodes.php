@@ -14,7 +14,8 @@ class AlterTablePromocodes extends Migration
     public function up()
     {
         Schema::table(
-            'promocodes', function (Blueprint $table) {
+            'promocodes',
+            function (Blueprint $table) {
                 $table->json("promo_races")->after("event_id");
             }
         );
@@ -22,6 +23,7 @@ class AlterTablePromocodes extends Migration
 
     /**
      * Reverse the migrations.
+     *
      *
      * @return void
      */
