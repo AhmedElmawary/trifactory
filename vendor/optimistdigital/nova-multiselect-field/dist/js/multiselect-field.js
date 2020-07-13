@@ -14056,7 +14056,7 @@
                 slot: "noResult"
             }, [t._v("\n          " + t._s(t.__("novaMultiselect.noResult")) + "\n        ")]), t._v(" "), n("template", {
                 slot: "noOptions"
-            }, [t._v("\n          " + t._s(t.__("Inorder to view the races you need firstly to create a promocode")) + "\n        ")])], 2), t._v(" "), t.reorderMode ? n("div", {
+            }, [t._v("\n          " + t._s(t.__("Inorder to view the races you firstly need create a promocode")) + "\n        ")])], 2), t._v(" "), t.reorderMode ? n("div", {
                 staticClass: "form-input-bordered py-1"
             }, [n("vue-draggable", {
                 staticClass: "flex flex-col pl-0",
