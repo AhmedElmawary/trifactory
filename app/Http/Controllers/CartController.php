@@ -43,17 +43,21 @@ class CartController extends Controller
                     $cartItems[$cartItem['id']]['promo'] = $condition->getAttributes();
                 }
             }
-            return response()->json([
+            return response()->json(
+                [
                 'cartItems' => $cartItems,
                 'cartSubTotal' => $cartSubTotal,
                 'cartTotal' => $cartTotal,
-            ]);
+                ]
+            );
         } else {
-            return view('cart', [
+            return view(
+                'cart', [
                 'cartItems' => $cartItems,
                 'cartSubTotal' => $cartSubTotal,
                 'cartTotal' => $cartTotal,
-            ]);
+                ]
+            );
         }
     }
 
@@ -105,7 +109,6 @@ class CartController extends Controller
         $item = $inputs['item'];
 
         $cartItems = \Cart::getContent()->toArray();
-
         $code = null;
         if (isset($inputs['code'])) {
             $code = $inputs['code'];
@@ -113,19 +116,24 @@ class CartController extends Controller
             \Cart::clearItemConditions($item);
         }
 
-        $validator = Validator::make($request->all(), [
-            'item' => ['required'],
-            'code' => [
-                new \App\Rules\Promocode($cartItems, $item),
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'item' => ['required'],
+                'code' => [
+                    new \App\Rules\Promocode($cartItems, $item),
+                ]
             ]
-        ]);
+        );
 
         if ($validator->fails()) {
             if (\Request::is('api*') || \Request::wantsJson()) {
                 if (isset($inputs["code"])) {
-                    return response()->json([
+                    return response()->json(
+                        [
                         'message' => $validator->errors()
-                    ]);
+                        ]
+                    );
                 } else {
                     return $this->index($request);
                 }
@@ -136,34 +144,36 @@ class CartController extends Controller
                     ->withInput();
             }
         }
-
+        
         if (array_key_exists($item, $cartItems)) {
             $cartItem = $cartItems[$item];
 
-            $races = [];
             $promocode = \App\Promocode::where('code', $code)->first();
             if ($promocode) {
-                $races = $promocode->races()->get();
-                $promocode = null;
-            }
+                // $races = $promocode->races()->get();
 
-            if (count($races) > 0) {
-                $promocode = \App\Promocode::where('code', $code)
-                    ->where('published', 'YES')
-                    ->whereHas('races', function ($query) use ($cartItem) {
-                        $query->where('race_id', '=', $cartItem['attributes']['_race_id']);
-                    })
-                    ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
-                        $query->where('user_id', '=', $user->id);
-                    })
-                    ->first();
-            } else {
-                $promocode = \App\Promocode::where('code', $code)
-                    ->where('published', 'YES')
-                    ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
-                        $query->where('user_id', '=', $user->id);
-                    })
-                    ->first();
+                $promocodeEventIdDB = $promocode->events()->first();
+                if (!isset($promocodeEventIdDB)) {
+                    return;
+                }
+                $promocodeEventIdDB = $promocodeEventIdDB->id;
+
+                $promocodeRacesDB = $promocode->select("promo_races")->where("code", $code)->first();
+                if (!isset($promocodeRacesDB["promo_races"])) {
+                    return;
+                }
+                $promocodeRacesDB = json_decode($promocodeRacesDB->promo_races);
+
+                $ticketRaceId = $cartItem["attributes"]["_race_id"];
+                $ticketEventId = $cartItem["attributes"]["Event_id"];
+                
+                
+        
+                if (! in_array($ticketRaceId, $promocodeRacesDB)
+                    && ! ($ticketEventId == $promocodeEventIdDB)
+                ) {
+                    $promocode =  null ;
+                }
             }
 
             if ($promocode) {
@@ -176,14 +186,16 @@ class CartController extends Controller
                     $value = '-' . $promocode->value;
                 }
 
-                $condition = new \Darryldecode\Cart\CartCondition([
+                $condition = new \Darryldecode\Cart\CartCondition(
+                    [
                     'name' => $promocode->code,
                     'type' => 'promocode',
                     'value' => $value,
                     'attributes' => [
                         'code' => $code
                     ]
-                ]);
+                    ]
+                );
                 // not auto-set incase of custom storage storage
                 $condition->parsedRawValue = -intval($value);
 
@@ -212,18 +224,22 @@ class CartController extends Controller
 
         $user = Auth::user();
 
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(
+            $request->all(), [
             'code' => [
                 new \App\Rules\Voucher($user),
             ]
-        ]);
+            ]
+        );
 
         if ($validator->fails()) {
             if (\Request::is('api*')) {
                 if (isset($inputs['code'])) {
-                    return response()->json([
+                    return response()->json(
+                        [
                         'message' => $validator->errors()
-                    ]);
+                        ]
+                    );
                 }
             } else {
                 return redirect()
@@ -244,7 +260,8 @@ class CartController extends Controller
                     ->first();
 
                 if ($voucher) {
-                    $condition = new \Darryldecode\Cart\CartCondition([
+                    $condition = new \Darryldecode\Cart\CartCondition(
+                        [
                         'name' => 'Voucher',
                         'type' => 'voucher',
                         'target' => 'total',
@@ -252,7 +269,8 @@ class CartController extends Controller
                         'attributes' => [
                             'code' => $code
                         ]
-                    ]);
+                        ]
+                    );
 
                     // not auto-set incase of custom storage storage
                     $condition->parsedRawValue = $voucher->amount * -1;
@@ -290,12 +308,14 @@ class CartController extends Controller
                 $credit = $cartTotal;
             }
 
-            $condition = new \Darryldecode\Cart\CartCondition([
+            $condition = new \Darryldecode\Cart\CartCondition(
+                [
                 'name' => 'Credit',
                 'type' => 'credit',
                 'target' => 'total', // this condition will be applied to cart's total when getTotal() is called.
                 'value' => $credit * -1,
-            ]);
+                ]
+            );
 
             $condition->parsedRawValue = $credit;  // not auto-set incase of custom storage storage
 
@@ -382,7 +402,8 @@ class CartController extends Controller
             try {
                 $ticket = Ticket::find($ticketValues['type']);
             } catch (\Exception $e) {
-                \App\Exception::create([
+                \App\Exception::create(
+                    [
                     'message' => $e->getMessage(),
                     'data' => json_encode($input),
                     'location' =>
@@ -390,7 +411,8 @@ class CartController extends Controller
                         . ';File:' . __FILE__
                         . ';Class:' . __CLASS__
                         . ';Method:' . __METHOD__
-                ]);
+                    ]
+                );
                 return redirect()->back();
             }
             $race = $ticket->race()->first();
@@ -502,14 +524,16 @@ class CartController extends Controller
                     }
                 }
             }
-            \Cart::add([
+            \Cart::add(
+                [
                 'id' => $uniqueid,
                 'name' => $ticket->name,
                 'price' => $ticket->price,
                 'quantity' => 1,
                 'conditions' => [],
                 'attributes' => $attributes
-            ]);
+                ]
+            );
         }
 
         // $user = Auth::user();

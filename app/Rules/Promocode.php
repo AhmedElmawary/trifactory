@@ -13,7 +13,7 @@ class Promocode implements Rule
     public $cartItemCode = null;
     public $cartCodes = [];
     public $message = 'error!';
-
+    private $promo_races;
     /**
      * Create a new rule instance.
      *
@@ -32,45 +32,21 @@ class Promocode implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
+     * @param  string $attribute
      * @param  mixed  $value
      * @return bool
      */
     public function passes($attribute, $value)
     {
-        $user = Auth::user();
-
-        $races = [];
-        $userPromocodeOrder = null;
         $promocode = \App\Promocode::where('code', $value)->first();
 
-
-        if ($promocode) {
-            $races = $promocode->races()->get();
-            $userPromocodeOrder = \App\UserPromocodeOrder::where('promocode_id', $promocode->id)->first();
-            $promocode = null;
+        if (!isset(($promocode))) {
+            $this->message = 'The selected code is invalid.';
+            return false;
         }
+        $this->promo_races = json_decode($promocode->promo_races);
 
-        if (!$userPromocodeOrder) {
-            if (count($races) > 0) {
-                $promocode = \App\Promocode::where('code', $value)
-                    ->where('published', 'YES')
-                    ->whereHas('races', function ($query) {
-                        $query->where('race_id', '=', $this->cartItem['attributes']['_race_id']);
-                    })
-                    ->whereDoesntHave('userPromocodeOrder', function ($query) use ($user) {
-                        $query->where('user_id', '=', $user->id);
-                    })
-                    ->first();
-            } else {
-                $promocode = \App\Promocode::where('code', $value)
-                    ->where('published', 'YES')
-                    ->first();
-            }
-        }
-
-
-        if (!$promocode) {
+        if (! isset($this->promo_races)) {
             $this->message = 'The selected code is invalid.';
             return false;
         }
@@ -80,15 +56,22 @@ class Promocode implements Rule
                 $this->cartCodes[] = $cartItem['conditions'][0]->getAttributes()['code'];
             }
         }
+       
+        if (isset($this->promo_races) && ! in_array($this->cartItem["attributes"]["_race_id"], $this->promo_races)) {
+            $this->message = 'The selected code is invalid.';
+            return false;
+        }
 
         if (in_array($value, $this->cartCodes) && $promocode->unlimited == 0 && $promocode->limit == -1) {
             $this->message = 'The selected code can only be used once.';
             return false;
         }
+
         if ($promocode->limit == 0
-        || (in_array($value, $this->cartCodes)
-        && $promocode->limit <= array_count_values($this->cartCodes)[$value]
-        && $promocode->unlimited == 0)) {
+            || (in_array($value, $this->cartCodes)
+            && $promocode->limit <= array_count_values($this->cartCodes)[$value]
+            && $promocode->unlimited == 0)
+        ) {
             $this->message = 'The selected code limit has exceeded.';
             return false;
         }

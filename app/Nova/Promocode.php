@@ -9,7 +9,9 @@ use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use App\Nova\Actions\RemovePromocodeDuplicates;
-use \OptimistDigital\MultiselectField\Multiselect;
+use Illuminate\Support\Facades\DB;
+use Laravel\Nova\Fields\Select;
+use OptimistDigital\MultiselectField\Multiselect;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class Promocode extends Resource
@@ -43,7 +45,7 @@ class Promocode extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function fields(Request $request)
@@ -58,15 +60,22 @@ class Promocode extends Resource
             Boolean::make('Unlimited', 'unlimited')
                 ->trueValue(1)
                 ->falseValue(0),
-            BelongsToMany::make('Races', 'races'),
+            // BelongsToMany::make('Races', 'races'),
             BelongsTo::make('Event', 'events'),
+            Multiselect::make('Races', 'promo_races')
+            ->options(
+                $this->racesOptions()
+            )
+            ->reorderable(true)
+            ->placeholder("Promocode's Avialabe Races"),
+
         ];
     }
 
     /**
      * Get the cards available for the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function cards(Request $request)
@@ -77,7 +86,7 @@ class Promocode extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function filters(Request $request)
@@ -88,7 +97,7 @@ class Promocode extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function lenses(Request $request)
@@ -99,7 +108,7 @@ class Promocode extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function actions(Request $request)
@@ -108,5 +117,19 @@ class Promocode extends Resource
             (new DownloadExcel)->withHeadings()->askForFilename(),
             // new RemovePromocodeDuplicates
         ];
+    }
+    
+    private function racesOptions()
+    {
+        $event = $this->events()->first();
+        if ($event == null) {
+            return;
+        }
+        $races = $event->race()->get();
+        $returned = [];
+        foreach ($races as $race) {
+            $returned[$race->id] = $race->name;
+        }
+        return $returned;
     }
 }
