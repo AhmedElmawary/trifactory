@@ -232,24 +232,23 @@
                 </span><br>
                 <span style="font-family: AvenirNext-Medium;font-size: 16.6px;color: #000000;line-height: 25px;">
                     To Join the mission, Click on the link below  <br>
-                   <?php  
-                   
+                   <?php 
                         if ($ticket->_ticket_id == 125 || $ticket->_ticket_id == 131) 
-                                        $link = "https://www.myvirtualmission.com/missions/52718/50km-stay-safe-marathon";  
+                                        $link="https://www.myvirtualmission.com/missions/52718/50km-stay-safe-marathon";
                         if ($ticket->_ticket_id == 126 || $ticket->_ticket_id == 132) 
-                                        $link = "https://www.myvirtualmission.com/missions/52719/100km-stay-safe-marathon";            
+                                        $link="https://www.myvirtualmission.com/missions/52719/100km-stay-safe-marathon";
                         if ($ticket->_ticket_id == 133 || $ticket->_ticket_id == 137) 
-                                        $link = "https://www.myvirtualmission.com/missions/52721/100km-stay-safe-cycling-challenge";  
+                                        $link="https://www.myvirtualmission.com/missions/52721/100km-stay-safe-cycling-challenge";  
                         if ($ticket->_ticket_id == 134 || $ticket->_ticket_id == 138) 
-                                        $link = "https://www.myvirtualmission.com/missions/52722/200km-stay-safe-cycling-challenge";  
+                                        $link="https://www.myvirtualmission.com/missions/52722/200km-stay-safe-cycling-challenge";  
                         if ($ticket->_ticket_id == 135 || $ticket->_ticket_id == 139) 
-                                        $link = "https://www.myvirtualmission.com/missions/52723/150km-stay-safe-endurance-challenge";  
+                                        $link="https://www.myvirtualmission.com/missions/52723/150km-stay-safe-endurance-challenge";  
                         if ($ticket->_ticket_id == 136 || $ticket->_ticket_id == 140) 
-                                        $link = "https://www.myvirtualmission.com/missions/52724/250km-stay-safe-endurance-challenge";  
+                                        $link="https://www.myvirtualmission.com/missions/52724/250km-stay-safe-endurance-challenge";  
                         if ($ticket->_ticket_id == 141 ) 
-                                        $link = "https://www.myvirtualmission.com/missions/53505/25km-stay-safe-marathon";  
-
+                                        $link="https://www.myvirtualmission.com/missions/53505/25km-stay-safe-marathon";
                             ?>
+
                         {{$link}}<br>
                     Make sure to Click on "Join Mission" when you receive the invitation email.<br>
                     After clicking on "Join Mission", wait for your invitation to be accepted on the app within 24 hours.<br>
@@ -289,27 +288,31 @@
             </td>
         </tr>
 
-    @elseif($ticket->_race_id == 53 || $ticket->_race_id == 54)
+    @elseif($ticket->_race_id == 63 || $ticket->_race_id == 62)
         
     @php
         $url = "#";
         $title = "-";
         
-        if($ticket->_ticket_id == 117) {
-            $url = "https://www.myvirtualmission.com/missions/47858/stay-safe-marathon-50km-individual";
-            $title = "50 KM Individual Ticket";    
+        if($ticket->_ticket_id == 147) {
+            $url = "https://www.myvirtualmission.com/missions/54871/stay-safe-marathon-beach-edition-21km";
+            
+            $title = "Stay Safe Marathon - 21K Ticket";
+
+            $downloadAppInfo 
+                = "After you complete the registration download My Virtual Mission app from Apple Store or Google Play
+                 and wait for your invitation to join the <br> Stay Safe Marathon - 21K.";  
+
+            $howToStart="How to Start Your Stay Safe Marathon - Beach Edition | Stay Safe Marathon - 21K";
         }
-        elseif($ticket->_ticket_id == 118) {
-            $url = "https://www.myvirtualmission.com/missions/47860/stay-safe-marathon-100km-individual";
-            $title = "100 KM Individual Ticket";
-        }
-        elseif($ticket->_ticket_id == 119) {
-            $title = "200 KM Team Ticket";
-            $url = "https://www.myvirtualmission.com/missions/47864/stay-safe-marathon-200km-team-challenge";
-        }
-        elseif($ticket->_ticket_id == 120) {
-            $url = "https://www.myvirtualmission.com/missions/47868/stay-safe-marathon-400km-team-challenge";
-            $title = "400 KM Team Ticket";
+        elseif($ticket->_ticket_id == 146) {
+            $url = "https://www.myvirtualmission.com/missions/54868/stay-safe-marathon-beach-edition-42km";
+            
+            $title = "Stay Safe Marathon - 42K Ticket";
+
+            $downloadAppInfo 
+                = "After you complete the registration download My Virtual Mission app from Apple Store or Google Play 
+                and wait for your invitation to join the Stay <br> Safe Marathon - 42K.";  
         }
     @endphp
 
@@ -323,7 +326,7 @@
         <tr>
             <td>
                 <span style="font-family: AvenirNext-Bold;font-size: 26x;color: #000000;">
-                    How to Start Your Stay Safe Marathon | Ramadan Edition 
+                    {{$howToStart}} 
                 </span><br>
             </td>
         </tr>
@@ -335,7 +338,7 @@
                     1. DOWNLOAD APP
                 </span><br>
                 <span style="font-family: AvenirNext-Medium;font-size: 18px;color: #000000;line-height: 22px;">
-                    After you complete the registration download My Virtual Mission app from Apple Store or Google Play and wait for your invitation to join the <b> Stay Safe Marathon | Ramadan Edition</b>.
+                    {{$downloadAppInfo}}.
                 </span>
             </td>
         </tr>
