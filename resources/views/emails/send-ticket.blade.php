@@ -136,8 +136,8 @@
     $title = '';
     $link = '';
     if (isset($ticket)) {
-        $title = ($ticket->_race_id == 147) ? "Stay Safe Marathon - 21K Ticket" :"Stay Safe Marathon - 42K Ticket";
-        $link = ($ticket->_race_id == 147) ? "https://www.myvirtualmission.com/missions/54871/stay-safe-marathon-beach-edition-21km"
+        $title = ($ticket->_ticket_id == 147 || $ticket->_ticket_id == 145 ) ? "Stay Safe Marathon - 21K Ticket" :"Stay Safe Marathon - 42K Ticket";
+        $link = ($ticket->_ticket_id ==  147 || $ticket->_ticket_id == 145 ) ? "https://www.myvirtualmission.com/missions/54871/stay-safe-marathon-beach-edition-21km"
         : "https://www.myvirtualmission.com/missions/54868/stay-safe-marathon-beach-edition-42km";
     }
     ?>
