@@ -9,6 +9,8 @@ use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\Password;
 use Laravel\Nova\Fields\DateTime;
+use Laravel\Nova\Fields\Select;
+use Illuminate\Validation\Rule;
 use Maatwebsite\LaravelNovaExcel\Actions\DownloadExcel;
 
 class User extends Resource
@@ -59,7 +61,11 @@ class User extends Resource
                 ->rules('required', 'email', 'max:254')
                 ->creationRules('unique:users,email')
                 ->updateRules('unique:users,email,{{resourceId}}'),
-                // ->hideWhenUpdating(),
+
+            Select::make('Gender')
+                ->options($this->getGenderOptions())
+                ->sortable()
+                ->rules('required', Rule::in("Male", "Female"), "min:3", 'max:6'),
 
             Text::make('Phone')
                 ->sortable()
@@ -132,6 +138,14 @@ class User extends Resource
     {
         return [
             (new DownloadExcel)->withHeadings()->askForFilename(),
+        ];
+    }
+
+    private function getGenderOptions() : Array
+    {
+        return [
+            "Male"=>"Male",
+            "Female"=>"Female"
         ];
     }
 }
