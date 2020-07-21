@@ -84,11 +84,7 @@ class LoginController extends Controller
             if (Request::is('api*') || Request::wantsJson()) {
                 $user = $this->guard()->user();
                 $user->generateToken();
-                return response()->json(
-                    [
-                    'data' => $user->toArray(),
-                    ]
-                );
+                return $this->toJsonObject($user);
             } else {
                 return $this->sendLoginResponse($request);
             }
@@ -155,11 +151,7 @@ class LoginController extends Controller
         $user->fb_id = $userFb->getId();
         $user->save();
         $user->generateToken();
-        return response()->json(
-            [
-            'data' => $user->toArray(),
-            ]
-        );
+        return $this->toJsonObject($user);
     }
 
     private function isEmpty($object) :void
@@ -167,5 +159,14 @@ class LoginController extends Controller
         if ($object == null) {
             throw new Exception("null type Exception");
         }
+    }
+
+    private function toJsonObject($mixed)
+    {
+        return response()->json(
+            [
+            'data' => $mixed->toArray(),
+            ]
+        );
     }
 }
