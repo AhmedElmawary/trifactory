@@ -39,5 +39,9 @@ return [
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
     ],
-
+    'facebook' => [
+        'client_id' => "315415866167112",
+        'client_secret' => "1a3ddd6a1a1b689989e778930521a93b",
+        'redirect' => 'https://beta.thetrifactory.com/login/facebook/callback',
+    ],
 ];

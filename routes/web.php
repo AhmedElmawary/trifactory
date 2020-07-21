@@ -62,6 +62,9 @@ Route::get('/leaderboard/{year}', 'LeaderboardController@indexWithYear');
 Route::get('/leaderboard/details', 'LeaderboardController@details');
 
 
+// Route::get('login/facebook', 'Auth\LoginController@redirectToProvider');
+Route::get('login/facebook/callback/{token}', 'Auth\LoginController@handleProviderCallback');
+
 Auth::routes(['verify' => true]);
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 

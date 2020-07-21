@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use Request;
+use Exception;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -60,7 +62,7 @@ class LoginController extends Controller
     /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -82,9 +84,11 @@ class LoginController extends Controller
             if (Request::is('api*') || Request::wantsJson()) {
                 $user = $this->guard()->user();
                 $user->generateToken();
-                return response()->json([
+                return response()->json(
+                    [
                     'data' => $user->toArray(),
-                ]);
+                    ]
+                );
             } else {
                 return $this->sendLoginResponse($request);
             }
@@ -101,7 +105,7 @@ class LoginController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function logout(\Illuminate\Http\Request $request)
@@ -117,6 +121,46 @@ class LoginController extends Controller
             $this->guard()->logout();
             $request->session()->invalidate();
             return $this->loggedOut($request) ?: redirect('/');
+        }
+    }
+    /**
+     * Redirect the user to the GitHub authentication page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain the user information from GitHub.
+     * using Laravel\Socialite\Contracts\User to retrive the user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function handleProviderCallback($token = null)
+    {
+        $this->isEmpty($token);
+
+        $userFb = Socialite::driver('facebook')->userFromToken($token);
+        $this->isEmpty($userFb);
+
+        $user = \App\User::where("email", $userFb->getEmail())
+            ->orWhere("fb_id", $userFb->getId())
+            ->first();
+        if ($user == null) {
+            return json_encode($userFb);
+        }
+        $user->fb_id = $userFb->getId();
+        $user->save();
+        return $user->generateToken();
+    }
+
+    private function isEmpty($object) :void
+    {
+        if ($object == null) {
+            throw new Exception("null type Exception");
         }
     }
 }
