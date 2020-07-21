@@ -154,7 +154,12 @@ class LoginController extends Controller
         }
         $user->fb_id = $userFb->getId();
         $user->save();
-        return $user->generateToken();
+        $user->generateToken();
+        return response()->json(
+            [
+            'data' => $user->toArray(),
+            ]
+        );
     }
 
     private function isEmpty($object) :void
