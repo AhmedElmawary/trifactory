@@ -7,6 +7,8 @@ use Exception;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
+use App\Helpers\FacebookHelper;
+use App\Helpers\JsonHelper;
 
 class LoginController extends Controller
 {
@@ -84,7 +86,7 @@ class LoginController extends Controller
             if (Request::is('api*') || Request::wantsJson()) {
                 $user = $this->guard()->user();
                 $user->generateToken();
-                return $this->toJsonObject($user);
+                return JsonHelper::toJsonObject($user);
             } else {
                 return $this->sendLoginResponse($request);
             }
@@ -139,7 +141,7 @@ class LoginController extends Controller
     {
         $this->isEmpty($token);
 
-        $userFb = Socialite::driver('facebook')->userFromToken($token);
+        $userFb = Socialite::driver('facebook')->fields(FacebookHelper::getHelperFields())->userFromToken($token);
         $this->isEmpty($userFb);
 
         $user = \App\User::where("email", $userFb->getEmail())
@@ -151,7 +153,7 @@ class LoginController extends Controller
         $user->fb_id = $userFb->getId();
         $user->save();
         $user->generateToken();
-        return $this->toJsonObject($user);
+        return JsonHelper::toJsonObject($user);
     }
 
     private function isEmpty($object) :void
@@ -159,14 +161,5 @@ class LoginController extends Controller
         if ($object == null) {
             throw new Exception("null type Exception");
         }
-    }
-
-    private function toJsonObject($mixed)
-    {
-        return response()->json(
-            [
-            'data' => $mixed->toArray(),
-            ]
-        );
     }
 }

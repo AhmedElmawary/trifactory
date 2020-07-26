@@ -30,4 +30,8 @@ supervisord.pid
 # Deployer
 deployments/
 
+# testcases
+/tests
+
+
 .idea
