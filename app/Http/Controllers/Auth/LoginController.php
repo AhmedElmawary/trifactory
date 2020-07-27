@@ -87,7 +87,7 @@ class LoginController extends Controller
             if (Request::is('api*') || Request::wantsJson()) {
                 $user = $this->guard()->user();
                 $user->generateToken();
-                return JsonHelper::toJsonObject($user);
+                return JsonHelper::toJsonDataObject($user);
             } else {
                 return $this->sendLoginResponse($request);
             }
@@ -156,13 +156,13 @@ class LoginController extends Controller
                 $userFb->getId()
             );
 
-            return json_encode($userFb);
+            return  JsonHelper::toJsonObject($userFb);
         }
         $user->fb_id = $userFb->getId();
         $user->profile_image = $userFb->getId().".jpeg";
         $user->save();
         $user->generateToken();
-        return JsonHelper::toJsonObject($user);
+        return JsonHelper::toJsonDataObject($user);
     }
 
     private function isEmpty($object) :void
