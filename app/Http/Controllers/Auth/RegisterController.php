@@ -139,6 +139,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'fb_id' => $data["fb_id"] ?? null,
+            'profile_image' => $data["profile_image"] ?? null,
             'nationality' => $data['nationality'],
             'gender' => $data['gender'] ?? "",
             'password' => Hash::make($data['password']),

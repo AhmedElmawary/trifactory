@@ -146,7 +146,6 @@ class LoginController extends Controller
         $userFb = FacebookHelper::getUserByToken($token);
        
         $user  = DBHelper::retreiveUserByFBidOrEmail($userFb);
-
         if ($user == null) {
             DownloaderHelper::downloadFileToStorage(
                 $userFb->avatar_original,
@@ -155,7 +154,7 @@ class LoginController extends Controller
 
             return  JsonHelper::toJsonObject($userFb);
         }
-
+        ///TODO::try to insert the profile_image from register
         DBHelper::insertFBIdAndImageToUser($user, $userFb);
         
         return JsonHelper::toJsonDataObject($user);
