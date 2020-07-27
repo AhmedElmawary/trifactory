@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 class FacebookHelper
 {
+
     private static $fields = [
         'first_name',
         'last_name',

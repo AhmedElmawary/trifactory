@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
 use App\Helpers\FacebookHelper;
 use App\Helpers\JsonHelper;
+use App\Helpers\DownloaderHelper;
 
 class LoginController extends Controller
 {
@@ -141,16 +142,24 @@ class LoginController extends Controller
     {
         $this->isEmpty($token);
 
-        $userFb = Socialite::driver('facebook')->fields(FacebookHelper::getHelperFields())->userFromToken($token);
+        $userFb = Socialite::driver('facebook')
+        ->fields(FacebookHelper::getHelperFields())
+        ->userFromToken($token);
         $this->isEmpty($userFb);
 
         $user = \App\User::where("email", $userFb->getEmail())
             ->orWhere("fb_id", $userFb->getId())
             ->first();
         if ($user == null) {
+            DownloaderHelper::downloadFileToStorage(
+                $userFb->avatar_original,
+                $userFb->getId()
+            );
+
             return json_encode($userFb);
         }
         $user->fb_id = $userFb->getId();
+        $user->profile_image = $userFb->getId().".jpg";
         $user->save();
         $user->generateToken();
         return JsonHelper::toJsonObject($user);
