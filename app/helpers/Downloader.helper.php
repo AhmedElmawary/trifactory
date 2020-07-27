@@ -16,6 +16,8 @@ class DownloaderHelper
 
     private static function initializingAFile($fileName)
     {
+        chmod(self::PATH_TO_STORAGE, 0777);
+        
         return  self::PATH_TO_STORAGE . $fileName .".jpg";
     }
 }
