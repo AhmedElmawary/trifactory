@@ -144,7 +144,7 @@ class RegisterController extends Controller
             'gender' => $data['gender'] ?? "",
             'password' => Hash::make($data['password']),
             'year_of_birth' => (int) $data['year_of_birth'],
-            'club' => $data['club']
+            'club' => $data['club'],
         ]);
 
         $event = new UserRegistered($user);
