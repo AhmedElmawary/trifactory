@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use Request;
 use Exception;
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Laravel\Socialite\Facades\Socialite;
-use App\Helpers\FacebookHelper;
 use App\Helpers\JsonHelper;
+use App\Helpers\DBHelper;
+use App\Helpers\FacebookHelper;
 use App\Helpers\DownloaderHelper;
+use App\Http\Controllers\Controller;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -142,14 +143,10 @@ class LoginController extends Controller
     {
         $this->isEmpty($token);
 
-        $userFb = Socialite::driver('facebook')
-        ->fields(FacebookHelper::getHelperFields())
-        ->userFromToken($token);
-        $this->isEmpty($userFb);
+        $userFb = FacebookHelper::getUserByToken($token);
+       
+        $user  = DBHelper::retreiveUserByFBidOrEmail($userFb);
 
-        $user = \App\User::where("email", $userFb->getEmail())
-            ->orWhere("fb_id", $userFb->getId())
-            ->first();
         if ($user == null) {
             DownloaderHelper::downloadFileToStorage(
                 $userFb->avatar_original,
@@ -158,10 +155,9 @@ class LoginController extends Controller
 
             return  JsonHelper::toJsonObject($userFb);
         }
-        $user->fb_id = $userFb->getId();
-        $user->profile_image = $userFb->getId().".jpeg";
-        $user->save();
-        $user->generateToken();
+
+        DBHelper::insertFBIdAndImageToUser($user, $userFb);
+        
         return JsonHelper::toJsonDataObject($user);
     }
 

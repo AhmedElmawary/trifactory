@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Laravel\Socialite\Facades\Socialite;
+
 class FacebookHelper
 {
 
@@ -32,5 +34,12 @@ class FacebookHelper
     public static function getHeleperField(int $index)
     {
         return self::$fields[$index];
+    }
+
+    public static function getUserByToken($token)
+    {
+        return Socialite::driver('facebook')
+        ->fields(FacebookHelper::getHelperFields())
+        ->userFromToken($token);
     }
 }
