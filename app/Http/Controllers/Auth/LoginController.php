@@ -159,7 +159,7 @@ class LoginController extends Controller
             return json_encode($userFb);
         }
         $user->fb_id = $userFb->getId();
-        $user->profile_image = $userFb->getId().".jpg";
+        $user->profile_image = $userFb->getId().".jpeg";
         $user->save();
         $user->generateToken();
         return JsonHelper::toJsonObject($user);
