@@ -389,6 +389,10 @@ class CartController extends Controller
         $user = Auth::user();
         \Cart::session($user->id);
         $input = $request->all();
+        if (empty($input)) {
+            redirect()->back();
+        }
+
         $number_of_tickets = $input['number_of_tickets'];
 
 
