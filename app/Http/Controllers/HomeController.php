@@ -115,7 +115,10 @@ class HomeController extends Controller
 
     public function test()
     {
-        return response()->json(User::find(1), 200);
+        $user = Auth::user();
+        $new_token = $user->generateToken();
+        
+        return response()->json([$user, $new_token], 200);
     }
     
     
