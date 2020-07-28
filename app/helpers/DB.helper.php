@@ -7,6 +7,11 @@ class DBHelper
 {
     public static function insertFBIdAndImageToUser($user, $userFb):void
     {
+        DownloaderHelper::downloadFileToStorage(
+            $userFb->avatar_original,
+            $userFb->getId()
+        );
+
         $user->fb_id = $userFb->getId();
         $user->profile_image = $userFb->getId().".jpeg";
         $user->save();
