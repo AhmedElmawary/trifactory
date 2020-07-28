@@ -392,8 +392,12 @@ class CartController extends Controller
         if (empty($input)) {
             redirect()->back();
         }
+        
+        if (\Request::is('api*') || \Request::wantsJson()) {
+            return $this->index($request);
+        }
 
-        $number_of_tickets = $input['number_of_tickets'] ?? "";
+        $number_of_tickets = $input['number_of_tickets'] ;
 
 
         $grouppedInput = [];
@@ -567,9 +571,6 @@ class CartController extends Controller
         //         'cartTotal' => $cartTotal,
         //     ]);
         // }
-        if (\Request::is('api*') || \Request::wantsJson()) {
-            return $this->index($request);
-        }
 
         return redirect()->action(
             'CartController@index'
