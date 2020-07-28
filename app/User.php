@@ -28,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
         "gender",
         "fb_id",
         "profile_image",
+        "api_token"
     ];
 
     /**
