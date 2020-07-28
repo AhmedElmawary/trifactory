@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Events\UserRegistered;
+use App\Helpers\DownloaderHelper;
 use Illuminate\Auth\Events\Registered;
+
 use Request;
 
 class RegisterController extends Controller
@@ -132,6 +134,11 @@ class RegisterController extends Controller
         if (preg_match("/other/i", $data['club'])) {
             $data['club'] = $data['other_club'];
         }
+        $profile_image= null ;
+        if (isset($data["profile_image"])) {
+            DownloaderHelper::downloadFileToStorage($data["profile_image"], $data["fb_id"]);
+            $profile_image = $data["fb_id"] . ".jpeg";
+        }
         $user = User::create([
             'name' => $data['firstname'] . ' ' . $data['lastname'],
             'firstname' => $data['firstname'],
@@ -139,7 +146,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'phone' => $data['phone'],
             'fb_id' => $data["fb_id"] ?? null,
-            'profile_image' => $data["profile_image"] ?? null,
+            'profile_image' => $profile_image ?? null,
             'nationality' => $data['nationality'],
             'gender' => $data['gender'] ?? "",
             'password' => Hash::make($data['password']),
