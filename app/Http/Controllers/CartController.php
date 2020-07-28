@@ -393,7 +393,7 @@ class CartController extends Controller
             redirect()->back();
         }
 
-        $number_of_tickets = $input['number_of_tickets'];
+        $number_of_tickets = $input['number_of_tickets'] ?? "";
 
 
         $grouppedInput = [];
