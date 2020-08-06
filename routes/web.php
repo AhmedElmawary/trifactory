@@ -10,6 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+# manaul test
+Route::get('/test', 'TestController@index');
 
 Route::get('/', 'HomeController@index');
 Route::post('/gender/{user}', 'HomeController@gender')->name("gender");
@@ -36,6 +38,7 @@ Route::post('/refund-ticket', 'PaymentController@refundTicket')->name('refund-ti
 
 Route::post('/payment/processedCallback', 'PaymentController@processedCallback');
 Route::get('/payment/invoice', 'PaymentController@invoice');
+Route::get('/payment/cowpay', 'CowPayController@index');
 
 Route::get('/cart', 'CartController@index');
 Route::get('/cart/empty', 'CartController@emptyCart');
@@ -68,7 +71,6 @@ Route::get('login/facebook/callback/{token}', 'Auth\LoginController@handleProvid
 Auth::routes(['verify' => true]);
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-Route::get('/test', 'HomeController@test');
 
 use Illuminate\Support\Facades\Schema;
 use App\TelescopeEntries;

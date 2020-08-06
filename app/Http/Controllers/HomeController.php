@@ -113,13 +113,6 @@ class HomeController extends Controller
         }
     }
 
-    public function test()
-    {
-        $user = Auth::user();
-        $new_token = $user->generateToken();
-        
-        return response()->json([$user, $new_token], 200);
-    }
     
     
     public function gender(User $user)
