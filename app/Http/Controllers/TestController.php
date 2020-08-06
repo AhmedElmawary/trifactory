@@ -14,13 +14,14 @@ class TestController extends Controller
     {
         $user = Auth::user();
         $new_token = $user->generateToken();
-        $merchant_reference_id = openssl_random_pseudo_bytes(30). random_int(2, PHP_INT_MAX) . random_bytes(9)." at".date("d-m-Y_H:I:s");
+        $merchant_reference_id = openssl_random_pseudo_bytes(30)
+        .random_int(2, PHP_INT_MAX).random_bytes(9)." at".date("d-m-Y_H:I:s");
+        
         $string = "0123456789asdfghjklzxcvbnmqwertyuiopASDFGHJKLZXCVBNMQWERTYUIOP[];'!@#$%^&?><";
         $len = strlen($string);
         $i=0;
         $hash = '';
-        while ($i < 1000)
-        {
+        while ($i < 1000) {
             $hash.= $string[rand(0, $len-1)];
             $string = str_shuffle($string);
             $i++;
@@ -32,4 +33,4 @@ class TestController extends Controller
         dump($merchant_reference_id);
         return response()->json([$user, "new_token" => $new_token], 200);
     }
-    }
+}
